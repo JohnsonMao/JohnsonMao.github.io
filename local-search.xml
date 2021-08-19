@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  
+  
+  
+  <entry>
+    <title>Hello World</title>
+    <link href="/2021/08/12/hello-world/"/>
+    <url>/2021/08/12/hello-world/</url>
+    
+    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>React - 簡介</title>
+    <link href="/2021/07/26/2021-7-26-react-introduction/"/>
+    <url>/2021/07/26/2021-7-26-react-introduction/</url>
+    
+    <content type="html"><![CDATA[<h6 id="tags-React"><a href="#tags-React" class="headerlink" title="tags: React"></a>tags: <code>React</code></h6><h6 id="date-2021-7-26"><a href="#date-2021-7-26" class="headerlink" title="date: 2021/7/26"></a><em>date: 2021/7/26</em></h6><h1 id="⚛️-React-簡介"><a href="#⚛️-React-簡介" class="headerlink" title="⚛️ React - 簡介"></a>⚛️ React - 簡介</h1><h2 id="React-是什麼"><a href="#React-是什麼" class="headerlink" title="React 是什麼 ?"></a>React 是什麼 ?</h2><ul><li>React 是一個實作使用者介面的 JavaScript 函式庫，也就是所謂的框架。</li></ul><h2 id="誰開發的"><a href="#誰開發的" class="headerlink" title="誰開發的 ?"></a>誰開發的 ?</h2><ul><li>由 Facebook 開發，並且開源。</li></ul><h2 id="為什麼要學"><a href="#為什麼要學" class="headerlink" title="為什麼要學 ?"></a>為什麼要學 ?</h2><ol><li><p>原生 Javascript 操作 DOM 繁瑣，效率<strong>低</strong> ( DOM-API 操作 UI )。</p></li><li><p>使用 Javascript 直接操作 DOM，瀏覽器會<strong>大量重新</strong>繪製畫面。</p><p> <img src="https://i.imgur.com/MAar8Vs.png" alt="原生 JS 渲染畫面流程"><br> <em>每次新增資料，都會重新渲染畫面</em></p></li><li><p>原生 Javascript 沒有<strong>組件化</strong>程式碼功能，程式碼重複利用率低。</p></li></ol><h2 id="React-的優點"><a href="#React-的優點" class="headerlink" title="React 的優點"></a>React 的優點</h2><ol><li><p>採用<strong>組件化</strong>模式，<strong>聲明式編碼</strong>，提高開發效率及組件複用率。</p><ul><li>聲明式編碼 與 命令式編碼 的差別<ul><li>命令式編碼: 透過 Javascript 或 JQuery 拿到要操作的 DOM，並命令它改樣式。<br>  生活中的例子：<blockquote><p>老師口渴想喝水，命令同學去哪個地方裝水。<br>這就是命令式編碼，其中少做任何步驟，老師都會喝不到水</p></blockquote></li><li>聲明式編碼: 透過一些特殊的語法，表達它是甚麼樣式，然後 React 自動幫你改了。<br>  生活中的例子：<blockquote><p>老師說喉嚨有點乾，同學自動站起來遞水過來。<br>這就是聲明式編碼</p></blockquote></li></ul></li></ul></li><li><p>React Native 中可以使用 React 語法進行<strong>移動端開發</strong>。</p></li><li><p>使用<strong>虛擬 DOM</strong> + 優秀的 <strong>Diffing 算法</strong>，盡量減少與真實 DOM 的直接作用。</p><p> <img src="https://i.imgur.com/3ibcbkp.png" alt="React 渲染畫面流程"><br> <em>每次新增資料，都會比對虛擬 DOM，不一樣的 DOM 才渲染上去</em></p></li></ol><h3 id="學習-React-所需要的-Javascript-知識"><a href="#學習-React-所需要的-Javascript-知識" class="headerlink" title="學習 React 所需要的 Javascript 知識"></a>學習 React 所需要的 Javascript 知識</h3><ul><li><input checked="" disabled="" type="checkbox"> <ol><li>判斷 this 指向</li></ol></li><li><input checked="" disabled="" type="checkbox"> <ol start="2"><li>class 的概念</li></ol></li><li><input checked="" disabled="" type="checkbox"> <ol start="3"><li>Javascript ES6 的語法規範</li></ol></li><li><input checked="" disabled="" type="checkbox"> <ol start="4"><li>npm 套件管理工具</li></ol></li><li><input checked="" disabled="" type="checkbox"> <ol start="5"><li>繼承與原型鏈</li></ol></li><li><input checked="" disabled="" type="checkbox"> <ol start="6"><li>數列常用方法</li></ol></li><li><input checked="" disabled="" type="checkbox"> <ol start="7"><li>模組化</li></ol></li></ul><h3 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h3><ul><li><a href="https://reactjs.org/">React 官網</a></li><li><a href="https://www.youtube.com/playlist?list=PLmOn9nNkQxJFJXLvkNsGsoCUxJLqyLGxu">React 全家桶</a></li></ul>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>React</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  
+</search>
