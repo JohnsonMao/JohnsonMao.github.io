@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-TW" data-default-color-scheme=&#34;auto&#34;>
+<html lang="zh-TW" data-default-color-scheme=&#34;dark&#34;>
 
 
 
@@ -14,7 +14,8 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
   <meta name="theme-color" content="#2f4154">
-  <meta name="description" content="">
+  <meta name="description" content="React - 簡介
+前言這裡將會記錄我學習 React 的筆記，雖然說是從 0 開始學習，但該有的 Javascript 知識還是要有。">
   <meta name="author" content="Mao">
   <meta name="keywords" content="">
   
@@ -68,7 +69,7 @@
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand"
-       href="/">&nbsp;<strong>Fluid</strong>&nbsp;</a>
+       href="/">&nbsp;<strong>毛毛的部落格</strong>&nbsp;</a>
 
     <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
             data-target="#navbarSupportedContent"
@@ -158,7 +159,7 @@
 </nav>
 
     <div class="banner" id="banner" parallax=true
-         style="background: url('/img/default.png') no-repeat center center;
+         style="background: url('https://i.postimg.cc/76CsH11k/icons8-react-160.png') no-repeat center center;
            background-size: cover;">
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
@@ -173,8 +174,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-07-26 00:00" pubdate>
-        2021年7月26日 凌晨
+      <time datetime="2021-07-26 21:00" pubdate>
+        2021年7月26日 晚上
       </time>
     </span>
   
@@ -185,7 +186,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      426 字
+      412 字
     </span>
   
 
@@ -228,8 +229,21 @@
             <h1 style="display: none">React - 簡介</h1>
             
             <div class="markdown-body">
-              <h6 id="tags-React"><a href="#tags-React" class="headerlink" title="tags: React"></a>tags: <code>React</code></h6><h6 id="date-2021-7-26"><a href="#date-2021-7-26" class="headerlink" title="date: 2021/7/26"></a><em>date: 2021/7/26</em></h6><h1 id="⚛️-React-簡介"><a href="#⚛️-React-簡介" class="headerlink" title="⚛️ React - 簡介"></a>⚛️ React - 簡介</h1><h2 id="React-是什麼"><a href="#React-是什麼" class="headerlink" title="React 是什麼 ?"></a>React 是什麼 ?</h2><ul>
-<li>React 是一個實作使用者介面的 JavaScript 函式庫，也就是所謂的框架。</li>
+              <h1 id="React-簡介"><a href="#React-簡介" class="headerlink" title="React - 簡介"></a>React - 簡介</h1><p><img src="https://i.postimg.cc/76CsH11k/icons8-react-160.png" srcset="/img/loading.gif" lazyload alt="從 0 開始學 React"></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>這裡將會記錄我學習 React 的筆記，雖然說是從 0 開始學習，但該有的 Javascript 知識還是要有。</p>
+<span id="more"></span>
+
+<h3 id="學習-React-所需要的-Javascript-知識"><a href="#學習-React-所需要的-Javascript-知識" class="headerlink" title="學習 React 所需要的 Javascript 知識"></a>學習 React 所需要的 Javascript 知識</h3><ul>
+<li><input checked="" disabled="" type="checkbox"> 判斷 this 指向</li>
+<li><input checked="" disabled="" type="checkbox"> class 的概念</li>
+<li><input checked="" disabled="" type="checkbox"> Javascript ES6 的語法規範</li>
+<li><input checked="" disabled="" type="checkbox"> npm 套件管理工具</li>
+<li><input checked="" disabled="" type="checkbox"> 繼承與原型鏈</li>
+<li><input checked="" disabled="" type="checkbox"> 數列常用方法</li>
+<li><input checked="" disabled="" type="checkbox"> 模組化</li>
+</ul>
+<h2 id="React-是什麼"><a href="#React-是什麼" class="headerlink" title="React 是什麼 ?"></a>React 是什麼 ?</h2><ul>
+<li>React 是一個實作使用者介面的 JavaScript 函式庫。</li>
 </ul>
 <h2 id="誰開發的"><a href="#誰開發的" class="headerlink" title="誰開發的 ?"></a>誰開發的 ?</h2><ul>
 <li>由 Facebook 開發，並且開源。</li>
@@ -238,7 +252,7 @@
 <li><p>原生 Javascript 操作 DOM 繁瑣，效率<strong>低</strong> ( DOM-API 操作 UI )。</p>
 </li>
 <li><p>使用 Javascript 直接操作 DOM，瀏覽器會<strong>大量重新</strong>繪製畫面。</p>
-<p> <img src="https://i.imgur.com/MAar8Vs.png" srcset="/img/loading.gif" lazyload alt="原生 JS 渲染畫面流程"><br> <em>每次新增資料，都會重新渲染畫面</em></p>
+<p> <img src="https://i.imgur.com/MAar8Vs.png" srcset="/img/loading.gif" lazyload alt="原生 JS 渲染畫面流程，每次新增資料，都會重新渲染畫面"></p>
 </li>
 <li><p>原生 Javascript 沒有<strong>組件化</strong>程式碼功能，程式碼重複利用率低。</p>
 </li>
@@ -262,42 +276,12 @@
 <li><p>React Native 中可以使用 React 語法進行<strong>移動端開發</strong>。</p>
 </li>
 <li><p>使用<strong>虛擬 DOM</strong> + 優秀的 <strong>Diffing 算法</strong>，盡量減少與真實 DOM 的直接作用。</p>
-<p> <img src="https://i.imgur.com/3ibcbkp.png" srcset="/img/loading.gif" lazyload alt="React 渲染畫面流程"><br> <em>每次新增資料，都會比對虛擬 DOM，不一樣的 DOM 才渲染上去</em></p>
+<p> <img src="https://i.imgur.com/3ibcbkp.png" srcset="/img/loading.gif" lazyload alt="React 渲染畫面流程，每次新增資料，都會比對虛擬 DOM，不一樣的 DOM 才渲染上去"></p>
 </li>
 </ol>
-<h3 id="學習-React-所需要的-Javascript-知識"><a href="#學習-React-所需要的-Javascript-知識" class="headerlink" title="學習 React 所需要的 Javascript 知識"></a>學習 React 所需要的 Javascript 知識</h3><ul>
-<li><input checked="" disabled="" type="checkbox"> <ol>
-<li>判斷 this 指向</li>
-</ol>
-</li>
-<li><input checked="" disabled="" type="checkbox"> <ol start="2">
-<li>class 的概念</li>
-</ol>
-</li>
-<li><input checked="" disabled="" type="checkbox"> <ol start="3">
-<li>Javascript ES6 的語法規範</li>
-</ol>
-</li>
-<li><input checked="" disabled="" type="checkbox"> <ol start="4">
-<li>npm 套件管理工具</li>
-</ol>
-</li>
-<li><input checked="" disabled="" type="checkbox"> <ol start="5">
-<li>繼承與原型鏈</li>
-</ol>
-</li>
-<li><input checked="" disabled="" type="checkbox"> <ol start="6">
-<li>數列常用方法</li>
-</ol>
-</li>
-<li><input checked="" disabled="" type="checkbox"> <ol start="7">
-<li>模組化</li>
-</ol>
-</li>
-</ul>
 <h3 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h3><ul>
-<li><a target="_blank" rel="noopener" href="https://reactjs.org/">React 官網</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.youtube.com/playlist?list=PLmOn9nNkQxJFJXLvkNsGsoCUxJLqyLGxu">React 全家桶</a></li>
+<li><a target="_blank" rel="noopener" href="https://reactjs.org/">React 官網</a></li>
 </ul>
 
             </div>
@@ -310,6 +294,8 @@
                     <i class="iconfont icon-tags"></i>
                     
                       <a class="hover-with-bg" href="/tags/React/">React</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%AD%B8%E7%BF%92/">學習</a>
                     
                   </div>
                 
@@ -326,9 +312,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/08/12/hello-world/">
+                      <a href="/2021/07/26/2021-7-26-react-base/">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Hello World</span>
+                        <span class="hidden-mobile">React - 基礎</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -341,6 +327,34 @@
               
             </div>
 
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    
+      <script type="text/javascript">
+        var disqus_config = function() {
+          this.page.url = 'http://example.com/2021/07/26/2021-7-26-react-introduction/';
+          this.page.identifier = '/2021/07/26/2021-7-26-react-introduction/';
+        };
+        Fluid.utils.loadComments('#disqus_thread', function() {
+          var d = document, s = d.createElement('script');
+          s.src = '//' + 'fluid' + '.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', new Date());
+          (d.head || d.body).appendChild(s);
+        });
+      </script>
+    
+    <noscript>Please enable JavaScript to view the comments</noscript>
+  </div>
+
+
+              </article>
             
           </article>
         </div>
