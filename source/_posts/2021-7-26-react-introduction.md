@@ -1,10 +1,33 @@
 ---
 title: React - 簡介
-tags: React
 date: 2021/7/26 21:00:00
+index_img: https://i.postimg.cc/kMk16Gqq/icons8-react-160.png
+banner_img: https://i.postimg.cc/kMk16Gqq/icons8-react-160.png
+tags:
+    - React
+    - 學習
+excerpt: 這裡將會記錄我學習 React 的筆記，雖然說是從 0 開始學習，但該有的 Javascript 知識還是要有。
 ---
 
-# ⚛️ React - 簡介
+# React - 簡介
+
+![從 0 開始學 React](https://i.postimg.cc/kMk16Gqq/icons8-react-160.png)
+
+## 前言
+
+這裡將會記錄我學習 React 的筆記，雖然說是從 0 開始學習，但該有的 Javascript 知識還是要有。
+
+<!-- more -->
+
+### 學習 React 所需要的 Javascript 知識
+
+- [x] 判斷 this 指向
+- [x] class 的概念
+- [x] Javascript ES6 的語法規範
+- [x] npm 套件管理工具
+- [x] 繼承與原型鏈
+- [x] 數列常用方法
+- [x] 模組化
 
 ## React 是什麼 ?
 
@@ -35,24 +58,14 @@ date: 2021/7/26 21:00:00
             生活中的例子：
             > 老師說喉嚨有點乾，同學自動站起來遞水過來。
             > 這就是聲明式編碼
-  
+
 2. React Native 中可以使用 React 語法進行**移動端開發**。
 
 3. 使用**虛擬 DOM** + 優秀的 **Diffing 算法**，盡量減少與真實 DOM 的直接作用。
 
     ![React 渲染畫面流程，每次新增資料，都會比對虛擬 DOM，不一樣的 DOM 才渲染上去](https://i.imgur.com/3ibcbkp.png)
 
-### 學習 React 所需要的 Javascript 知識
-
-- [x] 判斷 this 指向
-- [x] class 的概念
-- [x] Javascript ES6 的語法規範
-- [x] npm 套件管理工具
-- [x] 繼承與原型鏈
-- [x] 數列常用方法
-- [x] 模組化
-
 ### 參考資料
 
-- [React 官網](https://reactjs.org/)
 - [React 全家桶](https://www.youtube.com/playlist?list=PLmOn9nNkQxJFJXLvkNsGsoCUxJLqyLGxu)
+- [React 官網](https://reactjs.org/)

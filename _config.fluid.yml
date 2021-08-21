@@ -105,3 +105,60 @@ deploy:
   type: git
   repo: git@github.com:JohnsonMao/JohnsonMao.github.io.git
   branch: gh-pages
+
+# custom style
+navbar:
+  blog_title: "毛毛的部落格"
+
+banner_img:
+
+dark_mode:
+  enable: true
+  default: dark
+
+index:
+  slogan:
+    enable: true
+    text: 這裡是毛毛的部落格！
+
+post:
+  default_index_img:
+  comments:
+    enable: true
+    type: disqus
+  footnote:
+    enable: true
+    header: '<p class="note note-warning">
+              本部落格所有文章除特別聲明外，均採用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh_TW" rel="nofollow noopener noopener">CC BY-SA 4.0 協議</a> ，轉載請註明出處！
+            </p>'
+
+code:
+  copy_btn: true
+  highlight:
+    enable: true
+    line_number: true
+    lib: "highlightjs"
+    highlightjs:
+      style: 'Github Gist'
+      bg_color: false
+    prismjs:
+      style: "default"
+      preprocess: true
+
+about:
+  avatar: https://avatars.githubusercontent.com/u/86179381?s=400&u=7d00d31b21bdf6101c6c5b4fcefd72e03951b126&v=4
+  name: "毛毛"
+  intro: "一個嘗試轉行的廚師"
+  icons:
+    - { class: 'iconfont icon-github-fill', link: 'https://github.com/JohnsonMao', tip: 'GitHub' }
+    - { class: 'iconfont icon-instagram-fill', link: 'https://www.instagram.com/maomao.owo/', tip: 'Instagram' }
+    - { class: 'iconfont icon-codepen-fill', link: 'https://codepen.io/vsfvjiuv-the-typescripter', tip: 'Codepen' }
+    - { class: 'iconfont icon-mail', link: 'tutelary.maomao@gmail.com', tip: 'Gmail' }
+    - { class: 'iconfont icon-note', link: 'https://hackmd.io/@JohnsonMao/Front-end/', tip: 'HackMD' }
+
+footer:
+  content: '<span>© 2021 <a href="/about">Johnson Mao</a> 毛毛的部落格 | 記錄成長的過程</span>
+            <span> - 本站使用 
+            <a href="https://hexo.io" target="_blank" rel="nofollow noopener">Hexo</a>
+            &
+            <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">Fluid 主題</a>'
