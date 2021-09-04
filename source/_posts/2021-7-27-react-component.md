@@ -1,6 +1,6 @@
 ---
 title: React - 組件 與 模組
-date: 2021/7/26 23:00:00
+date: 2021/7/27 20:00:00
 index_img: https://i.postimg.cc/kMk16Gqq/icons8-react-160.png
 banner_img: https://i.postimg.cc/kMk16Gqq/icons8-react-160.png
 tags:
@@ -48,11 +48,14 @@ React 官網一看，大致上可以拆成三個組件（Header / Content / Menu
 
 1. 打開 Chrome 線上應用程式商店
 2. 搜尋 [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=zh-TW) 並下載。
-3. 點擊瀏覽器右上方的 ![拼圖](https://i.imgur.com/3Uz8xcM.png) 把開發者工具釘選上去
+3. 點擊瀏覽器右上方的 Google 擴充功能，把開發者工具釘選上去。
+    ![Google 擴充功能](https://i.imgur.com/3Uz8xcM.png)
 4. 開發者工具會有三種顏色呈現方式
-    - ![Unused React](https://i.imgur.com/IlEAqv5.png) 灰色，表示當前網頁不是用 React 開發的
-    - ![Developer React](https://i.imgur.com/H3FqcQp.png) 紅色，表示當前網頁還處於開發者模式，未打包上線
-    - ![repo](https://i.imgur.com/5M7z7Gc.png) 藍色，表示當前網頁已打包上線
+    |圖案|解說|
+    |:--:|:--:|
+    |![Unused React](https://i.imgur.com/IlEAqv5.png)|  灰色，表示當前網頁不是用 React 開發的 |
+    |![Developer React](https://i.imgur.com/H3FqcQp.png)|  紅色，表示當前網頁還處於開發者模式，未打包上線 |
+    |![Go live](https://i.imgur.com/5M7z7Gc.png)|  藍色，表示當前網頁已打包上線 |
 5. 按 F12 開發者工具內會新增兩個選項
     ![Tools](https://i.imgur.com/MemNL3r.png)
     - Components 用來觀察網頁內有多少個組件組成的。

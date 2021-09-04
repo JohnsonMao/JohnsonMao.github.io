@@ -122,15 +122,14 @@ index:
     text: 這裡是毛毛的部落格！
 
 post:
-  default_index_img:
   comments:
     enable: true
     type: disqus
-  footnote:
-    enable: true
-    header: '<p class="note note-warning">
-              本部落格所有文章除特別聲明外，均採用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh_TW" rel="nofollow noopener noopener">CC BY-SA 4.0 協議</a> ，轉載請註明出處！
-            </p>'
+  copyright:
+    enable: false
+
+disqus:
+  shortname: fluid
 
 code:
   copy_btn: true
@@ -162,3 +161,13 @@ footer:
             <a href="https://hexo.io" target="_blank" rel="nofollow noopener">Hexo</a>
             &
             <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">Fluid 主題</a>'
+  statistics:
+    enable: true
+    source: 
+    pv_format: "總訪問量 {} 次"
+    uv_format: "總訪客數 {} 人"
+
+
+
+web_analytics:
+  enable: true

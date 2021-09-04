@@ -35,7 +35,7 @@ excerpt: 學習 React 中最重要的角色「Babel」，Babel 是 Javascript �
 
 1. 首先建立一個 HTML
 
-    ```HTML=
+    ```HTML
     <!-- 先準備一個容器 -->
     <div id="container"></div>
 
@@ -54,7 +54,7 @@ excerpt: 學習 React 中最重要的角色「Babel」，Babel 是 Javascript �
 
 2. 並在 script 內編寫虛擬 DOM
 
-    ```jsx=+
+    ```jsx
     // 1. 首先創建虛擬 DOM
     const VDOM = {
         <h1 id="test">Hello world</h1>
@@ -70,7 +70,7 @@ excerpt: 學習 React 中最重要的角色「Babel」，Babel 是 Javascript �
 
 1. 這時候 HTML 添加樣式
 
-    ```HTML=
+    ```HTML
     <style>
     .bg-hexschool {
         background: #69F0AE;
@@ -80,7 +80,7 @@ excerpt: 學習 React 中最重要的角色「Babel」，Babel 是 Javascript �
 
 2. script 內將內容用變數的方式展現
 
-    ```jsx=15
+    ```jsx
     // 1. 宣告變數    
     const myId = "test"
     const myData = "Hello world"
