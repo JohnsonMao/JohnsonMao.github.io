@@ -14,11 +14,11 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
   <meta name="theme-color" content="#2f4154">
-  <meta name="description" content="這裡將會記錄我學習 React 的筆記，雖然說是從 0 開始學習，但該有的 Javascript 知識還是要有。">
+  <meta name="description" content="提升開發效率，就要了解組件與模組的概念，用簡單的言語解說，並了解開發 React 所需要的開發者工具">
   <meta name="author" content="Mao">
   <meta name="keywords" content="">
   
-  <title>React - 簡介 - Mao&#39;s blog</title>
+  <title>React - 組件 與 模組 - Mao&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
 
@@ -163,7 +163,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="React - 簡介">
+            <span class="h2" id="subtitle" title="React - 組件 與 模組">
               
             </span>
 
@@ -173,8 +173,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-07-26 21:00" pubdate>
-        2021年7月26日 晚上
+      <time datetime="2021-07-27 20:00" pubdate>
+        2021年7月27日 晚上
       </time>
     </span>
   
@@ -185,7 +185,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      412 字
+      488 字
     </span>
   
 
@@ -195,7 +195,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      4
+      5
        分钟
     </span>
   
@@ -225,62 +225,61 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">React - 簡介</h1>
+            <h1 style="display: none">React - 組件 與 模組</h1>
             
             <div class="markdown-body">
-              <h1 id="React-簡介"><a href="#React-簡介" class="headerlink" title="React - 簡介"></a>React - 簡介</h1><p><img src="https://i.postimg.cc/kMk16Gqq/icons8-react-160.png" srcset="/img/loading.gif" lazyload alt="從 0 開始學 React"></p>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>這裡將會記錄我學習 React 的筆記，雖然說是從 0 開始學習，但該有的 Javascript 知識還是要有。</p>
+              <h1 id="React-組件-與-模組"><a href="#React-組件-與-模組" class="headerlink" title="React - 組件 與 模組"></a>React - 組件 與 模組</h1><p><img src="https://i.postimg.cc/kMk16Gqq/icons8-react-160.png" srcset="/img/loading.gif" lazyload alt="從 0 開始學 React"></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>提升開發效率，就要了解組件與模組的概念，用簡單的言語解說，並了解開發 React 所需要的開發者工具</p>
 <!-- more -->
 
-<h3 id="學習-React-所需要的-Javascript-知識"><a href="#學習-React-所需要的-Javascript-知識" class="headerlink" title="學習 React 所需要的 Javascript 知識"></a>學習 React 所需要的 Javascript 知識</h3><ul>
-<li><input checked="" disabled="" type="checkbox"> 判斷 this 指向</li>
-<li><input checked="" disabled="" type="checkbox"> class 的概念</li>
-<li><input checked="" disabled="" type="checkbox"> Javascript ES6 的語法規範</li>
-<li><input checked="" disabled="" type="checkbox"> npm 套件管理工具</li>
-<li><input checked="" disabled="" type="checkbox"> 繼承與原型鏈</li>
-<li><input checked="" disabled="" type="checkbox"> 數列常用方法</li>
-<li><input checked="" disabled="" type="checkbox"> 模組化</li>
-</ul>
-<h2 id="React-是什麼"><a href="#React-是什麼" class="headerlink" title="React 是什麼 ?"></a>React 是什麼 ?</h2><ul>
-<li>React 是一個實作使用者介面的 JavaScript 函式庫。</li>
-</ul>
-<h2 id="誰開發的"><a href="#誰開發的" class="headerlink" title="誰開發的 ?"></a>誰開發的 ?</h2><ul>
-<li>由 Facebook 開發，並且開源。</li>
-</ul>
-<h2 id="為什麼要學"><a href="#為什麼要學" class="headerlink" title="為什麼要學 ?"></a>為什麼要學 ?</h2><ol>
-<li><p>原生 Javascript 操作 DOM 繁瑣，效率<strong>低</strong> ( DOM-API 操作 UI )。</p>
-</li>
-<li><p>使用 Javascript 直接操作 DOM，瀏覽器會<strong>大量重新</strong>繪製畫面。</p>
-<p> <img src="https://i.imgur.com/MAar8Vs.png" srcset="/img/loading.gif" lazyload alt="原生 JS 渲染畫面流程，每次新增資料，都會重新渲染畫面"></p>
-</li>
-<li><p>原生 Javascript 沒有<strong>組件化</strong>程式碼功能，程式碼重複利用率低。</p>
-</li>
+<h2 id="模組"><a href="#模組" class="headerlink" title="模組"></a>模組</h2><ol>
+<li>什麼是模組? 向外提供特定功能的 JS 程序，一般就是一個 JS 文件。</li>
+<li>為什麼要拆成模組呢? 隨著業務邏輯增加，代碼越來越多且複雜。</li>
+<li>最終結果是更能重複利用 JS，簡化 JS 編寫，提高 JS 的效率。</li>
 </ol>
-<h2 id="React-的優點"><a href="#React-的優點" class="headerlink" title="React 的優點"></a>React 的優點</h2><ol>
-<li><p>採用<strong>組件化</strong>模式，<strong>聲明式編碼</strong>，提高開發效率及組件複用率。</p>
-<ul>
-<li>聲明式編碼 與 命令式編碼 的差別<ul>
-<li>命令式編碼: 透過 Javascript 或 JQuery 拿到要操作的 DOM，並命令它改樣式。<br>  生活中的例子：<blockquote>
-<p>老師口渴想喝水，命令同學去哪個地方裝水。<br>這就是命令式編碼，其中少做任何步驟，老師都會喝不到水</p>
-</blockquote>
+<h3 id="模組化"><a href="#模組化" class="headerlink" title="模組化"></a>模組化</h3><p>當應用程式的 JS 都以模組來編寫，就是一個模組化的應用程式</p>
+<h2 id="組件"><a href="#組件" class="headerlink" title="組件"></a>組件</h2><ol>
+<li>什麼是組件? 用來實現局部功能效果的代碼和資源的集合體（HTML / CSS / JS / Image）。</li>
+<li>為什麼拆成組件呢? 一個頁面的功能更複雜。</li>
+<li>最終結果是重複利用代碼，簡化項目編寫，提高運行效率。<br><img src="https://i.imgur.com/REJTFyp.png" srcset="/img/loading.gif" lazyload alt="React module"></li>
+</ol>
+<p><em>此為 React 官網作為範例</em><br>React 官網一看，大致上可以拆成三個組件（Header / Content / Menu），甚至還可以拆得更細。</p>
+<h3 id="組件化"><a href="#組件化" class="headerlink" title="組件化"></a>組件化</h3><p>當應用程式是以多組件的方式完成，就是一個組件化的應用程式</p>
+<h2 id="React-開發人員工具"><a href="#React-開發人員工具" class="headerlink" title="React 開發人員工具"></a>React 開發人員工具</h2><p>在正式開發組件之前，要先下載 React 開發人員工具</p>
+<ol>
+<li>打開 Chrome 線上應用程式商店</li>
+<li>搜尋 <a target="_blank" rel="noopener" href="https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=zh-TW">React Developer Tools</a> 並下載。</li>
+<li>點擊瀏覽器右上方的 Google 擴充功能，把開發者工具釘選上去。<br> <img src="https://i.imgur.com/3Uz8xcM.png" srcset="/img/loading.gif" lazyload alt="Google 擴充功能"></li>
+<li>開發者工具會有三種顏色呈現方式<table>
+<thead>
+<tr>
+<th align="center">圖案</th>
+<th align="center">解說</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><img src="https://i.imgur.com/IlEAqv5.png" srcset="/img/loading.gif" lazyload alt="Unused React"></td>
+<td align="center">灰色，表示當前網頁不是用 React 開發的</td>
+</tr>
+<tr>
+<td align="center"><img src="https://i.imgur.com/H3FqcQp.png" srcset="/img/loading.gif" lazyload alt="Developer React"></td>
+<td align="center">紅色，表示當前網頁還處於開發者模式，未打包上線</td>
+</tr>
+<tr>
+<td align="center"><img src="https://i.imgur.com/5M7z7Gc.png" srcset="/img/loading.gif" lazyload alt="Go live"></td>
+<td align="center">藍色，表示當前網頁已打包上線</td>
+</tr>
+</tbody></table>
 </li>
-<li>聲明式編碼: 透過一些特殊的語法，表達它是甚麼樣式，然後 React 自動幫你改了。<br>  生活中的例子：<blockquote>
-<p>老師說喉嚨有點乾，同學自動站起來遞水過來。<br>這就是聲明式編碼</p>
-</blockquote>
-</li>
+<li>按 F12 開發者工具內會新增兩個選項<br> <img src="https://i.imgur.com/MemNL3r.png" srcset="/img/loading.gif" lazyload alt="Tools"><ul>
+<li>Components 用來觀察網頁內有多少個組件組成的。</li>
+<li>Profiler 用來記錄網站的性能。</li>
 </ul>
-</li>
-</ul>
-</li>
-<li><p>React Native 中可以使用 React 語法進行<strong>移動端開發</strong>。</p>
-</li>
-<li><p>使用<strong>虛擬 DOM</strong> + 優秀的 <strong>Diffing 算法</strong>，盡量減少與真實 DOM 的直接作用。</p>
-<p> <img src="https://i.imgur.com/3ibcbkp.png" srcset="/img/loading.gif" lazyload alt="React 渲染畫面流程，每次新增資料，都會比對虛擬 DOM，不一樣的 DOM 才渲染上去"></p>
 </li>
 </ol>
 <h3 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h3><ul>
 <li><a target="_blank" rel="noopener" href="https://www.youtube.com/playlist?list=PLmOn9nNkQxJFJXLvkNsGsoCUxJLqyLGxu">React 全家桶</a></li>
-<li><a target="_blank" rel="noopener" href="https://reactjs.org/">React 官網</a></li>
+<li><a target="_blank" rel="noopener" href="https://zh-hant.reactjs.org/docs/components-and-props.html">React 官網 - Components &amp; Props</a></li>
 </ul>
 
             </div>
@@ -305,15 +304,21 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/07/26/2021-7-26-react-base/">
+                      <a href="/2021/07/27/2021-7-27-react-functionComponent/">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">React - 基礎</span>
+                        <span class="hidden-mobile">React - 函數式組件</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
                   </article>
                   <article class="post-next col-6">
                     
+                    
+                      <a href="/2021/07/26/2021-7-26-react-base/">
+                        <span class="hidden-mobile">React - 基礎</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
                     
                   </article>
                 </div>
@@ -332,8 +337,8 @@
     
       <script type="text/javascript">
         var disqus_config = function() {
-          this.page.url = 'http://example.com/2021/07/26/2021-7-26-react-introduction/';
-          this.page.identifier = '/2021/07/26/2021-7-26-react-introduction/';
+          this.page.url = 'http://example.com/2021/07/27/2021-7-27-react-component/';
+          this.page.identifier = '/2021/07/27/2021-7-27-react-component/';
         };
         Fluid.utils.loadComments('#disqus_thread', function() {
           var d = document, s = d.createElement('script');

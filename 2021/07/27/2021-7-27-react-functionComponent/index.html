@@ -14,11 +14,11 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
   <meta name="theme-color" content="#2f4154">
-  <meta name="description" content="學習 React 中最重要的角色「Babel」，Babel 是 Javascript 的編譯器，有了 Babel 就能更方便順暢的使用 React">
+  <meta name="description" content="介紹 function component 最基礎的起手式，這裡還不會介紹到 Hook 的運用。">
   <meta name="author" content="Mao">
   <meta name="keywords" content="">
   
-  <title>React - 基礎 - Mao&#39;s blog</title>
+  <title>React - 函數式組件 - Mao&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
 
@@ -163,7 +163,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="React - 基礎">
+            <span class="h2" id="subtitle" title="React - 函數式組件">
               
             </span>
 
@@ -173,8 +173,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-07-26 22:00" pubdate>
-        2021年7月26日 晚上
+      <time datetime="2021-07-27 21:00" pubdate>
+        2021年7月27日 晚上
       </time>
     </span>
   
@@ -185,7 +185,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      812 字
+      320 字
     </span>
   
 
@@ -195,7 +195,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      11
+      3
        分钟
     </span>
   
@@ -225,69 +225,38 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">React - 基礎</h1>
+            <h1 style="display: none">React - 函數式組件</h1>
             
             <div class="markdown-body">
-              <h1 id="React-基礎"><a href="#React-基礎" class="headerlink" title="React - 基礎"></a>React - 基礎</h1><p><img src="https://i.postimg.cc/kMk16Gqq/icons8-react-160.png" srcset="/img/loading.gif" lazyload alt="從 0 開始學 React"></p>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>學習 React 中最重要的角色「Babel」，Babel 是 Javascript 的編譯器，有了 Babel 就能更方便順暢的使用 React</p>
+              <h1 id="⚛️-React-函數式組件"><a href="#⚛️-React-函數式組件" class="headerlink" title="⚛️ React - 函數式組件"></a>⚛️ React - 函數式組件</h1><p><img src="https://i.postimg.cc/kMk16Gqq/icons8-react-160.png" srcset="/img/loading.gif" lazyload alt="從 0 開始學 React"></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>介紹 function component 最基礎的起手式，這裡還不會介紹到 Hook 的運用。</p>
 <!-- more -->
 
-<h2 id="React-基礎環境引入"><a href="#React-基礎環境引入" class="headerlink" title="React - 基礎環境引入"></a>React - 基礎環境引入</h2><ol>
-<li>Babel<ul>
-<li><code>&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js&quot;&gt;&lt;/script&gt;</code></li>
-</ul>
-<ol>
-<li>瀏覽器不認識 ES6，依靠 Babel 把 ES6 轉成 ES5</li>
-<li>瀏覽器不認識 jsx，依靠 Babel 把 jsx 轉成 js</li>
-<li>可以更流暢的編碼</li>
-</ol>
-</li>
-<li>React 核心庫<ul>
-<li><code>&lt;script crossorigin src=&quot;https://unpkg.com/react@17/umd/react.development.js&quot;&gt;&lt;/script&gt;</code></li>
-</ul>
-</li>
-<li>React 擴展庫（讓 React 幫你操作 DOM）<ul>
-<li><code>&lt;script crossorigin src=&quot;https://unpkg.com/react-dom@17/umd/react-dom.development.js&quot;&gt;&lt;/script&gt;</code></li>
-</ul>
-</li>
-</ol>
 <h2 id="React-起手式"><a href="#React-起手式" class="headerlink" title="React 起手式"></a>React 起手式</h2><ol>
-<li><p>首先建立一個 HTML</p>
- <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs HTML"><span class="hljs-comment">&lt;!-- 先準備一個容器 --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;container&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br><br><span class="hljs-comment">&lt;!-- 引入 React 核心庫 --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">crossorigin</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://unpkg.com/react@17/umd/react.development.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br><span class="hljs-comment">&lt;!-- 引入 React DOM，用來讓 React 操作 DOM --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">crossorigin</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://unpkg.com/react-dom@17/umd/react-dom.development.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br><span class="hljs-comment">&lt;!-- 引入 Babel，用來將 jsx 轉成 js --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br><br><span class="hljs-comment">&lt;!-- 這裡一定要寫 type=&quot;text/babel&quot; --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text/babel&quot;</span>&gt;</span><br><br><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br></code></pre></td></tr></table></figure></li>
-<li><p>並在 script 內編寫虛擬 DOM</p>
- <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs jsx"><span class="hljs-comment">// 1. 首先創建虛擬 DOM</span><br><span class="hljs-keyword">const</span> VDOM = &#123;<br>    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">h1</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;test&quot;</span>&gt;</span>Hello world<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span></span><br>&#125;<br><span class="hljs-comment">// 2. 渲染虛擬 DOM 到頁面</span><br>ReactDOM.render( VDOM, <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">&#x27;container&#x27;</span>) )<br></code></pre></td></tr></table></figure></li>
-<li><p>畫面呈現<br> <img src="https://i.imgur.com/qh3CLyD.png" srcset="/img/loading.gif" lazyload alt="Hello world"></p>
+<li><p>老規矩，先建立一個 HTML，並搭建好環境</p>
+<p> <a href="/2021/07/26/2021-7-26-react-base/#React-%E8%B5%B7%E6%89%8B%E5%BC%8F">還不知道 HTML 起手式請點我</a></p>
 </li>
 </ol>
-<h2 id="React-jsx-語法規則-與-必須知道的地方"><a href="#React-jsx-語法規則-與-必須知道的地方" class="headerlink" title="React - jsx 語法規則 與 必須知道的地方"></a>React - jsx 語法規則 與 必須知道的地方</h2><ol>
-<li><p>這時候 HTML 添加樣式</p>
- <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs HTML"><span class="hljs-tag">&lt;<span class="hljs-name">style</span>&gt;</span><span class="css"></span><br><span class="css"><span class="hljs-selector-class">.bg-hexschool</span> &#123;</span><br><span class="css">    <span class="hljs-attribute">background</span>: <span class="hljs-number">#69F0AE</span>;</span><br><span class="css">&#125;</span><br><span class="css"></span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span><br></code></pre></td></tr></table></figure></li>
-<li><p>script 內將內容用變數的方式展現</p>
- <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs jsx"><span class="hljs-comment">// 1. 宣告變數    </span><br><span class="hljs-keyword">const</span> myId = <span class="hljs-string">&quot;test&quot;</span><br><span class="hljs-keyword">const</span> myData = <span class="hljs-string">&quot;Hello world&quot;</span><br><br><span class="hljs-comment">// 2. 建創虛擬 DOM</span><br><span class="hljs-keyword">const</span> VDOM = (<br>    <span class="hljs-comment">// 虛擬 DOM 只能有一個根標籤</span><br>    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span><br><span class="xml">    &#123;/* jsx 語法範例如下 */&#125;</span><br><span class="xml">    &#123;/* class 要改成 className */&#125;</span><br><span class="xml">    &#123;/* style 要用 &#123;&#123; key=value &#125;&#125; 包起來，並採用駝峰命名法 */&#125;</span><br><span class="xml">    <span class="hljs-tag">&lt;<span class="hljs-name">h1</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&#123;</span> <span class="hljs-attr">myId</span> &#125; </span></span><br><span class="hljs-tag"><span class="xml">        <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;bg-hexschool&quot;</span> </span></span><br><span class="hljs-tag"><span class="xml">        <span class="hljs-attr">style</span>=<span class="hljs-string">&#123;&#123;</span> <span class="hljs-attr">fontSize:</span>&#x27;<span class="hljs-attr">20px</span>&#x27; &#125;&#125;&gt;</span></span><br><span class="xml">            &#123;/* JS 表達式都要用 &#123;&#125; 包起來，包含註解 */&#125;</span><br><span class="xml">            &#123; myData &#125;</span><br><span class="xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span></span><br><span class="xml">        <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>虛擬 DOM 只能用一個標籤包起來<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="xml">        &#123;/* 標籤需要閉合，例如最後面加 &quot;/&quot; */&#125;</span><br><span class="xml">        <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span>/&gt;</span></span><br><span class="xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br>     <span class="hljs-comment">// &lt;p&gt;這個沒有被包起來，會報錯&lt;/p&gt;</span><br>)<br><span class="hljs-comment">// 3. 渲染虛擬 DOM 到頁面</span><br>ReactDOM.render( VDOM, <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">&#x27;container&#x27;</span>) )<br></code></pre></td></tr></table></figure></li>
-<li><p>畫面呈現<br> <img src="https://i.imgur.com/1lrecAZ.png" srcset="/img/loading.gif" lazyload alt="jsx 運用"></p>
+<h2 id="創建函數式組件"><a href="#創建函數式組件" class="headerlink" title="創建函數式組件"></a>創建函數式組件</h2><ol>
+<li><p>在 script 中，創建函數式組件</p>
+ <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs jsx"><span class="hljs-comment">// 1. 創建函數式組件，定義組件首字母要大寫</span><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Demo</span>(<span class="hljs-params"></span>)</span>&#123;<br>    <span class="hljs-comment">// 此處 this 是 undefined，因為 Babel 編譯後開啟嚴格模式</span><br>    <span class="hljs-built_in">console</span>.log( <span class="hljs-built_in">this</span> )<br>    <span class="hljs-comment">// 必須要有 return 返回值</span><br>    <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>我是函數式組件<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span><br>&#125;<br><span class="hljs-comment">// 2.讓 React 自動渲染組件到頁面，需注意組件首字母大寫且閉合</span><br>ReactDOM.render( <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">Demo</span>/&gt;</span></span>, <span class="hljs-built_in">document</span>.getElementById( <span class="hljs-string">&#x27;container&#x27;</span> ) )<br><br></code></pre></td></tr></table></figure></li>
+<li><p>畫面呈現<br> <img src="https://i.imgur.com/RZeT2Df.png" srcset="/img/loading.gif" lazyload alt="function component"></p>
+</li>
+<li><p>打開開發人員工具的 Components 頁面可以看到組件、屬性與版本<br> <img src="https://i.imgur.com/roztIxH.png" srcset="/img/loading.gif" lazyload alt="開發人員工具"></p>
 </li>
 </ol>
-<h3 id="總結-jsx-語法規則"><a href="#總結-jsx-語法規則" class="headerlink" title="總結 jsx 語法規則"></a>總結 jsx 語法規則</h3><ol>
-<li>定義虛擬 DOM 時，不要寫<strong>引號</strong>。</li>
-<li>標籤中混入 JS 表達式要用 <code>&#123;&#125;</code> 包起來。</li>
-<li>樣式的類名指定不要用 <code>class</code>，要用 <code>className</code>。</li>
-<li>內聯樣式，要用 <code>style=&#123;&#123; key=value &#125;&#125;</code>的形式去寫。<ol>
-<li>key 如果像是 <code>font-size</code>，要改成<strong>駝峰命名</strong> <code>fontSize</code>。</li>
-<li>value 需要用<strong>引號</strong>包起來。</li>
+<h2 id="執行組件後-React-做了什麼"><a href="#執行組件後-React-做了什麼" class="headerlink" title="執行組件後 React 做了什麼?"></a>執行組件後 React 做了什麼?</h2><ol>
+<li>React 解析組件標籤，找到了 Demo 組件。</li>
+<li>發現組件是使用函數定義的，隨後調用該函數，將返回的虛擬 DOM 轉為真實 DOM，隨後呈現在頁面中。</li>
 </ol>
-</li>
-<li>虛擬 DOM 必須只有<strong>一個根標籤</strong></li>
-<li>標籤必須<strong>閉合</strong></li>
-<li>標籤首字母<ol>
-<li>如果小寫開頭，則將把標籤轉為 HTML 中同名元素，如果 HTML 中無該標籤同名元素，則報錯。</li>
-<li>如果大寫開頭，React 就去渲染對應的組件，如果組件沒有定義，則報錯</li>
-</ol>
-</li>
+<h2 id="函數式組件-3-大重點須知"><a href="#函數式組件-3-大重點須知" class="headerlink" title="函數式組件 3 大重點須知"></a>函數式組件 3 大重點須知</h2><ol>
+<li>組件首字母必須大寫</li>
+<li>必須要 return 返回值</li>
+<li>讓 ReactDOM 渲染必須使用閉合標籤</li>
 </ol>
 <h3 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h3><ul>
 <li><a target="_blank" rel="noopener" href="https://www.youtube.com/playlist?list=PLmOn9nNkQxJFJXLvkNsGsoCUxJLqyLGxu">React 全家桶</a></li>
-<li><a target="_blank" rel="noopener" href="https://zh-hant.reactjs.org/docs/cdn-links.html">React 官網 - CDN 連結</a></li>
-<li><a target="_blank" rel="noopener" href="https://zh-hant.reactjs.org/docs/introducing-jsx.html">React 官網 - JSX 介紹</a></li>
+<li><a target="_blank" rel="noopener" href="https://zh-hant.reactjs.org/docs/components-and-props.html">React 官網 - Components &amp; Props</a></li>
 </ul>
 
             </div>
@@ -312,9 +281,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/07/27/2021-7-27-react-component/">
+                      <a href="/2021/07/27/2021-7-27-react-classComponent/">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">React - 組件 與 模組</span>
+                        <span class="hidden-mobile">React - 類式組件</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -322,8 +291,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021/07/26/2021-7-26-react-introduction/">
-                        <span class="hidden-mobile">React - 簡介</span>
+                      <a href="/2021/07/27/2021-7-27-react-component/">
+                        <span class="hidden-mobile">React - 組件 與 模組</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -345,8 +314,8 @@
     
       <script type="text/javascript">
         var disqus_config = function() {
-          this.page.url = 'http://example.com/2021/07/26/2021-7-26-react-base/';
-          this.page.identifier = '/2021/07/26/2021-7-26-react-base/';
+          this.page.url = 'http://example.com/2021/07/27/2021-7-27-react-functionComponent/';
+          this.page.identifier = '/2021/07/27/2021-7-27-react-functionComponent/';
         };
         Fluid.utils.loadComments('#disqus_thread', function() {
           var d = document, s = d.createElement('script');
