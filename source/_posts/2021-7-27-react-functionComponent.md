@@ -9,7 +9,7 @@ tags:
 excerpt: 介紹 function component 最基礎的起手式，這裡還不會介紹到 Hook 的運用。
 ---
 
-# ⚛️ React - 函數式組件
+# React - 函數式組件
 
 ![從 0 開始學 React](https://i.postimg.cc/kMk16Gqq/icons8-react-160.png)
 
