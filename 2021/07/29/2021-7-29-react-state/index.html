@@ -1,0 +1,591 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-TW" data-default-color-scheme=&#34;dark&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="介紹組件 三大屬性中的 State 屬性，這裡還不會討論 Hook 運用。">
+  <meta name="author" content="Mao">
+  <meta name="keywords" content="">
+  
+  <title>React - 三大屬性 State - Mao&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>毛毛的部落格</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首頁
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                封存
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分類
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                標籤
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                關於
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('https://i.postimg.cc/kMk16Gqq/icons8-react-160.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="React - 三大屬性 State">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-07-29 21:00" pubdate>
+        2021年7月29日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.9k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      25
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">React - 三大屬性 State</h1>
+            
+            <div class="markdown-body">
+              <h1 id="React-三大屬性-State"><a href="#React-三大屬性-State" class="headerlink" title="React - 三大屬性 State"></a>React - 三大屬性 <strong>State</strong></h1><p><img src="https://i.postimg.cc/kMk16Gqq/icons8-react-160.png" srcset="/img/loading.gif" lazyload alt="從 0 開始學 React"></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>介紹組件 三大屬性中的 State 屬性，這裡還不會討論 Hook 運用。</p>
+<!-- more -->
+
+<h2 id="React-起手式"><a href="#React-起手式" class="headerlink" title="React 起手式"></a>React 起手式</h2><ol>
+<li><p>老規矩，先建立一個 HTML，並搭建好環境</p>
+<p> <a href="/2021/07/26/2021-7-26-react-base/#React-%E8%B5%B7%E6%89%8B%E5%BC%8F">還不知道 HTML 起手式請點我</a></p>
+</li>
+</ol>
+<h2 id="創建組件，完成基礎頁面"><a href="#創建組件，完成基礎頁面" class="headerlink" title="創建組件，完成基礎頁面"></a>創建組件，完成基礎頁面</h2><ol>
+<li><p>在 script 中，要引用 React 的三大屬性，若不考慮使用 Hook ，則需使用類式組件。</p>
+ <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs jsx"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Vaccine</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-title">render</span>(<span class="hljs-params"></span>)</span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>你打疫苗了嗎? 還沒QQ<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span><br>    &#125;<br>&#125;<br>ReactDOM.render( <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">Vaccine</span>/&gt;</span></span>, <span class="hljs-built_in">document</span>.getElementById( <span class="hljs-string">&#x27;container&#x27;</span> ) )<br></code></pre></td></tr></table></figure></li>
+<li><p>畫面呈現</p>
+<p> <img src="https://i.imgur.com/y2nKsGB.png" srcset="/img/loading.gif" lazyload alt="你打疫苗了嗎? 還沒QQ"></p>
+</li>
+</ol>
+<h2 id="創建建構子，初始化狀態"><a href="#創建建構子，初始化狀態" class="headerlink" title="創建建構子，初始化狀態"></a>創建建構子，初始化狀態</h2><ol>
+<li><p>在類式組件內添加建構子</p>
+ <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs jsx"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Vaccine</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>&#123;<br><br>    <span class="hljs-comment">// 建構子，寫 props 傳遞參數</span><br>    <span class="hljs-function"><span class="hljs-title">constructor</span>(<span class="hljs-params">props</span>)</span>&#123;<br>        <span class="hljs-comment">// 建構子內要寫 super 接收 props，不然會報錯</span><br>        <span class="hljs-built_in">super</span>(props)<br>        <span class="hljs-comment">// 初始化狀態，官方規定要寫物件型式</span><br>        <span class="hljs-built_in">this</span>.state = &#123; <span class="hljs-attr">vaccinated</span>: <span class="hljs-literal">true</span> &#125;<br>    &#125;<br><br><br>    <span class="hljs-function"><span class="hljs-title">render</span>(<span class="hljs-params"></span>)</span>&#123;<br>        <span class="hljs-comment">// 這裡把回答變成 JS 表達式 &#123;&#125;，並使用用條件運算子</span><br>        <span class="hljs-keyword">return</span> (<br>        <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>你打疫苗了嗎? </span><br><span class="xml">            &#123; this.state.vaccinated ? &#x27; 已經打了(．▽．) b&#x27; : &#x27; 還沒(Q A Q)&#x27; &#125;</span><br><span class="xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span>)<br>    &#125;<br>&#125;<br>ReactDOM.render( <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">Vaccine</span>/&gt;</span></span>, <span class="hljs-built_in">document</span>.getElementById( <span class="hljs-string">&#x27;container&#x27;</span> ) )<br></code></pre></td></tr></table></figure></li>
+<li><p>因為我們把<code>vaccinated:</code>設為<code>true</code>，所以條件運算子就會選<code>:</code>前面的字串。</p>
+<p> <img src="https://i.imgur.com/Mn3nvCs.png" srcset="/img/loading.gif" lazyload alt="true 畫面"></p>
+</li>
+<li><p>如果我們把<code>vaccinated:</code>改成<code>false</code>，那麼條件運算子就會選擇<code>:</code>後面的字串。</p>
+<p> <img src="https://i.imgur.com/y2nKsGB.png" srcset="/img/loading.gif" lazyload alt="false 畫面"></p>
+</li>
+<li><p>這時打開開發者工具的 Component，可以看到<code>state</code>。</p>
+<p> <img src="https://i.imgur.com/tLQV8Op.png" srcset="/img/loading.gif" lazyload alt="State 狀態"></p>
+</li>
+<li><p>最後再更進階一點，把代碼更加精簡，將<code>render</code>內提取狀態進行<strong>解構賦值</strong>，讓程式更容易閱讀。</p>
+ <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs jsx"><span class="hljs-function"><span class="hljs-title">render</span>(<span class="hljs-params"></span>)</span>&#123;<br>    <span class="hljs-comment">// 在這裡先進行解構賦值，讀取狀態</span><br>    <span class="hljs-keyword">const</span> &#123; vaccinated &#125; = <span class="hljs-built_in">this</span>.state<br>    <span class="hljs-comment">// 這樣後面就可以直接利用變數，不用再加前墜</span><br>    <span class="hljs-keyword">return</span> (<br>    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>你打疫苗了嗎? </span><br><span class="xml">        &#123; vaccinated ? &#x27; 已經打了(．▽．) b&#x27; : &#x27; 還沒(Q A Q)&#x27; &#125;</span><br><span class="xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span>)<br>&#125;<br></code></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="嘗試為頁面新增互動"><a href="#嘗試為頁面新增互動" class="headerlink" title="嘗試為頁面新增互動"></a>嘗試為頁面新增互動</h2><h3 id="類式組件中方法的-this-指向"><a href="#類式組件中方法的-this-指向" class="headerlink" title="類式組件中方法的 this 指向?"></a>類式組件中方法的 this 指向?</h3><ol>
+<li><p>幫頁面中的<code>&lt;h2&gt;</code>新增<code>onClick</code>事件</p>
+ <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs jsx"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Vaccine</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>&#123;<br><br>    <span class="hljs-function"><span class="hljs-title">constructor</span>(<span class="hljs-params">props</span>)</span>&#123;<br>        <span class="hljs-built_in">super</span>(props)<br>        <span class="hljs-built_in">this</span>.state = &#123; <span class="hljs-attr">vaccinated</span>: <span class="hljs-literal">false</span> &#125;<br>    &#125;<br><br><br>    <span class="hljs-function"><span class="hljs-title">render</span>(<span class="hljs-params"></span>)</span>&#123;<br>        <span class="hljs-keyword">const</span> &#123; vaccinated &#125; = <span class="hljs-built_in">this</span>.state<br>        <span class="hljs-comment">// 用來測試作為實例調用是否正常</span><br>        <span class="hljs-built_in">this</span>.changeVaccinated()<br>        <br>        <span class="hljs-comment">// 幫 &lt;h2&gt; 新增 onClick 事件，</span><br>        <span class="hljs-comment">// 需注意 React 的事件綁定改成用駝峰命名法，</span><br>        <span class="hljs-comment">// 並且調用方法要用 &#123;&#125; 包起來，</span><br>        <span class="hljs-comment">// 且要用 this 來調用函數，結尾不能加 ()</span><br>        <span class="hljs-comment">// 有加 () 會變成一開頁面就立即執行</span><br>        <span class="hljs-keyword">return</span> (<br>        <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">h2</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">&#123;</span> <span class="hljs-attr">this.changeVaccinated</span> &#125;&gt;</span>你打疫苗了嗎? </span><br><span class="xml">            &#123; vaccinated ? &#x27; 已經打了(．▽．) b&#x27; : &#x27; 還沒(Q A Q)&#x27; &#125;</span><br><span class="xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span>)<br>    &#125;<br>    <span class="hljs-comment">/* 接續下面 */</span><br></code></pre></td></tr></table></figure></li>
+<li><p>並在類式組件內增加<code>onClick</code>所需調用的函數</p>
+ <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs jsx">    <span class="hljs-comment">/* 承接上面 */</span><br>    <br>    <span class="hljs-comment">// 將 changeVaccinated 放進 Vaccine 的原型變數裡，供實例使用</span><br>    <span class="hljs-comment">// 通過 Vaccine 實例調用 changeVaccinated 時</span><br>    <br>    <span class="hljs-comment">// 由於 changeVaccinated 是作為 onClick 的&#x27;回調函數&#x27;</span><br>    <span class="hljs-comment">// 所以不是通過&#x27;實例&#x27;調用，而是&#x27;直接&#x27;調用。</span><br>    <br>    <span class="hljs-comment">// 類中的方法默認開啟了局部的嚴格模式，</span><br>    <span class="hljs-comment">// 所以 changeVaccinated 中的 this 為 undefined</span><br>    <span class="hljs-function"><span class="hljs-title">changeVaccinated</span>(<span class="hljs-params"></span>)</span>&#123;<br>        <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">this</span>)<br>    &#125;<br>&#125;<br>ReactDOM.render( <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">Vaccine</span>/&gt;</span></span>, <span class="hljs-built_in">document</span>.getElementById( <span class="hljs-string">&#x27;container&#x27;</span> ) )<br></code></pre></td></tr></table></figure></li>
+<li><p>點擊<code>你打疫苗了嗎?</code>後，打開開發者工具 Console ，觀察 this 回傳值</p>
+<p> <img src="https://i.imgur.com/A6jSC6U.png" srcset="/img/loading.gif" lazyload alt="組件內 this 的指向"></p>
+</li>
+<li><p>總結 this 指向結果，作為<code>onClick</code>直接調用函數會無法指向實例。</p>
+<p> <img src="https://i.imgur.com/swv0Vza.png" srcset="/img/loading.gif" lazyload alt="this 調用"></p>
+</li>
+</ol>
+<h3 id="解決類式組件中方法-this-指向的問題"><a href="#解決類式組件中方法-this-指向的問題" class="headerlink" title="解決類式組件中方法 this 指向的問題"></a>解決類式組件中方法 this 指向的問題</h3><ol>
+<li><p>只要在<code>constructor</code>中，多加一行程式碼就能解決 this 指向問題</p>
+ <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs jsx"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Vaccine</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>&#123;<br><br>    <span class="hljs-function"><span class="hljs-title">constructor</span>(<span class="hljs-params">props</span>)</span>&#123;<br>        <span class="hljs-built_in">super</span>(props)<br>        <span class="hljs-built_in">this</span>.state = &#123; <span class="hljs-attr">vaccinated</span>: <span class="hljs-literal">false</span> &#125;<br>        <br>        <span class="hljs-comment">// 增加這一行，解決 changeVaccinated 中的 this 指向</span><br>        <span class="hljs-comment">// 右邊的 this.changeVaccinated 會先找到自身原型上的 changeVaccinated</span><br>        <span class="hljs-comment">// 調用了 bind(this) 方法，並把 this 綁在實例身上</span><br>        <span class="hljs-comment">// 然後將這個方法放到自身新增的 changeVaccinated (左邊)</span><br>        <span class="hljs-built_in">this</span>.changeVaccinated = <span class="hljs-built_in">this</span>.changeVaccinated.bind(<span class="hljs-built_in">this</span>)<br>    &#125;<br></code></pre></td></tr></table></figure></li>
+<li><p>點擊<code>你打疫苗了嗎?</code>後，打開開發者頁面的 Console，就會看到 this 指向實例，並且添加了<code>changeVaccinated</code>方法</p>
+<p> ![bind(this) 解決指向問題]](<a target="_blank" rel="noopener" href="https://i.imgur.com/jJl2WYw.png">https://i.imgur.com/jJl2WYw.png</a>)</p>
+</li>
+</ol>
+<h3 id="這段程式碼整個流程如下圖"><a href="#這段程式碼整個流程如下圖" class="headerlink" title="這段程式碼整個流程如下圖"></a>這段程式碼整個流程如下圖</h3><p><img src="https://i.imgur.com/rrBeuZ6.png" srcset="/img/loading.gif" lazyload alt="這段程式碼整個流程如下圖"></p>
+<h4 id="bind-方法做了什麼"><a href="#bind-方法做了什麼" class="headerlink" title="bind() 方法做了什麼?"></a>bind() 方法做了什麼?</h4><p>bind() 方法做了兩件事<br>    1. 會建立一個新的函數。<br>    2. 會幫你改函數裡面的 this</p>
+<h3 id="小測驗"><a href="#小測驗" class="headerlink" title="小測驗"></a>小測驗</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs jsx"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Youtube</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>&#123;<br><br>    <span class="hljs-function"><span class="hljs-title">constructor</span>(<span class="hljs-params">props</span>)</span>&#123;<br>        <span class="hljs-built_in">super</span>(props)<br>        <span class="hljs-built_in">this</span>.state = &#123; <br>            <span class="hljs-attr">subscribed</span>: <span class="hljs-literal">false</span>,<br>            <span class="hljs-attr">youtube</span>: <span class="hljs-string">&#x27;https://www.youtube.com/channel/UC-b2nGm0xLzic38Byti0VjA&#x27;</span>,<br>        &#125;<br>        <span class="hljs-built_in">this</span>.____A____ = <span class="hljs-built_in">this</span>.____B____.bind(<span class="hljs-built_in">this</span>)<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-title">render</span>(<span class="hljs-params"></span>)</span>&#123;<br>        <span class="hljs-keyword">const</span> &#123; subscribed, youtube &#125; = <span class="hljs-built_in">this</span>.state<br><br>        <span class="hljs-keyword">return</span> (<br>        <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">h2</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">&#123;</span> <span class="hljs-attr">this.subscribe</span> &#125;&gt;</span>你訂閱六角學院的 Youtube 了嗎? </span><br><span class="xml">            &#123; subscribed ? &#x27; σ`∀´)σ 訂閱了，哪次不訂閱&#x27; : </span><br><span class="xml">            &#x27; 我就幫到這了(ㆆᴗㆆ) &#x27; + youtube &#125;</span><br><span class="xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span>)<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-title">gogogo</span>(<span class="hljs-params"></span>)</span>&#123;<br>        <span class="hljs-built_in">console</span>(<span class="hljs-string">&#x27;趕快去唄 =͟͟͞͞( •̀д•́)&#x27;</span>)<br>    &#125;<br>&#125;<br>ReactDOM.render( <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">Youtube</span>/&gt;</span></span>, <span class="hljs-built_in">document</span>.getElementById( <span class="hljs-string">&#x27;container&#x27;</span> ) )<br></code></pre></td></tr></table></figure>
+
+<p>A 和 B 答案分別是甚麼 <a href="#%E9%80%99%E6%AE%B5%E7%A8%8B%E5%BC%8F%E7%A2%BC%E6%95%B4%E5%80%8B%E6%B5%81%E7%A8%8B%E5%A6%82%E4%B8%8B%E5%9C%96">不知道的話請點我</a></p>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ada">右邊有答案<span class="hljs-comment">-----------------------------------------------------------------------------A: subscribe / B: gogogo！</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="嘗試新增互動，剛學-React-必踏入過一次的坑"><a href="#嘗試新增互動，剛學-React-必踏入過一次的坑" class="headerlink" title="嘗試新增互動，剛學 React 必踏入過一次的坑"></a>嘗試新增互動，剛學 React 必踏入過一次的坑</h3><ol>
+<li><p>首先取得 state 裡面的<code>vaccinated</code>值</p>
+ <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs jsx"><span class="hljs-function"><span class="hljs-title">changeVaccinated</span>(<span class="hljs-params"></span>)</span>&#123;<br>    <span class="hljs-keyword">const</span> vaccinated = <span class="hljs-built_in">this</span>.state.vaccinated<br>&#125;<br></code></pre></td></tr></table></figure></li>
+<li><p>嘗試修改 state</p>
+ <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs jsx"><span class="hljs-function"><span class="hljs-title">changeVaccinated</span>(<span class="hljs-params"></span>)</span>&#123;<br>    <span class="hljs-keyword">const</span> vaccinated = <span class="hljs-built_in">this</span>.state.vaccinated<br>    <span class="hljs-built_in">this</span>.state.vaccinated = !vaccinated<br>    <span class="hljs-comment">// 用來測試是否有更改值</span><br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">this</span>.state.vaccinated)<br>&#125;<br></code></pre></td></tr></table></figure></li>
+<li><p>你會發現值確實有修改，但畫面不會變</p>
+<p> <img src="https://i.imgur.com/rA3Ja4C.png" srcset="/img/loading.gif" lazyload alt="你會發現值確實有修改，但畫面不會變"></p>
+</li>
+<li><p><strong>注意</strong>狀態( state )不可以直接修改<br><code>this.state.vaccinated = !vaccinated</code> 這行就是直接修改</p>
+</li>
+</ol>
+<h2 id="使用-setState-來修改狀態"><a href="#使用-setState-來修改狀態" class="headerlink" title="使用 setState 來修改狀態"></a>使用 setState 來修改狀態</h2><ol>
+<li><p>一樣先取得 state 裡面的<code>vaccinated</code>值</p>
+ <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs jsx"><span class="hljs-function"><span class="hljs-title">changeVaccinated</span>(<span class="hljs-params"></span>)</span>&#123;<br>    <span class="hljs-keyword">const</span> vaccinated = <span class="hljs-built_in">this</span>.state.vaccinated<br>&#125;<br></code></pre></td></tr></table></figure></li>
+<li><p>使用 setState() 方法，<br> <strong>注意</strong>狀態( state )必須透過 setState 進行修改</p>
+ <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs jsx"><span class="hljs-function"><span class="hljs-title">changeVaccinated</span>(<span class="hljs-params"></span>)</span>&#123;<br>    <span class="hljs-keyword">const</span> vaccinated = <span class="hljs-built_in">this</span>.state.vaccinated<br>    <span class="hljs-built_in">this</span>.setState(&#123; <span class="hljs-attr">vaccinated</span>: !vaccinated &#125;)<br>&#125;<br></code></pre></td></tr></table></figure></li>
+<li><p>這時畫面就能點擊切換</p>
+<p> <img src="https://i.imgur.com/5igofn0.gif" srcset="/img/loading.gif" lazyload alt="成功觸發切換"></p>
+</li>
+</ol>
+<h2 id="state-的簡寫方式"><a href="#state-的簡寫方式" class="headerlink" title="state 的簡寫方式"></a>state 的簡寫方式</h2><p>使用<strong>類的基礎知識</strong>簡化 state</p>
+<ol>
+<li><p>這是原來的程式碼</p>
+ <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs jsx"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Vaccine</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>&#123;<br><br>    <span class="hljs-function"><span class="hljs-title">constructor</span>(<span class="hljs-params">props</span>)</span>&#123;<br>        <span class="hljs-built_in">super</span>(props)<br>        <span class="hljs-built_in">this</span>.state = &#123; <span class="hljs-attr">vaccinated</span>: <span class="hljs-literal">false</span> &#125;<br>        <span class="hljs-built_in">this</span>.changeVaccinated = <span class="hljs-built_in">this</span>.changeVaccinated.bind(<span class="hljs-built_in">this</span>)<br>    &#125;<br><br><br>    <span class="hljs-function"><span class="hljs-title">render</span>(<span class="hljs-params"></span>)</span>&#123;<br>        <span class="hljs-keyword">const</span> &#123; vaccinated &#125; = <span class="hljs-built_in">this</span>.state<br>        <span class="hljs-keyword">return</span> (<br>        <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">h2</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">&#123;</span> <span class="hljs-attr">this.changeVaccinated</span> &#125;&gt;</span>你打疫苗了嗎? </span><br><span class="xml">            &#123; vaccinated ? &#x27; 已經打了(．▽．) b&#x27; : &#x27; 還沒(Q A Q)&#x27; &#125;</span><br><span class="xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span>)<br>    &#125;<br>    <br>    <span class="hljs-function"><span class="hljs-title">changeVaccinated</span>(<span class="hljs-params"></span>)</span>&#123;<br>        <span class="hljs-keyword">const</span> vaccinated = <span class="hljs-built_in">this</span>.state.vaccinated<br>        <span class="hljs-built_in">this</span>.setState(&#123; <span class="hljs-attr">vaccinated</span>: !vaccinated &#125;)<br>    &#125;<br>&#125;<br>ReactDOM.render( <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">Vaccine</span>/&gt;</span></span>, <span class="hljs-built_in">document</span>.getElementById( <span class="hljs-string">&#x27;container&#x27;</span> ) )<br></code></pre></td></tr></table></figure></li>
+<li><p>將 constructor 中的 state 拉出來</p>
+<ul>
+<li>類中可以直接寫賦值語句 = 往實例裡面追加屬性</li>
+</ul>
+ <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs jsx"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Vaccine</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>&#123;<br><br>    <span class="hljs-function"><span class="hljs-title">constructor</span>(<span class="hljs-params">props</span>)</span>&#123;<br>        <span class="hljs-built_in">super</span>(props)<br>        <span class="hljs-comment">// this.state = &#123; vaccinated: false &#125;</span><br>        <span class="hljs-built_in">this</span>.changeVaccinated = <span class="hljs-built_in">this</span>.changeVaccinated.bind(<span class="hljs-built_in">this</span>)<br>    &#125;<br>    <br>    <span class="hljs-comment">// 使用賦值語句，拉出 constructor</span><br>    state = &#123; <span class="hljs-attr">vaccinated</span>: <span class="hljs-literal">false</span> &#125;<br><br>    <span class="hljs-comment">/* 以下省略 */</span><br></code></pre></td></tr></table></figure></li>
+<li><p>將函數改成<strong>賦值語句</strong> + <strong>ES6 箭頭函數</strong>的寫法，並省略 constructor 裡面的 bind()</p>
+<p> 利用箭頭函數的特點</p>
+<ul>
+<li>沒有自己的 this</li>
+<li>使用 this 時，會找其外側函數的 this，作為箭頭函數 this 去使用</li>
+</ul>
+ <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs jsx">    <span class="hljs-comment">/* 以上省略 */</span><br>    <br> <span class="hljs-comment">// changeVaccinated()&#123;</span><br> <span class="hljs-comment">//     const vaccinated = this.state.vaccinated</span><br> <span class="hljs-comment">//     this.setState(&#123; vaccinated: !vaccinated &#125;)</span><br> <span class="hljs-comment">// &#125;</span><br>    <br>    <span class="hljs-comment">// 改成 ES6 箭頭函數</span><br>    changeVaccinated = <span class="hljs-function">() =&gt;</span> &#123;<br>        <span class="hljs-keyword">const</span> vaccinated = <span class="hljs-built_in">this</span>.state.vaccinated<br>        <span class="hljs-built_in">this</span>.setState(&#123; <span class="hljs-attr">vaccinated</span>: !vaccinated &#125;)<br>    &#125;<br>&#125;<br>ReactDOM.render( <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">Vaccine</span>/&gt;</span></span>, <span class="hljs-built_in">document</span>.getElementById( <span class="hljs-string">&#x27;container&#x27;</span> ) )<br></code></pre></td></tr></table></figure></li>
+<li><p>省略整個 constructor，最後簡化結果</p>
+ <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs jsx"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Vaccine</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>&#123;<br>    <span class="hljs-comment">// 初始化狀態</span><br>    state = &#123; <span class="hljs-attr">vaccinated</span>: <span class="hljs-literal">false</span> &#125;<br>    <br>    <span class="hljs-function"><span class="hljs-title">render</span>(<span class="hljs-params"></span>)</span>&#123;<br>        <span class="hljs-keyword">const</span> &#123; vaccinated &#125; = <span class="hljs-built_in">this</span>.state<br>        <span class="hljs-keyword">return</span> (<br>        <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">h2</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">&#123;</span> <span class="hljs-attr">this.changeVaccinated</span> &#125;&gt;</span>你打疫苗了嗎? </span><br><span class="xml">            &#123; vaccinated ? &#x27; 已經打了(．▽．) b&#x27; : &#x27; 還沒(Q A Q)&#x27; &#125;</span><br><span class="xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span>)<br>    &#125;<br>    <span class="hljs-comment">// 自定義方法 - 藥用賦值語句的型式 + 箭頭函數</span><br>    changeVaccinated = <span class="hljs-function">() =&gt;</span> &#123;<br>        <span class="hljs-keyword">const</span> vaccinated = <span class="hljs-built_in">this</span>.state.vaccinated<br>        <span class="hljs-built_in">this</span>.setState(&#123; <span class="hljs-attr">vaccinated</span>: !vaccinated &#125;)<br>    &#125;<br>&#125;<br>ReactDOM.render( <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">Vaccine</span>/&gt;</span></span>, <span class="hljs-built_in">document</span>.getElementById( <span class="hljs-string">&#x27;container&#x27;</span> ) )<br></code></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="總結-State"><a href="#總結-State" class="headerlink" title="總結 State"></a>總結 State</h2><h3 id="什麼是-State"><a href="#什麼是-State" class="headerlink" title="什麼是 State ?"></a>什麼是 State ?</h3><ol>
+<li>State 是組件中最重要的屬性，值是<strong>物件</strong>（可以包含多個 key-value）。</li>
+<li>通過更新 State 重新渲染組件。</li>
+</ol>
+<h3 id="State-必須注意的要點"><a href="#State-必須注意的要點" class="headerlink" title="State 必須注意的要點"></a>State 必須注意的要點</h3><ol>
+<li><p>組件中 render 方法中的 this 為組件的實例物件。</p>
+</li>
+<li><p>組件自訂義的函數中，this 為<code>undefined</code>如何解決?</p>
+<ul>
+<li>強制綁定 this：通過函數<code>bind()</code>方法</li>
+<li>賦值語句 + 箭頭函數</li>
+</ul>
+</li>
+<li><p>狀態資料，不能直接修改或更新，必須借助<code>setState()</code>來更新</p>
+</li>
+</ol>
+<h3 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/playlist?list=PLmOn9nNkQxJFJXLvkNsGsoCUxJLqyLGxu">React 全家桶</a></li>
+<li><a target="_blank" rel="noopener" href="https://zh-hant.reactjs.org/docs/state-and-lifecycle.html">React 官網 - State &amp; 生命週期</a></li>
+</ul>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/React/">React</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%AD%B8%E7%BF%92/">學習</a>
+                    
+                  </div>
+                
+              </div>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/07/31/2021-7-31-react-props/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">React - 三大屬性 Props</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/07/28/2021-7-28-react-classComponent/">
+                        <span class="hidden-mobile">React - 類式組件</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    
+      <script type="text/javascript">
+        var disqus_config = function() {
+          this.page.url = 'http://example.com/2021/07/29/2021-7-29-react-state/';
+          this.page.identifier = '/2021/07/29/2021-7-29-react-state/';
+        };
+        Fluid.utils.loadComments('#disqus_thread', function() {
+          var d = document, s = d.createElement('script');
+          s.src = '//' + 'fluid' + '.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', new Date());
+          (d.head || d.body).appendChild(s);
+        });
+      </script>
+    
+    <noscript>Please enable JavaScript to view the comments</noscript>
+  </div>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目錄</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜尋</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">關鍵字</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+    <span>© 2021 <a href="/about">Johnson Mao</a> 毛毛的部落格 | 記錄成長的過程</span> <span> - 本站使用  <a href="https://hexo.io" target="_blank" rel="nofollow noopener">Hexo</a> & <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">Fluid 主題</a>
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
