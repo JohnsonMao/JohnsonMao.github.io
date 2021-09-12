@@ -3,9 +3,10 @@ title: React - 基礎
 date: 2021/7/26 22:00:00
 index_img: https://i.postimg.cc/kMk16Gqq/icons8-react-160.png
 banner_img: https://i.postimg.cc/kMk16Gqq/icons8-react-160.png
+categories:
+    - [程式語言, 前端, React]
 tags:
     - React
-    - 學習
 excerpt: 學習 React 中最重要的角色「Babel」，Babel 是 Javascript 的編譯器，有了 Babel 就能更方便順暢的使用 React
 ---
 

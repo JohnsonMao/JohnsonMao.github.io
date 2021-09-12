@@ -3,9 +3,10 @@ title: React - 簡介
 date: 2021/7/26 21:00:00
 index_img: https://i.postimg.cc/kMk16Gqq/icons8-react-160.png
 banner_img: https://i.postimg.cc/kMk16Gqq/icons8-react-160.png
+categories:
+    - [程式語言, 前端, React]
 tags:
     - React
-    - 學習
 excerpt: 這裡將會記錄我學習 React 的筆記，雖然說是從 0 開始學習，但該有的 Javascript 知識還是要有。
 ---
 

@@ -1,11 +1,12 @@
 ---
 title: React - 函數式組件
-date: 2021/7/27 21:00:00
+date: 2021/7/28 21:00:00
 index_img: https://i.postimg.cc/kMk16Gqq/icons8-react-160.png
 banner_img: https://i.postimg.cc/kMk16Gqq/icons8-react-160.png
+categories:
+    - [程式語言, 前端, React]
 tags:
     - React
-    - 學習
 excerpt: 介紹 function component 最基礎的起手式，這裡還不會介紹到 Hook 的運用。
 ---
 

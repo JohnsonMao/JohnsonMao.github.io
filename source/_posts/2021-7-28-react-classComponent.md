@@ -1,11 +1,12 @@
 ---
 title: React - 類式組件
-date: 2021/7/27 22:00:00
+date: 2021/7/28 22:00:00
 index_img: https://i.postimg.cc/kMk16Gqq/icons8-react-160.png
 banner_img: https://i.postimg.cc/kMk16Gqq/icons8-react-160.png
+categories:
+    - [程式語言, 前端, React]
 tags:
     - React
-    - 學習
 excerpt: 介紹 class component 最基礎的起手式。
 ---
 

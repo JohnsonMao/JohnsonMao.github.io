@@ -3,9 +3,10 @@ title: React - 組件 與 模組
 date: 2021/7/27 20:00:00
 index_img: https://i.postimg.cc/kMk16Gqq/icons8-react-160.png
 banner_img: https://i.postimg.cc/kMk16Gqq/icons8-react-160.png
+categories:
+    - [程式語言, 前端, React]
 tags:
     - React
-    - 學習
 excerpt: 提升開發效率，就要了解組件與模組的概念，用簡單的言語解說，並了解開發 React 所需要的開發者工具
 ---
 
