@@ -1,0 +1,590 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-TW" data-default-color-scheme=&#34;dark&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="人是視覺動物，當網頁架構用得差不多了，想自己安排布局，會開始想辦法把網頁變得更漂亮。">
+  <meta name="author" content="Mao">
+  <meta name="keywords" content="">
+  
+  <title>Day.4 「了解地盤的範圍！」 —— CSS 盒模型 box-model &amp; 距離單位 - Mao&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>毛毛的部落格</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首頁
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                封存
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分類
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                標籤
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                關於
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('https://i.imgur.com/KxTNQgX.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Day.4 「了解地盤的範圍！」 —— CSS 盒模型 box-model & 距離單位">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-09-13 22:00" pubdate>
+        2021年9月13日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      22
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Day.4 「了解地盤的範圍！」 —— CSS 盒模型 box-model &amp; 距離單位</h1>
+            
+            <div class="markdown-body">
+              <h1 id="Day-4-「了解地盤的範圍！」-——-CSS-盒模型-box-model-amp-距離單位"><a href="#Day-4-「了解地盤的範圍！」-——-CSS-盒模型-box-model-amp-距離單位" class="headerlink" title="Day.4 「了解地盤的範圍！」 —— CSS 盒模型 box-model &amp; 距離單位"></a>Day.4 「了解地盤的範圍！」 —— CSS 盒模型 box-model &amp; 距離單位</h1><p><img src="https://i.imgur.com/KxTNQgX.jpg" srcset="/img/loading.gif" lazyload alt="盒模型 地盤 示意圖"></p>
+<h2 id="人是視覺動物"><a href="#人是視覺動物" class="headerlink" title="人是視覺動物"></a>人是視覺動物</h2><p>當網頁架構用得差不多了，想自己安排布局，會開始想辦法把網頁變得更漂亮。<br>Google Chrome 很好用，有提供開發者工具給我們除錯，點開 elements 標籤最下面會有個方形的圖案。</p>
+<p><img src="https://i.imgur.com/JVqvJ0K.png" srcset="/img/loading.gif" lazyload alt="盒模型 box-model"></p>
+<p>這就是我們今天的主角 —— <strong>CSS</strong> 的基礎<strong>盒模型 box-model</strong></p>
+<!-- more -->
+
+<h2 id="什麼是-CSS？"><a href="#什麼是-CSS？" class="headerlink" title="什麼是 CSS？"></a>什麼是 CSS？</h2><p>CSS 是 Cascading Style Sheets 的簡寫，中文翻譯為階層式樣式表。<br>名字內有階層兩個字，顧名思義，他可以使用多個選擇器組合，來達到階層式的管理樣式。</p>
+<h3 id="如何使用-CSS？"><a href="#如何使用-CSS？" class="headerlink" title="如何使用 CSS？"></a>如何使用 CSS？</h3><p>先教兩個最<strong>簡單</strong>最<strong>基本</strong>的 CSS 使用方法。<br><img src="https://i.imgur.com/mvfQaQr.png" srcset="/img/loading.gif" lazyload alt="最簡單的 CSS 使用方法"></p>
+<ul>
+<li><p>在 <code>&lt;head&gt;</code> 標籤內添加 <code>&lt;style&gt;</code> 標籤，如<strong>紅色框</strong>，標籤內使用你要套用 CSS 樣式的標籤名，如<strong>橘色框</strong>，在裡面撰寫屬性值，如<strong>紅色框內的橘色框</strong>。</p>
+</li>
+<li><p>或著直接在標籤內添加 <code>style</code> 屬性，並在裡面賦予屬性值，如<strong>綠色框</strong>。</p>
+</li>
+</ul>
+<h2 id="盒模型"><a href="#盒模型" class="headerlink" title="盒模型"></a>盒模型</h2><p>盒模型能幫助我們更加了解如何操控網頁並進行排版。<br>每個標籤都有獨立的盒模型，看盒模型我們可以觀察到有三個英文單字，四個顏色</p>
+<ul>
+<li>紅色：<code>margin</code>，外邊距，可以想成與下一個標籤的距離</li>
+<li>橘色：<code>border</code>，邊框，就是內容的外框</li>
+<li>綠色：<code>padding</code>，內邊距，可以想成內容與外框的留白距離</li>
+<li>藍色：內容</li>
+</ul>
+<h3 id="距離單位"><a href="#距離單位" class="headerlink" title="距離單位"></a>距離單位</h3><p>在學習盒模型語法時，必須先了解 CSS 的距離單位。</p>
+<h4 id="不管在哪都固定大小的單位"><a href="#不管在哪都固定大小的單位" class="headerlink" title="不管在哪都固定大小的單位"></a>不管在哪都固定大小的單位</h4><ul>
+<li>px 是絕對單位，為螢幕中最基礎單位，1px 代表 1 個點，如下圖：字的大小 24px，固定在視窗內佔 24 位元的大小</li>
+<li>rem 是相對單位，每個<strong>元素</strong>都依據<strong>根元素</strong>的 px 值乘以<strong>倍數</strong>，如下圖：字的大小 1.5rem，固定比祖先大 1.5 倍的大小，瀏覽器內建字體原始大小為 16px。</li>
+</ul>
+<h4 id="取決於父元素單位大小的單位"><a href="#取決於父元素單位大小的單位" class="headerlink" title="取決於父元素單位大小的單位"></a>取決於父元素單位大小的單位</h4><ul>
+<li>em 是相對單位，每個<strong>子元素</strong>都依據<strong>父元素</strong>的 px 值乘以<strong>倍數</strong>，如下圖：字的大小 1.5em，比老爸大 1.5 倍。</li>
+<li>% 是相對單位，每個<strong>子元素</strong>都依據<strong>父元素</strong>的 px 值乘以<strong>百分比</strong>，如下圖：字的大小 150%，比老爸大 150 %。</li>
+</ul>
+<h4 id="取決於視窗大小的單位"><a href="#取決於視窗大小的單位" class="headerlink" title="取決於視窗大小的單位"></a>取決於視窗大小的單位</h4><ul>
+<li>vh 是相對單位，每個<strong>元素</strong>都依據<strong>視窗</strong>的（像素高度 / 100）乘以倍數，如下圖：字的大小 5vh，視窗的 1 / 20 <strong>高</strong>的大小。</li>
+<li>vw 是相對單位，每個<strong>元素</strong>都依據<strong>視窗</strong>的（像素寬度 / 100）乘以倍數，如下圖：字的大小 5vw，視窗的 1 / 20 <strong>寬</strong>的大小。</li>
+</ul>
+<p><img src="https://i.imgur.com/YqTwWv1.png" srcset="/img/loading.gif" lazyload alt="圖片為各種單位的示意圖"></p>
+<h3 id="盒模型通用語法"><a href="#盒模型通用語法" class="headerlink" title="盒模型通用語法"></a>盒模型通用語法</h3><p>可以看到盒模型在<code>margin</code>、<code>border</code>、<code>padding</code>，都可以在四個方位設定距離</p>
+<p>而設定的語法也很簡單直白，在此用<code>margin</code>做示範：</p>
+<ul>
+<li><code>margin-top: 上距</code>，上外邊距</li>
+<li><code>margin-right: 右距</code>，右外邊距</li>
+<li><code>margin-bottom: 下距</code>，下外邊距</li>
+<li><code>margin-left: 左距</code>，左外邊距</li>
+</ul>
+<h4 id="一行程式碼簡化的語法"><a href="#一行程式碼簡化的語法" class="headerlink" title="一行程式碼簡化的語法"></a>一行程式碼簡化的語法</h4><ul>
+<li><code>margin: 上距 右距 下距 左距</code>，四個值的順序不能錯，分別設定<strong>上</strong>、<strong>右</strong>、<strong>下</strong>、<strong>左</strong></li>
+<li><code>margin: 上距 水平距 下距</code>，三個值的順序不能錯，分別設定<strong>上</strong>、<strong>左右</strong>、<strong>下</strong></li>
+<li><code>margin: 垂直距 水平距</code>，兩個值的順序不能錯，分別設定<strong>上下</strong> 與 <strong>左右</strong></li>
+<li><code>margin: 距離</code>，一個值你也很難錯，<strong>四個方向一起設定</strong></li>
+</ul>
+<blockquote>
+<p>以上 margin 也可以提替成 border 來設定 border 或 padding 來設定 padding</p>
+</blockquote>
+<h3 id="Margin-的特色"><a href="#Margin-的特色" class="headerlink" title="Margin 的特色"></a>Margin 的特色</h3><p>因為 Margin 毛最多，所以先來說 Margin，搞定 Margin，後面就輕鬆了！</p>
+<p>上下相隔的距離<strong>會重疊</strong>。<br><img src="https://i.imgur.com/ChVScKT.png" srcset="/img/loading.gif" lazyload alt="上下相隔的距離會重疊"></p>
+<p>左右相隔的距離<strong>不會重疊</strong>。<br><img src="https://i.imgur.com/6MCayhD.png" srcset="/img/loading.gif" lazyload alt="左右相隔的距離不會重疊"></p>
+<p><strong>行內元素</strong>的垂直 margin 沒有效果。<br><img src="https://i.imgur.com/JzyzpcK.png" srcset="/img/loading.gif" lazyload alt="行內元素的垂直 margin 沒有效果"></p>
+<p>可以使用<strong>負值</strong>，讓元素重疊，<strong>注意</strong> 在同個層級，右邊會壓過左邊，下面會壓過上面<br><img src="https://i.imgur.com/EKKPqUc.png" srcset="/img/loading.gif" lazyload alt="margin 負值，同層級下，右邊蓋住左邊"></p>
+<h4 id="父子元素-Margin-外邊距重疊"><a href="#父子元素-Margin-外邊距重疊" class="headerlink" title="父子元素 Margin 外邊距重疊"></a>父子元素 Margin 外邊距重疊</h4><p>當<strong>父元素</strong>包著<strong>子元素</strong>，同時都有使用 margin 時，<strong>垂直</strong> margin 會取<strong>最大</strong>的 margin 值<br>![垂直 margin 會重疊]](<a target="_blank" rel="noopener" href="https://i.imgur.com/quUpAkb.png">https://i.imgur.com/quUpAkb.png</a>)</p>
+<p>但當父元素有設定 padding 或 border 時，就不會重疊了。<br><img src="https://i.imgur.com/CYsrCCn.png" srcset="/img/loading.gif" lazyload alt="設定 padding 或 border ，margin 就不會重疊了"></p>
+<p>還有屬於<strong>不同</strong>的 BFC 元素，如：子元素使用 float 浮動元素</p>
+<blockquote>
+<p>什麼是 BFC？ BFC 是 Block formatting context 簡寫，簡單的說就是定位的方式改變。想更瞭解可以看<a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Block_formatting_context">MDN 官方文件</a></p>
+</blockquote>
+<p>這個部分要等到認識更多 CSS 才比較好解釋。<br>簡單說，就是脫離老爸的控制（脫離文檔流）</p>
+<blockquote>
+<p>什麼是脫離文檔流？ 簡單說，原本每個元素都是一個個盒模型，依次排列在網頁上面，看起來像流水般由上而下依序排下來，稱之為「文檔流」。而脫離文檔流，顧名思義就是脫離出來的意思。</p>
+</blockquote>
+<h3 id="Border-的特色"><a href="#Border-的特色" class="headerlink" title="Border 的特色"></a>Border 的特色</h3><p>可以設定邊框的<strong>寬度</strong>、<strong>樣式</strong>與<strong>顏色</strong><br>此外還可以使用 border-radius 來設定<strong>外圍</strong>的圓滑程度。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-attribute">border</span>: 寬度 樣式 顏色;<br><span class="hljs-attribute">border-radius</span>: 圓滑程度;<br></code></pre></td></tr></table></figure>
+
+<p>寬度、樣式、顏色上網查，比較容易理解易學，就不多加琢磨了。</p>
+<p>稍微介紹圓滑程度<code>border-radius</code>。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-comment">/* 這個是沒有字母的最基本型態 */</span><br><span class="hljs-selector-class">.border</span> &#123; <span class="hljs-attribute">border</span>: <span class="hljs-number">10px</span> solid <span class="hljs-number">#f88</span>; &#125;<br><span class="hljs-comment">/* 當設定一個值，四個角都會依據設定值為半徑做弧度 */</span><br><span class="hljs-selector-class">.a</span> &#123; <span class="hljs-attribute">border-radius</span>: <span class="hljs-number">20px</span>; &#125;<br><span class="hljs-comment">/* 當設定為 % 數，會依照內容寬度乘以百分比為半徑做弧度 */</span><br><span class="hljs-selector-class">.b</span> &#123; <span class="hljs-attribute">border-radius</span>: <span class="hljs-number">50%</span>; &#125; <br><span class="hljs-comment">/* 當有兩個值，第一個值對應的是左上與右下，第二個值對應的是右上與左下 */</span><br><span class="hljs-selector-class">.c</span> &#123; <span class="hljs-attribute">border-radius</span>: <span class="hljs-number">0</span> <span class="hljs-number">50%</span>; &#125;<br><span class="hljs-comment">/* 當有三個值，第一個值對應左上，第二個值對應的是右上與左下，第三個值為右下 */</span><br><span class="hljs-selector-class">.d</span> &#123; <span class="hljs-attribute">border-radius</span>: <span class="hljs-number">0</span> <span class="hljs-number">100%</span> <span class="hljs-number">50%</span>; &#125;<br><span class="hljs-comment">/* 當有四個值，就順時針從右上開始分別對應值 */</span><br><span class="hljs-selector-class">.e</span> &#123; <span class="hljs-attribute">border-radius</span>: <span class="hljs-number">0</span> <span class="hljs-number">25%</span> <span class="hljs-number">50%</span> <span class="hljs-number">100%</span>; &#125;<br><span class="hljs-comment">/* 當要做特別形狀時，參數會更麻煩 */</span><br><span class="hljs-selector-class">.f</span> &#123; <span class="hljs-attribute">border-radius</span>: <span class="hljs-number">30%</span> <span class="hljs-number">70%</span> <span class="hljs-number">70%</span> <span class="hljs-number">30%</span> / <span class="hljs-number">30%</span> <span class="hljs-number">30%</span> <span class="hljs-number">70%</span> <span class="hljs-number">70%</span>; &#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://i.imgur.com/ElanoDL.png" srcset="/img/loading.gif" lazyload alt="上面的英文字母分別對應形狀"></p>
+<p><a target="_blank" rel="noopener" href="https://9elements.github.io/fancy-border-radius/">想做特別的圓弧形？</a></p>
+<h3 id="Padding-的特色"><a href="#Padding-的特色" class="headerlink" title="Padding 的特色"></a>Padding 的特色</h3><p>Padding 就相對單純許多。<br>可以設定內容留白的寬度，與 margin 語法差不多，顏色則取自內容的背景色，背景顏色也是很簡單易學的語法，可以上網查，更進階的漸層背景顏色、多重背景、濾鏡背景，如果未來有時間會補充。<br>在行內元素狀態下，padding 水平會正常，但垂直就跟 margin 一樣會失效。如圖：<br><img src="https://i.imgur.com/C7tugxA.png" srcset="/img/loading.gif" lazyload alt="行內元素 垂直 padding 失效"><br>此外值得一提的是，margin 是元素之間的距離，所以不能算在元素內，padding 則是在元素內留白的距離，算是元素的一份子，常見的例子就是按鈕。</p>
+<h2 id="想要把元素推到中間置中？"><a href="#想要把元素推到中間置中？" class="headerlink" title="想要把元素推到中間置中？"></a>想要把元素推到中間置中？</h2><h3 id="盒模型還有-auto-這個值"><a href="#盒模型還有-auto-這個值" class="headerlink" title="盒模型還有 auto 這個值"></a>盒模型還有 auto 這個值</h3><p>除了寫數字值外，我們也可以請瀏覽器幫忙我們計算</p>
+<ul>
+<li>auto 是讓瀏覽器決定自動調整的距離單位，通常用在<strong>水平置中</strong>或<strong>自動推移</strong></li>
+</ul>
+<p><img src="https://i.imgur.com/WQmkumP.png" srcset="/img/loading.gif" lazyload alt="添加 auto 的作用"></p>
+<h2 id="怎麼設定的大小跟我想像的不一樣？"><a href="#怎麼設定的大小跟我想像的不一樣？" class="headerlink" title="怎麼設定的大小跟我想像的不一樣？"></a>怎麼設定的大小跟我想像的不一樣？</h2><p>這裡要介紹一個現在很多人都會使用的盒模型語法<code>box-sizing: border-box</code></p>
+<p>以往的網頁切版充滿了數學計算，<br>因為 border 與 padding 要另外計算，如下圖<code>content-box</code>，<br>寬度總共 <code>border</code>10×2+<code>padding</code>10×2+<code>width</code>100 = 140px<br>想要把總寬度變 100px 就要往回扣 <code>width</code>。</p>
+<p>但把 CSS 全域設成 <code>box-sizing: border-box;</code>，<br>就可以設定寬度 100px ，瀏覽器會幫我們計算，<br>可以更<strong>直覺性</strong>的設定內容的寬高！<br><img src="https://i.imgur.com/qarkIjK.png" srcset="/img/loading.gif" lazyload alt="content-box 與 border-box 的差異"></p>
+<p>至於 <code>width</code> 和 <code>height</code> 基礎語法，這個語法也很簡單，主要難是在判斷對的時機使用，這要多做才知道哪些情況要使用。</p>
+<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>沒想到如此基礎的 盒模型，也有很多重要觀念，明天將介紹 CSS 如何更精準的套用樣式。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%A8%8B%E5%BC%8F%E8%AA%9E%E8%A8%80/">程式語言</a>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%A8%8B%E5%BC%8F%E8%AA%9E%E8%A8%80/%E5%89%8D%E7%AB%AF/">前端</a>
+                    
+                      <a class="hover-with-bg" href="/categories/iT-%E9%90%B5%E4%BA%BA%E8%B3%BD/">iT 鐵人賽</a>
+                    
+                      <a class="hover-with-bg" href="/categories/iT-%E9%90%B5%E4%BA%BA%E8%B3%BD/%E7%AC%AC-2021-%E5%B9%B4/">第 2021 年</a>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%A8%8B%E5%BC%8F%E8%AA%9E%E8%A8%80/%E5%89%8D%E7%AB%AF/HTML/">HTML</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/iT-%E9%90%B5%E4%BA%BA%E8%B3%BD/">iT 鐵人賽</a>
+                    
+                      <a class="hover-with-bg" href="/tags/HTML/">HTML</a>
+                    
+                  </div>
+                
+              </div>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/09/12/2021-9-12-it_ironman-day3/">
+                        <span class="hidden-mobile">Day.3 「建構網頁的基石！」 —— 使用網頁標籤</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    
+      <script type="text/javascript">
+        var disqus_config = function() {
+          this.page.url = 'http://example.com/2021/09/13/2021-9-13-it_ironman-day4/';
+          this.page.identifier = '/2021/09/13/2021-9-13-it_ironman-day4/';
+        };
+        Fluid.utils.loadComments('#disqus_thread', function() {
+          var d = document, s = d.createElement('script');
+          s.src = '//' + 'fluid' + '.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', new Date());
+          (d.head || d.body).appendChild(s);
+        });
+      </script>
+    
+    <noscript>Please enable JavaScript to view the comments</noscript>
+  </div>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目錄</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜尋</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">關鍵字</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+    <span>© 2021 <a href="/about">Johnson Mao</a> 毛毛的部落格 | 記錄成長的過程</span> <span> - 本站使用  <a href="https://hexo.io" target="_blank" rel="nofollow noopener">Hexo</a> & <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">Fluid 主題</a>
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            總訪問量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            總訪客數 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
