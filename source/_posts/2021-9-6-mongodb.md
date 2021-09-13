@@ -1,8 +1,8 @@
 ---
 title: MongoDB
 date: 2021/9/6 22:00:00
-index_img: 
-banner_img: 
+index_img: https://i.imgur.com/E7ajmZa.jpg
+banner_img: https://i.imgur.com/E7ajmZa.jpg
 categories:
     - [程式語言, 資料庫, MongoDB]
 tags: 
@@ -12,6 +12,7 @@ excerpt: 在製作自己的專案時，想讓專案更加完整，於是就開�
 
 # MongoDB
 
+![資料庫概念圖](https://i.imgur.com/E7ajmZa.jpg)
 ## 前言
 
 在製作自己的專案時，想讓專案更加完整，於是就開始想，既然前端畫面邏輯都自己開發了，現在網路上資源又那麼豐富，未來也有可能朝全端發展，何不自己架設後端 API，給自己串接，還能了解整個網頁的運作邏輯，於是開始自學了後端框架 Express 和資料庫 MongoDB，這裡將會記錄學習 MongoDB 的學習筆記。
