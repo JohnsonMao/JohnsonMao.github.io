@@ -110,7 +110,7 @@ deploy:
 navbar:
   blog_title: "毛毛的部落格"
 
-banner_img:
+banner_img: "https://i.imgur.com/E7ajmZa.jpg"
 
 dark_mode:
   enable: true
@@ -163,7 +163,7 @@ footer:
             <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">Fluid 主題</a>'
   statistics:
     enable: true
-    source: 
+    source: "busuanzi"
     pv_format: "總訪問量 {} 次"
     uv_format: "總訪客數 {} 人"
 
