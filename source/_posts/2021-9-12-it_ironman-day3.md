@@ -41,12 +41,12 @@ excerpt: 雖然會最基礎的 div 和 span 標籤就能夠開始切版了，甚
 
 - `<footer>` 代表容器的底部
 
-- `<secition>` 代表一個段落
+- `<section>` 代表一個段落
 
 - `<nav>` 代表導航列
 
 ![iT ironman](https://i.imgur.com/HesZUPB.png)
-*如圖紅色框使用的是 `<nav>`，黃色使用的是 `<hander>`*
+*如圖紅色框使用的是 `<nav>`，黃色使用的是 `<header>`*
 
 **注意** 這邊是用容器，代表`<header>`不一定要放在整個網頁的最上面
 也可以用`<main>`包住，代表主要內容的頭部。
