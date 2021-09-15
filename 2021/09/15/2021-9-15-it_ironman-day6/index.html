@@ -14,11 +14,11 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
   <meta name="theme-color" content="#2f4154">
-  <meta name="description" content="使用標籤元素套用就像是畫草圖上底色，雖然有色彩但不細緻，這時為了能夠更精雕細琢我們的網頁，於是我們要更加精準的設定樣式，但有的選擇器必須謹慎使用，不然後面要修改就麻煩了。">
+  <meta name="description" content="如同前面章節所說，一開始的標籤元素，很單調只有一行並沒有各式各樣的元素，是瀏覽器內建的樣式表賦予它該扮演的角色。">
   <meta name="author" content="Mao">
   <meta name="keywords" content="">
   
-  <title>Day.5 「我的樣式失靈啦！你有頭緒嗎？」 —— CSS 選擇器 與 權重 - Mao&#39;s blog</title>
+  <title>Day.6 「你扮演的是什麼角色？」 —— CSS display 屬性 - Mao&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
 
@@ -158,12 +158,12 @@
 </nav>
 
     <div class="banner" id="banner" parallax=true
-         style="background: url('https://i.imgur.com/vD6fclV.jpg') no-repeat center center;
+         style="background: url('https://i.imgur.com/dbVE6IA.jpg') no-repeat center center;
            background-size: cover;">
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="Day.5 「我的樣式失靈啦！你有頭緒嗎？」 —— CSS 選擇器 與 權重">
+            <span class="h2" id="subtitle" title="Day.6 「你扮演的是什麼角色？」 —— CSS display 屬性">
               
             </span>
 
@@ -173,8 +173,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-09-14 22:00" pubdate>
-        2021年9月14日 晚上
+      <time datetime="2021-09-15 22:00" pubdate>
+        2021年9月15日 晚上
       </time>
     </span>
   
@@ -185,7 +185,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.5k 字
+      612 字
     </span>
   
 
@@ -195,7 +195,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      17
+      6
        分钟
     </span>
   
@@ -225,70 +225,26 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Day.5 「我的樣式失靈啦！你有頭緒嗎？」 —— CSS 選擇器 與 權重</h1>
+            <h1 style="display: none">Day.6 「你扮演的是什麼角色？」 —— CSS display 屬性</h1>
             
             <div class="markdown-body">
-              <h1 id="Day-5-「我的樣式失靈啦！你有頭緒嗎？」-——-CSS-選擇器-與-權重"><a href="#Day-5-「我的樣式失靈啦！你有頭緒嗎？」-——-CSS-選擇器-與-權重" class="headerlink" title="Day.5 「我的樣式失靈啦！你有頭緒嗎？」 —— CSS 選擇器 與 權重"></a>Day.5 「我的樣式失靈啦！你有頭緒嗎？」 —— CSS 選擇器 與 權重</h1><p><img src="https://i.imgur.com/vD6fclV.jpg" srcset="/img/loading.gif" lazyload alt="My CSS is invalid??"></p>
-<p>了解盒模型後，就要為標籤套上各種花樣了，上一篇介紹了簡單的套用方法，但這個套用方法其實不太好用！</p>
-<p>使用標籤元素套用就像是畫草圖上底色，雖然有色彩但不細緻，這時為了能夠更精雕細琢我們的網頁，於是我們要更加精準的設定樣式，但有的選擇器必須謹慎使用，不然後面要修改就麻煩了。</p>
+              <h1 id="Day-6-「你扮演的是什麼角色？」-——-CSS-display-屬性"><a href="#Day-6-「你扮演的是什麼角色？」-——-CSS-display-屬性" class="headerlink" title="Day.6 「你扮演的是什麼角色？」 —— CSS display 屬性"></a>Day.6 「你扮演的是什麼角色？」 —— CSS display 屬性</h1><p><img src="https://i.imgur.com/dbVE6IA.jpg" srcset="/img/loading.gif" lazyload alt="我們都是人，在社會中扮演著不同的角色。"></p>
+<p>如同前面章節所說，一開始的標籤元素，很單調只有一行並沒有各式各樣的元素，是瀏覽器內建的樣式表賦予它該扮演的角色。</p>
+<p><img src="https://i.imgur.com/A0uiSrM.png" srcset="/img/loading.gif" lazyload alt="table 屬性"><br><em>圖中，瀏覽器為 <code>&lt;table&gt;</code> 標籤任命為 表格屬性</em></p>
+<p>所以能用標籤本身取代的冷門 display 屬性值暫且不會介紹，只介紹大家最常用的 display 屬性值。</p>
 <!-- more -->
 
-<h2 id="CSS-的使用方式"><a href="#CSS-的使用方式" class="headerlink" title="CSS 的使用方式"></a>CSS 的使用方式</h2><ul>
-<li>在標籤內寫 <code>style</code> 屬性，稱為 inline style</li>
-<li>在 <code>&lt;head&gt;</code> 標籤內添加 <code>&lt;style&gt;</code>，稱為 HTML style</li>
-<li>還有一個上一篇沒介紹的外部載入樣式，是用外部連結 <code>&lt;link rel=&quot;stylesheet&quot; href=&quot;樣式網址&quot;&gt;</code> 標籤，同樣是放在  <code>&lt;head&gt;</code> 內，稱為 link style。</li>
-</ul>
-<h3 id="這三個有什麼差異與影響？"><a href="#這三個有什麼差異與影響？" class="headerlink" title="這三個有什麼差異與影響？"></a>這三個有什麼差異與影響？</h3><ul>
-<li><strong>維護</strong>上，inline style 和 HTML style 都是寫在 HTML 這個檔案內的，HTML 會越來越大，比較不好維護。</li>
-<li><strong>載入有順序性</strong>，上面樣式屬性會被下面<strong>同個</strong>屬性取代，所以 inline style &gt; HTML style &gt; link style。</li>
-<li>inline style 通常會保留給 <strong>Javascript</strong> 做網站互動。</li>
-</ul>
-<h3 id="如何撰寫-link-style？"><a href="#如何撰寫-link-style？" class="headerlink" title="如何撰寫 link style？"></a>如何撰寫 link style？</h3><p><img src="https://i.imgur.com/DExuoCr.png" srcset="/img/loading.gif" lazyload alt="link CSS"></p>
-<ul>
-<li>新增 <code>.css</code> 副檔名的檔案，並透過<code>&lt;link rel=&quot;stylesheet&quot; href=&quot;./樣式.css&quot;&gt;</code>就可以引入了<br><strong>注意</strong> 引入自己的檔案要使用<strong>相對路徑</strong>來引入</li>
-<li>接著就可以在 CSS 檔寫樣式，與在 <code>&lt;style&gt;</code> 內寫法相同（不需要寫<code>&lt;style&gt;</code>標籤）</li>
-<li>除了引入自己的檔案，也可以引入網路上的 CSS 檔案。</li>
-</ul>
-<h2 id="CSS-選擇器"><a href="#CSS-選擇器" class="headerlink" title="CSS 選擇器"></a>CSS 選擇器</h2><p>這裡要先補充，選擇器鎖定的元素不一定只有一個，可以藉由<strong>組合</strong>，來選擇其後代的所有元素。<br>但會建議選擇器階層<strong>別超過三層</strong>，因為瀏覽器會一層一層比對，當超過三層瀏覽器的渲染<strong>效率</strong>會下降許多。<br>把握簡單原則，當要超過三層時，就可以考慮再新增一個<strong>選擇器</strong></p>
-<p><img src="https://i.imgur.com/qtv6Rqd.png" srcset="/img/loading.gif" lazyload alt="CSS effective"><br><em>如圖如果都是要指定 menu 下的 <code>&lt;a&gt;</code>標籤，下面這樣指定也能達到同樣效果</em></p>
-<h3 id="element-元素選擇器"><a href="#element-元素選擇器" class="headerlink" title="element 元素選擇器"></a>element 元素選擇器</h3><p>首先先介紹我們最<strong>基礎</strong>最簡單直白的元素選擇器，階級分數為 1 分，<br>用來畫草圖的選擇器。</p>
-<p><img src="https://i.imgur.com/l0nfufP.png" srcset="/img/loading.gif" lazyload alt="elements select"><br><em>如圖利用<code>&lt;header&gt;</code>&amp;<code>&lt;main&gt;</code>，來區分兩個區域的<code>&lt;h2&gt;</code>，另外<code>&lt;body&gt;</code>也是標籤可以設定</em></p>
-<h3 id="class-類別選擇器"><a href="#class-類別選擇器" class="headerlink" title="class 類別選擇器"></a>class 類別選擇器</h3><p>最受歡迎的 class 選擇器，<br>比起有限的標籤選擇器，能夠<strong>自由命名</strong>的 class 選擇器更方便，階級分數為 10 分，<br>可以用來構圖，也能細琢的，屬於最好用方便的選擇器。</p>
-<p><img src="https://i.imgur.com/dg0wJCR.png" srcset="/img/loading.gif" lazyload alt="class select"><br><em>如圖利用 class 命名成顏色直接套用</em></p>
-<p>需在標籤屬性添加 <code>class=&quot;red&quot;</code> 屬性，透過使用 <code>.red&#123; 樣式 &#125;</code> 來套用樣式</p>
-<h3 id="id-選擇器"><a href="#id-選擇器" class="headerlink" title="id 選擇器"></a>id 選擇器</h3><p>id 這個屬性有個特性，就是一個 HTML 檔案中，每個 id 都要<strong>獨一無二</strong>的。<br>所以相較受歡迎的 class 選擇器，id 選擇器也就比較難被使用。階級分數為 100 分。<br>因為它的<strong>獨特性</strong>，且階級分數高，所以在使用上綁手綁腳的，比較<strong>不推薦</strong>在 CSS 中使用 id 選擇器。</p>
-<p><img src="https://i.imgur.com/wmalwua.png" srcset="/img/loading.gif" lazyload alt="id select"><br><em>如圖顯示 id 選擇器階級分數高，蓋過 class 選擇器樣式</em></p>
-<p>如果要使用，標籤屬性要添加 <code>id=&quot;red&quot;</code> 屬性，透過使用 <code>#red&#123; 樣式 &#125;</code> 來套用樣式</p>
-<h3 id="運算符號選擇器"><a href="#運算符號選擇器" class="headerlink" title="運算符號選擇器"></a>運算符號選擇器</h3><p>有時候會希望選擇器能更靈活的使用，像上一篇的<code>box-sizing: border-box;</code>，如果要一個一個標籤都要使用，還不累死，這時就可以使用運算符號選擇器，運算符號選擇器有個特點，就是本身沒有權重。</p>
-<ul>
-<li><p><code>*</code> 選擇器，可以把全部的標籤都套用的選擇器，如：<code>* &#123; box-sizing: border-box; &#125;</code>。</p>
-</li>
-<li><p><code>&gt;</code> 選擇器，可以把子代元素套用樣式，不影響孫代元素。常用在階層列表中。</p>
-<blockquote>
-<p>何謂子代、孫代？<br>如同我們的祖譜，父元素下一層就是子元素，在下一層就是孫元素，此時子元素就是孫元素的父元素，好像有點饒舌。</p>
-</blockquote>
-<p><img src="https://i.imgur.com/Vw0QhBT.png" srcset="/img/loading.gif" lazyload alt="child select"><br><em>透過 <code>&gt;</code> 選擇器，只改變第一層顏色</em></p>
-</li>
-<li><p><code>+</code> 選擇器，可以把選擇器同層級第一個遇到的元素套用樣式。常用來修正列表邊框。<br><img src="https://i.imgur.com/7tV99kY.png" srcset="/img/loading.gif" lazyload alt="fix list border"><br><em>透過 <code>+</code> 選擇器，搭配上一篇所學的 margin 負值來修正邊框。</em></p>
-</li>
-<li><p><code>~</code> 選擇器，跟 <code>+</code> 選擇器很像，只是這次不是選取第一個，而是選取全部符合條件的。</p>
-</li>
-<li><p>還有其他選擇器，放在後面的篇章在講</p>
-</li>
-</ul>
-<h2 id="CSS-權重"><a href="#CSS-權重" class="headerlink" title="CSS 權重"></a>CSS 權重</h2><p>上面已經稍微認識權重了，權重大的會蓋過權重小的。<br><strong>注意</strong> 雖然用分數來比擬權重，但其實就算使用 11 個 class 選擇器，也蓋不過 1 個 id 選擇器。</p>
-<ul>
-<li>元素選擇器，權重是 1</li>
-<li>類別選擇器，權重是 10</li>
-<li>ID 選擇器，權重是 100</li>
-<li><code>*</code> 選擇器，權重是 0</li>
-<li>前面說的 inline style，權重高達 1000</li>
-<li>!important ，權重最高 <strong>10000</strong></li>
-</ul>
-<h3 id="important"><a href="#important" class="headerlink" title="!important"></a>!important</h3><p>沒錯～!important，就是多麼無敵的存在，連 inline style 都無法保住自己絕對的地位。<br>所以在使用 !important 時，務必想清楚，最好是別隨便的亂使用</p>
-<p><img src="https://i.imgur.com/VXJX0b3.png" srcset="/img/loading.gif" lazyload alt="!important"><br><em>透過使用 !important 強制蓋過樣式。</em></p>
-<p>使用方法為，在你需要把權重調最高的樣式後添加 <code>!important;</code>。</p>
-<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>這邊了解如何使用選擇器，與權重的概念了，也了解到 HTML 中 <code>id</code> 、 <code>class</code> 與 <code>style</code> 這三個屬性，還有幾個很重要的觀念沒說，像是<strong>命名的藝術</strong>、命名的<strong>邏輯</strong>、樣式的<strong>複用性</strong>也都是很重要的，礙於篇幅有限，未來有機會再提起，還有一些 CSS 的樣式這系列應該不會說那麼細，<strong>推薦</strong>可以去看 CSScoke 金魚系列的文章，下一篇我們將介紹 CSS 的 display 屬性。</p>
+<h2 id="常用的-display-屬性值"><a href="#常用的-display-屬性值" class="headerlink" title="常用的 display 屬性值"></a>常用的 display 屬性值</h2><h3 id="inline-amp-block-行內元素-與-區塊元素"><a href="#inline-amp-block-行內元素-與-區塊元素" class="headerlink" title="inline &amp; block 行內元素 與 區塊元素"></a>inline &amp; block 行內元素 與 區塊元素</h3><p>這是大家最熟悉的屬性值了，相信不必我多說，你們也已經知道它的作用了</p>
+<p><strong>值得</strong>注意的是，HTML 標籤換行，在渲染的時候會自動變成一個空白，如下圖<br><img src="https://i.imgur.com/mO39ScR.png" srcset="/img/loading.gif" lazyload alt="最基礎的 區塊元素 與 行內元素"></p>
+<h3 id="inline-block-行內區塊元素"><a href="#inline-block-行內區塊元素" class="headerlink" title="inline-block 行內區塊元素"></a>inline-block 行內區塊元素</h3><p>上上篇盒模型中，有發現 inline 元素的垂直方向都無法推擠，這時 inline-block 出現了<br><img src="https://i.imgur.com/TI35bGk.png" srcset="/img/loading.gif" lazyload alt="同時具有 inline 並排的特性，還擁有 block 垂直推擠的特性。"><br>同時具有 inline 並排的特性，還擁有 block 垂直推擠的特性。</p>
+<h3 id="none-隱藏"><a href="#none-隱藏" class="headerlink" title="none 隱藏"></a>none 隱藏</h3><p>none 屬性，也是很常使用的屬性，它的作用就是把元素整個隱藏消失，常見的範例就是，關掉廣告的這個動作。</p>
+<p>與它非常相似的屬性還有一個，很常被提起討論的是<code>visibility: hidden;</code>這個屬性，與<code>display: none;</code>相似，但它只是單純的隱藏，高度位置還是在那裡<br><img src="https://i.imgur.com/oQbYhBT.png" srcset="/img/loading.gif" lazyload alt="表面上隱藏，高度位置還是有占用"></p>
+<h3 id="flex-彈性盒模型"><a href="#flex-彈性盒模型" class="headerlink" title="flex 彈性盒模型"></a>flex 彈性盒模型</h3><p><strong>彈性盒模型</strong>，目前最多人使用的屬性，方便易學的基礎排版，具有<strong>一維</strong>的概念，依靠父元素設定影響子元素<strong>一個方向</strong>的<strong>排列對齊</strong>。</p>
+<p><img src="https://i.imgur.com/WcmxB4K.png" srcset="/img/loading.gif" lazyload alt="依照主軸進行布局"><br><em>依照主軸進行布局</em></p>
+<h3 id="grid-網格模型"><a href="#grid-網格模型" class="headerlink" title="grid 網格模型"></a>grid 網格模型</h3><p><strong>網格模型</strong>，近年來興起，許多瀏覽器開始慢慢支援，很多人想嘗試的屬性，與 flex 彈性盒模型有點像，不過是採取<strong>二維</strong>的概念，依靠父元素設定<strong>表格般</strong>影響子元素的布局。</p>
+<p>現今也有很多 <strong>CSS 框架</strong>都有使用<strong>格線系統</strong>來進行排版，與網格模型個概念非常相近。</p>
+<p><img src="https://i.imgur.com/X9VTWRV.png" srcset="/img/loading.gif" lazyload alt="個平面上，隨意布局盒模型"><br><em>一個平面上，隨意布局盒模型。<a target="_blank" rel="noopener" href="https://codepen.io/vsfvjiuv-the-typescripter/pen/RwgjGWL">Codepen 範例</a></em></p>
+<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>光是 flex 彈性盒模型就有很多細節可以講， grid 網格模型更是複雜，預計是不會講 grid 網格模型，如果有多餘時間再考慮補充，明天將介紹最受大家喜愛的 flex 彈性盒模型。</p>
 
             </div>
             <hr>
@@ -327,18 +283,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/09/15/2021-9-15-it_ironman-day6/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Day.6 「你扮演的是什麼角色？」 —— CSS display 屬性</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021/09/13/2021-9-13-it_ironman-day4/">
-                        <span class="hidden-mobile">Day.4 「了解地盤的範圍！」 —— CSS 盒模型 box-model & 距離單位</span>
+                      <a href="/2021/09/14/2021-9-14-it_ironman-day5/">
+                        <span class="hidden-mobile">Day.5 「我的樣式失靈啦！你有頭緒嗎？」 —— CSS 選擇器 與 權重</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -360,8 +310,8 @@
     
       <script type="text/javascript">
         var disqus_config = function() {
-          this.page.url = 'http://example.com/2021/09/14/2021-9-14-it_ironman-day5/';
-          this.page.identifier = '/2021/09/14/2021-9-14-it_ironman-day5/';
+          this.page.url = 'http://example.com/2021/09/15/2021-9-15-it_ironman-day6/';
+          this.page.identifier = '/2021/09/15/2021-9-15-it_ironman-day6/';
         };
         Fluid.utils.loadComments('#disqus_thread', function() {
           var d = document, s = d.createElement('script');

@@ -4,6 +4,41 @@
   
   
   <entry>
+    <title>Day.6 「你扮演的是什麼角色？」 —— CSS display 屬性</title>
+    <link href="/2021/09/15/2021-9-15-it_ironman-day6/"/>
+    <url>/2021/09/15/2021-9-15-it_ironman-day6/</url>
+    
+    <content type="html"><![CDATA[<h1 id="Day-6-「你扮演的是什麼角色？」-——-CSS-display-屬性"><a href="#Day-6-「你扮演的是什麼角色？」-——-CSS-display-屬性" class="headerlink" title="Day.6 「你扮演的是什麼角色？」 —— CSS display 屬性"></a>Day.6 「你扮演的是什麼角色？」 —— CSS display 屬性</h1><p><img src="https://i.imgur.com/dbVE6IA.jpg" alt="我們都是人，在社會中扮演著不同的角色。"></p><p>如同前面章節所說，一開始的標籤元素，很單調只有一行並沒有各式各樣的元素，是瀏覽器內建的樣式表賦予它該扮演的角色。</p><p><img src="https://i.imgur.com/A0uiSrM.png" alt="table 屬性"><br><em>圖中，瀏覽器為 <code>&lt;table&gt;</code> 標籤任命為 表格屬性</em></p><p>所以能用標籤本身取代的冷門 display 屬性值暫且不會介紹，只介紹大家最常用的 display 屬性值。</p><!-- more --><h2 id="常用的-display-屬性值"><a href="#常用的-display-屬性值" class="headerlink" title="常用的 display 屬性值"></a>常用的 display 屬性值</h2><h3 id="inline-amp-block-行內元素-與-區塊元素"><a href="#inline-amp-block-行內元素-與-區塊元素" class="headerlink" title="inline &amp; block 行內元素 與 區塊元素"></a>inline &amp; block 行內元素 與 區塊元素</h3><p>這是大家最熟悉的屬性值了，相信不必我多說，你們也已經知道它的作用了</p><p><strong>值得</strong>注意的是，HTML 標籤換行，在渲染的時候會自動變成一個空白，如下圖<br><img src="https://i.imgur.com/mO39ScR.png" alt="最基礎的 區塊元素 與 行內元素"></p><h3 id="inline-block-行內區塊元素"><a href="#inline-block-行內區塊元素" class="headerlink" title="inline-block 行內區塊元素"></a>inline-block 行內區塊元素</h3><p>上上篇盒模型中，有發現 inline 元素的垂直方向都無法推擠，這時 inline-block 出現了<br><img src="https://i.imgur.com/TI35bGk.png" alt="同時具有 inline 並排的特性，還擁有 block 垂直推擠的特性。"><br>同時具有 inline 並排的特性，還擁有 block 垂直推擠的特性。</p><h3 id="none-隱藏"><a href="#none-隱藏" class="headerlink" title="none 隱藏"></a>none 隱藏</h3><p>none 屬性，也是很常使用的屬性，它的作用就是把元素整個隱藏消失，常見的範例就是，關掉廣告的這個動作。</p><p>與它非常相似的屬性還有一個，很常被提起討論的是<code>visibility: hidden;</code>這個屬性，與<code>display: none;</code>相似，但它只是單純的隱藏，高度位置還是在那裡<br><img src="https://i.imgur.com/oQbYhBT.png" alt="表面上隱藏，高度位置還是有占用"></p><h3 id="flex-彈性盒模型"><a href="#flex-彈性盒模型" class="headerlink" title="flex 彈性盒模型"></a>flex 彈性盒模型</h3><p><strong>彈性盒模型</strong>，目前最多人使用的屬性，方便易學的基礎排版，具有<strong>一維</strong>的概念，依靠父元素設定影響子元素<strong>一個方向</strong>的<strong>排列對齊</strong>。</p><p><img src="https://i.imgur.com/WcmxB4K.png" alt="依照主軸進行布局"><br><em>依照主軸進行布局</em></p><h3 id="grid-網格模型"><a href="#grid-網格模型" class="headerlink" title="grid 網格模型"></a>grid 網格模型</h3><p><strong>網格模型</strong>，近年來興起，許多瀏覽器開始慢慢支援，很多人想嘗試的屬性，與 flex 彈性盒模型有點像，不過是採取<strong>二維</strong>的概念，依靠父元素設定<strong>表格般</strong>影響子元素的布局。</p><p>現今也有很多 <strong>CSS 框架</strong>都有使用<strong>格線系統</strong>來進行排版，與網格模型個概念非常相近。</p><p><img src="https://i.imgur.com/X9VTWRV.png" alt="個平面上，隨意布局盒模型"><br><em>一個平面上，隨意布局盒模型。<a href="https://codepen.io/vsfvjiuv-the-typescripter/pen/RwgjGWL">Codepen 範例</a></em></p><h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>光是 flex 彈性盒模型就有很多細節可以講， grid 網格模型更是複雜，預計是不會講 grid 網格模型，如果有多餘時間再考慮補充，明天將介紹最受大家喜愛的 flex 彈性盒模型。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>程式語言</category>
+      
+      <category>前端</category>
+      
+      <category>iT 鐵人賽</category>
+      
+      <category>第 2021 年</category>
+      
+      <category>CSS</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>iT 鐵人賽</tag>
+      
+      <tag>CSS</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Day.5 「我的樣式失靈啦！你有頭緒嗎？」 —— CSS 選擇器 與 權重</title>
     <link href="/2021/09/14/2021-9-14-it_ironman-day5/"/>
     <url>/2021/09/14/2021-9-14-it_ironman-day5/</url>
