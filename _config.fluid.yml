@@ -117,8 +117,8 @@ dark_mode:
 index:
   slogan:
     enable: true
-    text: ！
-  banner_img: "https://i.imgur.com/E7ajmZa.jpg"
+    text: 每天都要比昨天的自己更厲害！
+  banner_img: "https://i.imgur.com/uKkSpVl.jpg"
 
 post:
   comments:
