@@ -14,11 +14,11 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
   <meta name="theme-color" content="#2f4154">
-  <meta name="description" content="如同前面章節所說，一開始的標籤元素，很單調只有一行並沒有各式各樣的元素，是瀏覽器內建的樣式表賦予它該扮演的角色。">
+  <meta name="description" content="要來介紹大家最愛用的 Flexbox 了，Flexbox 之所以被稱之為彈性盒，是因為可以隨著視窗的尺寸，改變自己布局的方式，使用起來非常彈性，且易於使用，所以深受大家喜愛。">
   <meta name="author" content="Mao">
   <meta name="keywords" content="">
   
-  <title>Day.6 「你扮演的是什麼角色？」 —— CSS display 屬性 - Mao&#39;s blog</title>
+  <title>Day.7 「伸縮自在的愛～」 —— CSS 彈性盒模型 Flexbox - Mao&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
 
@@ -158,12 +158,12 @@
 </nav>
 
     <div class="banner" id="banner" parallax=true
-         style="background: url('https://i.imgur.com/dbVE6IA.jpg') no-repeat center center;
+         style="background: url('https://i.imgur.com/ImmG3lU.gif') no-repeat center center;
            background-size: cover;">
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="Day.6 「你扮演的是什麼角色？」 —— CSS display 屬性">
+            <span class="h2" id="subtitle" title="Day.7 「伸縮自在的愛～」 —— CSS 彈性盒模型 Flexbox">
               
             </span>
 
@@ -173,8 +173,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-09-15 22:00" pubdate>
-        2021年9月15日 晚上
+      <time datetime="2021-09-16 22:00" pubdate>
+        2021年9月16日 晚上
       </time>
     </span>
   
@@ -185,7 +185,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      612 字
+      1.3k 字
     </span>
   
 
@@ -195,7 +195,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      6
+      13
        分钟
     </span>
   
@@ -225,26 +225,82 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Day.6 「你扮演的是什麼角色？」 —— CSS display 屬性</h1>
+            <h1 style="display: none">Day.7 「伸縮自在的愛～」 —— CSS 彈性盒模型 Flexbox</h1>
             
             <div class="markdown-body">
-              <h1 id="Day-6-「你扮演的是什麼角色？」-——-CSS-display-屬性"><a href="#Day-6-「你扮演的是什麼角色？」-——-CSS-display-屬性" class="headerlink" title="Day.6 「你扮演的是什麼角色？」 —— CSS display 屬性"></a>Day.6 「你扮演的是什麼角色？」 —— CSS display 屬性</h1><p><img src="https://i.imgur.com/dbVE6IA.jpg" srcset="/img/loading.gif" lazyload alt="我們都是人，在社會中扮演著不同的角色。"></p>
-<p>如同前面章節所說，一開始的標籤元素，很單調只有一行並沒有各式各樣的元素，是瀏覽器內建的樣式表賦予它該扮演的角色。</p>
-<p><img src="https://i.imgur.com/A0uiSrM.png" srcset="/img/loading.gif" lazyload alt="table 屬性"><br><em>圖中，瀏覽器為 <code>&lt;table&gt;</code> 標籤任命為 表格屬性</em></p>
-<p>所以能用標籤本身取代的冷門 display 屬性值暫且不會介紹，只介紹大家最常用的 display 屬性值。</p>
-<!-- more -->
-
-<h2 id="常用的-display-屬性值"><a href="#常用的-display-屬性值" class="headerlink" title="常用的 display 屬性值"></a>常用的 display 屬性值</h2><h3 id="inline-amp-block-行內元素-與-區塊元素"><a href="#inline-amp-block-行內元素-與-區塊元素" class="headerlink" title="inline &amp; block 行內元素 與 區塊元素"></a>inline &amp; block 行內元素 與 區塊元素</h3><p>這是大家最熟悉的屬性值了，相信不必我多說，你們也已經知道它的作用了</p>
-<p><strong>值得</strong>注意的是，HTML 標籤換行，在渲染的時候會自動變成一個空白，如下圖<br><img src="https://i.imgur.com/mO39ScR.png" srcset="/img/loading.gif" lazyload alt="最基礎的 區塊元素 與 行內元素"></p>
-<h3 id="inline-block-行內區塊元素"><a href="#inline-block-行內區塊元素" class="headerlink" title="inline-block 行內區塊元素"></a>inline-block 行內區塊元素</h3><p>上上篇盒模型中，有發現 inline 元素的垂直方向都無法推擠，這時 inline-block 出現了<br><img src="https://i.imgur.com/TI35bGk.png" srcset="/img/loading.gif" lazyload alt="同時具有 inline 並排的特性，還擁有 block 垂直推擠的特性。"><br>同時具有 inline 並排的特性，還擁有 block 垂直推擠的特性。</p>
-<h3 id="none-隱藏"><a href="#none-隱藏" class="headerlink" title="none 隱藏"></a>none 隱藏</h3><p>none 屬性，也是很常使用的屬性，它的作用就是把元素整個隱藏消失，常見的範例就是，關掉廣告的這個動作。</p>
-<p>與它非常相似的屬性還有一個，很常被提起討論的是<code>visibility: hidden;</code>這個屬性，與<code>display: none;</code>相似，但它只是單純的隱藏，高度位置還是在那裡<br><img src="https://i.imgur.com/oQbYhBT.png" srcset="/img/loading.gif" lazyload alt="表面上隱藏，高度位置還是有占用"></p>
-<h3 id="flex-彈性盒模型"><a href="#flex-彈性盒模型" class="headerlink" title="flex 彈性盒模型"></a>flex 彈性盒模型</h3><p><strong>彈性盒模型</strong>，目前最多人使用的屬性，方便易學的基礎排版，具有<strong>一維</strong>的概念，依靠父元素設定影響子元素<strong>一個方向</strong>的<strong>排列對齊</strong>。</p>
-<p><img src="https://i.imgur.com/WcmxB4K.png" srcset="/img/loading.gif" lazyload alt="依照主軸進行布局"><br><em>依照主軸進行布局</em></p>
-<h3 id="grid-網格模型"><a href="#grid-網格模型" class="headerlink" title="grid 網格模型"></a>grid 網格模型</h3><p><strong>網格模型</strong>，近年來興起，許多瀏覽器開始慢慢支援，很多人想嘗試的屬性，與 flex 彈性盒模型有點像，不過是採取<strong>二維</strong>的概念，依靠父元素設定<strong>表格般</strong>影響子元素的布局。</p>
-<p>現今也有很多 <strong>CSS 框架</strong>都有使用<strong>格線系統</strong>來進行排版，與網格模型個概念非常相近。</p>
-<p><img src="https://i.imgur.com/X9VTWRV.png" srcset="/img/loading.gif" lazyload alt="個平面上，隨意布局盒模型"><br><em>一個平面上，隨意布局盒模型。<a target="_blank" rel="noopener" href="https://codepen.io/vsfvjiuv-the-typescripter/pen/RwgjGWL">Codepen 範例</a></em></p>
-<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>光是 flex 彈性盒模型就有很多細節可以講， grid 網格模型更是複雜，預計是不會講 grid 網格模型，如果有多餘時間再考慮補充，明天將介紹最受大家喜愛的 flex 彈性盒模型。</p>
+              <h1 id="Day-7-「伸縮自在的愛～」-——-CSS-彈性盒模型-Flexbox"><a href="#Day-7-「伸縮自在的愛～」-——-CSS-彈性盒模型-Flexbox" class="headerlink" title="Day.7 「伸縮自在的愛～」 —— CSS 彈性盒模型 Flexbox"></a>Day.7 「伸縮自在的愛～」 —— CSS 彈性盒模型 Flexbox</h1><p><img src="https://i.imgur.com/ImmG3lU.gif" srcset="/img/loading.gif" lazyload alt="隨著容器跟著伸縮"></p>
+<h2 id="為何稱為彈性盒？"><a href="#為何稱為彈性盒？" class="headerlink" title="為何稱為彈性盒？"></a>為何稱為彈性盒？</h2><p>要來介紹大家最愛用的 Flexbox 了，Flexbox 之所以被稱之為彈性盒，是因為可以隨著視窗的尺寸，改變自己布局的方式，使用起來非常彈性，且易於使用，所以深受大家喜愛。</p>
+<h2 id="Flexbox-規則"><a href="#Flexbox-規則" class="headerlink" title="Flexbox 規則"></a>Flexbox 規則</h2><p>要了解 Flexbox ，就要先了解最基礎簡單的 Flexbox 父容器規則。<br><img src="https://i.imgur.com/73CcPV8.png" srcset="/img/loading.gif" lazyload alt="Flexbox 規則"></p>
+<p>當我們為<strong>父容器</strong>（藍框）添加 <code>display: flex;</code> 屬性後，其內部的子元件（灰色方形）將會以<strong>主軸</strong>（紅色箭頭），依序<strong>排列</strong>（紅色數字）與<strong>分布</strong>，並以<strong>交錯軸</strong>（綠色箭頭）讓子元件<strong>互相對齊基準線</strong>（方形上的綠色線）。</p>
+<ul>
+<li>由<strong>父容器</strong>設定 <code>display: flex;</code>，影響子元件布局</li>
+<li>根據<strong>主軸</strong>方向安排子元件<strong>排列</strong>方向與分布</li>
+<li>根據<strong>交錯軸</strong>設定<strong>對齊基準線</strong>。</li>
+</ul>
+<h2 id="父容器的設定"><a href="#父容器的設定" class="headerlink" title="父容器的設定"></a>父容器的設定</h2><h3 id="怎麼主導子元件排列方向（flex-direction）"><a href="#怎麼主導子元件排列方向（flex-direction）" class="headerlink" title="怎麼主導子元件排列方向（flex-direction）"></a>怎麼主導子元件排列方向（flex-direction）</h3><p>看完上面的規則後，我們發現有一個<strong>主軸</strong>負責控制排列方向與佈局。</p>
+<ul>
+<li><p><code>flex-direction</code>預設的值是<code>row</code>，指水平排列<br><img src="https://i.imgur.com/ZrzZq2K.png" srcset="/img/loading.gif" lazyload alt="row"></p>
+</li>
+<li><p>當<code>flex-direction</code>值設<code>row-reverse</code>，指水平翻轉排列<br><img src="https://i.imgur.com/Pzm3WO5.png" srcset="/img/loading.gif" lazyload alt="row-reverse"></p>
+</li>
+<li><p>當<code>flex-direction</code>值設<code>column</code>，指垂直排列</p>
+</li>
+<li><p>當<code>flex-direction</code>值設<code>column-reverse</code>，指垂直翻轉排列</p>
+</li>
+</ul>
+<p><img src="https://i.imgur.com/ifPAjvP.png" srcset="/img/loading.gif" lazyload alt="column &amp; column-reverse"></p>
+<h3 id="控制主軸是否換行（flex-wrap）"><a href="#控制主軸是否換行（flex-wrap）" class="headerlink" title="控制主軸是否換行（flex-wrap）"></a>控制主軸是否換行（flex-wrap）</h3><p>Flexbox 彈性盒有個特性，當沒有特別設定要換行時，它預設是會想盡一切辦法把子元件都塞<strong>一行</strong>，如下圖，正方形因為彈性盒的緣故，被壓縮成長方形。</p>
+<p><img src="https://i.imgur.com/Igogdcq.png" srcset="/img/loading.gif" lazyload alt="nowrap"></p>
+<p>當你設定<code>flex-wrap: wrap;</code>，塞不下的時候，它就會自動<strong>換行</strong>了<br><img src="https://i.imgur.com/Cf06taa.png" srcset="/img/loading.gif" lazyload alt="wrap"></p>
+<p>當你設定<code>flex-wrap: wrap-reverse</code>，除了會自動換行，而且是<strong>反向換行</strong>。<br><img src="https://i.imgur.com/oM9iITZ.png" srcset="/img/loading.gif" lazyload alt="wrap-reverse"></p>
+<h3 id="控制主軸的布局（justify-content）"><a href="#控制主軸的布局（justify-content）" class="headerlink" title="控制主軸的布局（justify-content）"></a>控制主軸的布局（justify-content）</h3><p>使用屬性<code>justify-content</code>，設定主軸布局</p>
+<ul>
+<li><code>flex-start</code>，預設是這個，往主軸起始點對齊</li>
+<li><code>flex-end</code>，往主軸末端對齊</li>
+<li><code>center</code>，往主軸中央對齊</li>
+<li><code>space-between</code>，平均分配主軸位置，貼齊兩端</li>
+<li><code>space-around</code>，平均分配主軸留白的部分（頭尾留白處相加會與中間留白處相等，就像跑馬燈元素間距離相等）</li>
+</ul>
+<p><img src="https://i.imgur.com/rT9lwvQ.png" srcset="/img/loading.gif" lazyload alt="justify-content"></p>
+<h3 id="控制一行，交錯軸的對齊（align-items）"><a href="#控制一行，交錯軸的對齊（align-items）" class="headerlink" title="控制一行，交錯軸的對齊（align-items）"></a>控制一行，交錯軸的對齊（align-items）</h3><p>使用屬性<code>align-items</code>，設定主軸布局</p>
+<ul>
+<li><code>flex-start</code>，預設是這個，往交錯軸起始點對齊</li>
+<li><code>flex-end</code>，往交錯軸末端對齊</li>
+<li><code>center</code>，往交錯軸中央對齊</li>
+<li><code>baseline</code>，依照內容文本對齊</li>
+<li><code>stretch</code>，在沒寫死子元件大小下，子元件自動撐滿交錯軸。</li>
+</ul>
+<p><img src="https://i.imgur.com/4cBX9XS.png" srcset="/img/loading.gif" lazyload alt="align-items"><br><em>上圖數字代表行高倍率<code>line-height</code>，用來撐高以好展示效果</em></p>
+<h3 id="控制多行，交錯軸的對齊（align-content）"><a href="#控制多行，交錯軸的對齊（align-content）" class="headerlink" title="控制多行，交錯軸的對齊（align-content）"></a>控制多行，交錯軸的對齊（align-content）</h3><p>當彈性盒子元件有換行時，才有作用，在單行時無作用！</p>
+<ul>
+<li><code>flex-start</code>，預設是這個，往交錯軸起始點開始排列</li>
+<li><code>flex-end</code>，往交錯軸末端開始排列</li>
+<li><code>center</code>，往交錯軸中央開始排列</li>
+<li><code>space-between</code>，平均分配交錯軸位置，貼齊兩端</li>
+<li><code>space-around</code>，平均分配交錯軸留白</li>
+<li><code>stretch</code>，平均分配交錯籌位置</li>
+</ul>
+<p><img src="https://i.imgur.com/JRKnhSB.png" srcset="/img/loading.gif" lazyload alt="align-content"></p>
+<h2 id="子元素設定"><a href="#子元素設定" class="headerlink" title="子元素設定"></a>子元素設定</h2><p>已經了解 Flexbox 最常用的部分了，再來就是控制子元件的 flex，也是比較困難難懂精隨的部分，搞懂了，成功就離你不遠了！</p>
+<h3 id="利用-flex-來自動幫你安排大小"><a href="#利用-flex-來自動幫你安排大小" class="headerlink" title="利用 flex 來自動幫你安排大小"></a>利用 flex 來自動幫你安排大小</h3><p>flex 總共又有劃分三個屬性</p>
+<ul>
+<li><p><code>flex-grow</code>，負責管理<strong>放大</strong>這個部分，預設是 0（不會放大），當有多個子元件設定時，數字代表比例<br><img src="https://i.imgur.com/OL9HOd2.gif" srcset="/img/loading.gif" lazyload alt="flex-grow"></p>
+</li>
+<li><p><code>flex-shrink</code>，負責管理<strong>縮小</strong>這個部分，預設是 1 （隨父容器壓縮），設定為 0 時，則不會壓縮<br><img src="https://i.imgur.com/FPK0nG7.gif" srcset="/img/loading.gif" lazyload alt="flex-shrink"></p>
+</li>
+</ul>
+<ul>
+<li><p><code>flex-basis</code>，負責管理<strong>基礎大小</strong>的部分，有壓縮，就會有設置<strong>基礎大小</strong>，避免被壓太小。</p>
+</li>
+<li><p><code>flex</code>的<strong>簡寫</strong>方式，<code>flex: &lt;grow&gt; &lt;shrink&gt; &lt;basis&gt;;</code>，當只有寫一個值時，那個值會代表 <code>grow 值</code></p>
+</li>
+</ul>
+<h3 id="想來點不一樣的對齊方式？（align-self）"><a href="#想來點不一樣的對齊方式？（align-self）" class="headerlink" title="想來點不一樣的對齊方式？（align-self）"></a>想來點不一樣的對齊方式？（align-self）</h3><p>有時候想對<strong>子元件</strong>個別設定對齊方式，就可以個別對子元件設定<code>align-self</code>。</p>
+<p>設定與<code>align-items</code>相似。</p>
+<p><img src="https://i.imgur.com/GrhCydD.png" srcset="/img/loading.gif" lazyload alt="align-self"></p>
+<h3 id="我任性！就想自訂順序（order）"><a href="#我任性！就想自訂順序（order）" class="headerlink" title="我任性！就想自訂順序（order）"></a>我任性！就想自訂順序（order）</h3><p>用來設定<strong>順序</strong>*，預設為 0 ，數字越<strong>大</strong>越靠近<strong>主軸末端</strong>，反之越靠近<strong>起始點</strong>。<br><img src="https://i.imgur.com/jL4XZFa.png" srcset="/img/loading.gif" lazyload alt="order"></p>
+<h2 id="恭喜你！又多認識了一個垂直置中的好方法"><a href="#恭喜你！又多認識了一個垂直置中的好方法" class="headerlink" title="恭喜你！又多認識了一個垂直置中的好方法"></a>恭喜你！又多認識了一個垂直置中的好方法</h2><p>盒模型那一篇已經介紹了使用 <code>mragin: 0 auto;</code> 來把元素置中，現在又多認識了 Flexbox，恭喜你又多認識了一個把元素置中的好方法了，前面有介紹 DOM tree ，認識到<strong>文本</strong>也是單獨一個 DOM 節點，我們就可以利用 Flexbox 來達到<strong>水平垂直置中</strong>的效果了！</p>
+<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>當初在學 Flexbox，主要是透過 六角學院副校長——<strong>卡斯伯</strong>的 <a target="_blank" rel="noopener" href="https://wcc723.github.io/css/2017/07/21/css-flex/">圖解：CSS flex屬性一點也不難</a> 學習的，讓我受益良多，另外也推薦兩款 Flexbox 小遊戲， <a target="_blank" rel="noopener" href="https://flexboxfroggy.com/">Flexbox Froggy</a> 與 <a target="_blank" rel="noopener" href="https://hexschool.github.io/flexbox-pirate/index.html#/">flex Pirate 海盜船</a>，對認識 Flexbox 效果滿好的，下一篇將進入我們的定位（Position）與浮動（float）章節</p>
 
             </div>
             <hr>
@@ -283,18 +339,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/09/16/2021-9-16-it_ironman-day7/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Day.7 「伸縮自在的愛～」 —— CSS 彈性盒模型 Flexbox</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021/09/14/2021-9-14-it_ironman-day5/">
-                        <span class="hidden-mobile">Day.5 「我的樣式失靈啦！你有頭緒嗎？」 —— CSS 選擇器 與 權重</span>
+                      <a href="/2021/09/15/2021-9-15-it_ironman-day6/">
+                        <span class="hidden-mobile">Day.6 「你扮演的是什麼角色？」 —— CSS display 屬性</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -316,8 +366,8 @@
     
       <script type="text/javascript">
         var disqus_config = function() {
-          this.page.url = 'http://example.com/2021/09/15/2021-9-15-it_ironman-day6/';
-          this.page.identifier = '/2021/09/15/2021-9-15-it_ironman-day6/';
+          this.page.url = 'http://example.com/2021/09/16/2021-9-16-it_ironman-day7/';
+          this.page.identifier = '/2021/09/16/2021-9-16-it_ironman-day7/';
         };
         Fluid.utils.loadComments('#disqus_thread', function() {
           var d = document, s = d.createElement('script');
