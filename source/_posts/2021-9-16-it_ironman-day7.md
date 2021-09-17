@@ -11,14 +11,15 @@ tags:
     - CSS
 excerpt: 要來介紹大家最愛用的 Flexbox 了，Flexbox 之所以被稱之為彈性盒，是因為可以隨著視窗的尺寸，改變自己布局的方式，使用起來非常彈性，且易於使用，所以深受大家喜愛。
 ---
+
 # Day.7 「伸縮自在的愛～」 —— CSS 彈性盒模型 Flexbox
 
-![隨著容器跟著伸縮](https://i.imgur.com/ImmG3lU.gif)
-
+![CSS Flexbox](https://i.imgur.com/lSYvVfi.png)
 
 ## 為何稱為彈性盒？
 
 要來介紹大家最愛用的 Flexbox 了，Flexbox 之所以被稱之為彈性盒，是因為可以隨著視窗的尺寸，改變自己布局的方式，使用起來非常彈性，且易於使用，所以深受大家喜愛。
+![隨著容器跟著伸縮](https://i.imgur.com/ImmG3lU.gif)
 
 ## Flexbox 規則
 
