@@ -15,6 +15,7 @@ excerpt: 使用標籤元素套用就像是畫草圖上底色，雖然有色彩�
 # Day.5 「我的樣式失靈啦！你有頭緒嗎？」 —— CSS 選擇器 與 權重
 
 ![My CSS is invalid??](https://i.imgur.com/vD6fclV.jpg)
+Photo by [Tim Mossholder](https://unsplash.com/@timmossholder) on [Unsplash](https://unsplash.com/)
 
 了解盒模型後，就要為標籤套上各種花樣了，上一篇介紹了簡單的套用方法，但這個套用方法其實不太好用！
 

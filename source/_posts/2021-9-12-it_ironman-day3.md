@@ -14,7 +14,8 @@ excerpt: 雖然會最基礎的 div 和 span 標籤就能夠開始切版了，甚
 
 # Day.3 「建構網頁的基石！」 —— 使用網頁標籤
 
-![樂高](https://i.imgur.com/G3Fh3cl.jpg)
+![網頁就像樂高](https://i.imgur.com/G3Fh3cl.jpg)
+Photo by [Alphacolor](https://unsplash.com/@duck58cth) on [Unsplash](https://unsplash.com/)
 
 我們前面已經稍微認識了網頁的架構了，就像樂高一塊一塊堆疊起來，前一篇已經介紹的就不多贅述了。
 

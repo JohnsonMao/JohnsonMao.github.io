@@ -15,6 +15,7 @@ excerpt: 我們已經了解到基本的切版概念了，但前面所學的都�
 # Day.8 「怎麼就這樣脫離文檔流了！」 —— CSS 定位屬性 position & 浮動元素 float
 
 ![就跟泡泡一樣，脫離了水流](https://i.imgur.com/2aB7qU7.jpg)
+Photo by [傅甬 华](https://unsplash.com/@hhh13) on [Unsplash](https://unsplash.com/)
 
 我們已經了解到基本的切版概念了，但前面所學的都是**固定在網頁**上，也就是之前所說正常的**文檔流**！而這一篇就要來學會更進階一點了佈局方法了，讓元素布局上更加奔放自由，**脫離文檔流**。
 

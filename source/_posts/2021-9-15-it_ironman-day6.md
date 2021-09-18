@@ -15,6 +15,7 @@ excerpt: 如同前面章節所說，一開始的標籤元素，很單調只有�
 # Day.6 「你扮演的是什麼角色？」 —— CSS display 屬性
 
 ![我們都是人，在社會中扮演著不同的角色。](https://i.imgur.com/dbVE6IA.jpg)
+Photo by [NeONBRAND](https://unsplash.com/@neonbrand) on [Unsplash](https://unsplash.com/)
 
 如同前面章節所說，一開始的標籤元素，很單調只有一行並沒有各式各樣的元素，是瀏覽器內建的樣式表賦予它該扮演的角色。
 

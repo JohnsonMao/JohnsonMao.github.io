@@ -15,6 +15,7 @@ excerpt: 大家好！我是毛毛，因為這波疫情影響下，讓我多了�
 # Day.1 「工欲善其事，必先利其器！」—— 前言 與 介紹工具
 
 ![Everyone can code](https://i.imgur.com/eDkVQpQ.jpg)
+Photo by [Adi Goldstein](https://unsplash.com/@adigold1) on [Unsplash](https://unsplash.com/)
 
 ## 大家好
 

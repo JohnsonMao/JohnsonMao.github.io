@@ -15,6 +15,7 @@ excerpt: 上一篇有講到網頁三兄弟，其中有一個老大哥負責撐�
 # Day.2 「歡迎來到網頁這個世界！」 —— 認識網頁架構
 
 ![network work](https://i.imgur.com/QwHIOe0.jpg)
+Photo by [Robynne Hu](https://unsplash.com/@robynnexy) on [Unsplash](https://unsplash.com/)
 
 ## 網頁世界是由什麼組成？
 
