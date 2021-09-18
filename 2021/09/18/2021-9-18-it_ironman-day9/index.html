@@ -14,11 +14,11 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
   <meta name="theme-color" content="#2f4154">
-  <meta name="description" content="大家好！我是毛毛，因為這波疫情影響下，讓我多了許多時間可以好好投資自己，想把自己目前所學的技能，轉化成能夠讓更多人更好吸收的知識，如果有發現內容有誤，也請您不吝指教，感謝。">
+  <meta name="description" content="前面篇章有提到 CSS 選擇器，這篇會介紹 偽類選擇器 與 屬性選擇器，以及介於有與沒有之間的偽元素～">
   <meta name="author" content="Mao">
   <meta name="keywords" content="">
   
-  <title>Day.1 「工欲善其事，必先利其器！」—— 前言 與 介紹工具 - Mao&#39;s blog</title>
+  <title>Day.9 「我介於有與沒有之間～」 —— CSS 偽類選擇器（Pseudo classes） 與 偽元素（Pseudo element） - Mao&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
 
@@ -158,12 +158,12 @@
 </nav>
 
     <div class="banner" id="banner" parallax=true
-         style="background: url('https://i.imgur.com/eDkVQpQ.jpg') no-repeat center center;
+         style="background: url('https://i.imgur.com/0Vv4F3E.jpg') no-repeat center center;
            background-size: cover;">
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="Day.1 「工欲善其事，必先利其器！」—— 前言 與 介紹工具">
+            <span class="h2" id="subtitle" title="Day.9 「我介於有與沒有之間～」 —— CSS 偽類選擇器（Pseudo classes） 與 偽元素（Pseudo element）">
               
             </span>
 
@@ -173,8 +173,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-09-10 22:00" pubdate>
-        2021年9月10日 晚上
+      <time datetime="2021-09-18 22:00" pubdate>
+        2021年9月18日 晚上
       </time>
     </span>
   
@@ -185,7 +185,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      762 字
+      1.2k 字
     </span>
   
 
@@ -195,7 +195,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      8
+      13
        分钟
     </span>
   
@@ -225,40 +225,58 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Day.1 「工欲善其事，必先利其器！」—— 前言 與 介紹工具</h1>
+            <h1 style="display: none">Day.9 「我介於有與沒有之間～」 —— CSS 偽類選擇器（Pseudo classes） 與 偽元素（Pseudo element）</h1>
             
             <div class="markdown-body">
-              <h1 id="Day-1-「工欲善其事，必先利其器！」——-前言-與-介紹工具"><a href="#Day-1-「工欲善其事，必先利其器！」——-前言-與-介紹工具" class="headerlink" title="Day.1 「工欲善其事，必先利其器！」—— 前言 與 介紹工具"></a>Day.1 「工欲善其事，必先利其器！」—— 前言 與 介紹工具</h1><p><img src="https://i.imgur.com/eDkVQpQ.jpg" srcset="/img/loading.gif" lazyload alt="Everyone can code"><br>Photo by <a target="_blank" rel="noopener" href="https://unsplash.com/@adigold1">Adi Goldstein</a> on <a target="_blank" rel="noopener" href="https://unsplash.com/">Unsplash</a></p>
-<h2 id="大家好"><a href="#大家好" class="headerlink" title="大家好"></a>大家好</h2><p>我是毛毛，因為這波疫情影響下，讓我多了許多時間可以好好投資自己，想把自己目前所學的技能，轉化成能夠讓更多人更好吸收的知識，如果有發現內容有誤，也請您不吝指教，感謝。</p>
-<!-- more -->
-
-<h2 id="這個系列"><a href="#這個系列" class="headerlink" title="這個系列"></a>這個系列</h2><p>關於這個系列，會盡量著重在使用簡單好懂的解說，介紹網頁三兄弟（ HTML 、 CSS 、 Javascript ），希望在編寫的同時，回顧自己是否確實搞懂，正所謂最好的學習方式除了輸入，還要懂得輸出。</p>
-<h2 id="使用的編輯器"><a href="#使用的編輯器" class="headerlink" title="使用的編輯器"></a>使用的編輯器</h2><p>我會推薦使用 VS Code 編輯器，因為他非常適合開發 HTML 、 CSS 、 Javascript，而且套件、社群也已經相當成熟了，對於新手來說，非常容易入門。<br><a target="_blank" rel="noopener" href="https://code.visualstudio.com/download">VS Code 下載官網</a></p>
-<h3 id="善用套件，事半功倍"><a href="#善用套件，事半功倍" class="headerlink" title="善用套件，事半功倍"></a>善用套件，事半功倍</h3><p>VS Code 有相當多個套件可以使用，這裡先介紹常用的套件，當然還有許多套件值得你慢慢尋找。</p>
-<ul>
-<li><p><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=MS-CEINTL.vscode-language-pack-zh-hant">Chinese (Traditional) Language Pack for Visual Studio Code</a><br>  習慣看中文介面？ 這個套件可以把 VS Code 轉成繁體中文版。</p>
+              <h1 id="Day-9-「我介於有與沒有之間～」-——-CSS-偽類選擇器（Pseudo-classes）-與-偽元素（Pseudo-element）"><a href="#Day-9-「我介於有與沒有之間～」-——-CSS-偽類選擇器（Pseudo-classes）-與-偽元素（Pseudo-element）" class="headerlink" title="Day.9 「我介於有與沒有之間～」 —— CSS 偽類選擇器（Pseudo classes） 與 偽元素（Pseudo element）"></a>Day.9 「我介於有與沒有之間～」 —— CSS 偽類選擇器（Pseudo classes） 與 偽元素（Pseudo element）</h1><p><img src="https://i.imgur.com/0Vv4F3E.jpg" srcset="/img/loading.gif" lazyload alt="有看到，卻不再 HTML 內～概念圖"><br>Photo by <a target="_blank" rel="noopener" href="https://unsplash.com/@lazycreekimages">Michael Dziedzic</a> on <a target="_blank" rel="noopener" href="https://unsplash.com/">Unsplash</a></p>
+<h2 id="什麼是偽類選擇器（Pseudo-classes）？"><a href="#什麼是偽類選擇器（Pseudo-classes）？" class="headerlink" title="什麼是偽類選擇器（Pseudo classes）？"></a>什麼是偽類選擇器（Pseudo classes）？</h2><p>前面篇章有提到 CSS 選擇器，通常都能單獨使用，而偽類選擇器比較特別，他<strong>必須</strong>搭配其他選擇器來使用，我們常使用的<strong>操作型偽類</strong>在<strong>觸發條件前</strong>，一切都是假的！平時並不會有效果，最常見的範例就是<code>&lt;a&gt;</code>標籤。</p>
+<h2 id="偽類選擇器"><a href="#偽類選擇器" class="headerlink" title="偽類選擇器"></a>偽類選擇器</h2><p>這邊將舉出最常見的偽類選擇器與使用方法，還有許多偽類選擇器可以查看 MDN 官方文件<br>使用方法需在前面加<code>:</code>前綴，以<code>&lt;a&gt;</code>標籤作為範例：<code>a:hover &#123; css... &#125;</code></p>
+<h3 id="操作型偽類"><a href="#操作型偽類" class="headerlink" title="操作型偽類"></a>操作型偽類</h3><ul>
+<li><p><code>:hover</code>，當游標懸浮在元素上時，產生效果，最常見的使用方式。</p>
+<p><a href="#">游標懸浮在我上面，我顏色會變</a></p>
 </li>
-<li><p><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=oderwat.indent-rainbow">indent-rainbow</a><br>  縮排不知縮到哪去？ 幫縮排添加顏色，讓程式碼更加容易閱讀。</p>
+<li><p><code>:active</code>，當游標對著元素壓住時，產生效果，通常使用在按鈕類型的元件。</p>
 </li>
-<li><p><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=CoenraadS.bracket-pair-colorizer">Bracket Pair Colorizer</a><br>  在寫 Javascript 漏打一個括弧而找得很辛苦？ 這個套件幫你把對應的括弧上相同顏色。</p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer">Live Server</a><br>  開發網站想看網站的呈現？ 這個套件可以幫你及時更新畫面，不用一直按 F5。</p>
+<li><p><code>:focus</code>，當元素是焦點狀態時，產生效果，通常都是使用在<code>&lt;input&gt;</code>輸入框。</p>
 </li>
 </ul>
-<h3 id="善用快捷鍵，時間就是金錢"><a href="#善用快捷鍵，時間就是金錢" class="headerlink" title="善用快捷鍵，時間就是金錢"></a>善用快捷鍵，時間就是金錢</h3><p>將雙手盡量停留在鍵盤上，能更有效提升寫 code 的效率，這裡先介紹我常用的快捷鍵。<br>此篇以 Windows 操作，如果是 Mac 可能會有些許不一樣<br>Mac 需把 <code>Ctrl</code> 換成 <code>Cmd ⌘</code></p>
-<ul>
-<li><p>VS Code 非常貼心，本身就內建 HTML 、 CSS 、Javascript 的 Emmet，只要輸入縮寫語法，按下 Tab 或 Enter 就能擴充縮寫來快速編寫。需注意縮寫語法取決於副檔名。<br><img src="https://i.imgur.com/Vi5ZXGn.gif" srcset="/img/loading.gif" lazyload alt="縮寫語法"><br><em>此圖範例為，新增檔案切換成 HTML 副檔名，並使用 HTML emmet</em></p>
-</li>
-<li><p><code>Ctrl</code> + <code>D</code> 可以同字串選取。<br><img src="https://i.imgur.com/zWquMNw.gif" srcset="/img/loading.gif" lazyload alt="同字串選取"><br><em>此圖範例為，選取 MyNavLink 換成 NavLink</em></p>
-</li>
-<li><p>還在整段<code>Ctrl</code> + <code>C</code> + <code>Ctrl</code> + <code>V</code>，複製程式碼嗎？可以嘗試看看使用一個<code>Shift</code> + <code>Alt</code> + <code>上或下</code>來複製程式碼<br><img src="https://i.imgur.com/Li08fjb.gif" srcset="/img/loading.gif" lazyload alt="Shift + Alt + 上或下來複製程式碼"><br><em>此圖範例為，把整個<code>&lt;ul&gt;</code>格式複製貼上</em></p>
-</li>
-<li><p>使用<code>Shift</code> + <code>Alt</code> + <code>F</code>，就能快速為程式碼進行 Format 排版<br><img src="https://i.imgur.com/lJDcUXS.gif" srcset="/img/loading.gif" lazyload alt="快速為程式碼進行 Format 排版"><br><em>此圖範例為，使用<code>Shift</code> + <code>Alt</code> + <code>F</code>進行快速排版</em></p>
-</li>
-<li><p>別再左側資料夾慢慢找檔案，善用<code>Ctrl</code> + <code>E</code>或<code>Ctrl</code> + <code>P</code>搜尋檔案，就可以直接切換檔案<br><img src="https://i.imgur.com/jHQoBOG.gif" srcset="/img/loading.gif" lazyload alt="Ctrl + P 搜尋檔案，就可以直接切換檔案"><br><em>此圖範例為，快速導覽至 Nav.jsx</em></p>
+<h3 id="結構型偽類"><a href="#結構型偽類" class="headerlink" title="結構型偽類"></a>結構型偽類</h3><ul>
+<li><code>:nth-child()</code>，會根據<code>()</code>條件，影響同級元素樣式的偽類，通常使用在清單、表格這類有規律性的結構做變化。以下範例綠色為有修改樣式，紅色為未修改樣式<ul>
+<li><code>(3)</code>，代表同級元素第三個做樣式。<br><img src="https://i.imgur.com/zkIOMsO.png" srcset="/img/loading.gif" lazyload alt="nth-child(3)"></li>
+<li><code>(odd)</code>，代表同級元素中的基數列做樣式。<br><img src="https://i.imgur.com/PtKlC8P.png" srcset="/img/loading.gif" lazyload alt="nth-child(odd)"></li>
+<li><code>(even)</code>代表同級元素中的偶數列做樣式。<br><img src="https://i.imgur.com/dkmyI1M.png" srcset="/img/loading.gif" lazyload alt="nth-child(even)"></li>
+<li><code>(3n + 1)</code>，代表每 3 個為一組，每組第 1 個做樣式，n 的起始值為 0 。<br><img src="https://i.imgur.com/0vgYHxd.png" srcset="/img/loading.gif" lazyload alt="nth-child(3n + 1)"></li>
+</ul>
 </li>
 </ul>
-<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>這是我個人常用的套件工具與快捷鍵，準備好我們的工具，接下來就要進入我們的網頁篇～<br>也歡迎大家在下面留言補充更多好玩好用的套件～</p>
+<h2 id="什麼是偽元素（Pseudo-element）？"><a href="#什麼是偽元素（Pseudo-element）？" class="headerlink" title="什麼是偽元素（Pseudo element）？"></a>什麼是偽元素（Pseudo element）？</h2><p>偽元素就更妙了，原本 HTML 結構上沒有，但利用<strong>偽元素</strong>憑空造出一個虛幻的元素，在開發者模式下，只看到<code>::before</code>與<code>::after</code>，到底有還沒有，偽元素的好處就是讓 HTML 結構更加簡單清楚，<del>還感覺自己更厲害了</del>。<br><img src="https://i.imgur.com/fE4Aiv1.png" srcset="/img/loading.gif" lazyload alt="Pseudo element"></p>
+<h2 id="偽元素"><a href="#偽元素" class="headerlink" title="偽元素"></a>偽元素</h2><p>這邊就舉最常用的兩個偽元素，通常偽元素的使用實際是想讓 HTML 結構更簡單，避免太多<strong>無意義</strong>的標籤。<br>使用方法為需在前面加<code>::</code>前綴，以<code>&lt;div&gt;</code>標籤作為範例：<code>div::after &#123; content: &#39;&#39;; css... &#125;</code>，其中偽元素要添加 <code>content: &#39;&#39;;</code> ，否則沒效果。</p>
+<ul>
+<li><p><code>::after</code>，在元素<strong>後面</strong>安插新的元素，前一篇有介紹<strong>脫離文檔流</strong>的父容器攤縮問題，需使用偽元素（當然還有別的方法，但這個方法比較乾淨），因為在元素<strong>後面</strong>添加新的元素，剛好支撐了父容器的高度以解決攤縮問題，除了解決攤縮問題，還能製作與一般標籤一樣的事情，如下面按鈕淺藍色的部分。</p>
+</li>
+<li><p><code>::before</code>，在元素<strong>前面</strong>安插新的元素，與上一個很相似，只是從元素後面變成元素前面，如下面按鈕藍紫色的部分。</p>
+</li>
+<li><p>偽元素中的 <code>content</code> 是必須要添加的，它代表了偽元素的內容物，通常情況下都是寫一般 string 空字串，當然也有很多值可以寫，但這就需要研究了。</p>
+</li>
+</ul>
+<p>我個人就很喜歡利用偽元素來自製 icon，並透過 CSS 動畫優化。如手機上常出現的<strong>漢堡按鈕</strong>。</p>
+<p><img src="https://i.imgur.com/bTRSASr.png" srcset="/img/loading.gif" lazyload alt="漢堡按鈕"><br><a target="_blank" rel="noopener" href="https://codepen.io/vsfvjiuv-the-typescripter/pen/rNwpLQo?editors=1100">漢堡按鈕 Codepen</a></p>
+<h2 id="屬性選擇器"><a href="#屬性選擇器" class="headerlink" title="屬性選擇器"></a>屬性選擇器</h2><p>選擇器大致上都介紹得差不多了！</p>
+<p>這裡剛好補充一下屬性選擇器，屬性選擇器也有點類似於偽類選擇器，同樣都是要搭配其他選擇器才能使用，不過他是屬於把選擇器條件範圍縮小，平時就有效果了，並不像偽類選擇器平時沒效果。</p>
+<p>因為我平時很少使用，但想說都介紹選擇器了，也覺得屬性選擇器可能有時候有奇效，所以簡單介紹。<br>使用方法是屬性用<code>[key = value]</code>來縮小範圍。</p>
+<ul>
+<li><code>input[type=&quot;checkbox&quot;]</code>，鎖定複選框套入樣式。<br><img src="https://i.imgur.com/zJ8pOOb.png" srcset="/img/loading.gif" lazyload alt="複選框 套入樣式"></li>
+</ul>
+<p><em>只針對複選框修改寬度高度</em></p>
+<ul>
+<li><code>a[url^=&quot;https://ithelp.ithome.com.tw/&quot;]</code>，選定超連結網址<strong>開頭</strong>是<code>https://ithelp.ithome.com.tw/</code>套入樣式<br><img src="https://i.imgur.com/TavcrpT.png" srcset="/img/loading.gif" lazyload alt="iT 邦幫忙 連結 套入樣式"><ul>
+<li>條件等於前面加<code>^</code>，表示<strong>開頭</strong>要包含的條件，如<code>url^=https://</code>，網址符合 HTTPS 協定的套入樣式</li>
+<li>條件等於前面加<code>$</code>，表示<strong>結尾</strong>要包含的條件，如<code>src$=&quot;png&quot;</code>，PNG 圖檔的套入樣式</li>
+<li>條件等於前面加<code>*</code>，表示字串中<strong>只要有符合</strong>的條件，如<code>url*=google</code>，網址中有 google 的套入樣式</li>
+</ul>
+</li>
+</ul>
+<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>從一開始到現在，我們已經把最基礎的切版技能都瞭解了，明天將進入切版重頭戲 RWD 響應式網頁設計章節！</p>
 
             </div>
             <hr>
@@ -270,13 +288,13 @@
                     
                       <a class="hover-with-bg" href="/categories/%E7%A8%8B%E5%BC%8F%E8%AA%9E%E8%A8%80/">程式語言</a>
                     
-                      <a class="hover-with-bg" href="/categories/%E7%A8%8B%E5%BC%8F%E8%AA%9E%E8%A8%80/%E5%B7%A5%E5%85%B7/">工具</a>
-                    
-                      <a class="hover-with-bg" href="/categories/%E7%A8%8B%E5%BC%8F%E8%AA%9E%E8%A8%80/%E5%B7%A5%E5%85%B7/VS-Code/">VS Code</a>
+                      <a class="hover-with-bg" href="/categories/%E7%A8%8B%E5%BC%8F%E8%AA%9E%E8%A8%80/%E5%89%8D%E7%AB%AF/">前端</a>
                     
                       <a class="hover-with-bg" href="/categories/iT-%E9%90%B5%E4%BA%BA%E8%B3%BD/">iT 鐵人賽</a>
                     
                       <a class="hover-with-bg" href="/categories/iT-%E9%90%B5%E4%BA%BA%E8%B3%BD/%E7%AC%AC-2021-%E5%B9%B4/">第 2021 年</a>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%A8%8B%E5%BC%8F%E8%AA%9E%E8%A8%80/%E5%89%8D%E7%AB%AF/CSS/">CSS</a>
                     
                   </div>
                 
@@ -286,7 +304,7 @@
                     
                       <a class="hover-with-bg" href="/tags/iT-%E9%90%B5%E4%BA%BA%E8%B3%BD/">iT 鐵人賽</a>
                     
-                      <a class="hover-with-bg" href="/tags/VS-Code/">VS Code</a>
+                      <a class="hover-with-bg" href="/tags/CSS/">CSS</a>
                     
                   </div>
                 
@@ -297,18 +315,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/09/11/2021-9-11-it_ironman-day2/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Day.2 「歡迎來到網頁這個世界！」 —— 認識網頁架構</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021/09/06/2021-9-6-mongodb/">
-                        <span class="hidden-mobile">MongoDB</span>
+                      <a href="/2021/09/17/2021-9-17-it_ironman-day8/">
+                        <span class="hidden-mobile">Day.8 「怎麼就這樣脫離文檔流了！」 —— CSS 定位屬性 position & 浮動元素 float</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -330,8 +342,8 @@
     
       <script type="text/javascript">
         var disqus_config = function() {
-          this.page.url = 'http://example.com/2021/09/10/2021-9-10-it_ironman-day1/';
-          this.page.identifier = '/2021/09/10/2021-9-10-it_ironman-day1/';
+          this.page.url = 'http://example.com/2021/09/18/2021-9-18-it_ironman-day9/';
+          this.page.identifier = '/2021/09/18/2021-9-18-it_ironman-day9/';
         };
         Fluid.utils.loadComments('#disqus_thread', function() {
           var d = document, s = d.createElement('script');
