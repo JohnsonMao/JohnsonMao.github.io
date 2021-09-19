@@ -1,8 +1,8 @@
 ---
 title: Day.7 「伸縮自在的愛～」 —— CSS 彈性盒模型 Flexbox
 date: 2021/9/16 22:00:00
-index_img: https://i.imgur.com/ImmG3lU.gif
-banner_img: https://i.imgur.com/ImmG3lU.gif
+index_img: https://i.imgur.com/lSYvVfi.png
+banner_img: https://i.imgur.com/lSYvVfi.png
 categories:
     - [程式語言, 前端, CSS]
     - [iT 鐵人賽, 第 2021 年]
