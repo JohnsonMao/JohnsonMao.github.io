@@ -4,6 +4,41 @@
   
   
   <entry>
+    <title>Day.10 「沒有 RWD 的網站 === 沒有未來」 —— RWD　響應式網頁設計</title>
+    <link href="/2021/09/19/2021-9-19-it_ironman-day10/"/>
+    <url>/2021/09/19/2021-9-19-it_ironman-day10/</url>
+    
+    <content type="html"><![CDATA[<h1 id="Day-10-「沒有-RWD-的網站-沒有未來」-——-RWD-響應式網頁設計"><a href="#Day-10-「沒有-RWD-的網站-沒有未來」-——-RWD-響應式網頁設計" class="headerlink" title="Day.10 「沒有 RWD 的網站 === 沒有未來」 —— RWD　響應式網頁設計"></a>Day.10 「沒有 RWD 的網站 === 沒有未來」 —— RWD　響應式網頁設計</h1><p><img src="https://i.imgur.com/ruLsPM4.png" alt="沒有手機版網頁，使用者體感差，字小按鈕也很難點"></p><p>雖然標題有點聳動，但在這個行動裝置越來越多的現在，如果沒有<strong>手機版的網頁</strong>，<strong>SEO</strong> 排名會大受影響，也等同於宣告死刑了。</p><h2 id="什麼是-RWD？"><a href="#什麼是-RWD？" class="headerlink" title="什麼是 RWD？"></a>什麼是 RWD？</h2><p>是 Responsive Web Design 的簡稱 RWD，中文翻譯為<strong>響應式網頁設計</strong>，主要是針對不同裝置，網頁透過裝置寬度來決定排版的方式。</p><p><img src="https://i.imgur.com/Uyp0Xl3.gif" alt="隨著裝置不同，布局也不同"></p><h2 id="RWD-要如何開始？"><a href="#RWD-要如何開始？" class="headerlink" title="RWD 要如何開始？"></a>RWD 要如何開始？</h2><h3 id="1-在-HTML-添加-viewport-的-meta-標籤"><a href="#1-在-HTML-添加-viewport-的-meta-標籤" class="headerlink" title="1. 在 HTML 添加 viewport 的 meta 標籤"></a>1. 在 HTML 添加 viewport 的 meta 標籤</h3><p>首先要在 HTML 檔案 <code>&lt;head&gt;</code> 標籤內添加 <code>&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;</code>，通常使用 emmet 會自動設定。<br>viewport 屬性值：</p><ul><li>width=device-width：寬度等於當前裝置的寬度</li><li>height=device-height：高度等於當前裝置的高度</li><li>initial-scale：初始的縮放比例</li><li>minimum-scale：允許使用者縮放到的最小比例</li><li>maximum-scale：允許使用者縮放到的最大比例</li><li>user-scalable：使用者是否可以手動縮放</li></ul><h3 id="2-決定設計模式"><a href="#2-決定設計模式" class="headerlink" title="2. 決定設計模式"></a>2. 決定設計模式</h3><ul><li>局部流動 (mostly fluid)，隨著螢幕寬度斷點，主體像流體般依序往下排列。</li><li>欄內容下排 (column drop)，最大寬度時呈現橫向排列，隨著螢幕斷點往下推擠排列。</li><li>版面配置位移 (layout shifter)，隨著螢幕寬度斷點，進行版面大幅配置改變。</li><li>細微調整 (tiny tweaks)，隨著螢幕寬度，微小調整字體大小與按鈕大小 。</li><li>畫布外空間利用 (off canvas)，以橫向卷軸來操作，在小螢幕時顯示滿版，大螢幕時會排進更多畫面，有點像<strong>簡報</strong>。</li></ul><p>想更詳細的介紹可以看<a href="https://developers.google.com/web/fundamentals/design-and-ux/responsive/patterns?hl=zh-tw">回應式網頁設計模式</a></p><h3 id="3-使用-CSS-media-query-設定"><a href="#3-使用-CSS-media-query-設定" class="headerlink" title="3. 使用 CSS media query 設定"></a>3. 使用 CSS media query 設定</h3><p>使用方法在 CSS 檔案內需用<code>@media (條件) &#123;樣式&#125;</code>來設定，需要<strong>注意</strong>要寫在下方</p><p>例如想設定當視窗<strong>寬度小於</strong> 768px，改變背景顏色，語法範例：</p><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-keyword">@media</span> (<span class="hljs-attribute">max-width</span>: <span class="hljs-number">768px</span>) &#123;<br>  <span class="hljs-comment">/*  當視窗寬度 大於 768px 省略這段 CSS  */</span><br>  <span class="hljs-selector-tag">body</span> &#123;<br>    <span class="hljs-attribute">background</span>: <span class="hljs-number">#88f</span>;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure><p><img src="https://i.imgur.com/i7aU70Q.gif" alt="RWD 效果"><br><img src="https://i.imgur.com/zxzxCoj.png" alt="開發者工具可以看出，當螢幕小於 768px 原本樣式被覆蓋"></p><p>如果要改成<strong>大於</strong> 768px，才觸發樣式，就把條件設成<code>(min-width: 768px)</code></p><h3 id="4-使用相對單位設定大小"><a href="#4-使用相對單位設定大小" class="headerlink" title="4. 使用相對單位設定大小"></a>4. 使用相對單位設定大小</h3><p>此外會建議多使用相對單位設定樣式（%），比較不會出現字太小或按鈕太小的問題。</p><h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>我們已經大致上了解了 RWD 的設置，接著就是持續的實作才能掌握它，想了解更詳細的設定模式，可以看<a href="https://developers.google.com/web/fundamentals/design-and-ux/responsive/patterns?hl=zh-tw">回應式網頁設計模式</a>，下一個章節將會介紹 CSS transform。</p><h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul><li><a href="https://developers.google.com/web/fundamentals/design-and-ux/responsive/patterns?hl=zh-tw">回應式網頁設計模式</a></li></ul>]]></content>
+    
+    
+    <categories>
+      
+      <category>程式語言</category>
+      
+      <category>前端</category>
+      
+      <category>iT 鐵人賽</category>
+      
+      <category>第 2021 年</category>
+      
+      <category>CSS</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>iT 鐵人賽</tag>
+      
+      <tag>CSS</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Day.9 「我介於有與沒有之間～」 —— CSS 偽類選擇器（Pseudo classes） 與 偽元素（Pseudo element）</title>
     <link href="/2021/09/18/2021-9-18-it_ironman-day9/"/>
     <url>/2021/09/18/2021-9-18-it_ironman-day9/</url>
