@@ -18,7 +18,7 @@
   <meta name="author" content="Mao">
   <meta name="keywords" content="">
   
-  <title>Day.10 「沒有 RWD 的網站 === 沒有未來」 —— RWD　響應式網頁設計 - Mao&#39;s blog</title>
+  <title>Day.11 「來為網頁添加更多的可能性！」 —— CSS Transform - Mao&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
 
@@ -158,12 +158,12 @@
 </nav>
 
     <div class="banner" id="banner" parallax=true
-         style="background: url('https://i.imgur.com/ruLsPM4.png') no-repeat center center;
+         style="background: url('https://i.imgur.com/VoFpU6Q.png') no-repeat center center;
            background-size: cover;">
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="Day.10 「沒有 RWD 的網站 === 沒有未來」 —— RWD　響應式網頁設計">
+            <span class="h2" id="subtitle" title="Day.11 「來為網頁添加更多的可能性！」 —— CSS Transform">
               
             </span>
 
@@ -173,8 +173,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-09-19 22:00" pubdate>
-        2021年9月19日 晚上
+      <time datetime="2021-09-20 22:00" pubdate>
+        2021年9月20日 晚上
       </time>
     </span>
   
@@ -185,7 +185,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      664 字
+      986 字
     </span>
   
 
@@ -195,7 +195,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      7
+      11
        分钟
     </span>
   
@@ -225,40 +225,42 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Day.10 「沒有 RWD 的網站 === 沒有未來」 —— RWD　響應式網頁設計</h1>
+            <h1 style="display: none">Day.11 「來為網頁添加更多的可能性！」 —— CSS Transform</h1>
             
             <div class="markdown-body">
-              <h1 id="Day-10-「沒有-RWD-的網站-沒有未來」-——-RWD-響應式網頁設計"><a href="#Day-10-「沒有-RWD-的網站-沒有未來」-——-RWD-響應式網頁設計" class="headerlink" title="Day.10 「沒有 RWD 的網站 === 沒有未來」 —— RWD　響應式網頁設計"></a>Day.10 「沒有 RWD 的網站 === 沒有未來」 —— RWD　響應式網頁設計</h1><p><img src="https://i.imgur.com/ruLsPM4.png" srcset="/img/loading.gif" lazyload alt="沒有手機版網頁，使用者體感差，字小按鈕也很難點"></p>
-<p>雖然標題有點聳動，但在這個行動裝置越來越多的現在，如果沒有<strong>手機版的網頁</strong>，<strong>SEO</strong> 排名會大受影響，也等同於宣告死刑了。</p>
-<h2 id="什麼是-RWD？"><a href="#什麼是-RWD？" class="headerlink" title="什麼是 RWD？"></a>什麼是 RWD？</h2><p>是 Responsive Web Design 的簡稱 RWD，中文翻譯為<strong>響應式網頁設計</strong>，主要是針對不同裝置，網頁透過裝置寬度來決定排版的方式。</p>
-<p><img src="https://i.imgur.com/Uyp0Xl3.gif" srcset="/img/loading.gif" lazyload alt="隨著裝置不同，布局也不同"></p>
-<h2 id="RWD-要如何開始？"><a href="#RWD-要如何開始？" class="headerlink" title="RWD 要如何開始？"></a>RWD 要如何開始？</h2><h3 id="1-在-HTML-添加-viewport-的-meta-標籤"><a href="#1-在-HTML-添加-viewport-的-meta-標籤" class="headerlink" title="1. 在 HTML 添加 viewport 的 meta 標籤"></a>1. 在 HTML 添加 viewport 的 meta 標籤</h3><p>首先要在 HTML 檔案 <code>&lt;head&gt;</code> 標籤內添加 <code>&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;</code>，通常使用 emmet 會自動設定。<br>viewport 屬性值：</p>
+              <h1 id="Day-11-「來為網頁添加更多的可能性！」-——-CSS-Transform"><a href="#Day-11-「來為網頁添加更多的可能性！」-——-CSS-Transform" class="headerlink" title="Day.11 「來為網頁添加更多的可能性！」 —— CSS Transform"></a>Day.11 「來為網頁添加更多的可能性！」 —— CSS Transform</h1><p><img src="https://i.imgur.com/VoFpU6Q.png" srcset="/img/loading.gif" lazyload alt="CSS-transform"></p>
+<h2 id="transform-是做什麼的？"><a href="#transform-是做什麼的？" class="headerlink" title="transform 是做什麼的？"></a>transform 是做什麼的？</h2><p>transform 屬性是依靠 <strong>GPU</strong> 控制，修改 CSS 視覺模型的<strong>空間維度</strong>。</p>
+<p>大多數的屬性值預設都是操控平面維度的 <strong>X 軸</strong> 與 <strong>Y 軸</strong>，如果要再加上第三維度 <strong>Z 軸</strong>，需要額外添加。</p>
+<p>使用方法為<code>transform: 想進行控制的屬性值方法</code>，有多個屬性值可以用空白鍵或換行做區隔。</p>
+<p>以下的動態圖，只是要區分元素與原本的差異，並不會有動態效果</p>
+<h3 id="進行平移的屬性值-translate"><a href="#進行平移的屬性值-translate" class="headerlink" title="進行平移的屬性值 translate"></a>進行平移的屬性值 translate</h3><p>你會發現跟 <strong>Position 定位元素</strong>很相似，同樣都是移動元素，但他們不同的地方是，% 數參考的對象 與 GPU 的參與。<strong>注意</strong> 適當使用 GPU 可以減輕渲染負擔，過度使用 GPU 容易消耗過多記憶體。<br><img src="https://i.imgur.com/nRz9ajW.gif" srcset="/img/loading.gif" lazyload alt="translate"></p>
 <ul>
-<li>width=device-width：寬度等於當前裝置的寬度</li>
-<li>height=device-height：高度等於當前裝置的高度</li>
-<li>initial-scale：初始的縮放比例</li>
-<li>minimum-scale：允許使用者縮放到的最小比例</li>
-<li>maximum-scale：允許使用者縮放到的最大比例</li>
-<li>user-scalable：使用者是否可以手動縮放</li>
+<li>在執行<strong>動畫效果</strong>時，Position 定位會觸發瀏覽器的 reflow 和 repaint，讓瀏覽器一直重新渲染畫面，動畫效果也因為最小單位 1px，感覺有一點卡卡的感覺。<br><img src="https://i.imgur.com/DadHR9C.gif" srcset="/img/loading.gif" lazyload alt="瀏覽器一直頻繁的 reflow 和 repaint"><br><em>瀏覽器一直頻繁的 reflow 和 repaint</em></li>
+<li>而使用 translate 平移執行動畫，則是透過 GPU 來控制，使用硬體加速，動畫效果也比較平順。<br><img src="https://i.imgur.com/sVx7wS3.gif" srcset="/img/loading.gif" lazyload alt="依靠 GPU 不會觸發瀏覽器的 reflow 和 repaint"><br><em>依靠 GPU 不會觸發瀏覽器的 reflow 和 repaint</em></li>
 </ul>
-<h3 id="2-決定設計模式"><a href="#2-決定設計模式" class="headerlink" title="2. 決定設計模式"></a>2. 決定設計模式</h3><ul>
-<li>局部流動 (mostly fluid)，隨著螢幕寬度斷點，主體像流體般依序往下排列。</li>
-<li>欄內容下排 (column drop)，最大寬度時呈現橫向排列，隨著螢幕斷點往下推擠排列。</li>
-<li>版面配置位移 (layout shifter)，隨著螢幕寬度斷點，進行版面大幅配置改變。</li>
-<li>細微調整 (tiny tweaks)，隨著螢幕寬度，微小調整字體大小與按鈕大小 。</li>
-<li>畫布外空間利用 (off canvas)，以橫向卷軸來操作，在小螢幕時顯示滿版，大螢幕時會排進更多畫面，有點像<strong>簡報</strong>。</li>
+<p>使用方法<code>transform: translate( X 軸, Y 軸 )</code>，當只有使用一個值，該值代表 X 軸，如果想使用 Z 軸，就要改用<code>translate3d(X 軸, Y 軸, Z 軸 )</code> 或 <code>translateZ( Z 軸 )</code>。</p>
+<p>使用的值需要單位（px, %, em…），% 數是依照<strong>自身長寬</strong>當作參考，<strong>Z 軸只能使用長度單位</strong>（px, em…），因為深度沒有 % 數。</p>
+<h3 id="進行縮放的屬性值-scale"><a href="#進行縮放的屬性值-scale" class="headerlink" title="進行縮放的屬性值 scale"></a>進行縮放的屬性值 scale</h3><p>同樣會發現與 <strong>寬高元素（height、width）</strong> 很相似，而不同的地方也如同上面的例子。<br><img src="https://i.imgur.com/mj3YMpu.gif" srcset="/img/loading.gif" lazyload alt="scale"></p>
+<p>使用方法<code>transform: scale( X 軸, Y 軸 )</code>，當只有使用一個值，該值代表整體的放大縮小，如果想使用 Z 軸，就要改用<code>scale3d(X 軸, Y 軸, Z 軸 )</code> 或 <code>scaleZ( Z 軸 )</code>。</p>
+<p>使用的值為數字，<code>1</code> 為 1 倍大小，<code>.8</code> 為 0.8 倍大小</p>
+<h3 id="進行旋轉的屬性值-rotate"><a href="#進行旋轉的屬性值-rotate" class="headerlink" title="進行旋轉的屬性值 rotate"></a>進行旋轉的屬性值 rotate</h3><p>讓元素進行旋轉<br><img src="https://i.imgur.com/tJtkM2T.gif" srcset="/img/loading.gif" lazyload alt="rotate"></p>
+<p>使用方法<code>transform: rotate( Z 軸 )</code>，依靠 <strong>Z 軸</strong>旋轉，如果想依靠 X 軸 或 y 軸，就要改用<code>rotateX( X 軸 )</code> 或 <code>rotateY( Y 軸 )</code>。</p>
+<p>使用的值需要單位</p>
+<ul>
+<li>deg（一個圓有 360 度），應該是最多人用的</li>
+<li>gard（一個圓有 400 個梯度）</li>
+<li>rad（一個圓有 2π 弧度）</li>
+<li>turn（一個圓）</li>
 </ul>
-<p>想更詳細的介紹可以看<a target="_blank" rel="noopener" href="https://developers.google.com/web/fundamentals/design-and-ux/responsive/patterns?hl=zh-tw">回應式網頁設計模式</a></p>
-<h3 id="3-使用-CSS-media-query-設定"><a href="#3-使用-CSS-media-query-設定" class="headerlink" title="3. 使用 CSS media query 設定"></a>3. 使用 CSS media query 設定</h3><p>使用方法在 CSS 檔案內需用<code>@media (條件) &#123;樣式&#125;</code>來設定，需要<strong>注意</strong>要寫在下方</p>
-<p>例如想設定當視窗<strong>寬度小於</strong> 768px，改變背景顏色，語法範例：</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-keyword">@media</span> (<span class="hljs-attribute">max-width</span>: <span class="hljs-number">768px</span>) &#123;<br>  <span class="hljs-comment">/*  當視窗寬度 大於 768px 省略這段 CSS  */</span><br>  <span class="hljs-selector-tag">body</span> &#123;<br>    <span class="hljs-attribute">background</span>: <span class="hljs-number">#88f</span>;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p><img src="https://i.imgur.com/i7aU70Q.gif" srcset="/img/loading.gif" lazyload alt="RWD 效果"><br><img src="https://i.imgur.com/zxzxCoj.png" srcset="/img/loading.gif" lazyload alt="開發者工具可以看出，當螢幕小於 768px 原本樣式被覆蓋"></p>
-<p>如果要改成<strong>大於</strong> 768px，才觸發樣式，就把條件設成<code>(min-width: 768px)</code></p>
-<h3 id="4-使用相對單位設定大小"><a href="#4-使用相對單位設定大小" class="headerlink" title="4. 使用相對單位設定大小"></a>4. 使用相對單位設定大小</h3><p>此外會建議多使用相對單位設定樣式（%），比較不會出現字太小或按鈕太小的問題。</p>
-<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>我們已經大致上了解了 RWD 的設置，接著就是持續的實作才能掌握它，想了解更詳細的設定模式，可以看<a target="_blank" rel="noopener" href="https://developers.google.com/web/fundamentals/design-and-ux/responsive/patterns?hl=zh-tw">回應式網頁設計模式</a>，下一個章節將會介紹 CSS transform。</p>
+<p>另外也可以使用 <code>rotate3d( X 軸, Y 軸, Z 軸, 角度)</code>，其中 XYZ 軸為<strong>倍數</strong>，每個倍數乘以角度來呈現。</p>
+<h3 id="進行傾斜的屬性值-skew"><a href="#進行傾斜的屬性值-skew" class="headerlink" title="進行傾斜的屬性值 skew"></a>進行傾斜的屬性值 skew</h3><p>讓元素沿著軸線傾斜<br><img src="https://i.imgur.com/AOmufkr.gif" srcset="/img/loading.gif" lazyload alt="skew"></p>
+<p>使用方法<code>transform: skew( X 軸, Y 軸 )</code>，當只有使用一個值，該值代表 X 軸，傾斜沒有 Z 值。</p>
+<h3 id="變形矩陣的屬性值-matrix"><a href="#變形矩陣的屬性值-matrix" class="headerlink" title="變形矩陣的屬性值 matrix"></a>變形矩陣的屬性值 matrix</h3><p>算是綜合了上面的平移、縮放與傾斜的語法。<br>語法：<code>matrix(X 軸縮放, X 軸平移, X 軸傾斜, Y 軸縮放, Y 軸平移, Y 軸傾斜)</code><br>我個人是不常用，參數太多容易搞混。</p>
+<h2 id="恭喜你又學會新的置中方法了"><a href="#恭喜你又學會新的置中方法了" class="headerlink" title="恭喜你又學會新的置中方法了"></a>恭喜你又學會新的置中方法了</h2><p>前面在 Position 定位章節有提到，用 Position 定位置中 <code>top: 50%; left: 50%;</code> 會因為元素基準點是在左上角，導致左上角定位在中心，元素整體會呈現偏右下方。</p>
+<p>這時藉由 <code>transform: translate(-50%, -50%);</code>，因為 % 數是參考自身長寬，藉由 <code>-50%</code> 來矯正偏移問題，讓元素呈現完美的置中。</p>
+<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>其實 transform 還有很多屬性方法還沒介紹，像是設定<strong>基準點</strong>、<strong>定位視角</strong>，這類更為抽象進階的語法，也許會放到之後補充的地方，今天就先介紹簡單常用入門的部分就好，下一個章節算是大家學 CSS 最想達成的<strong>動畫</strong>章節。</p>
 <h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://developers.google.com/web/fundamentals/design-and-ux/responsive/patterns?hl=zh-tw">回應式網頁設計模式</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.796t.com/article.php?id=313455">淺析 CSS 的效能優化</a></li>
 </ul>
 
             </div>
@@ -298,18 +300,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/09/20/2021-9-20-it_ironman-day11/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Day.11 「來為網頁添加更多的可能性！」 —— CSS Transform</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021/09/18/2021-9-18-it_ironman-day9/">
-                        <span class="hidden-mobile">Day.9 「我介於有與沒有之間～」 —— CSS 偽類選擇器（Pseudo classes） 與 偽元素（Pseudo element）</span>
+                      <a href="/2021/09/19/2021-9-19-it_ironman-day10/">
+                        <span class="hidden-mobile">Day.10 「沒有 RWD 的網站 === 沒有未來」 —— RWD　響應式網頁設計</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -331,8 +327,8 @@
     
       <script type="text/javascript">
         var disqus_config = function() {
-          this.page.url = 'http://example.com/2021/09/19/2021-9-19-it_ironman-day10/';
-          this.page.identifier = '/2021/09/19/2021-9-19-it_ironman-day10/';
+          this.page.url = 'http://example.com/2021/09/20/2021-9-20-it_ironman-day11/';
+          this.page.identifier = '/2021/09/20/2021-9-20-it_ironman-day11/';
         };
         Fluid.utils.loadComments('#disqus_thread', function() {
           var d = document, s = d.createElement('script');
