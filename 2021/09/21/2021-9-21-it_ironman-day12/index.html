@@ -14,11 +14,11 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
   <meta name="theme-color" content="#2f4154">
-  <meta name="description" content="雖然標題有點聳動，但在這個行動裝置越來越多的現在，如果沒有手機版的網頁，SEO 排名會大受影響，也等同於宣告死刑了。">
+  <meta name="description" content="現在我們會使用具有互動性的簡單漸變效果了，接著要來試著讓網頁能增添更多活力，不需要我們操作，就會自動播放動畫效果。">
   <meta name="author" content="Mao">
   <meta name="keywords" content="">
   
-  <title>Day.10 「沒有 RWD 的網站 === 沒有未來」 —— RWD　響應式網頁設計 - Mao&#39;s blog</title>
+  <title>Day.12 「來為網頁添加動畫吧！」 —— CSS 動畫（animation） - Mao&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
 
@@ -158,12 +158,12 @@
 </nav>
 
     <div class="banner" id="banner" parallax=true
-         style="background: url('https://i.imgur.com/tJZ3MrQ.png') no-repeat center center;
+         style="background: url('https://i.imgur.com/Z0lYvKC.gif') no-repeat center center;
            background-size: cover;">
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="Day.10 「沒有 RWD 的網站 === 沒有未來」 —— RWD　響應式網頁設計">
+            <span class="h2" id="subtitle" title="Day.12 「來為網頁添加動畫吧！」 —— CSS 動畫（animation）">
               
             </span>
 
@@ -173,8 +173,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-09-19 22:00" pubdate>
-        2021年9月19日 晚上
+      <time datetime="2021-09-21 22:00" pubdate>
+        2021年9月21日 晚上
       </time>
     </span>
   
@@ -185,7 +185,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      664 字
+      1.1k 字
     </span>
   
 
@@ -195,7 +195,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      7
+      12
        分钟
     </span>
   
@@ -225,41 +225,62 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Day.10 「沒有 RWD 的網站 === 沒有未來」 —— RWD　響應式網頁設計</h1>
+            <h1 style="display: none">Day.12 「來為網頁添加動畫吧！」 —— CSS 動畫（animation）</h1>
             
             <div class="markdown-body">
-              <h1 id="Day-10-「沒有-RWD-的網站-沒有未來」-——-RWD-響應式網頁設計"><a href="#Day-10-「沒有-RWD-的網站-沒有未來」-——-RWD-響應式網頁設計" class="headerlink" title="Day.10 「沒有 RWD 的網站 === 沒有未來」 —— RWD　響應式網頁設計"></a>Day.10 「沒有 RWD 的網站 === 沒有未來」 —— RWD　響應式網頁設計</h1><p><img src="https://i.imgur.com/tJZ3MrQ.png" srcset="/img/loading.gif" lazyload alt="「沒有 RWD 的網站 === 沒有未來」 —— RWD　響應式網頁設計"></p>
-<p>雖然標題有點聳動，但在這個行動裝置越來越多的現在，如果沒有<strong>手機版的網頁</strong>，<strong>SEO</strong> 排名會大受影響，也等同於宣告死刑了。</p>
-<p><img src="https://i.imgur.com/ruLsPM4.png" srcset="/img/loading.gif" lazyload alt="沒有手機版網頁，使用者體感差，字小按鈕也很難點"></p>
-<h2 id="什麼是-RWD？"><a href="#什麼是-RWD？" class="headerlink" title="什麼是 RWD？"></a>什麼是 RWD？</h2><p>是 Responsive Web Design 的簡稱 RWD，中文翻譯為<strong>響應式網頁設計</strong>，主要是針對不同裝置，網頁透過裝置寬度來決定排版的方式。</p>
-<p><img src="https://i.imgur.com/Uyp0Xl3.gif" srcset="/img/loading.gif" lazyload alt="隨著裝置不同，布局也不同"></p>
-<h2 id="RWD-要如何開始？"><a href="#RWD-要如何開始？" class="headerlink" title="RWD 要如何開始？"></a>RWD 要如何開始？</h2><h3 id="1-在-HTML-添加-viewport-的-meta-標籤"><a href="#1-在-HTML-添加-viewport-的-meta-標籤" class="headerlink" title="1. 在 HTML 添加 viewport 的 meta 標籤"></a>1. 在 HTML 添加 viewport 的 meta 標籤</h3><p>首先要在 HTML 檔案 <code>&lt;head&gt;</code> 標籤內添加 <code>&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;</code>，通常使用 emmet 會自動設定。<br>viewport 屬性值：</p>
-<ul>
-<li>width=device-width：寬度等於當前裝置的寬度</li>
-<li>height=device-height：高度等於當前裝置的高度</li>
-<li>initial-scale：初始的縮放比例</li>
-<li>minimum-scale：允許使用者縮放到的最小比例</li>
-<li>maximum-scale：允許使用者縮放到的最大比例</li>
-<li>user-scalable：使用者是否可以手動縮放</li>
-</ul>
-<h3 id="2-決定設計模式"><a href="#2-決定設計模式" class="headerlink" title="2. 決定設計模式"></a>2. 決定設計模式</h3><ul>
-<li>局部流動 (mostly fluid)，隨著螢幕寬度斷點，主體像流體般依序往下排列。</li>
-<li>欄內容下排 (column drop)，最大寬度時呈現橫向排列，隨著螢幕斷點往下推擠排列。</li>
-<li>版面配置位移 (layout shifter)，隨著螢幕寬度斷點，進行版面大幅配置改變。</li>
-<li>細微調整 (tiny tweaks)，隨著螢幕寬度，微小調整字體大小與按鈕大小 。</li>
-<li>畫布外空間利用 (off canvas)，以橫向卷軸來操作，在小螢幕時顯示滿版，大螢幕時會排進更多畫面，有點像<strong>簡報</strong>。</li>
-</ul>
-<p>想更詳細的介紹可以看<a target="_blank" rel="noopener" href="https://developers.google.com/web/fundamentals/design-and-ux/responsive/patterns?hl=zh-tw">回應式網頁設計模式</a></p>
-<h3 id="3-使用-CSS-media-query-設定"><a href="#3-使用-CSS-media-query-設定" class="headerlink" title="3. 使用 CSS media query 設定"></a>3. 使用 CSS media query 設定</h3><p>使用方法在 CSS 檔案內需用<code>@media (條件) &#123;樣式&#125;</code>來設定，需要<strong>注意</strong>要寫在下方</p>
-<p>例如想設定當視窗<strong>寬度小於</strong> 768px，改變背景顏色，語法範例：</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-keyword">@media</span> (<span class="hljs-attribute">max-width</span>: <span class="hljs-number">768px</span>) &#123;<br>  <span class="hljs-comment">/*  當視窗寬度 大於 768px 省略這段 CSS  */</span><br>  <span class="hljs-selector-tag">body</span> &#123;<br>    <span class="hljs-attribute">background</span>: <span class="hljs-number">#88f</span>;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+              <h1 id="Day-12-「來為網頁添加動畫吧！」-——-CSS-動畫（animation）"><a href="#Day-12-「來為網頁添加動畫吧！」-——-CSS-動畫（animation）" class="headerlink" title="Day.12 「來為網頁添加動畫吧！」 —— CSS 動畫（animation）"></a>Day.12 「來為網頁添加動畫吧！」 —— CSS 動畫（animation）</h1><p><img src="https://i.imgur.com/Z0lYvKC.gif" srcset="/img/loading.gif" lazyload alt="「來為網頁添加動畫吧！」 —— CSS 動畫（animation）"></p>
+<p>現在我們會使用具有互動性的簡單漸變效果了，接著要來試著讓網頁能增添更多活力，不需要我們操作，就會自動播放動畫效果。</p>
+<h2 id="什麼是-animation？"><a href="#什麼是-animation？" class="headerlink" title="什麼是 animation？"></a>什麼是 animation？</h2><p>animation 就如同字面上的意思，動畫賦予了 CSS 更多的可能性，讓畫面可以更加生動活潑，以往要透過 Javascript 才能完成的效果，如今 CSS 也能幫忙分擔一些畫面效果，記住一句話，能使用 CSS 完成效果，就盡量使用 CSS。</p>
+<h2 id="CSS-animation-起手式"><a href="#CSS-animation-起手式" class="headerlink" title="CSS animation 起手式"></a>CSS animation 起手式</h2><h3 id="關鍵影格-keyframes"><a href="#關鍵影格-keyframes" class="headerlink" title="關鍵影格 keyframes"></a>關鍵影格 keyframes</h3><p>一開始的起手式當然就是先定義一個動畫效果，使用方法為<code>@keyframes &lt;name&gt; &#123; animation_css &#125;</code>，有在製作動畫影片的應該對 keyframes（關鍵影格） 這個字非常熟悉，藉由著個語法，來讓瀏覽器運算產生動態畫面，其中<code>&lt;name&gt;</code>可以自定義動畫名稱，<code>&#123;&#125;</code>內為動畫執行過程，執行過程可以用 <code>0%</code> ～ <code>100%</code>，或使用關鍵字 <code>from</code> &amp; <code>to</code>。</p>
+<p>例如，想讓封面圖的方塊旋轉，可以使用上一章的 <code>transform: rotateY()</code> 依靠 Y 軸為軸心進行旋轉：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-keyword">@keyframes</span> rotate &#123;<br>  <span class="hljs-number">0%</span> &#123;<br>    <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">rotateY</span>(<span class="hljs-number">0</span>);<br>  &#125;<br>  <span class="hljs-number">100%</span> &#123;<br>    <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">rotateY</span>(<span class="hljs-number">360deg</span>);<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<p><img src="https://i.imgur.com/i7aU70Q.gif" srcset="/img/loading.gif" lazyload alt="RWD 效果"><br><img src="https://i.imgur.com/zxzxCoj.png" srcset="/img/loading.gif" lazyload alt="開發者工具可以看出，當螢幕小於 768px 原本樣式被覆蓋"></p>
-<p>如果要改成<strong>大於</strong> 768px，才觸發樣式，就把條件設成<code>(min-width: 768px)</code></p>
-<h3 id="4-使用相對單位設定大小"><a href="#4-使用相對單位設定大小" class="headerlink" title="4. 使用相對單位設定大小"></a>4. 使用相對單位設定大小</h3><p>此外會建議多使用相對單位設定樣式（%），比較不會出現字太小或按鈕太小的問題。</p>
-<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>我們已經大致上了解了 RWD 的設置，接著就是持續的實作才能掌握它，想了解更詳細的設定模式，可以看<a target="_blank" rel="noopener" href="https://developers.google.com/web/fundamentals/design-and-ux/responsive/patterns?hl=zh-tw">回應式網頁設計模式</a>，下一個章節將會介紹 CSS transform。</p>
+<h2 id="套用-CSS-animation"><a href="#套用-CSS-animation" class="headerlink" title="套用 CSS animation"></a>套用 CSS animation</h2><h3 id="animation-name"><a href="#animation-name" class="headerlink" title="animation-name"></a>animation-name</h3><p>動畫名稱，<strong>注意</strong> 這個一定要設置，不然瀏覽器不知道你要套用的動畫名稱是什麼，<del>除非它會通靈</del>，以上面關鍵影格為例<code>animation-name: rotate;</code></p>
+<h3 id="animation-duration"><a href="#animation-duration" class="headerlink" title="animation-duration"></a>animation-duration</h3><p>動畫動完一次所需時間，<strong>注意</strong> 這個也一定要設置，因為預設是 0，<del>不會動的動畫還叫動畫</del>？以上面關鍵影格為例<code>animation-duration: 5s;</code>，需 <strong>注意</strong> 單位名稱一定要打，s 代表 秒，ms 代表 毫秒。</p>
+<h3 id="animation-delay"><a href="#animation-delay" class="headerlink" title="animation-delay"></a>animation-delay</h3><p>動畫延遲多久時間開始播放，這個看需求設置，與上面的設定方法雷同。</p>
+<h3 id="animation-iteration-count"><a href="#animation-iteration-count" class="headerlink" title="animation-iteration-count"></a>animation-iteration-count</h3><p>動畫循環幾次，這個也是看需求設置，預設是 1，執行 1 次的意思。</p>
+<h4 id="想要無限循環多次？"><a href="#想要無限循環多次？" class="headerlink" title="想要無限循環多次？"></a>想要無限循環多次？</h4><p>想要無限循環多次，可以設定 <code>infinite</code>，以上面關鍵影格為例<code>animation-iteration-count: infinite;</code></p>
+<h3 id="animation-timing-function"><a href="#animation-timing-function" class="headerlink" title="animation-timing-function"></a>animation-timing-function</h3><p>動畫加速度的函式，預設是 <code>ease</code></p>
+<p><img src="https://i.imgur.com/j0hxXeA.gif" srcset="/img/loading.gif" lazyload alt="animation-time-function"><br><a target="_blank" rel="noopener" href="https://codepen.io/vsfvjiuv-the-typescripter/pen/vYZjYZQ?editors=0100">animation-time-function Codepen</a></p>
+<h4 id="具有加減速的速度函式"><a href="#具有加減速的速度函式" class="headerlink" title="具有加減速的速度函式"></a>具有加減速的速度函式</h4><p>這個動態效果比較流暢</p>
+<ul>
+<li>ease</li>
+<li>ease-in</li>
+<li>ease-out</li>
+<li>ease-in-out</li>
+</ul>
+<p><img src="https://www.oxxostudio.tw/img/articles/201803/css-animation-04.jpg" srcset="/img/loading.gif" lazyload alt="具有加減速的速度函式圖"><br>（<a target="_blank" rel="noopener" href="https://www.oxxostudio.tw/articles/201803/css-animation.html">圖片來源</a>）</p>
+<h4 id="線性速度函式"><a href="#線性速度函式" class="headerlink" title="線性速度函式"></a>線性速度函式</h4><p>不具有加減速</p>
+<ul>
+<li>linear 線性，此封面範例就是使用這個 <code>animation-time-function: linear;</code></li>
+</ul>
+<p><img src="https://www.oxxostudio.tw/img/articles/201803/css-animation-03.jpg" srcset="/img/loading.gif" lazyload alt="線性函式圖"><br>（<a target="_blank" rel="noopener" href="https://www.oxxostudio.tw/articles/201803/css-animation.html">圖片來源</a>）</p>
+<h4 id="影格速度函式"><a href="#影格速度函式" class="headerlink" title="影格速度函式"></a>影格速度函式</h4><p>就像膠片影格一樣，一步一步展示變化過程，int 設置正整數，數字越大越流暢。<br>第二個參數，start 會忽略第 0 秒的開始動畫，end 會忽略最後一秒的結束動畫</p>
+<ul>
+<li>steps(int,start/end)</li>
+</ul>
+<h4 id="自定義速度函式（貝茲曲線）"><a href="#自定義速度函式（貝茲曲線）" class="headerlink" title="自定義速度函式（貝茲曲線）"></a>自定義速度函式（貝茲曲線）</h4><p>這就比較複雜了，由四個參數來設置貝茲曲線，設置的好會像皮球彈跳一樣自然來回，<del>設置不好就會失控</del>。</p>
+<ul>
+<li>cubic-bezier(n,n,n,n)</li>
+</ul>
+<h3 id="animation-direction"><a href="#animation-direction" class="headerlink" title="animation-direction"></a>animation-direction</h3><p>控制動畫是否反轉播放，預設值為 <code>normal</code> 正常播放</p>
+<ul>
+<li>normal，正常播放</li>
+<li>reverse：反轉播放，從 100% 到 0% 反著播。</li>
+<li>alternate：上面兩個的結合，正反播放輪替，先正後反，如此循環，當播放次數設 1 時，就正常播放</li>
+<li>alternate-reverse：與 alternate 的相反，變成先反後正，當播放次數設 1 時，就反轉播放</li>
+</ul>
+<p><img src="https://i.imgur.com/pBGvsjp.gif" srcset="/img/loading.gif" lazyload alt="此圖範例為使用 animation-directon: alternate;"><br><em>此圖範例為使用 <code>animation-direction: alternate;</code>，<a target="_blank" rel="noopener" href="https://codepen.io/vsfvjiuv-the-typescripter/pen/wvejaWj">Codepen</a></em></p>
+<h2 id="簡寫方式"><a href="#簡寫方式" class="headerlink" title="簡寫方式"></a>簡寫方式</h2><p>根據上面封面的動畫效果，原本是這樣使用</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-attribute">animation-name</span>: rotate;<br><span class="hljs-attribute">animation-duration</span>: <span class="hljs-number">5s</span>;<br><span class="hljs-attribute">animation-iteration-count</span>: infinite;<br><span class="hljs-attribute">animation</span>-<span class="hljs-selector-tag">time</span>-function: linear;<br></code></pre></td></tr></table></figure>
+
+<p>可以看到一直反覆的寫 <code>animation-</code> 開頭，而簡寫方式非常簡單</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-attribute">animation</span>: rotate <span class="hljs-number">5s</span> infinite linear;<br></code></pre></td></tr></table></figure>
+
+<p>直接用 <code>animation</code> 就可以設定所有動畫設定了，需<strong>注意</strong> 動畫<strong>名稱</strong> 與 <strong>時間</strong> 是一定要寫的，如果要設置 delay，第一個時間參數會是 持續時間，第二個時間參數會是 延遲時間！</p>
+<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>平面動畫寫起來還算簡單，很有成就感，如果要涉及到 3D 層面的話，又會需要多設定一些東西，如同前一篇所講，視角與定位點，會更加抽象，現階段 CSS 已經告個段落了！明天就要進入我們的 Javascript 章節了！</p>
 <h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://developers.google.com/web/fundamentals/design-and-ux/responsive/patterns?hl=zh-tw">回應式網頁設計模式</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.oxxostudio.tw/articles/201803/css-animation.html">完整解析 CSS 動畫</a></li>
 </ul>
 
             </div>
@@ -299,18 +320,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/09/20/2021-9-20-it_ironman-day11/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">「利用漸變效果，讓網頁不再死板！」 —— CSS Transform & CSS Transition</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021/09/18/2021-9-18-it_ironman-day9/">
-                        <span class="hidden-mobile">Day.9 「我介於有與沒有之間～」 —— CSS 偽類選擇器（Pseudo classes） 與 偽元素（Pseudo element）</span>
+                      <a href="/2021/09/20/2021-9-20-it_ironman-day11/">
+                        <span class="hidden-mobile">「利用漸變效果，讓網頁不再死板！」 —— CSS Transform & CSS Transition</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -332,8 +347,8 @@
     
       <script type="text/javascript">
         var disqus_config = function() {
-          this.page.url = 'http://example.com/2021/09/19/2021-9-19-it_ironman-day10/';
-          this.page.identifier = '/2021/09/19/2021-9-19-it_ironman-day10/';
+          this.page.url = 'http://example.com/2021/09/21/2021-9-21-it_ironman-day12/';
+          this.page.identifier = '/2021/09/21/2021-9-21-it_ironman-day12/';
         };
         Fluid.utils.loadComments('#disqus_thread', function() {
           var d = document, s = d.createElement('script');
