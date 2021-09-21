@@ -1,24 +1,26 @@
 ---
-title: Day.7 「伸縮自在的愛～」 —— CSS 彈性盒模型 Flexbox
+title: Day.7 「CSS 網頁切版必學，用過都說讚！」 —— CSS 彈性盒模型 Flexbox
 date: 2021/9/16 22:00:00
-index_img: https://i.imgur.com/lSYvVfi.png
-banner_img: https://i.imgur.com/lSYvVfi.png
+index_img: https://i.imgur.com/hLMVxvv.png
+banner_img: https://i.imgur.com/hLMVxvv.png
 categories:
     - [程式語言, 前端, CSS]
     - [iT 鐵人賽, 第 2021 年]
 tags: 
     - iT 鐵人賽
     - CSS
-excerpt: 要來介紹大家最愛用的 Flexbox 了，Flexbox 之所以被稱之為彈性盒，是因為可以隨著視窗的尺寸，改變自己布局的方式，使用起來非常彈性，且易於使用，所以深受大家喜愛。
+excerpt: 要來介紹大家最愛用的 Flexbox 了，以往兼容性還不太好的時候，大多都是使用表格（table）屬性來進行排版，也容易出問題，現在科技進步迅速，瀏覽器也持續跟進，~~IE 也要進入歷史了~~，只要用簡單的語法，就能安排元素在網頁上各自的位置，非常的方便好用又彈性！還不快學起來！
 ---
 
-# Day.7 「伸縮自在的愛～」 —— CSS 彈性盒模型 Flexbox
+# Day.7 「CSS 網頁切版必學，用過都說讚！」 —— CSS 彈性盒模型 Flexbox
 
-![CSS Flexbox](https://i.imgur.com/lSYvVfi.png)
+![「CSS 網頁切版必學，用過都說讚！」 —— CSS 彈性盒模型 Flexbox](https://i.imgur.com/hLMVxvv.png)
+
+要來介紹大家最愛用的 Flexbox 了，以往兼容性還不太好的時候，大多都是使用表格（table）屬性來進行排版，也容易出問題，現在科技進步迅速，瀏覽器也持續跟進，~~IE 也要進入歷史了~~，只要用簡單的語法，就能安排元素在網頁上各自的位置，非常的方便好用又彈性！還不快學起來！
 
 ## 為何稱為彈性盒？
 
-要來介紹大家最愛用的 Flexbox 了，Flexbox 之所以被稱之為彈性盒，是因為可以隨著視窗的尺寸，改變自己布局的方式，使用起來非常彈性，且易於使用，所以深受大家喜愛。
+Flexbox 之所以被稱之為彈性盒，是因為可以隨著視窗的尺寸，改變自己布局的方式，使用起來非常彈性，且易於使用，所以深受大家喜愛。
 ![隨著容器跟著伸縮](https://i.imgur.com/ImmG3lU.gif)
 
 ## Flexbox 規則

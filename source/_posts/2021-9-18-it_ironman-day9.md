@@ -1,21 +1,25 @@
 ---
 title: Day.9 「我介於有與沒有之間～」 —— CSS 偽類選擇器（Pseudo classes） 與 偽元素（Pseudo element）
 date: 2021/9/18 22:00:00
-index_img: https://i.imgur.com/0Vv4F3E.jpg
-banner_img: https://i.imgur.com/0Vv4F3E.jpg
+index_img: https://i.imgur.com/77yUxJL.png
+banner_img: https://i.imgur.com/77yUxJL.png
 categories:
     - [程式語言, 前端, CSS]
     - [iT 鐵人賽, 第 2021 年]
 tags: 
     - iT 鐵人賽
     - CSS
-excerpt: 前面篇章有提到 CSS 選擇器，這篇會介紹 偽類選擇器 與 屬性選擇器，以及介於有與沒有之間的偽元素～
+excerpt: 偽（Pseudo）這個意思有虛幻虛無的意思，類選擇器是用來處理 DOM 操作不了選擇器，偽元素則是原本並沒有在 HTML DOM 中，是透過 CSS 創造出來的元素。
+
 ---
 
-# Day.9 「我介於有與沒有之間～」 —— CSS 偽類選擇器（Pseudo classes） 與 偽元素（Pseudo element）
+# Day.9 「我實際不存在 DOM 裡～」 —— CSS 偽類選擇器（Pseudo classes） 與 偽元素（Pseudo element）
 
-![有看到，卻不再 HTML 內～概念圖](https://i.imgur.com/0Vv4F3E.jpg)
-Photo by [Michael Dziedzic](https://unsplash.com/@lazycreekimages) on [Unsplash](https://unsplash.com/)
+![「我實際不存在 DOM 裡～」 —— CSS 偽類選擇器（Pseudo classes） 與 偽元素（Pseudo element）](https://i.imgur.com/77yUxJL.png)
+
+## 為什麼會有個「偽」字呢？
+
+偽（Pseudo）這個意思有虛幻虛無的意思，類選擇器是用來處理 DOM 操作不了選擇器，偽元素則是原本並沒有在 HTML DOM 中，是透過 CSS 創造出來的元素。
 
 ## 什麼是偽類選擇器（Pseudo classes）？ 
 前面篇章有提到 CSS 選擇器，通常都能單獨使用，而偽類選擇器比較特別，他**必須**搭配其他選擇器來使用，我們常使用的**操作型偽類**在**觸發條件前**，一切都是假的！平時並不會有效果，最常見的範例就是`<a>`標籤。

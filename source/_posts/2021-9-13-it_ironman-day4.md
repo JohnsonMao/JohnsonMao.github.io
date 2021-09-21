@@ -1,8 +1,8 @@
 ---
-title: Day.4 「了解地盤的範圍！」 —— CSS 盒模型 box-model & 距離單位
+title: Day.4 「CSS 基礎中的基礎！」 —— CSS 盒模型 box-model & 距離單位
 date: 2021/9/13 22:00:00
-index_img: https://i.imgur.com/KxTNQgX.jpg
-banner_img: https://i.imgur.com/KxTNQgX.jpg
+index_img: https://i.imgur.com/v6IIogk.png
+banner_img: https://i.imgur.com/v6IIogk.png
 categories:
     - [程式語言, 前端, HTML]
     - [iT 鐵人賽, 第 2021 年]
@@ -12,10 +12,9 @@ tags:
 excerpt: 人是視覺動物，當網頁架構用得差不多了，想自己安排布局，會開始想辦法把網頁變得更漂亮。
 ---
 
-# Day.4 「了解地盤的範圍！」 —— CSS 盒模型 box-model & 距離單位
+# Day.4 「CSS 基礎中的基礎！」 —— CSS 盒模型 box-model & 距離單位
 
-![盒模型 地盤 示意圖](https://i.imgur.com/KxTNQgX.jpg)
-Photo by [Halacious](https://unsplash.com/@halacious) on [Unsplash](https://unsplash.com/)
+![「CSS 基礎中的基礎！」 —— CSS 盒模型 box-model & 距離單位](https://i.imgur.com/v6IIogk.png)
 
 ## 人是視覺動物
 

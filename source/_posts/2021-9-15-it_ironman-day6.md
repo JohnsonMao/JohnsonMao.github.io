@@ -1,30 +1,28 @@
 ---
-title: Day.6 「你扮演的是什麼角色？」 —— CSS display 屬性
+title: Day.6 「只要我想，我也能把 div 變 table！」 —— CSS display 屬性
 date: 2021/9/15 22:00:00
-index_img: https://i.imgur.com/dbVE6IA.jpg
-banner_img: https://i.imgur.com/dbVE6IA.jpg
+index_img: https://i.imgur.com/ofgbXuv.png
+banner_img: https://i.imgur.com/ofgbXuv.png
 categories:
     - [程式語言, 前端, CSS]
     - [iT 鐵人賽, 第 2021 年]
 tags: 
     - iT 鐵人賽
     - CSS
-excerpt: 如同前面章節所說，一開始的標籤元素，很單調只有一行並沒有各式各樣的元素，是瀏覽器內建的樣式表賦予它該扮演的角色。
+excerpt: 如同前面章節所說，一開始的標籤元素，很單調只有一行並沒有各式各樣的元素，是瀏覽器內建的樣式表賦予它該展示的樣子。所以我們可以把任何標籤變成任何你愛的樣子，當然不希望如此瞎搞！
 ---
 
-# Day.6 「你扮演的是什麼角色？」 —— CSS display 屬性
+# Day.6 「只要我想，我也能把 div 變 table！」 —— CSS display 屬性
 
-![我們都是人，在社會中扮演著不同的角色。](https://i.imgur.com/dbVE6IA.jpg)
-Photo by [NeONBRAND](https://unsplash.com/@neonbrand) on [Unsplash](https://unsplash.com/)
+![「只要我想，我也能把 div 變 table！」 —— CSS display 屬性](https://i.imgur.com/ofgbXuv.png)
 
-如同前面章節所說，一開始的標籤元素，很單調只有一行並沒有各式各樣的元素，是瀏覽器內建的樣式表賦予它該扮演的角色。
+如同前面章節所說，一開始的標籤元素，很單調只有一行並沒有各式各樣的元素，是瀏覽器內建的樣式表賦予它該展示的樣子。
 
-![table 屬性](https://i.imgur.com/A0uiSrM.png)
-*圖中，瀏覽器為 `<table>` 標籤任命為 表格屬性*
+![圖中，瀏覽器為 table 標籤賦予為 表格屬性](https://i.imgur.com/A0uiSrM.png)
 
-所以能用標籤本身取代的冷門 display 屬性值暫且不會介紹，只介紹大家最常用的 display 屬性值。
+所以我們可以把任何標籤變成任何你愛的樣子，當然不希望如此瞎搞！
 
-<!-- more -->
+能用標籤本身取代的冷門 display 屬性值暫且就不會介紹了，只介紹大家最常用的 display 屬性值。
 
 ## 常用的 display 屬性值
 

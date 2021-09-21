@@ -1,5 +1,5 @@
 ---
-title: Day.11 「來為網頁添加更多的可能性！」 —— CSS Transform
+title: 「利用漸變效果，讓網頁不再死板！」 —— CSS Transform & CSS Transition
 date: 2021/9/20 22:00:00
 index_img: https://i.imgur.com/VoFpU6Q.png
 banner_img: https://i.imgur.com/VoFpU6Q.png
@@ -9,12 +9,14 @@ categories:
 tags: 
     - iT 鐵人賽
     - CSS
-excerpt: 雖然標題有點聳動，但在這個行動裝置越來越多的現在，如果沒有手機版的網頁，SEO 排名會大受影響，也等同於宣告死刑了。
+excerpt: 現在我們會使用基本的偽類選擇器做效果了，但看到變化過程一閃而過、冷冰冰的，想增添更多漸變效果，讓動態效果可以更多變化、更平滑動感，就要使用我們的 transform 與 transition 這兩個屬性。
 ---
 
-# Day.11 「來為網頁添加更多的可能性！」 —— CSS Transform
+# Day.11 「利用漸變效果，讓網頁不再死板！」 —— CSS Transform & CSS Transition
 
-![CSS-transform](https://i.imgur.com/VoFpU6Q.png)
+![「利用漸變效果，讓網頁不再死板！」 —— CSS Transform & CSS Transition](https://i.imgur.com/VoFpU6Q.png)
+
+現在我們會使用基本的偽類選擇器做效果了，但看到變化過程一閃而過、冷冰冰的，想增添更多漸變效果，讓動態效果可以更多變化、更平滑動感，就要使用我們的 transform 與 transition 這兩個屬性。
 
 ## transform 是做什麼的？
 

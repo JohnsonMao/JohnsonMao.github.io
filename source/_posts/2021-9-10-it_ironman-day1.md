@@ -14,8 +14,7 @@ excerpt: 大家好！我是毛毛，因為這波疫情影響下，讓我多了�
 
 # Day.1 「工欲善其事，必先利其器！」—— 前言 與 介紹工具
 
-![Everyone can code](https://i.imgur.com/eDkVQpQ.jpg)
-Photo by [Adi Goldstein](https://unsplash.com/@adigold1) on [Unsplash](https://unsplash.com/)
+![「工欲善其事，必先利其器！」—— 前言 與 介紹工具](https://i.imgur.com/YyhvZBl.png)
 
 ## 大家好
 
@@ -25,7 +24,7 @@ Photo by [Adi Goldstein](https://unsplash.com/@adigold1) on [Unsplash](https://u
 
 ## 這個系列
 
-關於這個系列，會盡量著重在使用簡單好懂的解說，介紹網頁三兄弟（ HTML 、 CSS 、 Javascript ），希望在編寫的同時，回顧自己是否確實搞懂，正所謂最好的學習方式除了輸入，還要懂得輸出。
+關於這個系列，會盡量著重在使用簡單好懂的解說，介紹網頁三兄弟（ HTML 、 CSS 、 Javascript ）所需要的知識，會嘗試把過程中所學到的東西，製作出一個小網站，希望在編寫的同時，回顧自己是否確實搞懂，正所謂最好的學習方式除了輸入，還要懂得輸出。
 
 ## 使用的編輯器
 

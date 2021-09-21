@@ -1,8 +1,8 @@
 ---
 title: Day.2 「歡迎來到網頁這個世界！」 —— 認識網頁架構
 date: 2021/9/11 22:00:00
-index_img: https://i.imgur.com/QwHIOe0.jpg
-banner_img: https://i.imgur.com/QwHIOe0.jpg
+index_img: https://i.imgur.com/xadMCtM.png
+banner_img: https://i.imgur.com/xadMCtM.png
 categories:
     - [程式語言, 前端, HTML]
     - [iT 鐵人賽, 第 2021 年]
@@ -14,8 +14,7 @@ excerpt: 上一篇有講到網頁三兄弟，其中有一個老大哥負責撐�
 
 # Day.2 「歡迎來到網頁這個世界！」 —— 認識網頁架構
 
-![network work](https://i.imgur.com/QwHIOe0.jpg)
-Photo by [Robynne Hu](https://unsplash.com/@robynnexy) on [Unsplash](https://unsplash.com/)
+![「歡迎來到網頁這個世界！」 —— 認識網頁架構](https://i.imgur.com/xadMCtM.png)
 
 ## 網頁世界是由什麼組成？
 

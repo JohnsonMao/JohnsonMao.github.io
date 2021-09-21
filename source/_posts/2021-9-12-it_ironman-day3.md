@@ -1,8 +1,8 @@
 ---
 title: Day.3 「建構網頁的基石！」 —— 使用網頁標籤
 date: 2021/9/12 22:00:00
-index_img: https://i.imgur.com/G3Fh3cl.jpg
-banner_img: https://i.imgur.com/G3Fh3cl.jpg
+index_img: https://i.imgur.com/3myJcyZ.png
+banner_img: https://i.imgur.com/3myJcyZ.png
 categories:
     - [程式語言, 前端, HTML]
     - [iT 鐵人賽, 第 2021 年]
@@ -14,8 +14,7 @@ excerpt: 雖然會最基礎的 div 和 span 標籤就能夠開始切版了，甚
 
 # Day.3 「建構網頁的基石！」 —— 使用網頁標籤
 
-![網頁就像樂高](https://i.imgur.com/G3Fh3cl.jpg)
-Photo by [Alphacolor](https://unsplash.com/@duck58cth) on [Unsplash](https://unsplash.com/)
+![「建構網頁的基石！」 —— 使用網頁標籤](https://i.imgur.com/3myJcyZ.png)
 
 我們前面已經稍微認識了網頁的架構了，就像樂高一塊一塊堆疊起來，前一篇已經介紹的就不多贅述了。
 

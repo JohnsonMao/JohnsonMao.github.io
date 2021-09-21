@@ -1,8 +1,8 @@
 ---
 title: Day.10 「沒有 RWD 的網站 === 沒有未來」 —— RWD　響應式網頁設計
 date: 2021/9/19 22:00:00
-index_img: https://i.imgur.com/ruLsPM4.png
-banner_img: https://i.imgur.com/ruLsPM4.png
+index_img: https://i.imgur.com/tJZ3MrQ.png
+banner_img: https://i.imgur.com/tJZ3MrQ.png
 categories:
     - [程式語言, 前端, CSS]
     - [iT 鐵人賽, 第 2021 年]
@@ -14,9 +14,11 @@ excerpt: 雖然標題有點聳動，但在這個行動裝置越來越多的現�
 
 # Day.10 「沒有 RWD 的網站 === 沒有未來」 —— RWD　響應式網頁設計
 
-![沒有手機版網頁，使用者體感差，字小按鈕也很難點](https://i.imgur.com/ruLsPM4.png)
+![「沒有 RWD 的網站 === 沒有未來」 —— RWD　響應式網頁設計](https://i.imgur.com/tJZ3MrQ.png)
 
 雖然標題有點聳動，但在這個行動裝置越來越多的現在，如果沒有**手機版的網頁**，**SEO** 排名會大受影響，也等同於宣告死刑了。
+
+![沒有手機版網頁，使用者體感差，字小按鈕也很難點](https://i.imgur.com/ruLsPM4.png)
 
 ## 什麼是 RWD？
 
