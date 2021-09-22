@@ -4,6 +4,41 @@
   
   
   <entry>
+    <title>Day.13 「初步學習 Javascript 基礎篇」 —— Javascript 宣告變數 與 基本型別</title>
+    <link href="/2021/09/22/2021-9-22-it_ironman-day13/"/>
+    <url>/2021/09/22/2021-9-22-it_ironman-day13/</url>
+    
+    <content type="html"><![CDATA[<h1 id="Day-13-「初步學習-Javascript-基礎篇」-——-Javascript-宣告變數-與-基本型別"><a href="#Day-13-「初步學習-Javascript-基礎篇」-——-Javascript-宣告變數-與-基本型別" class="headerlink" title="Day.13 「初步學習 Javascript 基礎篇」 —— Javascript 宣告變數 與 基本型別"></a>Day.13 「初步學習 Javascript 基礎篇」 —— Javascript 宣告變數 與 基本型別</h1><p><img src="https://i.imgur.com/wh1ZT6h.png" alt="Javascript 宣告變數 與 基本型別"></p><p>前面已經大略介紹了 HTML 和 CSS 的入門知識了，接著我們要來認識 Javascript，來為我們的網頁添加更多邏輯互動。</p><h2 id="怎麼宣告變數？"><a href="#怎麼宣告變數？" class="headerlink" title="怎麼宣告變數？"></a>怎麼宣告變數？</h2><p>Javascript 是個<strong>弱型別</strong>語言，在宣告變數時，不像其他語言需要先指定型別那麼嚴謹，宣告的<strong>變數名</strong>會對應<strong>記憶體位子</strong>，把其<strong>值</strong>存入<strong>記憶體中</strong>，之後要取出值，只要藉由變數名，就能找到對應的值。</p><p><img src="https://i.imgur.com/J6BjmqI.png" alt="宣告變數"><br><img src="https://i.imgur.com/SAFuUzt.png" alt="存入記憶體中"></p><p>要幫變數命名也是有規則的，首先<strong>保留字</strong>（如：<code>class</code>）與<strong>關鍵字</strong>（如：<code>var</code>），不能用於變數名，變數名<strong>不能由數字作為開頭</strong>，且變數名有<strong>大小寫之分</strong>，可以使用<code>$</code>、<code>_</code>在名稱中。常見的命名法為<strong>駝峰命名法</strong>，如：<code>petName</code>、<code>pet_name</code>。</p><p>目前宣告方式有 3 個（含 ES6）</p><blockquote><p>什麼是 ES6？ ES6 正式名稱為 ECMAScript 2015，是第<strong>六</strong>版 ECMAScript，因此簡稱 ES6。<br>ES6 增加了原本 Javascript 沒有的語法，能更加方便使用與維護，但有些瀏覽器兼容性可能不好（<del>如：IE</del>）</p></blockquote><ul><li><code>var</code>，Javascript 最原始的宣告方法，使用起來很簡單暴力，屬於<strong>全域宣告</strong>，因為容易汙染全域變數，所以目前比較少使用了。</li><li><code>let</code>，ES6 新增的宣告方法，<code>let</code> 與 <code>var</code> 最大的不同就是<strong>區域作用域（block scope）</strong>，比較不會有汙染問題。</li><li><code>const</code>，ES6 新增的宣告方法，<code>const</code> 最大的特色是屬於<strong>常數宣告</strong>，常數宣告的意思是不能隨意改值，降低不小心更改所導致的 bug，<strong>需注意</strong> 因為是常數宣告，無法隨意改值，所以使用常數宣告<strong>一定要賦予值</strong>，否則會報錯。</li></ul><blockquote><p>何謂常數？ 就像是圓周率 π 就是數學常數 3.14159，並不會隨意更改。</p></blockquote><h2 id="變數的基本型別"><a href="#變數的基本型別" class="headerlink" title="變數的基本型別"></a>變數的基本型別</h2><p>Javascript 的基本型別</p><ul><li><p>string 字串型別，這個型別很簡單，只要是使用 <code>&quot;</code> 、 <code>&#39;</code> 包起來的就是字串型別，另外 ES6 還新增了樣板字面值 <code>‵</code>，使用起來更加方便靈活，還能套用變數，<strong>注意</strong> 包起來的符號要一樣的才可以。</p><ul><li><code>&quot;string&quot;</code> 頭尾都是使用 <code>&quot;</code></li><li><code>&#39;string&#39;</code> 頭尾都是使用 <code>&#39;</code></li><li><code>&#39;string&quot;</code> 交錯使用會<strong>報錯</strong>。</li><li>如果字串內要使用 <code>&#39;</code> 則需要使用 <code>&quot;</code> 來包，如：<code>&quot;I&#39;m Mao&quot;</code>，反之亦然。</li><li>ES6 新增的樣板字面值，<code>‵string $&#123; 變數名 &#125;‵</code> 頭尾都使用 <code>‵</code>，要使用變數可以在裡面使用 <code>$&#123;&#125;</code> 來使用。</li></ul></li><li><p>number 數字型別，這個型別代表數字，以下這些都是數字型別</p><ul><li>不管是正負數、小數點都是。（如：0, 9, -8, 7.6）</li><li><code>Infinity</code>（無限大）</li><li><code>-Infinity</code>（無限小）</li><li><code>NaN</code>（Not a Number，非數字）</li></ul></li><li><p>boolean 布林值，這個值就非常的單純許多，只有 true 與 false，這兩個值，主要是使用在判斷式中，在 Javascript 中，<strong>任何值都能轉換成布林值</strong>。</p></li><li><p>undefined 未定義型別，只有一個值 undefined，代表這個變數<strong>還沒定義型別</strong>。</p></li><li><p>null 空值，只有一個值 null ，代表這個變數<strong>目前定義為沒有值</strong>。</p></li><li><p>object 以上基本型別以外的都是<strong>Object 物件</strong>，物件這個東西比較複雜，我們之後在細細品味。</p></li></ul><h2 id="如何知道變數的型別？"><a href="#如何知道變數的型別？" class="headerlink" title="如何知道變數的型別？"></a>如何知道變數的型別？</h2><p>可以使用 Javascript 中用來判斷型別的運算符 <code>typeof</code>，使用方法如下</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> a;<br><span class="hljs-keyword">let</span> n = <span class="hljs-literal">null</span>;<br><br><span class="hljs-keyword">typeof</span> <span class="hljs-string">&quot;I&#x27;m Mao&quot;</span>; <span class="hljs-comment">// string</span><br><span class="hljs-keyword">typeof</span> <span class="hljs-literal">NaN</span>;       <span class="hljs-comment">// number</span><br><span class="hljs-keyword">typeof</span> <span class="hljs-literal">true</span>;      <span class="hljs-comment">// boolean</span><br><span class="hljs-keyword">typeof</span> a;         <span class="hljs-comment">// undefined</span><br><span class="hljs-keyword">typeof</span> n;         <span class="hljs-comment">// object</span><br><span class="hljs-keyword">typeof</span> &#123;&#125;;        <span class="hljs-comment">// object</span><br><span class="hljs-keyword">typeof</span> [];        <span class="hljs-comment">// object</span><br></code></pre></td></tr></table></figure><p>欸～這時會發現奇怪的事情，null 給出的型別怎麼是 object 呢？ 這其實是一開始 Javascript 設置實作時產生的 bug！</p><blockquote><p>Javascript 的值是由一個表示<strong>型別</strong>的標籤，與實際內容的<strong>值</strong>所組成。<br>由於物件型別標籤是 <strong>0</strong>，而 null 代表的是空值（通常以 0x00 表示），導致物件與空值的標籤搞混，而產生的結果。<br>內容取自 <a href="https://www.tenlong.com.tw/products/9789864344130">008 天 重新認識 Javascript</a></p></blockquote><p>既然 Javascript 已經不打算修復這個 bug 了（應該說一改會牽動到很多東西，就乾脆不改了），我們就 <del>想像 null 是空物件吧</del>，實際上並不是唷！</p><h2 id="如何轉型別？"><a href="#如何轉型別？" class="headerlink" title="如何轉型別？"></a>如何轉型別？</h2><p>有的時候我們宣告變數使用<code>var a = &quot;1&quot;</code>，那麼 <code>a</code> 是的型別是什麼？ 聰明的你應該馬上就知道是字串（string）型別了吧！<br>那麼如果想要把 <code>a</code> 轉型成數字（number）型別，就可以使用轉換型別的語法，剛好來介紹一下轉換型別的語法吧！</p><p>轉換型別語法：</p><ul><li>轉換成字串（string）型別：<ul><li><code>toString()</code>，使用方法<code>a.toString()</code>就能轉換成字串型別，但遇到 null 或 undefined <strong>會報錯</strong></li><li><code>String()</code>，使用方法<code>String(a)</code>就能轉換成字串型別，遇到 null 或 undefined <strong>也不會報錯</strong></li><li>變數直接加空字串，使用方法 <code>a + &#39;&#39;</code> 就能轉換成字串型別。</li></ul></li><li>轉換成數字型別<ul><li><code>Number()</code>，任意資料型別轉換成數字型別。</li><li><code>parseInt()</code>，將字串或數字轉成整數。</li><li><code>parseFloat()</code>，將字串或數字轉成浮點數。</li><li>變數前面使用 <code>+</code> 一元運算子，使用方法 <code>+a</code> 就能轉換成數字型別。</li></ul></li><li>任何型別都可以轉換成 <strong>布林值</strong><ul><li>true<ul><li>任何非空字串的值</li><li>任何非 0 的數字</li><li>任何物件</li></ul></li><li>false<ul><li>空字串（<code>&#39;&#39;</code> 和 <code>&quot;&quot;</code>）</li><li>數字 0 和 NaN</li><li>null 和 undefined</li></ul></li></ul></li></ul><h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>終於開始學習程式語言了，今天認識了基礎的宣告變數與型別判斷，蠻推薦 Kuro 大大寫的 <a href="https://www.tenlong.com.tw/products/9789864344130">008 天 重新認識 Javascript</a>，寫得十分有趣清楚，下一篇章先進入我們的運算符篇。</p><h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul><li><a href="https://www.tenlong.com.tw/products/9789864344130">008 天 重新認識 Javascript</a></li></ul>]]></content>
+    
+    
+    <categories>
+      
+      <category>程式語言</category>
+      
+      <category>前端</category>
+      
+      <category>iT 鐵人賽</category>
+      
+      <category>第 2021 年</category>
+      
+      <category>Javascript</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>iT 鐵人賽</tag>
+      
+      <tag>Javascript</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Day.12 「來為網頁添加動畫吧！」 —— CSS 動畫（animation）</title>
     <link href="/2021/09/21/2021-9-21-it_ironman-day12/"/>
     <url>/2021/09/21/2021-9-21-it_ironman-day12/</url>

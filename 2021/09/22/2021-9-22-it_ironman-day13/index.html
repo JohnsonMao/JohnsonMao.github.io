@@ -14,11 +14,11 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
   <meta name="theme-color" content="#2f4154">
-  <meta name="description" content="大家好！我是毛毛，因為這波疫情影響下，讓我多了許多時間可以好好投資自己，想把自己目前所學的技能，轉化成能夠讓更多人更好吸收的知識，如果有發現內容有誤，也請您不吝指教，感謝。">
+  <meta name="description" content="Javascript 是個弱型別語言，在宣告變數時，不像其他語言需要先指定型別那麼嚴謹，宣告的變數名會對應記憶體位子，把其值存入記憶體中，之後要取出值，只要藉由變數名，就能找到對應的值。">
   <meta name="author" content="Mao">
   <meta name="keywords" content="">
   
-  <title>Day.1 「工欲善其事，必先利其器！」—— 前言 與 介紹工具 - Mao&#39;s blog</title>
+  <title>Day.13 「初步學習 Javascript 基礎篇」 —— Javascript 宣告變數 與 基本型別 - Mao&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
 
@@ -158,12 +158,12 @@
 </nav>
 
     <div class="banner" id="banner" parallax=true
-         style="background: url('https://i.imgur.com/YyhvZBl.png') no-repeat center center;
+         style="background: url('https://i.imgur.com/wh1ZT6h.png') no-repeat center center;
            background-size: cover;">
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="Day.1 「工欲善其事，必先利其器！」—— 前言 與 介紹工具">
+            <span class="h2" id="subtitle" title="Day.13 「初步學習 Javascript 基礎篇」 —— Javascript 宣告變數 與 基本型別">
               
             </span>
 
@@ -173,8 +173,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-09-10 22:00" pubdate>
-        2021年9月10日 晚上
+      <time datetime="2021-09-22 16:00" pubdate>
+        2021年9月22日 下午
       </time>
     </span>
   
@@ -185,7 +185,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      783 字
+      1.4k 字
     </span>
   
 
@@ -195,7 +195,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      8
+      16
        分钟
     </span>
   
@@ -225,40 +225,98 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Day.1 「工欲善其事，必先利其器！」—— 前言 與 介紹工具</h1>
+            <h1 style="display: none">Day.13 「初步學習 Javascript 基礎篇」 —— Javascript 宣告變數 與 基本型別</h1>
             
             <div class="markdown-body">
-              <h1 id="Day-1-「工欲善其事，必先利其器！」——-前言-與-介紹工具"><a href="#Day-1-「工欲善其事，必先利其器！」——-前言-與-介紹工具" class="headerlink" title="Day.1 「工欲善其事，必先利其器！」—— 前言 與 介紹工具"></a>Day.1 「工欲善其事，必先利其器！」—— 前言 與 介紹工具</h1><p><img src="https://i.imgur.com/YyhvZBl.png" srcset="/img/loading.gif" lazyload alt="「工欲善其事，必先利其器！」—— 前言 與 介紹工具"></p>
-<h2 id="大家好"><a href="#大家好" class="headerlink" title="大家好"></a>大家好</h2><p>我是毛毛，因為這波疫情影響下，讓我多了許多時間可以好好投資自己，想把自己目前所學的技能，轉化成能夠讓更多人更好吸收的知識，如果有發現內容有誤，也請您不吝指教，感謝。</p>
-<!-- more -->
+              <h1 id="Day-13-「初步學習-Javascript-基礎篇」-——-Javascript-宣告變數-與-基本型別"><a href="#Day-13-「初步學習-Javascript-基礎篇」-——-Javascript-宣告變數-與-基本型別" class="headerlink" title="Day.13 「初步學習 Javascript 基礎篇」 —— Javascript 宣告變數 與 基本型別"></a>Day.13 「初步學習 Javascript 基礎篇」 —— Javascript 宣告變數 與 基本型別</h1><p><img src="https://i.imgur.com/wh1ZT6h.png" srcset="/img/loading.gif" lazyload alt="Javascript 宣告變數 與 基本型別"></p>
+<p>前面已經大略介紹了 HTML 和 CSS 的入門知識了，接著我們要來認識 Javascript，來為我們的網頁添加更多邏輯互動。</p>
+<h2 id="怎麼宣告變數？"><a href="#怎麼宣告變數？" class="headerlink" title="怎麼宣告變數？"></a>怎麼宣告變數？</h2><p>Javascript 是個<strong>弱型別</strong>語言，在宣告變數時，不像其他語言需要先指定型別那麼嚴謹，宣告的<strong>變數名</strong>會對應<strong>記憶體位子</strong>，把其<strong>值</strong>存入<strong>記憶體中</strong>，之後要取出值，只要藉由變數名，就能找到對應的值。</p>
+<p><img src="https://i.imgur.com/J6BjmqI.png" srcset="/img/loading.gif" lazyload alt="宣告變數"><br><img src="https://i.imgur.com/SAFuUzt.png" srcset="/img/loading.gif" lazyload alt="存入記憶體中"></p>
+<p>要幫變數命名也是有規則的，首先<strong>保留字</strong>（如：<code>class</code>）與<strong>關鍵字</strong>（如：<code>var</code>），不能用於變數名，變數名<strong>不能由數字作為開頭</strong>，且變數名有<strong>大小寫之分</strong>，可以使用<code>$</code>、<code>_</code>在名稱中。常見的命名法為<strong>駝峰命名法</strong>，如：<code>petName</code>、<code>pet_name</code>。</p>
+<p>目前宣告方式有 3 個（含 ES6）</p>
+<blockquote>
+<p>什麼是 ES6？ ES6 正式名稱為 ECMAScript 2015，是第<strong>六</strong>版 ECMAScript，因此簡稱 ES6。<br>ES6 增加了原本 Javascript 沒有的語法，能更加方便使用與維護，但有些瀏覽器兼容性可能不好（<del>如：IE</del>）</p>
+</blockquote>
+<ul>
+<li><code>var</code>，Javascript 最原始的宣告方法，使用起來很簡單暴力，屬於<strong>全域宣告</strong>，因為容易汙染全域變數，所以目前比較少使用了。</li>
+<li><code>let</code>，ES6 新增的宣告方法，<code>let</code> 與 <code>var</code> 最大的不同就是<strong>區域作用域（block scope）</strong>，比較不會有汙染問題。</li>
+<li><code>const</code>，ES6 新增的宣告方法，<code>const</code> 最大的特色是屬於<strong>常數宣告</strong>，常數宣告的意思是不能隨意改值，降低不小心更改所導致的 bug，<strong>需注意</strong> 因為是常數宣告，無法隨意改值，所以使用常數宣告<strong>一定要賦予值</strong>，否則會報錯。</li>
+</ul>
+<blockquote>
+<p>何謂常數？ 就像是圓周率 π 就是數學常數 3.14159，並不會隨意更改。</p>
+</blockquote>
+<h2 id="變數的基本型別"><a href="#變數的基本型別" class="headerlink" title="變數的基本型別"></a>變數的基本型別</h2><p>Javascript 的基本型別</p>
+<ul>
+<li><p>string 字串型別，這個型別很簡單，只要是使用 <code>&quot;</code> 、 <code>&#39;</code> 包起來的就是字串型別，另外 ES6 還新增了樣板字面值 <code>‵</code>，使用起來更加方便靈活，還能套用變數，<strong>注意</strong> 包起來的符號要一樣的才可以。</p>
+<ul>
+<li><code>&quot;string&quot;</code> 頭尾都是使用 <code>&quot;</code></li>
+<li><code>&#39;string&#39;</code> 頭尾都是使用 <code>&#39;</code></li>
+<li><code>&#39;string&quot;</code> 交錯使用會<strong>報錯</strong>。</li>
+<li>如果字串內要使用 <code>&#39;</code> 則需要使用 <code>&quot;</code> 來包，如：<code>&quot;I&#39;m Mao&quot;</code>，反之亦然。</li>
+<li>ES6 新增的樣板字面值，<code>‵string $&#123; 變數名 &#125;‵</code> 頭尾都使用 <code>‵</code>，要使用變數可以在裡面使用 <code>$&#123;&#125;</code> 來使用。</li>
+</ul>
+</li>
+<li><p>number 數字型別，這個型別代表數字，以下這些都是數字型別</p>
+<ul>
+<li>不管是正負數、小數點都是。（如：0, 9, -8, 7.6）</li>
+<li><code>Infinity</code>（無限大）</li>
+<li><code>-Infinity</code>（無限小）</li>
+<li><code>NaN</code>（Not a Number，非數字）</li>
+</ul>
+</li>
+<li><p>boolean 布林值，這個值就非常的單純許多，只有 true 與 false，這兩個值，主要是使用在判斷式中，在 Javascript 中，<strong>任何值都能轉換成布林值</strong>。</p>
+</li>
+<li><p>undefined 未定義型別，只有一個值 undefined，代表這個變數<strong>還沒定義型別</strong>。</p>
+</li>
+<li><p>null 空值，只有一個值 null ，代表這個變數<strong>目前定義為沒有值</strong>。</p>
+</li>
+<li><p>object 以上基本型別以外的都是<strong>Object 物件</strong>，物件這個東西比較複雜，我們之後在細細品味。</p>
+</li>
+</ul>
+<h2 id="如何知道變數的型別？"><a href="#如何知道變數的型別？" class="headerlink" title="如何知道變數的型別？"></a>如何知道變數的型別？</h2><p>可以使用 Javascript 中用來判斷型別的運算符 <code>typeof</code>，使用方法如下</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> a;<br><span class="hljs-keyword">let</span> n = <span class="hljs-literal">null</span>;<br><br><span class="hljs-keyword">typeof</span> <span class="hljs-string">&quot;I&#x27;m Mao&quot;</span>; <span class="hljs-comment">// string</span><br><span class="hljs-keyword">typeof</span> <span class="hljs-literal">NaN</span>;       <span class="hljs-comment">// number</span><br><span class="hljs-keyword">typeof</span> <span class="hljs-literal">true</span>;      <span class="hljs-comment">// boolean</span><br><span class="hljs-keyword">typeof</span> a;         <span class="hljs-comment">// undefined</span><br><span class="hljs-keyword">typeof</span> n;         <span class="hljs-comment">// object</span><br><span class="hljs-keyword">typeof</span> &#123;&#125;;        <span class="hljs-comment">// object</span><br><span class="hljs-keyword">typeof</span> [];        <span class="hljs-comment">// object</span><br></code></pre></td></tr></table></figure>
 
-<h2 id="這個系列"><a href="#這個系列" class="headerlink" title="這個系列"></a>這個系列</h2><p>關於這個系列，會盡量著重在使用簡單好懂的解說，介紹網頁三兄弟（ HTML 、 CSS 、 Javascript ）所需要的知識，會嘗試把過程中所學到的東西，製作出一個小網站，希望在編寫的同時，回顧自己是否確實搞懂，正所謂最好的學習方式除了輸入，還要懂得輸出。</p>
-<h2 id="使用的編輯器"><a href="#使用的編輯器" class="headerlink" title="使用的編輯器"></a>使用的編輯器</h2><p>我會推薦使用 VS Code 編輯器，因為他非常適合開發 HTML 、 CSS 、 Javascript，而且套件、社群也已經相當成熟了，對於新手來說，非常容易入門。<br><a target="_blank" rel="noopener" href="https://code.visualstudio.com/download">VS Code 下載官網</a></p>
-<h3 id="善用套件，事半功倍"><a href="#善用套件，事半功倍" class="headerlink" title="善用套件，事半功倍"></a>善用套件，事半功倍</h3><p>VS Code 有相當多個套件可以使用，這裡先介紹常用的套件，當然還有許多套件值得你慢慢尋找。</p>
+<p>欸～這時會發現奇怪的事情，null 給出的型別怎麼是 object 呢？ 這其實是一開始 Javascript 設置實作時產生的 bug！</p>
+<blockquote>
+<p>Javascript 的值是由一個表示<strong>型別</strong>的標籤，與實際內容的<strong>值</strong>所組成。<br>由於物件型別標籤是 <strong>0</strong>，而 null 代表的是空值（通常以 0x00 表示），導致物件與空值的標籤搞混，而產生的結果。<br>內容取自 <a target="_blank" rel="noopener" href="https://www.tenlong.com.tw/products/9789864344130">008 天 重新認識 Javascript</a></p>
+</blockquote>
+<p>既然 Javascript 已經不打算修復這個 bug 了（應該說一改會牽動到很多東西，就乾脆不改了），我們就 <del>想像 null 是空物件吧</del>，實際上並不是唷！</p>
+<h2 id="如何轉型別？"><a href="#如何轉型別？" class="headerlink" title="如何轉型別？"></a>如何轉型別？</h2><p>有的時候我們宣告變數使用<code>var a = &quot;1&quot;</code>，那麼 <code>a</code> 是的型別是什麼？ 聰明的你應該馬上就知道是字串（string）型別了吧！<br>那麼如果想要把 <code>a</code> 轉型成數字（number）型別，就可以使用轉換型別的語法，剛好來介紹一下轉換型別的語法吧！</p>
+<p>轉換型別語法：</p>
 <ul>
-<li><p><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=MS-CEINTL.vscode-language-pack-zh-hant">Chinese (Traditional) Language Pack for Visual Studio Code</a><br>  習慣看中文介面？ 這個套件可以把 VS Code 轉成繁體中文版。</p>
+<li>轉換成字串（string）型別：<ul>
+<li><code>toString()</code>，使用方法<code>a.toString()</code>就能轉換成字串型別，但遇到 null 或 undefined <strong>會報錯</strong></li>
+<li><code>String()</code>，使用方法<code>String(a)</code>就能轉換成字串型別，遇到 null 或 undefined <strong>也不會報錯</strong></li>
+<li>變數直接加空字串，使用方法 <code>a + &#39;&#39;</code> 就能轉換成字串型別。</li>
+</ul>
 </li>
-<li><p><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=oderwat.indent-rainbow">indent-rainbow</a><br>  縮排不知縮到哪去？ 幫縮排添加顏色，讓程式碼更加容易閱讀。</p>
+<li>轉換成數字型別<ul>
+<li><code>Number()</code>，任意資料型別轉換成數字型別。</li>
+<li><code>parseInt()</code>，將字串或數字轉成整數。</li>
+<li><code>parseFloat()</code>，將字串或數字轉成浮點數。</li>
+<li>變數前面使用 <code>+</code> 一元運算子，使用方法 <code>+a</code> 就能轉換成數字型別。</li>
+</ul>
 </li>
-<li><p><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=CoenraadS.bracket-pair-colorizer">Bracket Pair Colorizer</a><br>  在寫 Javascript 漏打一個括弧而找得很辛苦？ 這個套件幫你把對應的括弧上相同顏色。</p>
+<li>任何型別都可以轉換成 <strong>布林值</strong><ul>
+<li>true<ul>
+<li>任何非空字串的值</li>
+<li>任何非 0 的數字</li>
+<li>任何物件</li>
+</ul>
 </li>
-<li><p><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer">Live Server</a><br>  開發網站想看網站的呈現？ 這個套件可以幫你及時更新畫面，不用一直按 F5。</p>
+<li>false<ul>
+<li>空字串（<code>&#39;&#39;</code> 和 <code>&quot;&quot;</code>）</li>
+<li>數字 0 和 NaN</li>
+<li>null 和 undefined</li>
+</ul>
 </li>
 </ul>
-<h3 id="善用快捷鍵，時間就是金錢"><a href="#善用快捷鍵，時間就是金錢" class="headerlink" title="善用快捷鍵，時間就是金錢"></a>善用快捷鍵，時間就是金錢</h3><p>將雙手盡量停留在鍵盤上，能更有效提升寫 code 的效率，這裡先介紹我常用的快捷鍵。<br>此篇以 Windows 操作，如果是 Mac 可能會有些許不一樣<br>Mac 需把 <code>Ctrl</code> 換成 <code>Cmd ⌘</code></p>
-<ul>
-<li><p>VS Code 非常貼心，本身就內建 HTML 、 CSS 、Javascript 的 Emmet，只要輸入縮寫語法，按下 Tab 或 Enter 就能擴充縮寫來快速編寫。需注意縮寫語法取決於副檔名。<br><img src="https://i.imgur.com/Vi5ZXGn.gif" srcset="/img/loading.gif" lazyload alt="縮寫語法"><br><em>此圖範例為，新增檔案切換成 HTML 副檔名，並使用 HTML emmet</em></p>
-</li>
-<li><p><code>Ctrl</code> + <code>D</code> 可以同字串選取。<br><img src="https://i.imgur.com/zWquMNw.gif" srcset="/img/loading.gif" lazyload alt="同字串選取"><br><em>此圖範例為，選取 MyNavLink 換成 NavLink</em></p>
-</li>
-<li><p>還在整段<code>Ctrl</code> + <code>C</code> + <code>Ctrl</code> + <code>V</code>，複製程式碼嗎？可以嘗試看看使用一個<code>Shift</code> + <code>Alt</code> + <code>上或下</code>來複製程式碼<br><img src="https://i.imgur.com/Li08fjb.gif" srcset="/img/loading.gif" lazyload alt="Shift + Alt + 上或下來複製程式碼"><br><em>此圖範例為，把整個<code>&lt;ul&gt;</code>格式複製貼上</em></p>
-</li>
-<li><p>使用<code>Shift</code> + <code>Alt</code> + <code>F</code>，就能快速為程式碼進行 Format 排版<br><img src="https://i.imgur.com/lJDcUXS.gif" srcset="/img/loading.gif" lazyload alt="快速為程式碼進行 Format 排版"><br><em>此圖範例為，使用<code>Shift</code> + <code>Alt</code> + <code>F</code>進行快速排版</em></p>
-</li>
-<li><p>別再左側資料夾慢慢找檔案，善用<code>Ctrl</code> + <code>E</code>或<code>Ctrl</code> + <code>P</code>搜尋檔案，就可以直接切換檔案<br><img src="https://i.imgur.com/jHQoBOG.gif" srcset="/img/loading.gif" lazyload alt="Ctrl + P 搜尋檔案，就可以直接切換檔案"><br><em>此圖範例為，快速導覽至 Nav.jsx</em></p>
 </li>
 </ul>
-<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>這是我個人常用的套件工具與快捷鍵，準備好我們的工具，接下來就要進入我們的網頁篇～<br>也歡迎大家在下面留言補充更多好玩好用的套件～</p>
+<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>終於開始學習程式語言了，今天認識了基礎的宣告變數與型別判斷，蠻推薦 Kuro 大大寫的 <a target="_blank" rel="noopener" href="https://www.tenlong.com.tw/products/9789864344130">008 天 重新認識 Javascript</a>，寫得十分有趣清楚，下一篇章先進入我們的運算符篇。</p>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.tenlong.com.tw/products/9789864344130">008 天 重新認識 Javascript</a></li>
+</ul>
 
             </div>
             <hr>
@@ -270,13 +328,13 @@
                     
                       <a class="hover-with-bg" href="/categories/%E7%A8%8B%E5%BC%8F%E8%AA%9E%E8%A8%80/">程式語言</a>
                     
-                      <a class="hover-with-bg" href="/categories/%E7%A8%8B%E5%BC%8F%E8%AA%9E%E8%A8%80/%E5%B7%A5%E5%85%B7/">工具</a>
-                    
-                      <a class="hover-with-bg" href="/categories/%E7%A8%8B%E5%BC%8F%E8%AA%9E%E8%A8%80/%E5%B7%A5%E5%85%B7/VS-Code/">VS Code</a>
+                      <a class="hover-with-bg" href="/categories/%E7%A8%8B%E5%BC%8F%E8%AA%9E%E8%A8%80/%E5%89%8D%E7%AB%AF/">前端</a>
                     
                       <a class="hover-with-bg" href="/categories/iT-%E9%90%B5%E4%BA%BA%E8%B3%BD/">iT 鐵人賽</a>
                     
                       <a class="hover-with-bg" href="/categories/iT-%E9%90%B5%E4%BA%BA%E8%B3%BD/%E7%AC%AC-2021-%E5%B9%B4/">第 2021 年</a>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%A8%8B%E5%BC%8F%E8%AA%9E%E8%A8%80/%E5%89%8D%E7%AB%AF/Javascript/">Javascript</a>
                     
                   </div>
                 
@@ -286,7 +344,7 @@
                     
                       <a class="hover-with-bg" href="/tags/iT-%E9%90%B5%E4%BA%BA%E8%B3%BD/">iT 鐵人賽</a>
                     
-                      <a class="hover-with-bg" href="/tags/VS-Code/">VS Code</a>
+                      <a class="hover-with-bg" href="/tags/Javascript/">Javascript</a>
                     
                   </div>
                 
@@ -297,18 +355,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/09/11/2021-9-11-it_ironman-day2/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Day.2 「歡迎來到網頁這個世界！」 —— 認識網頁架構</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021/09/06/2021-9-6-mongodb/">
-                        <span class="hidden-mobile">MongoDB</span>
+                      <a href="/2021/09/21/2021-9-21-it_ironman-day12/">
+                        <span class="hidden-mobile">Day.12 「來為網頁添加動畫吧！」 —— CSS 動畫（animation）</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -330,8 +382,8 @@
     
       <script type="text/javascript">
         var disqus_config = function() {
-          this.page.url = 'http://example.com/2021/09/10/2021-9-10-it_ironman-day1/';
-          this.page.identifier = '/2021/09/10/2021-9-10-it_ironman-day1/';
+          this.page.url = 'http://example.com/2021/09/22/2021-9-22-it_ironman-day13/';
+          this.page.identifier = '/2021/09/22/2021-9-22-it_ironman-day13/';
         };
         Fluid.utils.loadComments('#disqus_thread', function() {
           var d = document, s = d.createElement('script');
