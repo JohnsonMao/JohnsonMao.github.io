@@ -1,8 +1,8 @@
 ---
 title: Day.1 「工欲善其事，必先利其器！」—— 前言 與 介紹工具
 date: 2021/9/10 22:00:00
-index_img: https://i.imgur.com/eDkVQpQ.jpg
-banner_img: https://i.imgur.com/eDkVQpQ.jpg
+index_img: https://i.imgur.com/YyhvZBl.png
+banner_img: https://i.imgur.com/YyhvZBl.png
 categories:
     - [程式語言, 工具, VS Code]
     - [iT 鐵人賽, 第 2021 年]
