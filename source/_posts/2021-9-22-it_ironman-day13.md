@@ -1,27 +1,26 @@
 ---
-title: Day.13 「初步學習 Javascript 基礎篇」 —— Javascript 宣告變數 與 基本型別
+title: Day.13 「初步學習 JavaScript 基礎篇」 —— JavaScript 宣告變數 與 基本型別
 date: 2021/9/22 16:00:00
 index_img: https://i.imgur.com/wh1ZT6h.png
 banner_img: https://i.imgur.com/wh1ZT6h.png
 categories:
-    - [程式語言, 前端, Javascript]
+    - [程式語言, 前端, JavaScript]
     - [iT 鐵人賽, 第 2021 年]
 tags: 
     - iT 鐵人賽
-    - Javascript
-excerpt: Javascript 是個弱型別語言，在宣告變數時，不像其他語言需要先指定型別那麼嚴謹，宣告的變數名會對應記憶體位子，把其值存入記憶體中，之後要取出值，只要藉由變數名，就能找到對應的值。
-
+    - JavaScript
+excerpt: JavaScript 是個弱型別語言，在宣告變數時，不像其他語言需要先指定型別那麼嚴謹，宣告的變數名會對應記憶體位子，把其值存入記憶體中，之後要取出值，只要藉由變數名，就能找到對應的值。
 ---
 
-# Day.13 「初步學習 Javascript 基礎篇」 —— Javascript 宣告變數 與 基本型別
+# Day.13 「初步學習 JavaScript 基礎篇」 —— JavaScript 宣告變數 與 基本型別
 
-![Javascript 宣告變數 與 基本型別](https://i.imgur.com/wh1ZT6h.png)
+![JavaScript 宣告變數 與 基本型別](https://i.imgur.com/wh1ZT6h.png)
 
-前面已經大略介紹了 HTML 和 CSS 的入門知識了，接著我們要來認識 Javascript，來為我們的網頁添加更多邏輯互動。
+前面已經大略介紹了 HTML 和 CSS 的入門知識了，接著我們要來認識 JavaScript，來為我們的網頁添加更多邏輯互動。
 
 ## 怎麼宣告變數？
 
-Javascript 是個**弱型別**語言，在宣告變數時，不像其他語言需要先指定型別那麼嚴謹，宣告的**變數名**會對應**記憶體位子**，把其**值**存入**記憶體中**，之後要取出值，只要藉由變數名，就能找到對應的值。
+JavaScript 是個**弱型別**語言，在宣告變數時，不像其他語言需要先指定型別那麼嚴謹，宣告的**變數名**會對應**記憶體位子**，把其**值**存入**記憶體中**，之後要取出值，只要藉由變數名，就能找到對應的值。
 
 ![宣告變數](https://i.imgur.com/J6BjmqI.png)
 ![存入記憶體中](https://i.imgur.com/SAFuUzt.png)
@@ -31,9 +30,9 @@ Javascript 是個**弱型別**語言，在宣告變數時，不像其他語言�
 目前宣告方式有 3 個（含 ES6）
 
 > 什麼是 ES6？ ES6 正式名稱為 ECMAScript 2015，是第**六**版 ECMAScript，因此簡稱 ES6。
-> ES6 增加了原本 Javascript 沒有的語法，能更加方便使用與維護，但有些瀏覽器兼容性可能不好（~~如：IE~~）
+> ES6 增加了原本 JavaScript 沒有的語法，能更加方便使用與維護，但有些瀏覽器兼容性可能不好（~~如：IE~~）
 
-- `var`，Javascript 最原始的宣告方法，使用起來很簡單暴力，屬於**全域宣告**，因為容易汙染全域變數，所以目前比較少使用了。
+- `var`，JavaScript 最原始的宣告方法，使用起來很簡單暴力，屬於**全域宣告**，因為容易汙染全域變數，所以目前比較少使用了。
 - `let`，ES6 新增的宣告方法，`let` 與 `var` 最大的不同就是**區域作用域（block scope）**，比較不會有汙染問題。
 - `const`，ES6 新增的宣告方法，`const` 最大的特色是屬於**常數宣告**，常數宣告的意思是不能隨意改值，降低不小心更改所導致的 bug，**需注意** 因為是常數宣告，無法隨意改值，所以使用常數宣告**一定要賦予值**，否則會報錯。
 
@@ -41,7 +40,7 @@ Javascript 是個**弱型別**語言，在宣告變數時，不像其他語言�
 
 ## 變數的基本型別
 
-Javascript 的基本型別
+JavaScript 的基本型別
 
 - string 字串型別，這個型別很簡單，只要是使用 `"` 、 `'` 包起來的就是字串型別，另外 ES6 還新增了樣板字面值 `‵`，使用起來更加方便靈活，還能套用變數，**注意** 包起來的符號要一樣的才可以。
   - `"string"` 頭尾都是使用 `"`
@@ -66,7 +65,7 @@ Javascript 的基本型別
 
 ## 如何知道變數的型別？
 
-可以使用 Javascript 中用來判斷型別的運算符 `typeof`，使用方法如下
+可以使用 JavaScript 中用來判斷型別的運算符 `typeof`，使用方法如下
 
 ```javascript
 var a;
@@ -83,11 +82,11 @@ typeof [];        // object
 
 欸～這時會發現奇怪的事情，null 給出的型別怎麼是 object 呢？ 這其實是一開始 Javascript 設置實作時產生的 bug！
 
-> Javascript 的值是由一個表示**型別**的標籤，與實際內容的**值**所組成。
+> JavaScript 的值是由一個表示**型別**的標籤，與實際內容的**值**所組成。
 > 由於物件型別標籤是 **0**，而 null 代表的是空值（通常以 0x00 表示），導致物件與空值的標籤搞混，而產生的結果。
-> 內容取自 [008 天 重新認識 Javascript](https://www.tenlong.com.tw/products/9789864344130)
+> 內容取自 [008 天 重新認識 JavaScript](https://www.tenlong.com.tw/products/9789864344130)
 
-既然 Javascript 已經不打算修復這個 bug 了（應該說一改會牽動到很多東西，就乾脆不改了），我們就 ~~想像 null 是空物件吧~~，實際上並不是唷！
+既然 JavaScript 已經不打算修復這個 bug 了（應該說一改會牽動到很多東西，就乾脆不改了），我們就 ~~想像 null 是空物件吧~~，實際上並不是唷！
 
 ## 如何轉型別？
 
@@ -117,8 +116,8 @@ typeof [];        // object
 
 ## 總結
 
-終於開始學習程式語言了，今天認識了基礎的宣告變數與型別判斷，蠻推薦 Kuro 大大寫的 [008 天 重新認識 Javascript](https://www.tenlong.com.tw/products/9789864344130)，寫得十分有趣清楚，下一篇章先進入我們的運算符篇。
+終於開始學習程式語言了，今天認識了基礎的宣告變數與型別判斷，蠻推薦 Kuro 大大寫的 [008 天 重新認識 JavaScript](https://www.tenlong.com.tw/products/9789864344130)，寫得十分有趣清楚，下一篇章先進入我們的運算符篇。
 
 ## 參考資料
 
-- [008 天 重新認識 Javascript](https://www.tenlong.com.tw/products/9789864344130)
+- [008 天 重新認識 JavaScript](https://www.tenlong.com.tw/products/9789864344130)
