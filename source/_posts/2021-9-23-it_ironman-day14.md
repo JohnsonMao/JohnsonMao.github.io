@@ -1,5 +1,5 @@
 ---
-title: Day.13 「初步學習 JavaScript 基礎篇」 —— JavaScript 宣告變數 與 基本型別
+title: Day.14 「基礎打穩了，就能走得更長久～」 —— JavaScript 基礎運算子
 date: 2021/9/23 16:00:00
 index_img: https://i.imgur.com/0XXiCaD.png
 banner_img: https://i.imgur.com/0XXiCaD.png
