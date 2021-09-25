@@ -1,0 +1,534 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-TW" data-default-color-scheme=&#34;dark&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="前面學習到了條件判斷式，接著我們來學習有點~~危險~~的**循環迴圈**，好啦！也沒那麼誇張～只是寫不好，容易進入無窮迴圈導致當機！不過我們是寫在網頁上～所以如果真的不小心陷入無窮迴圈，就關掉瀏覽器就可以了！">
+  <meta name="author" content="Mao">
+  <meta name="keywords" content="">
+  
+  <title>Day.16 「重複的事情，交給程式去做！」 —— JavaScript 循環迴圈 - Mao&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>毛毛的部落格</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首頁
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                封存
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分類
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                標籤
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                關於
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('https://i.imgur.com/0bAwQpd.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Day.16 「重複的事情，交給程式去做！」 —— JavaScript 循環迴圈">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-09-25 22:00" pubdate>
+        2021年9月25日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.3k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      15
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Day.16 「重複的事情，交給程式去做！」 —— JavaScript 循環迴圈</h1>
+            
+            <div class="markdown-body">
+              <h1 id="Day-16-「重複的事情，交給程式去做！」-——-JavaScript-循環迴圈"><a href="#Day-16-「重複的事情，交給程式去做！」-——-JavaScript-循環迴圈" class="headerlink" title="Day.16 「重複的事情，交給程式去做！」 —— JavaScript 循環迴圈"></a>Day.16 「重複的事情，交給程式去做！」 —— JavaScript 循環迴圈</h1><p><img src="https://i.imgur.com/0bAwQpd.png" srcset="/img/loading.gif" lazyload alt="「重複的事情，交給程式去做！」 —— JavaScript 循環迴圈"></p>
+<p>前面學習到了條件判斷式，接著我們來學習有點<del>危險</del>的<strong>循環迴圈</strong>，好啦！也沒那麼誇張～只是寫不好，容易進入無窮迴圈導致當機！不過我們是寫在網頁上～所以如果真的不小心陷入無窮迴圈，就關掉瀏覽器就可以了！</p>
+<h2 id="什麼是迴圈？"><a href="#什麼是迴圈？" class="headerlink" title="什麼是迴圈？"></a>什麼是迴圈？</h2><p>如同字面上的意思，一直反覆輪迴，重複做一樣的事（<del>怎麼好像人生</del>）。</p>
+<h2 id="迴圈流程圖"><a href="#迴圈流程圖" class="headerlink" title="迴圈流程圖"></a>迴圈流程圖</h2><p>沒錯！迴圈也有流程圖，但其實也跟判斷流程圖相差不遠，幾乎一模一樣</p>
+<p><img src="https://i.imgur.com/nfy4vsd.png" srcset="/img/loading.gif" lazyload alt="迴圈流程圖"></p>
+<p>同樣是要達成所設定的條件來進行循環，是不是跟條件判斷式很像呀！</p>
+<h2 id="while-迴圈"><a href="#while-迴圈" class="headerlink" title="while 迴圈"></a>while 迴圈</h2><p>while 迴圈是個最基本、結構簡單的迴圈，使用的語法 <code>while ( 條件表達式 ) &#123; 當條件表達式為 true 時，執行程式碼 &#125;</code>。</p>
+<p>假設我們要印出 12 個月份，除了乖乖的打出 12 個月份，我們也可以發揮工程師精神，使用迴圈來幫我們代勞：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">let</span> month = <span class="hljs-number">1</span>; <span class="hljs-comment">/* 一年由 1 月開始 */</span><br><span class="hljs-keyword">while</span> (month &lt;= <span class="hljs-number">12</span> <span class="hljs-comment">/* 一年只有 12 個月，超過就終止 */</span>) &#123;<br>  <span class="hljs-built_in">console</span>.log( <span class="hljs-string">`<span class="hljs-subst">$&#123;month&#125;</span> 月`</span> );  <span class="hljs-comment">// 利用前面所學的樣板字面值，帶入變數</span><br>  month++;  <span class="hljs-comment">// 重點：需要每執行一次自動 + 1，否則會陷入無限迴圈</span><br>&#125;<br><br><span class="hljs-comment">/*</span><br><span class="hljs-comment">  &quot;1 月&quot;</span><br><span class="hljs-comment">  &quot;2 月&quot;</span><br><span class="hljs-comment">  &quot;3 月&quot;</span><br><span class="hljs-comment">  &quot;4 月&quot;</span><br><span class="hljs-comment">  &quot;5 月&quot;</span><br><span class="hljs-comment">  &quot;6 月&quot;</span><br><span class="hljs-comment">  &quot;7 月&quot;</span><br><span class="hljs-comment">  &quot;8 月&quot;</span><br><span class="hljs-comment">  &quot;9 月&quot; </span><br><span class="hljs-comment">  &quot;10 月&quot;</span><br><span class="hljs-comment">  &quot;11 月&quot;</span><br><span class="hljs-comment">  &quot;12 月&quot;</span><br><span class="hljs-comment">*/</span><br></code></pre></td></tr></table></figure>
+
+<p>非常簡單吧～</p>
+<h2 id="do-while-迴圈"><a href="#do-while-迴圈" class="headerlink" title="do while 迴圈"></a>do while 迴圈</h2><p>而 do while 跟 while 非常相似，唯一不同的地方就在於，JavaScript 是由上而下執行程式碼，所以會<strong>先執行一次</strong>！</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">let</span> month = <span class="hljs-number">1</span>; <span class="hljs-comment">/* 一年由 1 月開始 */</span><br><span class="hljs-keyword">do</span> &#123;<br>  <span class="hljs-comment">// 不管有沒有符合條件，都會先執行&quot;一次&quot;這段程式碼</span><br>  <span class="hljs-built_in">console</span>.log( <span class="hljs-string">`<span class="hljs-subst">$&#123;month&#125;</span> 月`</span> );<br>  month++; <span class="hljs-comment">// 重點記得加</span><br>&#125; <span class="hljs-keyword">while</span> (month &lt;= <span class="hljs-number">12</span>) <span class="hljs-comment">// 一年不超過 12 個月</span><br><br><span class="hljs-comment">/*</span><br><span class="hljs-comment">  &quot;1 月&quot;</span><br><span class="hljs-comment">  &quot;2 月&quot;</span><br><span class="hljs-comment">  &quot;3 月&quot;</span><br><span class="hljs-comment">  &quot;4 月&quot;</span><br><span class="hljs-comment">  &quot;5 月&quot;</span><br><span class="hljs-comment">  &quot;6 月&quot;</span><br><span class="hljs-comment">  &quot;7 月&quot;</span><br><span class="hljs-comment">  &quot;8 月&quot;</span><br><span class="hljs-comment">  &quot;9 月&quot; </span><br><span class="hljs-comment">  &quot;10 月&quot;</span><br><span class="hljs-comment">  &quot;11 月&quot;</span><br><span class="hljs-comment">  &quot;12 月&quot;</span><br><span class="hljs-comment">*/</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="for-迴圈"><a href="#for-迴圈" class="headerlink" title="for 迴圈"></a>for 迴圈</h2><p>for 迴圈比較嚴謹，它把設定<strong>初始值</strong>、<strong>條件判斷</strong> 與 <strong>更新值</strong> 集中在一起設定，讓迴圈的操控次數更容易掌控。</p>
+<p>for 迴圈的語法 <code>for (初始化表達式; 條件表達式; 更新表達式) &#123; 條件判斷為 true 執行程式碼 &#125;</code></p>
+<p>同樣用上面 12 個月的例子：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">/* 同樣設定初始值 1 月; 不超過 12 個月; 每執行一次 + 1 */</span><br><span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">1</span>; i &lt;= <span class="hljs-number">12</span>; i++) &#123;<br>  <span class="hljs-built_in">console</span>.log( <span class="hljs-string">`<span class="hljs-subst">$&#123;i&#125;</span> 月`</span> );<br>&#125;<br><br><span class="hljs-comment">/*</span><br><span class="hljs-comment">  &quot;1 月&quot;</span><br><span class="hljs-comment">  &quot;2 月&quot;</span><br><span class="hljs-comment">  &quot;3 月&quot;</span><br><span class="hljs-comment">  &quot;4 月&quot;</span><br><span class="hljs-comment">  &quot;5 月&quot;</span><br><span class="hljs-comment">  &quot;6 月&quot;</span><br><span class="hljs-comment">  &quot;7 月&quot;</span><br><span class="hljs-comment">  &quot;8 月&quot;</span><br><span class="hljs-comment">  &quot;9 月&quot; </span><br><span class="hljs-comment">  &quot;10 月&quot;</span><br><span class="hljs-comment">  &quot;11 月&quot;</span><br><span class="hljs-comment">  &quot;12 月&quot;</span><br><span class="hljs-comment">*/</span><br></code></pre></td></tr></table></figure>
+
+<p>有沒有發現更簡單了！<br>大多數人會喜歡使用 <code>let i</code> 來初始化元素，是因為 <code>let</code> 是區塊變數，不會汙染到外面的變數，而 <code>i</code> 是 <code>index</code> 的縮寫，當然你變數名取別的也無所謂就是了！</p>
+<h2 id="break-amp-continue"><a href="#break-amp-continue" class="headerlink" title="break &amp; continue"></a>break &amp; continue</h2><p>有時候我們並不想讓迴圈直接執行到底，想要跳過幾個選項，或到哪個選項直接停止，就可以利用 break （中斷語法）與　continue （跳過語法），只能使用在循環語法中。<br>是不是很熟悉～沒錯！就是前面 switch 中的 <code>break</code> 語法，switch 也可以搭配 <code>continue</code> 進行跳過。</p>
+<p><code>break</code> 用法應該都知道了，這裡就介紹 <code>continue</code> 吧～<br>使用方法也很簡單，假如我想在印出 9 月有幾天紅字：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">let</span> holiday = <span class="hljs-number">0</span>;  <span class="hljs-comment">// 統計假日</span><br><br><span class="hljs-comment">/* 同樣設定初始值 1 日; 9 月不超過 30 天; 每執行一次 + 1 */</span><br><span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">1</span>; i &lt;= <span class="hljs-number">30</span>; i++) &#123;<br><br>  <span class="hljs-comment">// 1 號是從星期三開始的，判斷如果是星期一到五的話 continue 跳過</span><br>  <span class="hljs-keyword">if</span> ( (i + <span class="hljs-number">2</span>) % <span class="hljs-number">7</span> &gt;= <span class="hljs-number">1</span> &amp;&amp; (i + <span class="hljs-number">2</span>) % <span class="hljs-number">7</span> &lt;= <span class="hljs-number">5</span> ) <span class="hljs-keyword">continue</span>;<br>  <br>  <span class="hljs-comment">// 沒被 continue 跳過的，會在這行程式碼進行 + 1</span><br>  holiday++;<br>&#125;<br><br>holiday += <span class="hljs-number">1</span>; <span class="hljs-comment">// 不能忘了中秋節是在星期二</span><br><br><span class="hljs-built_in">console</span>.log(<span class="hljs-string">`紅字有 <span class="hljs-subst">$&#123;holiday&#125;</span> 天`</span>); <span class="hljs-comment">// 紅字有 9 天</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="for-迴圈-與-while-迴圈-的差別"><a href="#for-迴圈-與-while-迴圈-的差別" class="headerlink" title="for 迴圈 與 while 迴圈 的差別"></a>for 迴圈 與 while 迴圈 的差別</h2><p>就如同我上一篇所說，既然 for 迴圈 和 while 迴圈 使用的情況與結果都差不多，那為什麼還會存在，一定是有它的意義在！</p>
+<p>大多數的情況，都會使用 for 迴圈，是因為 for 迴圈把控制迴圈次數的條件都集中一起寫，閱讀性比較高，適合 <strong>條件次數明確</strong> 的情況使用。</p>
+<p>而當<strong>條件次數不明確</strong>呢？ 沒錯！就要利用 while 迴圈來達成了！while 迴圈在面對隨機性的時候，只要<strong>條件</strong>的部分符合，不用像 for 迴圈要設定好三個值，<strong>while 迴圈</strong>就比 <strong>for 迴圈</strong>會更加靈活好用且更直覺。</p>
+<p>這邊舉一下 <a target="_blank" rel="noopener" href="https://www.tenlong.com.tw/products/9789864344130">008 天 重新認識 JavaScript</a> 書中很好的例子，當大樂透要使用「電腦選號」時，迴圈要如何判定呢？ 規則：「從 1～49中，隨機選9個不重複的號碼」，這就留給各位思考了。</p>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.tenlong.com.tw/products/9789864344130">008 天 重新認識 JavaScript</a></li>
+</ul>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%A8%8B%E5%BC%8F%E8%AA%9E%E8%A8%80/">程式語言</a>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%A8%8B%E5%BC%8F%E8%AA%9E%E8%A8%80/%E5%89%8D%E7%AB%AF/">前端</a>
+                    
+                      <a class="hover-with-bg" href="/categories/iT-%E9%90%B5%E4%BA%BA%E8%B3%BD/">iT 鐵人賽</a>
+                    
+                      <a class="hover-with-bg" href="/categories/iT-%E9%90%B5%E4%BA%BA%E8%B3%BD/%E7%AC%AC-2021-%E5%B9%B4/">第 2021 年</a>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%A8%8B%E5%BC%8F%E8%AA%9E%E8%A8%80/%E5%89%8D%E7%AB%AF/JavaScript/">JavaScript</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/iT-%E9%90%B5%E4%BA%BA%E8%B3%BD/">iT 鐵人賽</a>
+                    
+                      <a class="hover-with-bg" href="/tags/JavaScript/">JavaScript</a>
+                    
+                  </div>
+                
+              </div>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/09/24/2021-9-24-it_ironman-day15/">
+                        <span class="hidden-mobile">Day.15 「條件設定好～讓程式判斷！」 —— JavaScript 條件判斷式</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    
+      <script type="text/javascript">
+        var disqus_config = function() {
+          this.page.url = 'http://example.com/2021/09/25/2021-9-25-it_ironman-day16/';
+          this.page.identifier = '/2021/09/25/2021-9-25-it_ironman-day16/';
+        };
+        Fluid.utils.loadComments('#disqus_thread', function() {
+          var d = document, s = d.createElement('script');
+          s.src = '//' + 'fluid' + '.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', new Date());
+          (d.head || d.body).appendChild(s);
+        });
+      </script>
+    
+    <noscript>Please enable JavaScript to view the comments</noscript>
+  </div>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目錄</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜尋</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">關鍵字</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+    <span>© 2021 <a href="/about">Johnson Mao</a> 毛毛的部落格 | 記錄成長的過程</span> <span> - 本站使用  <a href="https://hexo.io" target="_blank" rel="nofollow noopener">Hexo</a> & <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">Fluid 主題</a>
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            總訪問量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            總訪客數 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
