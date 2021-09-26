@@ -1,5 +1,5 @@
 ---
-title: 「利用漸變效果，讓網頁不再死板！」 —— CSS Transform & CSS Transition
+title: Day.11 「利用漸變效果，讓網頁不再死板！」 —— CSS Transform & CSS Transition
 date: 2021/9/20 22:00:00
 index_img: https://i.imgur.com/VoFpU6Q.png
 banner_img: https://i.imgur.com/VoFpU6Q.png
