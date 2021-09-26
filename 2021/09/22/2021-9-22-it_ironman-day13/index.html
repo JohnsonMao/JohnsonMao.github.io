@@ -185,7 +185,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.4k 字
+      1.5k 字
     </span>
   
 
@@ -281,6 +281,9 @@
 <p>JavaScript 的值是由一個表示<strong>型別</strong>的標籤，與實際內容的<strong>值</strong>所組成。<br>由於物件型別標籤是 <strong>0</strong>，而 null 代表的是空值（通常以 0x00 表示），導致物件與空值的標籤搞混，而產生的結果。<br>內容取自 <a target="_blank" rel="noopener" href="https://www.tenlong.com.tw/products/9789864344130">008 天 重新認識 JavaScript</a></p>
 </blockquote>
 <p>既然 JavaScript 已經不打算修復這個 bug 了（應該說一改會牽動到很多東西，就乾脆不改了），我們就 <del>想像 null 是空物件吧</del>，實際上並不是唷！</p>
+<h3 id="如何分辨-NaN"><a href="#如何分辨-NaN" class="headerlink" title="如何分辨 NaN"></a>如何分辨 NaN</h3><p>這時會很困擾，會發現一般數字與 NaN 檢查型別都是回傳 number，要判斷數字型別是否為 NaN。<br>可以利用 JavaScript 提供的 <code>isNaN()</code> 來進行判斷！</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">let</span> n = <span class="hljs-literal">NaN</span>;<br><span class="hljs-built_in">console</span>.log( <span class="hljs-built_in">isNaN</span>(n) );  <span class="hljs-comment">// true</span><br></code></pre></td></tr></table></figure>
+
 <h2 id="如何轉型別？"><a href="#如何轉型別？" class="headerlink" title="如何轉型別？"></a>如何轉型別？</h2><p>有的時候我們宣告變數使用<code>var a = &quot;1&quot;</code>，那麼 <code>a</code> 是的型別是什麼？ 聰明的你應該馬上就知道是字串（string）型別了吧！<br>那麼如果想要把 <code>a</code> 轉型成數字（number）型別，就可以使用轉換型別的語法，剛好來介紹一下轉換型別的語法吧！</p>
 <p>轉換型別語法：</p>
 <ul>

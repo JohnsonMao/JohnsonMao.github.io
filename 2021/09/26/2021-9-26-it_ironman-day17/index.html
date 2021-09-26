@@ -1,0 +1,591 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-TW" data-default-color-scheme=&#34;dark&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="前面有介紹了基本型別，基本型別有 `string`、`number`、`boolean`、`null`、`undefined` 這五個型別，剩下的可以都歸類於物件型別。">
+  <meta name="author" content="Mao">
+  <meta name="keywords" content="">
+  
+  <title>Day.17 「如果基本型別是商品，那物件型別就是購物袋」 —— JavaScript 物件型別 - Mao&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>毛毛的部落格</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首頁
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                封存
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分類
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                標籤
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                關於
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('https://i.imgur.com/6P86wxa.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Day.17 「如果基本型別是商品，那物件型別就是購物袋」 —— JavaScript 物件型別">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-09-26 15:00" pubdate>
+        2021年9月26日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.4k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      28
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Day.17 「如果基本型別是商品，那物件型別就是購物袋」 —— JavaScript 物件型別</h1>
+            
+            <div class="markdown-body">
+              <h1 id="Day-17-「如果基本型別是商品，那物件型別就是購物袋」-——-JavaScript-物件型別"><a href="#Day-17-「如果基本型別是商品，那物件型別就是購物袋」-——-JavaScript-物件型別" class="headerlink" title="Day.17 「如果基本型別是商品，那物件型別就是購物袋」 —— JavaScript 物件型別"></a>Day.17 「如果基本型別是商品，那物件型別就是購物袋」 —— JavaScript 物件型別</h1><p><img src="https://i.imgur.com/6P86wxa.png" srcset="/img/loading.gif" lazyload alt="「如果基本型別是商品，那物件型別就是購物袋」 —— JavaScript 物件型別"></p>
+<p>前面有介紹了基本型別，基本型別有 <code>string</code>、<code>number</code>、<code>boolean</code>、<code>null</code>、<code>undefined</code> 這五個型別，剩下的可以都歸類於物件型別。</p>
+<h2 id="什麼是物件型別？"><a href="#什麼是物件型別？" class="headerlink" title="什麼是物件型別？"></a>什麼是物件型別？</h2><p>如同標題所說，基本型別所存入的值比較單純簡單，每個值都沒有關連，如同一個商店賣的商品一樣。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">let</span> coffee = <span class="hljs-number">45</span>;<br><span class="hljs-keyword">let</span> sandwich = <span class="hljs-number">30</span>;<br></code></pre></td></tr></table></figure>
+
+<p>而現在要來介紹的<strong>物件型別</strong>，就是由 <strong>0 個到多個</strong>的資料屬性所組合而成的，讓資料有<strong>關連性</strong>！就像我要購買咖啡與三明治一樣，讓這兩個商品裝進我的購物袋。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> shopping_bag = &#123;<br>  <span class="hljs-attr">coffee</span>: <span class="hljs-number">45</span>,<br>  <span class="hljs-attr">sandwich</span>: <span class="hljs-number">30</span><br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<p>當然這只是簡單的比喻，實際並沒那麼簡單。</p>
+<h2 id="物件（object）"><a href="#物件（object）" class="headerlink" title="物件（object）"></a>物件（object）</h2><p>先來介紹最基礎的<strong>物件（object）</strong></p>
+<p>物件可以<strong>多個屬性值</strong>組合而成，屬於<strong>無序</strong>集合體，每個屬性都會有一個對應值，特色是由<code>&#123;&#125;</code>包起來。</p>
+<p>就像一個人有名字（string）、性別（string）、年齡（number），就很適合用物件來新增。</p>
+<h3 id="宣告物件的方法"><a href="#宣告物件的方法" class="headerlink" title="宣告物件的方法"></a>宣告物件的方法</h3><h4 id="利用-new-Object-新增物件"><a href="#利用-new-Object-新增物件" class="headerlink" title="利用 new Object() 新增物件"></a>利用 new Object() 新增物件</h4><p>這是以前新增物件的方法，利用 <code>new Object()</code> 幫變數新增 <code>&#123;&#125;</code> 空物件，再由賦值語句 <code>物件名.屬性名 = 屬性值</code>，進行<strong>新增物件屬性</strong>。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> person = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Object</span>();<br>person.name = <span class="hljs-string">&quot;毛毛&quot;</span>;<br>person.gender = <span class="hljs-string">&quot;男&quot;</span>;<br></code></pre></td></tr></table></figure>
+
+<h4 id="利用空物件-新增物件"><a href="#利用空物件-新增物件" class="headerlink" title="利用空物件 {} 新增物件"></a>利用空物件 {} 新增物件</h4><p>這是現在大多數人都使用的方法，更簡單直觀，直接宣告物件並在裡面定義屬性 <code>&#123; key: value, key2: value &#125;</code>。<br>物件結構：</p>
+<ul>
+<li>使用 <code>&#123;&#125;</code> 包住</li>
+<li>key 命名，盡量具有語意，<strong>盡量避免</strong>使用 數字、數字英文混和 與 空白鍵，如果 數字<strong>開頭</strong>與英文混和 或 含有空白鍵，需使用引號 <code>&#39;&#39;</code> 包起來，而單純數字就不需要引號包起來。</li>
+<li>value 值可以是<strong>任何型別</strong>，只要遵守型別規則就可以了。</li>
+<li>多個屬性值用 <code>,</code> 做區隔。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> person = &#123;<br>  <span class="hljs-attr">name</span> : <span class="hljs-string">&quot;毛毛&quot;</span>,<br>  <span class="hljs-attr">gender</span> : <span class="hljs-string">&quot;男&quot;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h5 id="當然也可以先宣告空物件"><a href="#當然也可以先宣告空物件" class="headerlink" title="當然也可以先宣告空物件"></a>當然也可以先宣告空物件</h5><p>也可以透過宣告空物件，再看需要新增進去。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> person = &#123;&#125;;<br>person.name = <span class="hljs-string">&quot;毛毛&quot;</span>;<br>person.gender = <span class="hljs-string">&quot;男&quot;</span>;<br></code></pre></td></tr></table></figure>
+
+<h3 id="如何存取物件的-value-值"><a href="#如何存取物件的-value-值" class="headerlink" title="如何存取物件的 value 值"></a>如何存取物件的 value 值</h3><p>就跟前面新增屬性值的方法一樣</p>
+<ul>
+<li><p>使用 <code>.</code> 取值，通常都使用這個方式取值，比較直觀</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> person = &#123;<br>  <span class="hljs-attr">name</span> : <span class="hljs-string">&quot;毛毛&quot;</span>,<br>  <span class="hljs-attr">gender</span> : <span class="hljs-string">&quot;男&quot;</span><br>&#125;<br><br><span class="hljs-built_in">console</span>.log( person.name );  <span class="hljs-comment">// &quot;毛毛&quot;</span><br></code></pre></td></tr></table></figure></li>
+<li><p>使用 <code>[&quot;&quot;]</code> 取值，通常使用在 key 的命名法<strong>不符合</strong>常規變數命名時（如：<strong>數字開頭</strong> 或 <strong>字串中間有空格</strong>），藉由自動轉型使用中括號框起字串取值，如果 key 命名是<strong>純數字</strong>，可以不使用引號取值。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> obj = &#123;<br>  <span class="hljs-number">1</span> : <span class="hljs-string">&quot;我是 1&quot;</span>,<br>  <span class="hljs-string">&quot;2a&quot;</span> : <span class="hljs-string">&quot;我是 2a&quot;</span>,<br>  <span class="hljs-string">&#x27;my name&#x27;</span>: <span class="hljs-string">&quot;毛毛&quot;</span><br>&#125;<br><br><span class="hljs-built_in">console</span>.log( obj<span class="hljs-number">.1</span> );          <span class="hljs-comment">// 報錯</span><br><span class="hljs-built_in">console</span>.log( obj[<span class="hljs-number">1</span>] );         <span class="hljs-comment">// &quot;我是 1&quot;</span><br><span class="hljs-built_in">console</span>.log( obj[<span class="hljs-string">&quot;1&quot;</span>] );       <span class="hljs-comment">// &quot;我是 1&quot;</span><br><span class="hljs-built_in">console</span>.log( obj[2a] );        <span class="hljs-comment">// 報錯</span><br><span class="hljs-built_in">console</span>.log( obj[<span class="hljs-string">&quot;2a&quot;</span>] );      <span class="hljs-comment">// &quot;我是 2a&quot;</span><br><span class="hljs-built_in">console</span>.log( obj[my name] );   <span class="hljs-comment">// 報錯</span><br><span class="hljs-built_in">console</span>.log( obj[<span class="hljs-string">&quot;my name&quot;</span>] ); <span class="hljs-comment">// &quot;毛毛&quot;</span><br></code></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="如何新增物件屬性"><a href="#如何新增物件屬性" class="headerlink" title="如何新增物件屬性"></a>如何新增物件屬性</h3><p>眼尖的人應該已經有發現，其實前面介紹如何新增物件時，就有新增物件屬性。<br><strong>需注意</strong> 物件的 <code>key</code> 會<strong>自動轉型成字串型別</strong>，而 <code>value</code> 可以存任何型別。</p>
+<p>而新增方法其實就跟存取方法幾乎一模一樣，使用賦值語句直接賦值即可！如：<code>person.name = &quot;毛毛&quot;;</code><br>注意的要點也差不多，盡量使用有語意的字串來命名 key。</p>
+<h3 id="如何刪除物件屬性"><a href="#如何刪除物件屬性" class="headerlink" title="如何刪除物件屬性"></a>如何刪除物件屬性</h3><p>這就要使用到一元運算子 <code>delete</code>，在要刪除的屬性前面使用 <code>delete</code> 就會刪除屬性。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> wallet = &#123;&#125;;   <span class="hljs-comment">// 設一個錢包</span><br>wallet.money = <span class="hljs-number">1000</span>; <span class="hljs-comment">// 錢包內多了 1000 元</span><br><span class="hljs-built_in">console</span>.log( wallet.money );  <span class="hljs-comment">// 1000</span><br><br><span class="hljs-keyword">delete</span> wallet.money; <span class="hljs-comment">// 錢包內移除了 1000 元</span><br><span class="hljs-built_in">console</span>.log( wallet.money );  <span class="hljs-comment">// undefined</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="陣列（array）"><a href="#陣列（array）" class="headerlink" title="陣列（array）"></a>陣列（array）</h2><p>跟物件（object）有點相似，陣列也是<strong>多個值</strong>組合而成。<br>與物件不一樣的是，屬於<strong>有序</strong>集合體，陣列的屬性名為數字索引，陣列<strong>索引</strong>號碼由 <strong>0</strong> 開始。<br>雖然可以有很多不同的值組合，但通常都會放同類型、具有關聯性的值統合成陣列。</p>
+<p>就像一個班級有你（string）、我（string）、他（string），都是班級裡的學生，就很適合用陣列。</p>
+<h3 id="宣告陣列的方法"><a href="#宣告陣列的方法" class="headerlink" title="宣告陣列的方法"></a>宣告陣列的方法</h3><p>其實跟宣告物件的方法差不多，你會覺得似曾相似。<br>就想像原本的所有屬性值，變成<strong>有序</strong>的索引值就好。</p>
+<h4 id="利用-new-Array-新增陣列"><a href="#利用-new-Array-新增陣列" class="headerlink" title="利用 new Array() 新增陣列"></a>利用 new Array() 新增陣列</h4><p>這是以前新增陣列的方法，利用 <code>new Array()</code> 幫變數新增 <code>[]</code> 空物件，再由賦值語句 <code>陣列名[ 索引號碼 ] = 屬性值</code>，進行<strong>新增陣列內容</strong>。<br>因為<strong>索引號碼</strong>一定是有序數字，所以只能使用 <code>陣列名[ 索引號碼 ]</code> 來新增存取。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> person = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Array</span>();<br>person[<span class="hljs-number">0</span>] = <span class="hljs-string">&quot;花花&quot;</span>;<br>person[<span class="hljs-number">1</span>] = <span class="hljs-string">&quot;泡泡&quot;</span>;<br>person[<span class="hljs-number">2</span>] = <span class="hljs-string">&quot;毛毛&quot;</span>;<br></code></pre></td></tr></table></figure>
+
+<h4 id="利用空陣列-新增物件"><a href="#利用空陣列-新增物件" class="headerlink" title="利用空陣列 [] 新增物件"></a>利用空陣列 [] 新增物件</h4><p>這是現在大多數人都使用的方法，更簡單直觀，直接宣告陣列並在裡面定義屬性 <code>[ value, value ]</code>。<br>陣列結構：</p>
+<ul>
+<li>使用 <code>[]</code> 包住</li>
+<li>value 值可以是<strong>任何型別</strong>，但通常使用陣列的 value 值會具有相關性。</li>
+<li>多個 value 值用 <code>,</code> 做區隔。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> person = [ <span class="hljs-string">&quot;花花&quot;</span>, <span class="hljs-string">&quot;泡泡&quot;</span>, <span class="hljs-string">&quot;毛毛&quot;</span> ];<br></code></pre></td></tr></table></figure>
+
+<h5 id="當然也可以先宣告空陣列"><a href="#當然也可以先宣告空陣列" class="headerlink" title="當然也可以先宣告空陣列"></a>當然也可以先宣告空陣列</h5><p>也可以透過宣告空物件，再看需要新增進去。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> person = [];<br>person[<span class="hljs-number">0</span>] = <span class="hljs-string">&quot;花花&quot;</span>;<br>person[<span class="hljs-number">1</span>] = <span class="hljs-string">&quot;泡泡&quot;</span>;<br>person[<span class="hljs-number">2</span>] = <span class="hljs-string">&quot;毛毛&quot;</span>;<br></code></pre></td></tr></table></figure>
+
+<h3 id="如何-新增-與-刪除-陣列索引"><a href="#如何-新增-與-刪除-陣列索引" class="headerlink" title="如何 新增 與 刪除 陣列索引"></a>如何 新增 與 刪除 陣列索引</h3><p>這聰明的你應該馬上就猜到！沒錯～跟物件使用的方法非常像，因為索引值都是數字，所以直接用 <code>[]</code> 來存取陣列索引值就可以了！<br>但是陣列還有更好的新增刪除方法。</p>
+<p>如果是用索引直接新增，會產生一個問題。如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> person = [ <span class="hljs-string">&quot;花花&quot;</span>, <span class="hljs-string">&quot;泡泡&quot;</span>, <span class="hljs-string">&quot;毛毛&quot;</span> ];<br><br><span class="hljs-comment">/* 這時一個手殘，把索引值案到 9 */</span><br>person[<span class="hljs-number">9</span>] = <span class="hljs-string">&quot;尤教授&quot;</span>;<br><span class="hljs-built_in">console</span>.log( person );  <span class="hljs-comment">// [ &quot;花花&quot;, &quot;泡泡&quot;, &quot;毛毛&quot;, , , , , , , &quot;尤教授&quot; ]</span><br></code></pre></td></tr></table></figure>
+
+<p>你會發現索引值打錯，會多很多個還沒定義的索引值先占位子！<br>每次新增刪除都還要小心翼翼地計算索引值。</p>
+<h4 id="在陣列最末端新增索引值-push"><a href="#在陣列最末端新增索引值-push" class="headerlink" title="在陣列最末端新增索引值 push()"></a>在陣列最末端新增索引值 push()</h4><p>這時候使用 <code>push()</code> 這個方法就能無後顧之憂的在陣列最後面新增索引值了！</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> person = [ <span class="hljs-string">&quot;花花&quot;</span>, <span class="hljs-string">&quot;泡泡&quot;</span>, <span class="hljs-string">&quot;毛毛&quot;</span> ];<br><br>person.push(<span class="hljs-string">&quot;尤教授&quot;</span>);<br><span class="hljs-built_in">console</span>.log( person );  <span class="hljs-comment">// [ &quot;花花&quot;, &quot;泡泡&quot;, &quot;毛毛&quot;, &quot;尤教授&quot; ]</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="刪除陣列最末端的索引值-pop"><a href="#刪除陣列最末端的索引值-pop" class="headerlink" title="刪除陣列最末端的索引值 pop()"></a>刪除陣列最末端的索引值 pop()</h4><p>有新增就會有刪除！使用 <code>pop()</code> 這個方法就能毫無顧忌地刪除陣列最後的索引值了！</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> person = [ <span class="hljs-string">&quot;花花&quot;</span>, <span class="hljs-string">&quot;泡泡&quot;</span>, <span class="hljs-string">&quot;毛毛&quot;</span>, <span class="hljs-string">&quot;尤教授&quot;</span>, <span class="hljs-string">&quot;魔鞋啾啾&quot;</span> ];<br><br>person.pop();<br><span class="hljs-built_in">console</span>.log( person );  <span class="hljs-comment">// [ &quot;花花&quot;, &quot;泡泡&quot;, &quot;毛毛&quot;, &quot;尤教授&quot; ]</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="刪除-與-新增-最前頭的索引值-shift-與-unshift"><a href="#刪除-與-新增-最前頭的索引值-shift-與-unshift" class="headerlink" title="刪除 與 新增 最前頭的索引值 shift() 與 unshift()"></a>刪除 與 新增 最前頭的索引值 shift() 與 unshift()</h4><p>既然有處理陣列最末端的，當然也有處理陣列最前頭的索引值！</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> person = [ <span class="hljs-string">&quot;魔鞋啾啾&quot;</span>, <span class="hljs-string">&quot;花花&quot;</span>, <span class="hljs-string">&quot;泡泡&quot;</span>, <span class="hljs-string">&quot;毛毛&quot;</span>, <span class="hljs-string">&quot;尤教授&quot;</span> ];<br><br>person.shift();<br><span class="hljs-built_in">console</span>.log( person );    <span class="hljs-comment">// [ &quot;花花&quot;, &quot;泡泡&quot;, &quot;毛毛&quot;, &quot;尤教授&quot; ]</span><br>person.unshift(<span class="hljs-string">&quot;魔人啾啾&quot;</span>);<br><span class="hljs-built_in">console</span>.log( person );    <span class="hljs-comment">// [ &quot;魔人啾啾&quot;, &quot;花花&quot;, &quot;泡泡&quot;, &quot;毛毛&quot;, &quot;尤教授&quot; ]</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="如何獲取陣列的長度-length"><a href="#如何獲取陣列的長度-length" class="headerlink" title="如何獲取陣列的長度 length"></a>如何獲取陣列的長度 length</h4><p>有時候陣列很長時，可以依靠 <code>length</code> 語法來獲取陣列的長度！</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> person = [ <span class="hljs-string">&quot;花花&quot;</span>, <span class="hljs-string">&quot;泡泡&quot;</span>, <span class="hljs-string">&quot;毛毛&quot;</span>, <span class="hljs-string">&quot;尤教授&quot;</span>, <span class="hljs-string">&quot;魔人啾啾&quot;</span> ];<br><br><span class="hljs-built_in">console</span>.log( person.length );  <span class="hljs-comment">// 5</span><br></code></pre></td></tr></table></figure>
+
+<h5 id="甚至修改陣列長度"><a href="#甚至修改陣列長度" class="headerlink" title="甚至修改陣列長度"></a>甚至修改陣列長度</h5><p>利用 <code>length</code> 修改陣列，讓陣列直接刪除多餘的值 或 添加未定義的值！</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> person = [ <span class="hljs-string">&quot;花花&quot;</span>, <span class="hljs-string">&quot;泡泡&quot;</span>, <span class="hljs-string">&quot;毛毛&quot;</span>, <span class="hljs-string">&quot;尤教授&quot;</span>, <span class="hljs-string">&quot;魔人啾啾&quot;</span> ];<br>person.length = <span class="hljs-number">3</span>; <span class="hljs-comment">// 把陣列長度修改為 3</span><br><span class="hljs-built_in">console</span>.log( person );  <span class="hljs-comment">// [ &quot;花花&quot;, &quot;泡泡&quot;, &quot;毛毛&quot; ]</span><br>person.length = <span class="hljs-number">5</span>; <span class="hljs-comment">// 在修改回 5</span><br><span class="hljs-built_in">console</span>.log( person );  <span class="hljs-comment">// [ &quot;花花&quot;, &quot;泡泡&quot;, &quot;毛毛&quot;, , ]</span><br></code></pre></td></tr></table></figure>
+
+<h5 id="除了用在陣列也能用在字串"><a href="#除了用在陣列也能用在字串" class="headerlink" title="除了用在陣列也能用在字串"></a>除了用在陣列也能用在字串</h5><p><code>length</code> 除了可以用在察看陣列的長度，也能用來查看字串的字數，不過跟陣列不同的是不能修改字串的長度！</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> name = <span class="hljs-string">&quot;Mao&quot;</span>;<br><span class="hljs-built_in">console</span>.log( name.length );  <span class="hljs-comment">// 3</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="還有更多方法"><a href="#還有更多方法" class="headerlink" title="還有更多方法"></a>還有更多方法</h4><p>還有很多陣列方法可以使用，有興趣的可以再去看 <a target="_blank" rel="noopener" href="https://www.oxxostudio.tw/articles/201908/js-array.html">JavaScript Array 陣列操作方法</a></p>
+<h2 id="如何透過程式碼判斷-陣列-和-物件"><a href="#如何透過程式碼判斷-陣列-和-物件" class="headerlink" title="如何透過程式碼判斷 陣列 和 物件"></a>如何透過程式碼判斷 陣列 和 物件</h2><p>前面我們有教過一元運算子的 <code>typeof</code> 可以用來判斷型別，但會發現判斷陣列與物件時，回傳的都是 <code>&quot;object&quot;</code>！<br>這時候 JavaScript 有新增一個判斷陣列的方法 <code>Array.isArray()</code>。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> arr = [];<br><span class="hljs-keyword">const</span> person = [ <span class="hljs-string">&quot;花花&quot;</span>, <span class="hljs-string">&quot;泡泡&quot;</span>, <span class="hljs-string">&quot;毛毛&quot;</span> ];<br><span class="hljs-keyword">const</span> obj = &#123;&#125;;<br><br><span class="hljs-built_in">console</span>.log( <span class="hljs-built_in">Array</span>.isArray(arr) );      <span class="hljs-comment">// true</span><br><span class="hljs-built_in">console</span>.log( <span class="hljs-built_in">Array</span>.isArray(person) );   <span class="hljs-comment">// true</span><br><span class="hljs-built_in">console</span>.log( <span class="hljs-built_in">Array</span>.isArray(obj) );      <span class="hljs-comment">// false</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>這邊先大概瞭解了物件型別的基礎了～至少會定義與增刪改查，物件型別這個坑還很深，我們現在才剛踏進去，明天先介紹函式（function），介紹完函式，我們再繼續把物件型別這個坑挖深！</p>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.tenlong.com.tw/products/9789864344130">008 天 重新認識 JavaScript</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.oxxostudio.tw/articles/201908/js-array.html">JavaScript Array 陣列操作方法</a></li>
+</ul>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%A8%8B%E5%BC%8F%E8%AA%9E%E8%A8%80/">程式語言</a>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%A8%8B%E5%BC%8F%E8%AA%9E%E8%A8%80/%E5%89%8D%E7%AB%AF/">前端</a>
+                    
+                      <a class="hover-with-bg" href="/categories/iT-%E9%90%B5%E4%BA%BA%E8%B3%BD/">iT 鐵人賽</a>
+                    
+                      <a class="hover-with-bg" href="/categories/iT-%E9%90%B5%E4%BA%BA%E8%B3%BD/%E7%AC%AC-2021-%E5%B9%B4/">第 2021 年</a>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%A8%8B%E5%BC%8F%E8%AA%9E%E8%A8%80/%E5%89%8D%E7%AB%AF/JavaScript/">JavaScript</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/iT-%E9%90%B5%E4%BA%BA%E8%B3%BD/">iT 鐵人賽</a>
+                    
+                      <a class="hover-with-bg" href="/tags/JavaScript/">JavaScript</a>
+                    
+                  </div>
+                
+              </div>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/09/25/2021-9-25-it_ironman-day16/">
+                        <span class="hidden-mobile">Day.16 「重複的事情，交給程式去做！」 —— JavaScript 循環迴圈</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    
+      <script type="text/javascript">
+        var disqus_config = function() {
+          this.page.url = 'http://example.com/2021/09/26/2021-9-26-it_ironman-day17/';
+          this.page.identifier = '/2021/09/26/2021-9-26-it_ironman-day17/';
+        };
+        Fluid.utils.loadComments('#disqus_thread', function() {
+          var d = document, s = d.createElement('script');
+          s.src = '//' + 'fluid' + '.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', new Date());
+          (d.head || d.body).appendChild(s);
+        });
+      </script>
+    
+    <noscript>Please enable JavaScript to view the comments</noscript>
+  </div>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目錄</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜尋</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">關鍵字</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+    <span>© 2021 <a href="/about">Johnson Mao</a> 毛毛的部落格 | 記錄成長的過程</span> <span> - 本站使用  <a href="https://hexo.io" target="_blank" rel="nofollow noopener">Hexo</a> & <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">Fluid 主題</a>
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            總訪問量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            總訪客數 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
