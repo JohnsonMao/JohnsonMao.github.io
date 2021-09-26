@@ -88,6 +88,16 @@ typeof [];        // object
 
 既然 JavaScript 已經不打算修復這個 bug 了（應該說一改會牽動到很多東西，就乾脆不改了），我們就 ~~想像 null 是空物件吧~~，實際上並不是唷！
 
+### 如何分辨 NaN
+
+這時會很困擾，會發現一般數字與 NaN 檢查型別都是回傳 number，要判斷數字型別是否為 NaN。
+可以利用 JavaScript 提供的 `isNaN()` 來進行判斷！
+
+```javascript
+let n = NaN;
+console.log( isNaN(n) );  // true
+```
+
 ## 如何轉型別？
 
 有的時候我們宣告變數使用`var a = "1"`，那麼 `a` 是的型別是什麼？ 聰明的你應該馬上就知道是字串（string）型別了吧！
