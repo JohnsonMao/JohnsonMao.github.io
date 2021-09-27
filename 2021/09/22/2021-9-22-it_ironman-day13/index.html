@@ -195,7 +195,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      16
+      17
        分钟
     </span>
   
@@ -238,7 +238,7 @@
 <p>什麼是 ES6？ ES6 正式名稱為 ECMAScript 2015，是第<strong>六</strong>版 ECMAScript，因此簡稱 ES6。<br>ES6 增加了原本 JavaScript 沒有的語法，能更加方便使用與維護，但有些瀏覽器兼容性可能不好（<del>如：IE</del>）</p>
 </blockquote>
 <ul>
-<li><code>var</code>，JavaScript 最原始的宣告方法，使用起來很簡單暴力，屬於<strong>全域宣告</strong>，因為容易汙染全域變數，所以目前比較少使用了。</li>
+<li><code>var</code>，JavaScript 最原始的宣告方法，使用起來很簡單暴力，屬於<strong>全域宣告</strong>，可以在<strong>函式作用域</strong>做區隔，因為容易汙染全域變數，所以目前比較少使用了。</li>
 <li><code>let</code>，ES6 新增的宣告方法，<code>let</code> 與 <code>var</code> 最大的不同就是<strong>區域作用域（block scope）</strong>，比較不會有汙染問題。</li>
 <li><code>const</code>，ES6 新增的宣告方法，<code>const</code> 最大的特色是屬於<strong>常數宣告</strong>，常數宣告的意思是不能隨意改值，降低不小心更改所導致的 bug，<strong>需注意</strong> 因為是常數宣告，無法隨意改值，所以使用常數宣告<strong>一定要賦予值</strong>，否則會報錯。</li>
 </ul>
@@ -297,7 +297,7 @@
 <li><code>Number()</code>，任意資料型別轉換成數字型別。</li>
 <li><code>parseInt()</code>，將字串或數字轉成整數。</li>
 <li><code>parseFloat()</code>，將字串或數字轉成浮點數。</li>
-<li>變數前面使用 <code>+</code> 一元運算子，使用方法 <code>+a</code> 就能轉換成數字型別。</li>
+<li>變數前面使用 <code>+</code> 一元運算子 或後面使用 <code>*1</code>，使用方法 <code>+a</code> 或 <code>a *1</code> 就能轉換成數字型別。</li>
 </ul>
 </li>
 <li>任何型別都可以轉換成 <strong>布林值</strong><ul>

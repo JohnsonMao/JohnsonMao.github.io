@@ -1,0 +1,598 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-TW" data-default-color-scheme=&#34;dark&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="函數也是個物件型別，可以封裝一些功能（程式碼），在需要使用的時候執行功能（程式碼）。">
+  <meta name="author" content="Mao">
+  <meta name="keywords" content="">
+  
+  <title>Day.18 「從函式物件認識 作用域 與 提升！」 —— JavaScript 函式（Function） &amp; 作用域（Scope） &amp; 提升（Hoisting） - Mao&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>毛毛的部落格</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首頁
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                封存
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分類
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                標籤
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                關於
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('https://i.imgur.com/dUL5Ryk.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Day.18 「從函式物件認識 作用域 與 提升！」 —— JavaScript 函式（Function） & 作用域（Scope） & 提升（Hoisting）">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-09-27 16:00" pubdate>
+        2021年9月27日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.2k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      26
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Day.18 「從函式物件認識 作用域 與 提升！」 —— JavaScript 函式（Function） &amp; 作用域（Scope） &amp; 提升（Hoisting）</h1>
+            
+            <div class="markdown-body">
+              <h1 id="Day-18-「從函式物件認識-作用域-與-提升！」-——-JavaScript-函式（Function）-amp-作用域（Scope）-amp-提升（Hoisting）"><a href="#Day-18-「從函式物件認識-作用域-與-提升！」-——-JavaScript-函式（Function）-amp-作用域（Scope）-amp-提升（Hoisting）" class="headerlink" title="Day.18 「從函式物件認識 作用域 與 提升！」 —— JavaScript 函式（Function） &amp; 作用域（Scope） &amp; 提升（Hoisting）"></a>Day.18 「從函式物件認識 作用域 與 提升！」 —— JavaScript 函式（Function） &amp; 作用域（Scope） &amp; 提升（Hoisting）</h1><p><img src="https://i.imgur.com/dUL5Ryk.png" srcset="/img/loading.gif" lazyload alt="「從函式物件認識 作用域 與 提升！」 —— JavaScript 函式（Function） &amp; 作用域（Scope） &amp; 提升（Hoisting）"></p>
+<p>函數也是個物件型別，可以封裝一些功能（程式碼），在需要使用的時候執行功能（程式碼）。</p>
+<p>例如我們需要把數字相加，在沒有函式的時候，需要用的時候就要重複打程式碼：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">let</span> x = <span class="hljs-number">1</span>;<br><span class="hljs-keyword">let</span> y = <span class="hljs-number">1</span>;<br><span class="hljs-keyword">let</span> result = x + y;<br><span class="hljs-built_in">console</span>.log( result );  <span class="hljs-comment">// 2</span><br>x = <span class="hljs-number">3</span>;<br>y = <span class="hljs-number">2</span>;<br>result = x + y;<br><span class="hljs-built_in">console</span>.log( result );  <span class="hljs-comment">// 5</span><br></code></pre></td></tr></table></figure>
+
+<p>而我們學程式，講求的就是效率，所以自己定義一個函式封裝相加功能：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">sum</span> (<span class="hljs-params">x, y</span>) </span>&#123;<br>  <span class="hljs-keyword">let</span> result = x + y;<br>  <span class="hljs-built_in">console</span>.log( result );<br>&#125;<br>sum(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>);  <span class="hljs-comment">// 2</span><br>sum(<span class="hljs-number">3</span>, <span class="hljs-number">2</span>);  <span class="hljs-comment">// 5</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="認識函式結構"><a href="#認識函式結構" class="headerlink" title="認識函式結構"></a>認識函式結構</h2><p><img src="https://i.imgur.com/JFEdr8A.png" srcset="/img/loading.gif" lazyload alt="函式結構"></p>
+<p>從上面的函式結構我們可以看到</p>
+<ul>
+<li>函式名稱：這其實不一定會有，但我們先介紹基礎的方法，主要用處是在使用函式時需要使用名字來呼喚。</li>
+<li>參數：這不一定要傳，主要是用來傳遞資料給函式內對應的變數，給功能程式碼運算。</li>
+<li>功能程式碼：就是使用函式後，接收參數並進行功能運作的部分。</li>
+</ul>
+<h2 id="如何建創與調用函式"><a href="#如何建創與調用函式" class="headerlink" title="如何建創與調用函式"></a>如何建創與調用函式</h2><p>上面已經使用了一個建創方法</p>
+<h3 id="函式陳述式"><a href="#函式陳述式" class="headerlink" title="函式陳述式"></a>函式陳述式</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> 函式名 (<span class="hljs-params">參數</span>) </span>&#123;<br>  <span class="hljs-comment">/* 運作程式碼功能 */</span><br>&#125;<br>函式名 (參數);<br></code></pre></td></tr></table></figure>
+
+<h3 id="函式表達式，匿名函式"><a href="#函式表達式，匿名函式" class="headerlink" title="函式表達式，匿名函式"></a>函式表達式，匿名函式</h3><p>上面有說函式名稱不一定會有，匿名函式就是沒有自己的名稱，而是直接賦值給變數使用，又稱<strong>函式表達式</strong>。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> 變數名 = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">參數</span>) </span>&#123;<br>  <span class="hljs-comment">/* 運作程式碼功能 */</span><br>&#125;<br>變數名 (參數);<br></code></pre></td></tr></table></figure>
+
+<h3 id="new-Function"><a href="#new-Function" class="headerlink" title="new Function"></a>new Function</h3><p>跟物件與陣列一樣，使用 <code>new Function</code> 新增函式。<br>需注意：</p>
+<ul>
+<li>大小寫不能拼錯</li>
+<li>參數與運作程式碼皆需要用<strong>字串型別</strong></li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> 變數名 = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Function</span> (<span class="hljs-string">&quot;參數&quot;</span>, <span class="hljs-string">&quot;運作程式碼&quot;</span>);<br></code></pre></td></tr></table></figure>
+
+<p>但這個方法並不好用，而且<strong>效率低</strong>，因為程式碼會先把<strong>字串轉成它看得懂的程式碼</strong>，才進行運算。</p>
+<h4 id="更多更多的-new"><a href="#更多更多的-new" class="headerlink" title="更多更多的 new"></a>更多更多的 new</h4><p>看到這裡你會發現～是不是所有型別都可以 new 出來。<br>沒錯！其實還可以用 new 來新增字串、數字、布林…等，但因為 new 基礎型別非常不常用，這裡就不多介紹 new 基本型別了。</p>
+<h2 id="返回值（return）"><a href="#返回值（return）" class="headerlink" title="返回值（return）"></a>返回值（return）</h2><p>我們會運用功能了，但不想一直使用 <code>console.log</code> 印出來，想要讓函式結果繼續在程式碼裡面運算。<br>可以利用 <code>return</code> 把運算結果返回並終止函式。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">sum</span> (<span class="hljs-params">x, y</span>) </span>&#123;<br>  <span class="hljs-keyword">const</span> res = x + y;<br>  <span class="hljs-keyword">return</span> res;  <span class="hljs-comment">// 使用 result 返回值，並終止函式</span><br>  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;測試有沒有執行&quot;</span>)  <span class="hljs-comment">// return 後的程式碼不會執行</span><br>&#125;<br><span class="hljs-keyword">const</span> result = sum(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>);  <span class="hljs-comment">// 返回的值 賦予到 result 變數上</span><br><span class="hljs-built_in">console</span>.log( result );  <span class="hljs-comment">// 2</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="立即執行函式，IIFE（Immediately-Invoked-Function-Expression）"><a href="#立即執行函式，IIFE（Immediately-Invoked-Function-Expression）" class="headerlink" title="立即執行函式，IIFE（Immediately Invoked Function Expression）"></a>立即執行函式，IIFE（Immediately Invoked Function Expression）</h2><p>有些時候，我們只想在一開始使用一次函式，後續不會調用函式，就像進入超商會聽到歡迎光臨一樣。<br>此時不想占用變數空間，就可以使用匿名函式立即執行，需注意：</p>
+<ul>
+<li>匿名函式需要使用 <code>()</code> 包起來，不然 JavaScript 會認為你忘記為函式命名而報錯。</li>
+<li>後面需像正常調用函式一樣，也可以和一般函式一樣帶入參數。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs javascript">( <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">text</span>) </span>&#123;<br>  <span class="hljs-built_in">console</span>.log(text)<br>&#125; )(<span class="hljs-string">&quot;歡迎光臨&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>或</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs javascript">( <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">text</span>) </span>&#123;<br>  <span class="hljs-built_in">console</span>.log(text)<br>&#125;(<span class="hljs-string">&quot;歡迎光臨&quot;</span>) )<br></code></pre></td></tr></table></figure>
+
+<p>都可以使用，看個人（團體）習慣</p>
+<h2 id="作用域（Scope）與-提升（Hoisting）"><a href="#作用域（Scope）與-提升（Hoisting）" class="headerlink" title="作用域（Scope）與 提升（Hoisting）"></a>作用域（Scope）與 提升（Hoisting）</h2><p>在我們宣告變數那一篇有介紹，全局作用域 與 函數作用域。</p>
+<h3 id="全局作用域"><a href="#全局作用域" class="headerlink" title="全局作用域"></a>全局作用域</h3><ul>
+<li><p>直接編寫 script 標籤中 JavaScript 程式碼，都會在全局作用域。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> a = <span class="hljs-number">1</span>;<br><span class="hljs-built_in">console</span>.log(a);        <span class="hljs-comment">// 1</span><br></code></pre></td></tr></table></figure></li>
+<li><p>全局作用域在網頁打開時創建，在關閉網頁時清除。</p>
+</li>
+<li><p>在全局作用域有一個叫 <code>window</code> 的<strong>物件</strong>，代表瀏覽器的視窗，它由瀏覽器新增並供我們使用其內建的方法。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-built_in">console</span>.log(<span class="hljs-keyword">typeof</span> <span class="hljs-built_in">window</span>); <span class="hljs-comment">// &quot;object&quot;</span><br></code></pre></td></tr></table></figure></li>
+<li><p>在全局作用域中</p>
+<ul>
+<li><p>宣告變數都會變成 window 的屬性保存</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> a = <span class="hljs-number">1</span>;<br><span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">window</span>.a); <span class="hljs-comment">// 1</span><br></code></pre></td></tr></table></figure></li>
+<li><p>新增的函式會變成 window 的方法保存</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">sum</span> (<span class="hljs-params">x,y</span>) </span>&#123;<br>  <span class="hljs-keyword">return</span> x + y;<br>&#125;<br><span class="hljs-built_in">console</span>.log( <span class="hljs-built_in">window</span>.sum ); <br><span class="hljs-comment">/*</span><br><span class="hljs-comment">   function sum (x,y) &#123;</span><br><span class="hljs-comment">     return x + y;</span><br><span class="hljs-comment">   &#125;</span><br><span class="hljs-comment">*/</span><br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h3 id="變數提升"><a href="#變數提升" class="headerlink" title="變數提升"></a>變數提升</h3><p>我們先從全局作用域看變數，會發現不管有沒有使用 <code>var</code> 宣告都會取得到值</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> a = <span class="hljs-number">1</span>;<br>x = <span class="hljs-number">2</span>;<br><br><span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;a = &quot;</span>+ a);  <span class="hljs-comment">// &quot;a = 1&quot;</span><br><span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;x = &quot;</span>+ x);  <span class="hljs-comment">// &quot;x = 2&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>這時候我們把變數往後移，因為 Javascript 是由上向下一行一行執行，會發現有沒有宣告的差別。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;a = &quot;</span>+ a);  <span class="hljs-comment">// &quot;a = undefined&quot;</span><br><span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;x = &quot;</span>+ x);  <span class="hljs-comment">// 報錯 x is not defined </span><br><br><span class="hljs-keyword">var</span> a = <span class="hljs-number">1</span>;<br>x = <span class="hljs-number">2</span>;<br></code></pre></td></tr></table></figure>
+
+<p>有先進行 <code>var</code> 聲明宣告的變數，在執行程式碼之前會先提升至全局作用域的開頭，才執行程式碼，相當於：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> a  <span class="hljs-comment">// var 聲明宣告會自動提升</span><br><br><span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;a = &quot;</span>+ a);  <span class="hljs-comment">// &quot;a = undefined&quot;</span><br><span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;x = &quot;</span>+ x);  <span class="hljs-comment">// 報錯 x is not defined </span><br><br>a = <span class="hljs-number">1</span>;<br>x = <span class="hljs-number">2</span>;<br></code></pre></td></tr></table></figure>
+
+<h3 id="函數提升"><a href="#函數提升" class="headerlink" title="函數提升"></a>函數提升</h3><p>一樣的，函數也會在程式執行前，會先自行提升，但函式有兩個新增方法，一個是函式陳述式，一個是函式表達式。<br>與上面一樣正常使用的話是不會報錯，但如果反過來？</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs javascript">fun()  <span class="hljs-comment">// &quot;我是一個 fun 函式&quot;</span><br>fun2() <span class="hljs-comment">// 報錯 fun2 is not a function</span><br><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">fun</span> (<span class="hljs-params"></span>) </span>&#123;<br>  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;我是一個 fun 函式&quot;</span>)<br>&#125;<br><span class="hljs-keyword">var</span> fun2 = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>&#123;<br>  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;我是一個 fun2 函式&quot;</span>)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>我想聰明的你，應該馬上就猜想到，沒錯！就是宣告變數提前，但變數的函式要到後面才會賦值，<code>undefined</code>當函式使用當然會報錯！</p>
+<p>而使用函式陳述式，會把整個函式提升，在執行程式碼！</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">fun</span> (<span class="hljs-params"></span>) </span>&#123;    <span class="hljs-comment">// 函式陳述式把整個函式提升</span><br>  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;我是一個 fun 函式&quot;</span>)<br>&#125;<br><span class="hljs-keyword">var</span> fun2;  <span class="hljs-comment">// var 自動提升宣告 undefined</span><br><br>fun()  <span class="hljs-comment">// &quot;我是一個 fun 函式&quot;</span><br>fun2() <span class="hljs-comment">// 報錯 fun2 is not a function</span><br><br>fun2 = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>&#123;  <span class="hljs-comment">// 到這裡才賦值</span><br>  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;我是一個 fun2 函式&quot;</span>)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="函式作用域"><a href="#函式作用域" class="headerlink" title="函式作用域"></a>函式作用域</h3><ul>
+<li><p>編寫在函式<strong>裡面</strong>的 Javascript 程式碼，這個區域就稱<strong>函式作用域</strong>。</p>
+</li>
+<li><p>函式作用域只在函式被<strong>調用</strong>時創建，在函式執行結束時清除。</p>
+</li>
+<li><p>每調用一次函式會創建一個<strong>新的函式作用域</strong>，函式作用域彼此都是<strong>獨立運作的</strong>。</p>
+</li>
+<li><p>函式作用域<strong>可以往外</strong>查找全局作用域的變數，全域作用域<strong>不能往內</strong>查找函式作用域的變數。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> a = <span class="hljs-number">1</span>;<br><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">echo</span> (<span class="hljs-params"></span>) </span>&#123;<br>  <span class="hljs-keyword">var</span> b = <span class="hljs-number">2</span>;<br>  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;a = &quot;</span>+ a);  <span class="hljs-comment">// &quot;a = 1&quot;，函式內沒有 a 變數，會往全域找 a 變數</span><br>&#125;<br><br>echo();<br><span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;b = &quot;</span>+ b);  <span class="hljs-comment">// 報錯 b is not defined，全域找不到 b 變數</span><br></code></pre></td></tr></table></figure></li>
+<li><p>函式作用域中操作變數時，會<strong>先在自己的作用域</strong>尋找，沒有則會<strong>往上一層</strong>去尋找變數，一路查到全局作用域，直到找到為止，如果找不到就會報錯。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> a = <span class="hljs-string">&quot;我是全局的 a&quot;</span>;<br><span class="hljs-keyword">var</span> c = <span class="hljs-string">&quot;我是全局的 c&quot;</span>;<br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">echo</span> (<span class="hljs-params"></span>) </span>&#123;<br>  <span class="hljs-keyword">var</span> a = <span class="hljs-string">&quot;我是 echo 內的 a&quot;</span>;<br>  <span class="hljs-keyword">var</span> b = <span class="hljs-string">&quot;我是 echo 內的 b&quot;</span>;<br>  <br>  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;a = &quot;</span>+ a);  <span class="hljs-comment">// &quot;a = 我是 echo 內的 a&quot;，函式內有 a 變數，優先使用</span><br>  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;a = &quot;</span>+ <span class="hljs-built_in">window</span>.a);  <span class="hljs-comment">// &quot;a = 我是全局的 a&quot;，利用 window 直接查找全局變數</span><br>  <br>  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">inside</span> (<span class="hljs-params"></span>) </span>&#123;<br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;b = &quot;</span>+b); <span class="hljs-comment">// &quot;b = 我是 echo 內的 b&quot;，</span><br>      <span class="hljs-comment">// 函式內沒有 b 變數，往上一層 echo 內查找到 b 變數</span><br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;c = &quot;</span>+c); <span class="hljs-comment">// &quot;c = 我是全局的 c&quot;，</span><br>      <span class="hljs-comment">// 函式內沒有 c 變數，往上一層 echo 內也查找不到變數，再往上一層查找。</span><br>  &#125;<br>&#125;<br><br>echo();<br><span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;a = &quot;</span>+ a);  <span class="hljs-comment">// &quot;a = 我是全局的 a&quot;，不會查找函式內的值</span><br></code></pre></td></tr></table></figure></li>
+<li><p>定義<strong>參數</strong>，其實就等於在函式內<strong>宣告變數</strong>，所以就不會往外查找變數。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> e = <span class="hljs-number">1</span>;<br><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">echo</span> (<span class="hljs-params">e</span>) </span>&#123;<br>  <span class="hljs-built_in">console</span>.log(e);<br>&#125;<br><br>echo();    <span class="hljs-comment">// undefined，因為 var e; 是 undefined</span><br>echo(<span class="hljs-number">10</span>);  <span class="hljs-comment">// 10</span><br></code></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>這邊已經先瞭解了基礎的函式，但函式的精隨 <code>this</code> 還沒介紹，介紹函式的同時也瞭解了宣告變數 <code>var</code> 的作用域與提升了～但宣告變數還有 <code>let</code> 與 <code>const</code> 的特性還沒有介紹！這等到後面要認識函式的精隨的時候，在一起解說～明天將先繼續挖深物件型別，加油！我們快脫離<strong>基礎篇</strong>了。</p>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.tenlong.com.tw/products/9789864344130">008 天 重新認識 JavaScript</a></li>
+</ul>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%A8%8B%E5%BC%8F%E8%AA%9E%E8%A8%80/">程式語言</a>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%A8%8B%E5%BC%8F%E8%AA%9E%E8%A8%80/%E5%89%8D%E7%AB%AF/">前端</a>
+                    
+                      <a class="hover-with-bg" href="/categories/iT-%E9%90%B5%E4%BA%BA%E8%B3%BD/">iT 鐵人賽</a>
+                    
+                      <a class="hover-with-bg" href="/categories/iT-%E9%90%B5%E4%BA%BA%E8%B3%BD/%E7%AC%AC-2021-%E5%B9%B4/">第 2021 年</a>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%A8%8B%E5%BC%8F%E8%AA%9E%E8%A8%80/%E5%89%8D%E7%AB%AF/JavaScript/">JavaScript</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/iT-%E9%90%B5%E4%BA%BA%E8%B3%BD/">iT 鐵人賽</a>
+                    
+                      <a class="hover-with-bg" href="/tags/JavaScript/">JavaScript</a>
+                    
+                  </div>
+                
+              </div>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/09/26/2021-9-26-it_ironman-day17/">
+                        <span class="hidden-mobile">Day.17 「如果基本型別是商品，那物件型別就是購物袋」 —— JavaScript 物件型別</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    
+      <script type="text/javascript">
+        var disqus_config = function() {
+          this.page.url = 'http://example.com/2021/09/27/2021-9-27-it_ironman-day18/';
+          this.page.identifier = '/2021/09/27/2021-9-27-it_ironman-day18/';
+        };
+        Fluid.utils.loadComments('#disqus_thread', function() {
+          var d = document, s = d.createElement('script');
+          s.src = '//' + 'fluid' + '.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', new Date());
+          (d.head || d.body).appendChild(s);
+        });
+      </script>
+    
+    <noscript>Please enable JavaScript to view the comments</noscript>
+  </div>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目錄</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜尋</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">關鍵字</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+    <span>© 2021 <a href="/about">Johnson Mao</a> 毛毛的部落格 | 記錄成長的過程</span> <span> - 本站使用  <a href="https://hexo.io" target="_blank" rel="nofollow noopener">Hexo</a> & <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">Fluid 主題</a>
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            總訪問量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            總訪客數 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
