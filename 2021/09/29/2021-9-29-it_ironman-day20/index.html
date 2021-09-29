@@ -1,0 +1,571 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-TW" data-default-color-scheme=&#34;dark&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="如同學習函式一樣！有時候我們會一直重複地做一件事，當還是初學者的我們需要製作大量的個人資料物件時，通常第一個想法就是複製貼上～一直重複製作一樣的東西！我們要發揮工程師的精神～看到一直有重複的程式碼時，就要想辦法簡化它。在學習自訂物件之前，要先認識之前函式沒說到的「this」">
+  <meta name="author" content="Mao">
+  <meta name="keywords" content="">
+  
+  <title>Day.20 「初步認識 this，中央工廠式的自訂物件～」 —— JavaSript 構造函式 - Mao&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>毛毛的部落格</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首頁
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                封存
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分類
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                標籤
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                關於
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('https://i.imgur.com/MowXDC1.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Day.20 「初步認識 this，中央工廠式的自訂物件～」 —— JavaSript 構造函式">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-09-29 16:00" pubdate>
+        2021年9月29日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.8k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      22
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Day.20 「初步認識 this，中央工廠式的自訂物件～」 —— JavaSript 構造函式</h1>
+            
+            <div class="markdown-body">
+              <h1 id="Day-20-「初步認識-this，中央工廠式的自訂物件～」-——-JavaSript-構造函式"><a href="#Day-20-「初步認識-this，中央工廠式的自訂物件～」-——-JavaSript-構造函式" class="headerlink" title="Day.20 「初步認識 this，中央工廠式的自訂物件～」 —— JavaSript 構造函式"></a>Day.20 「初步認識 this，中央工廠式的自訂物件～」 —— JavaSript 構造函式</h1><p><img src="https://i.imgur.com/MowXDC1.png" srcset="/img/loading.gif" lazyload alt="Day.20 「初步認識 this，中央工廠式的自訂物件～」 —— JavaSript 構造函式"></p>
+<p>如同<strong>學習函式</strong>一樣！有時候我們會一直重複地做一件事，<br>當還是初學者的我們需要製作大量的個人資料物件時，通常第一個想法就是複製貼上～</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> person = &#123;<br>  <span class="hljs-attr">name</span>: <span class="hljs-string">&quot;毛毛&quot;</span>,<br>  <span class="hljs-attr">gender</span>: <span class="hljs-string">&quot;男&quot;</span>,<br>  <span class="hljs-attr">sayName</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>&#123;<br>    <span class="hljs-built_in">console</span>.log( <span class="hljs-string">&quot;大家好！我是&quot;</span> + person.name );<br>  &#125;<br>&#125;<br><span class="hljs-keyword">const</span> person2 = &#123;<br>  <span class="hljs-attr">name</span>: <span class="hljs-string">&quot;小黃&quot;</span>,<br>  <span class="hljs-attr">gender</span>: <span class="hljs-string">&quot;男&quot;</span>,<br>  <span class="hljs-attr">sayName</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>&#123;<br>    <span class="hljs-built_in">console</span>.log( <span class="hljs-string">&quot;大家好！我是&quot;</span> + person2.name );<br>  &#125;<br>&#125;<br><span class="hljs-comment">/* ... */</span><br></code></pre></td></tr></table></figure>
+
+<p>一直重複製作一樣的東西！<br>我們要發揮工程師的精神～看到一直有重複的程式碼時，就要想辦法簡化它。<br>在學習自訂物件之前，要先認識之前函式沒說到的「<strong>this</strong>」</p>
+<h2 id="this"><a href="#this" class="headerlink" title="this"></a>this</h2><p>瀏覽器在執行函式時，都會向函式傳遞一個<strong>隱藏的參數</strong>！</p>
+<ul>
+<li><p>這個隱藏的參數就是今天的主角「this」，this 指向的是一個<strong>物件</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">echo</span> (<span class="hljs-params"></span>) </span>&#123;<br>  <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">this</span>);<br>&#125;<br>echo ();  <span class="hljs-comment">// this 指向 window 這個物件</span><br></code></pre></td></tr></table></figure></li>
+<li><p>隨著函式<strong>執行的場合不同</strong>，this 的指向也會不同。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">echoName</span> (<span class="hljs-params"></span>) </span>&#123;<br>  <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">this</span>.name);<br>&#125;<br><span class="hljs-comment">// 為 window 這個物件添加 name 屬性，也就是在全局作用域宣告 name 變數</span><br><span class="hljs-keyword">var</span> name = <span class="hljs-string">&quot;我是 window 的 name 屬性&quot;</span>;  <br><br>echoName ();  <span class="hljs-comment">// &quot;我是 window 的 name 屬性&quot;</span><br><br><span class="hljs-keyword">var</span> obj = &#123;<br>  <span class="hljs-attr">name</span>: <span class="hljs-string">&quot;毛毛&quot;</span>,<br>  <span class="hljs-attr">sayName</span>: echoName  <span class="hljs-comment">// 物件添加函式</span><br>&#125;<br><br><span class="hljs-built_in">console</span>.log(obj.sayName === echoName);  <span class="hljs-comment">// true 用來確認是不是同一個函式</span><br><br>obj.sayName();  <span class="hljs-comment">// &quot;毛毛&quot;</span><br></code></pre></td></tr></table></figure></li>
+<li><p>根據執行的場合不同，指向不同懶人包</p>
+<ul>
+<li>直接調用函式，this 的指向永遠在 <strong>window</strong></li>
+<li>使用物件的函式，this 的指向會在使用的<strong>那個物件</strong></li>
+<li>使用建構函式，this 會指向<strong>新增建構函式的物件</strong></li>
+</ul>
+</li>
+</ul>
+<p>當然這只是稍微認識了我們的 this，不過以目前的知識量，就能夠的自訂物件了！</p>
+<h2 id="利用函式新增物件"><a href="#利用函式新增物件" class="headerlink" title="利用函式新增物件"></a>利用函式新增物件</h2><p>我們前面有說過，函式非常方便，可以把功能都寫在函式裡，例如我們現在要來自定義物件</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">createPerson</span>(<span class="hljs-params"></span>) </span>&#123;<br>  <span class="hljs-keyword">var</span> obj = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Object</span>;  <span class="hljs-comment">// 新增一個物件</span><br>  obj.name = <span class="hljs-string">&quot;毛毛&quot;</span>,<br>  obj.gender = <span class="hljs-string">&quot;男&quot;</span>,<br>  obj.sayName = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>&#123;<br>    <span class="hljs-built_in">console</span>.log( <span class="hljs-string">&quot;大家好！我是&quot;</span> + <span class="hljs-built_in">this</span>.name );<br>  &#125;<br>  <span class="hljs-keyword">return</span> obj;<br>&#125;<br><span class="hljs-keyword">const</span> person = createPerson();<br><span class="hljs-built_in">console</span>.log( person );<br><span class="hljs-comment">/*</span><br><span class="hljs-comment">   &#123;</span><br><span class="hljs-comment">      name: &quot;毛毛&quot;,</span><br><span class="hljs-comment">      gender: &quot;男&quot;,</span><br><span class="hljs-comment">      sayName: function() &#123;</span><br><span class="hljs-comment">        console.log( &quot;大家好！我是&quot; + this.name );</span><br><span class="hljs-comment">      &#125;</span><br><span class="hljs-comment">   &#125;</span><br><span class="hljs-comment">*/</span><br></code></pre></td></tr></table></figure>
+
+<p>但會發現這樣新增的物件的是固定的！<br>這時我們利用函式的<strong>參數</strong>，就可以簡化新增物件的步驟了。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">createPerson</span> (<span class="hljs-params">name, gender</span>) </span>&#123;<br>  <span class="hljs-keyword">var</span> obj = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Object</span>;  <span class="hljs-comment">// 新增一個物件</span><br>  obj.name = name,<br>  obj.gender = gender,<br>  obj.sayName = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>&#123;<br>    <span class="hljs-built_in">console</span>.log( <span class="hljs-string">&quot;大家好！我是&quot;</span> + <span class="hljs-built_in">this</span>.name );<br>  &#125;<br>  <span class="hljs-keyword">return</span> obj;<br>&#125;<br><span class="hljs-keyword">const</span> person = createPerson(<span class="hljs-string">&quot;毛毛&quot;</span>, <span class="hljs-string">&quot;男&quot;</span>);<br><span class="hljs-keyword">const</span> person2 = createPerson(<span class="hljs-string">&quot;小黃&quot;</span>, <span class="hljs-string">&quot;男&quot;</span>);<br>person.sayName();  <span class="hljs-comment">// &quot;大家好！我是毛毛&quot;</span><br>person2.sayName();  <span class="hljs-comment">// &quot;大家好！我是小黃&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>但如果這個時候～還想要自訂一個寵物的物件，這樣直接看會覺得 人的物件 與 寵物的物件 差不多。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">createPet</span> (<span class="hljs-params">name, sex, animal</span>) </span>&#123;<br>  <span class="hljs-keyword">var</span> obj = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Object</span>;  <span class="hljs-comment">// 新增一個物件</span><br>  obj.name = name,<br>  obj.sex = sex,<br>  obj.animal = animal<br>  <span class="hljs-keyword">return</span> obj;<br>&#125;<br><span class="hljs-keyword">const</span> pet = createPet(<span class="hljs-string">&quot;小黃&quot;</span>, <span class="hljs-string">&quot;雄性&quot;</span>, <span class="hljs-string">&quot;小狗&quot;</span>);<br><span class="hljs-built_in">console</span>.log( pet );   <span class="hljs-comment">// &#123;...&#125;</span><br><span class="hljs-built_in">console</span>.log( person ) <span class="hljs-comment">// &#123;...&#125; </span><br></code></pre></td></tr></table></figure>
+
+<p>這時使用建構函式來真正意義上的自訂物件，更加方便快速簡單！</p>
+<h2 id="構造函式"><a href="#構造函式" class="headerlink" title="構造函式"></a>構造函式</h2><p>自訂一個構造函式，用來專門新增人的物件</p>
+<ul>
+<li>構造函式就是一個普通函式，新增的方法與普通的方法沒有不同</li>
+<li>不同的是建構函式會習慣在<strong>首字母大寫</strong></li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Person</span> (<span class="hljs-params"></span>) </span>&#123;&#125;<br></code></pre></td></tr></table></figure>
+
+<p>普通函式是直接調用，而構造函式是透過 <code>new</code> 關鍵字調用！</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> 直接調用 = Person()<br><span class="hljs-keyword">const</span> 構造函式 = <span class="hljs-keyword">new</span> Person()<br><span class="hljs-built_in">console</span>.log( 直接調用 );  <span class="hljs-comment">// undefined</span><br><span class="hljs-built_in">console</span>.log( 構造函式 );  <span class="hljs-comment">// &#123;&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>直接調用的函式，因為沒有使用 <code>return</code> ，所以會自動返回 <code>undefined</code></p>
+<h3 id="構造函式執行過程"><a href="#構造函式執行過程" class="headerlink" title="構造函式執行過程"></a>構造函式執行過程</h3><ol>
+<li>會立刻自動新增一個物件</li>
+<li>函式的 <strong>this 會指向該物件</strong></li>
+<li>逐行執行程式碼（我們操作的部分）</li>
+<li>將新增的物件作為返回值返回</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Person</span> (<span class="hljs-params">name, gender</span>) </span>&#123;<br>  <span class="hljs-built_in">this</span>.name = name,<br>  <span class="hljs-built_in">this</span>.gender = gender,<br>  <span class="hljs-built_in">this</span>.sayName = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>&#123;<br>    <span class="hljs-built_in">console</span>.log( <span class="hljs-string">&quot;大家好！我是&quot;</span> + <span class="hljs-built_in">this</span>.name );<br>  &#125;<br>&#125;<br><span class="hljs-keyword">const</span> person = <span class="hljs-keyword">new</span> Person(<span class="hljs-string">&quot;毛毛&quot;</span>, <span class="hljs-string">&quot;男&quot;</span>);<br><span class="hljs-built_in">console</span>.log( person )  <span class="hljs-comment">// Person &#123;...&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>這時你發現前面出現了 <code>Person</code>，再來用一個的寵物的構造函式。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Pet</span> (<span class="hljs-params">name, sex, animal</span>) </span>&#123;<br>  <span class="hljs-built_in">this</span>.name = name,<br>  <span class="hljs-built_in">this</span>.sex = sex,<br>  <span class="hljs-built_in">this</span>.animal = animal<br>&#125;<br><span class="hljs-keyword">const</span> pet = <span class="hljs-keyword">new</span> Pet(<span class="hljs-string">&quot;小黃&quot;</span>, <span class="hljs-string">&quot;雄性&quot;</span>, <span class="hljs-string">&quot;小狗&quot;</span>);<br><span class="hljs-built_in">console</span>.log( person )  <span class="hljs-comment">// Person &#123;...&#125;</span><br><span class="hljs-built_in">console</span>.log( pet )     <span class="hljs-comment">// Pet &#123;...&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>這樣就可以透過構造函式更直觀的看<strong>同一類的物件</strong>！</p>
+<h3 id="構造函式實例檢查"><a href="#構造函式實例檢查" class="headerlink" title="構造函式實例檢查"></a>構造函式實例檢查</h3><p>JavaScript 有個語法 <code>instanceof</code>，可以用來檢查，物件是否為該構造函式新增出來的實例。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-built_in">console</span>.log(person <span class="hljs-keyword">instanceof</span> Person); <span class="hljs-comment">// true  代表是由這個構造函式創建出來的</span><br><span class="hljs-built_in">console</span>.log(person <span class="hljs-keyword">instanceof</span> Pet);    <span class="hljs-comment">// false 代表不是由這個構造函式創建出來的</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="優化構造函式"><a href="#優化構造函式" class="headerlink" title="優化構造函式"></a>優化構造函式</h2><p>我們前面的構造函式中，有為物件添加函式 <code>sayName()</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Person</span> (<span class="hljs-params">name, gender</span>) </span>&#123;<br>  <span class="hljs-built_in">this</span>.name = name,<br>  <span class="hljs-built_in">this</span>.gender = gender,<br>  <span class="hljs-built_in">this</span>.sayName = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>&#123;<br>    <span class="hljs-built_in">console</span>.log( <span class="hljs-string">&quot;大家好！我是&quot;</span> + <span class="hljs-built_in">this</span>.name );<br>  &#125;<br>&#125;<br><span class="hljs-keyword">const</span> person = <span class="hljs-keyword">new</span> Person(<span class="hljs-string">&quot;毛毛&quot;</span>, <span class="hljs-string">&quot;男&quot;</span>);<br>person.sayName();  <span class="hljs-comment">// &quot;大家好！我是毛毛&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>而我們每新增一個物件，同時也跟著在物件內<strong>新增</strong>一個 <code>sayName</code> 函式</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Person</span> (<span class="hljs-params">name, gender</span>) </span>&#123;<br>  <span class="hljs-built_in">this</span>.name = name,<br>  <span class="hljs-built_in">this</span>.gender = gender,<br>  <span class="hljs-built_in">this</span>.sayName = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>&#123;<br>    <span class="hljs-built_in">console</span>.log( <span class="hljs-string">&quot;大家好！我是&quot;</span> + <span class="hljs-built_in">this</span>.name );<br>  &#125;<br>&#125;<br><span class="hljs-keyword">const</span> person = <span class="hljs-keyword">new</span> Person(<span class="hljs-string">&quot;毛毛&quot;</span>, <span class="hljs-string">&quot;男&quot;</span>);<br><span class="hljs-keyword">const</span> person2 = <span class="hljs-keyword">new</span> Person(<span class="hljs-string">&quot;小黃&quot;</span>, <span class="hljs-string">&quot;男&quot;</span>);<br><span class="hljs-built_in">console</span>.log( person.sayName === person2.sayName );  <span class="hljs-comment">// false  兩個 sayName 不一樣</span><br></code></pre></td></tr></table></figure>
+
+<p>發現 <code>sayName</code> 函式，彼此不相同，當新增了 10000 個 Person 物件，也會同時新增 10000 個 <code>sayName</code> 函式！而這 10000 個 <code>sayName</code> 函式其實都是一模一樣的，會為了這一模一樣的函式浪費記憶體空間！</p>
+<p>這想當然是沒有必要的事情，我們可以讓所有物件共同使用一個函式。<br>直接在全局作用域定義一個 <code>sayName</code> 函式，在構造函式內賦值 <code>sayName</code> 函式，這時構造函式內找不到 <code>sayName</code> 函式，就會往外找 <code>sayName</code> 函式</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Person</span> (<span class="hljs-params">name, gender</span>) </span>&#123;<br>  <span class="hljs-built_in">this</span>.name = name,<br>  <span class="hljs-built_in">this</span>.gender = gender,<br>  <span class="hljs-built_in">this</span>.sayName = sayName<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">sayName</span>(<span class="hljs-params"></span>) </span>&#123;<br>  <span class="hljs-built_in">console</span>.log( <span class="hljs-string">&quot;大家好！我是&quot;</span> + <span class="hljs-built_in">this</span>.name );<br>&#125;<br><br><span class="hljs-keyword">const</span> person = <span class="hljs-keyword">new</span> Person(<span class="hljs-string">&quot;毛毛&quot;</span>, <span class="hljs-string">&quot;男&quot;</span>);<br><span class="hljs-keyword">const</span> person2 = <span class="hljs-keyword">new</span> Person(<span class="hljs-string">&quot;小黃&quot;</span>, <span class="hljs-string">&quot;男&quot;</span>);<br><span class="hljs-built_in">console</span>.log( person.sayName === person2.sayName );  <span class="hljs-comment">// true  兩個 sayName 引用同一個函式，所以一樣</span><br></code></pre></td></tr></table></figure>
+
+<p>當然這樣也是有缺點，就是把函式定義在全局作用域會壓縮到全局作用域的命名空間，而且多人協作的時候，也容易出問題</p>
+<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>今天稍微介紹了 JavaScript 的 「this」，它可是 JavaScript 的精隨，少了 <code>this</code> 會有很多事情不能做，昨天介紹的記憶體堆疊，在使用物件型別的東西要特別注意，不然一不小心會讓瀏覽器效能變低，網頁卡卡的！</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%A8%8B%E5%BC%8F%E8%AA%9E%E8%A8%80/">程式語言</a>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%A8%8B%E5%BC%8F%E8%AA%9E%E8%A8%80/%E5%89%8D%E7%AB%AF/">前端</a>
+                    
+                      <a class="hover-with-bg" href="/categories/iT-%E9%90%B5%E4%BA%BA%E8%B3%BD/">iT 鐵人賽</a>
+                    
+                      <a class="hover-with-bg" href="/categories/iT-%E9%90%B5%E4%BA%BA%E8%B3%BD/%E7%AC%AC-2021-%E5%B9%B4/">第 2021 年</a>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%A8%8B%E5%BC%8F%E8%AA%9E%E8%A8%80/%E5%89%8D%E7%AB%AF/JavaScript/">JavaScript</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/iT-%E9%90%B5%E4%BA%BA%E8%B3%BD/">iT 鐵人賽</a>
+                    
+                      <a class="hover-with-bg" href="/tags/JavaScript/">JavaScript</a>
+                    
+                  </div>
+                
+              </div>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/09/28/2021-9-28-it_ironman-day19/">
+                        <span class="hidden-mobile">Day.19 「認識 JavaScript 記憶體堆疊、傳值 與 傳址」 —— JavaScript 物件 與 記憶體</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    
+      <script type="text/javascript">
+        var disqus_config = function() {
+          this.page.url = 'http://example.com/2021/09/29/2021-9-29-it_ironman-day20/';
+          this.page.identifier = '/2021/09/29/2021-9-29-it_ironman-day20/';
+        };
+        Fluid.utils.loadComments('#disqus_thread', function() {
+          var d = document, s = d.createElement('script');
+          s.src = '//' + 'fluid' + '.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', new Date());
+          (d.head || d.body).appendChild(s);
+        });
+      </script>
+    
+    <noscript>Please enable JavaScript to view the comments</noscript>
+  </div>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目錄</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜尋</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">關鍵字</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+    <span>© 2021 <a href="/about">Johnson Mao</a> 毛毛的部落格 | 記錄成長的過程</span> <span> - 本站使用  <a href="https://hexo.io" target="_blank" rel="nofollow noopener">Hexo</a> & <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">Fluid 主題</a>
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            總訪問量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            總訪客數 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
