@@ -1,6 +1,6 @@
 ---
 title: Day.21 「物件也有繼承問題？」 —— JavaScript 繼承 與 原型鍊
-date: 2021/9/30 16:00:00
+date: 2021/9/30 22:00:00
 index_img: https://i.imgur.com/k1U1ZAE.png
 banner_img: https://i.imgur.com/k1U1ZAE.png
 categories:
