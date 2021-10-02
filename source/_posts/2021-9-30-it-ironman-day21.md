@@ -1,6 +1,6 @@
 ---
 title: Day.21 「物件也有繼承問題？」 —— JavaScript 繼承 與 原型鍊
-date: 2021/9/30 22:00:00
+date: 2021/9/30 21:00:00
 index_img: https://i.imgur.com/k1U1ZAE.png
 banner_img: https://i.imgur.com/k1U1ZAE.png
 categories:
@@ -9,8 +9,7 @@ categories:
 tags: 
     - iT 鐵人賽
     - JavaScript
-excerpt: 我們每新增一個函式，瀏覽器都會向函式內新增一個屬性叫「prototype」，如果是普通函式的直接調用，「prototype」不會有任何作用，當是以構造函式的方式調用，他所新增的物件會有一個隱藏的屬性，指向該構造函式的原型物件。
-雖然「prototype」是隱藏屬性，但我們可以透過「__proto__」來查看該屬性
+excerpt: 我們每新增一個函式，瀏覽器都會向函式內新增一個屬性叫「prototype」，如果是普通函式的直接調用，「prototype」不會有任何作用，當是以構造函式的方式調用，他所新增的物件會有一個隱藏的屬性，指向該構造函式的原型物件，雖然「prototype」是隱藏屬性，但我們可以透過「__proto__」來查看該屬性！
 ---
 
 # Day.21 「物件也有繼承問題？」 —— JavaScript 繼承 與 原型鍊

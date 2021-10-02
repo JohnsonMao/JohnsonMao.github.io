@@ -9,7 +9,7 @@ categories:
 tags: 
     - iT 鐵人賽
     - JavaScript
-excerpt: 前面有介紹了基本型別，基本型別有 `string`、`number`、`boolean`、`null`、`undefined` 這五個型別，剩下的可以都歸類於物件型別。
+excerpt: 前面有介紹了基本型別，基本型別有 string、number、boolean、null、undefined 這五個型別，剩下的可以都歸類於物件型別。
 ---
 
 # Day.17 「如果基本型別是商品，那物件型別就是購物袋」 —— JavaScript 物件型別
