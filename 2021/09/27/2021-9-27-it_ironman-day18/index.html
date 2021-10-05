@@ -18,7 +18,7 @@
   <meta name="author" content="Mao">
   <meta name="keywords" content="">
   
-  <title>Day.18 「從函式物件認識 作用域 與 提升！」 —— JavaScript 函式（Function） &amp; 作用域（Scope） &amp; 提升（Hoisting） - Mao&#39;s blog</title>
+  <title>Day.18 「從函式物件認識 作用域 與 提升！」 —— JavaScript 函式 &amp; 作用域 &amp; 提升 - Mao&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
 
@@ -163,7 +163,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="Day.18 「從函式物件認識 作用域 與 提升！」 —— JavaScript 函式（Function） & 作用域（Scope） & 提升（Hoisting）">
+            <span class="h2" id="subtitle" title="Day.18 「從函式物件認識 作用域 與 提升！」 —— JavaScript 函式 & 作用域 & 提升">
               
             </span>
 
@@ -225,10 +225,10 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Day.18 「從函式物件認識 作用域 與 提升！」 —— JavaScript 函式（Function） &amp; 作用域（Scope） &amp; 提升（Hoisting）</h1>
+            <h1 style="display: none">Day.18 「從函式物件認識 作用域 與 提升！」 —— JavaScript 函式 &amp; 作用域 &amp; 提升</h1>
             
             <div class="markdown-body">
-              <h1 id="Day-18-「從函式物件認識-作用域-與-提升！」-——-JavaScript-函式（Function）-amp-作用域（Scope）-amp-提升（Hoisting）"><a href="#Day-18-「從函式物件認識-作用域-與-提升！」-——-JavaScript-函式（Function）-amp-作用域（Scope）-amp-提升（Hoisting）" class="headerlink" title="Day.18 「從函式物件認識 作用域 與 提升！」 —— JavaScript 函式（Function） &amp; 作用域（Scope） &amp; 提升（Hoisting）"></a>Day.18 「從函式物件認識 作用域 與 提升！」 —— JavaScript 函式（Function） &amp; 作用域（Scope） &amp; 提升（Hoisting）</h1><p><img src="https://i.imgur.com/dUL5Ryk.png" srcset="/img/loading.gif" lazyload alt="「從函式物件認識 作用域 與 提升！」 —— JavaScript 函式（Function） &amp; 作用域（Scope） &amp; 提升（Hoisting）"></p>
+              <h1 id="Day-18-「從函式物件認識-作用域-與-提升！」-——-JavaScript-函式-amp-作用域-amp-提升"><a href="#Day-18-「從函式物件認識-作用域-與-提升！」-——-JavaScript-函式-amp-作用域-amp-提升" class="headerlink" title="Day.18 「從函式物件認識 作用域 與 提升！」 —— JavaScript 函式 &amp; 作用域 &amp; 提升"></a>Day.18 「從函式物件認識 作用域 與 提升！」 —— JavaScript 函式 &amp; 作用域 &amp; 提升</h1><p><img src="https://i.imgur.com/dUL5Ryk.png" srcset="/img/loading.gif" lazyload alt="「從函式物件認識 作用域 與 提升！」 —— JavaScript 函式 &amp; 作用域 &amp; 提升"></p>
 <p>函數也是個物件型別，可以封裝一些功能（程式碼），在需要使用的時候執行功能（程式碼）。</p>
 <p>例如我們需要把數字相加，在沒有函式的時候，需要用的時候就要重複打程式碼：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">let</span> x = <span class="hljs-number">1</span>;<br><span class="hljs-keyword">let</span> y = <span class="hljs-number">1</span>;<br><span class="hljs-keyword">let</span> result = x + y;<br><span class="hljs-built_in">console</span>.log( result );  <span class="hljs-comment">// 2</span><br>x = <span class="hljs-number">3</span>;<br>y = <span class="hljs-number">2</span>;<br>result = x + y;<br><span class="hljs-built_in">console</span>.log( result );  <span class="hljs-comment">// 5</span><br></code></pre></td></tr></table></figure>
