@@ -1,5 +1,5 @@
 ---
-title: Day.18 「從函式物件認識 作用域 與 提升！」 —— JavaScript 函式（Function） & 作用域（Scope） & 提升（Hoisting）
+title: Day.18 「從函式物件認識 作用域 與 提升！」 —— JavaScript 函式 & 作用域 & 提升
 date: 2021/9/27 16:00:00
 index_img: https://i.imgur.com/dUL5Ryk.png
 banner_img: https://i.imgur.com/dUL5Ryk.png
@@ -12,9 +12,9 @@ tags:
 excerpt: 函數也是個物件型別，可以封裝一些功能（程式碼），在需要使用的時候執行功能（程式碼）。
 ---
 
-# Day.18 「從函式物件認識 作用域 與 提升！」 —— JavaScript 函式（Function） & 作用域（Scope） & 提升（Hoisting）
+# Day.18 「從函式物件認識 作用域 與 提升！」 —— JavaScript 函式 & 作用域 & 提升
 
-![「從函式物件認識 作用域 與 提升！」 —— JavaScript 函式（Function） & 作用域（Scope） & 提升（Hoisting）](https://i.imgur.com/dUL5Ryk.png)
+![「從函式物件認識 作用域 與 提升！」 —— JavaScript 函式 & 作用域 & 提升](https://i.imgur.com/dUL5Ryk.png)
 
 函數也是個物件型別，可以封裝一些功能（程式碼），在需要使用的時候執行功能（程式碼）。
 
