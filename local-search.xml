@@ -4,6 +4,41 @@
   
   
   <entry>
+    <title>Day.27 「var 成為時代的眼淚！」 —— ES6 區塊作用域 與 提升</title>
+    <link href="/2021/10/06/2021-10-6-it_ironman-day27/"/>
+    <url>/2021/10/06/2021-10-6-it_ironman-day27/</url>
+    
+    <content type="html"><![CDATA[<h1 id="Day-27-「var-成為時代的眼淚！」-——-ES6-區塊作用域-與-提升"><a href="#Day-27-「var-成為時代的眼淚！」-——-ES6-區塊作用域-與-提升" class="headerlink" title="Day.27 「var 成為時代的眼淚！」 —— ES6 區塊作用域 與 提升"></a>Day.27 「var 成為時代的眼淚！」 —— ES6 區塊作用域 與 提升</h1><p><img src="https://i.imgur.com/hAS4sZ7.png" alt="「var 成為時代的眼淚！」 —— ES6 區塊作用域 與 提升"></p><p>之前已經介紹了 <code>var</code> 與<strong>函式作用域</strong>，今天來更仔細的介紹 ES6 新增的 <code>let</code> 、 <code>const</code>以及與它們相關的<strong>區塊作用域</strong></p><h2 id="區塊作用域"><a href="#區塊作用域" class="headerlink" title="區塊作用域"></a>區塊作用域</h2><p>與<strong>函式作用域</strong>有點像，一樣都是作用域內沒有的變數可以<strong>往外獲取</strong>變數，不一樣的是更嚴格謹慎，不只限制在函式上了，連 <code>if else</code> 、 <code>while</code> 、 <code>for</code> 這些循環語句都有限制不能從外往內取，稱為<strong>區塊作用域</strong>（<strong>Block Scope</strong>）。</p><p>以常見的 <code>var</code> 全域汙染為例：</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">3</span>; i++) &#123;&#125;<br><span class="hljs-built_in">console</span>.log( i );    <span class="hljs-comment">// 3，成功在 for 迴圈外面獲取到 for 迴圈內的 i = 3</span><br><br><span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> a = <span class="hljs-number">0</span>; a &lt; <span class="hljs-number">3</span>; a++) &#123;&#125;<br><span class="hljs-built_in">console</span>.log( a );    <span class="hljs-comment">// 報錯， a is not defined</span><br></code></pre></td></tr></table></figure><h2 id="let-的特性"><a href="#let-的特性" class="headerlink" title="let 的特性"></a>let 的特性</h2><p><code>let</code> 跟我們常用的 <code>var</code> 用法非常相似，但也是有不同的地方！</p><ul><li><p><code>let</code> 不可重複宣告</p><ul><li><p>使用 <code>var</code> 重複宣告不會報錯，只會覆蓋掉</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> name = <span class="hljs-string">&quot;毛毛&quot;</span>;<br><span class="hljs-keyword">var</span> name = <span class="hljs-string">&quot;小黃&quot;</span>;  <span class="hljs-comment">// 使用 var 重複宣告不會報錯，只會覆蓋掉</span><br></code></pre></td></tr></table></figure></li><li><p>使用 <code>let</code> 重複宣告會報錯</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">let</span> name = <span class="hljs-string">&quot;毛毛&quot;</span>;<br><span class="hljs-keyword">let</span> name = <span class="hljs-string">&quot;小黃&quot;</span>;  <span class="hljs-comment">// 使用 let 重複宣告會報錯</span><br></code></pre></td></tr></table></figure></li></ul></li><li><p>區塊作用域</p><ul><li><p>使用 <code>var</code> 容易汙染全域作用域</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">3</span>; i++) &#123;&#125;<br><span class="hljs-built_in">console</span>.log( i );    <span class="hljs-comment">// 成功在 for 迴圈外面獲取到 i = 3</span><br></code></pre></td></tr></table></figure></li><li><p>使用 <code>let</code> 則能讓變數限制在區塊內</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">3</span>; i++) &#123;&#125;<br><span class="hljs-built_in">console</span>.log( i );    <span class="hljs-comment">// 報錯， i is not defined</span><br></code></pre></td></tr></table></figure></li></ul></li><li><p>不存在變數提升</p><ul><li><p>使用 <code>var</code> 會自動提升</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-built_in">console</span>.log(name);  <span class="hljs-comment">// undefined</span><br><span class="hljs-keyword">var</span> name = <span class="hljs-string">&quot;毛毛&quot;</span>;<br></code></pre></td></tr></table></figure></li><li><p>使用 <code>let</code> 宣告就不會提升（也就是俗稱的死區）</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-built_in">console</span>.log(name);  <span class="hljs-comment">// 報錯</span><br><span class="hljs-keyword">let</span> name = <span class="hljs-string">&quot;毛毛&quot;</span>;<br></code></pre></td></tr></table></figure></li></ul></li></ul><h2 id="const-的特性"><a href="#const-的特性" class="headerlink" title="const 的特性"></a>const 的特性</h2><ul><li><p>必須要賦初始值</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> PI;  <span class="hljs-comment">// 報錯</span><br></code></pre></td></tr></table></figure></li><li><p>常數不能修改</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> PI = <span class="hljs-number">3.14159265</span>;<br>PI++  <span class="hljs-comment">// 報錯</span><br></code></pre></td></tr></table></figure></li><li><p>一樣也具有區塊作用域</p></li><li><p>對陣列或物件內的<strong>屬性</strong>做修改，並不會報錯</p><ul><li>因為我們知道物件型別存的是<strong>參考（地址）</strong>，只要 Stack 值不變就不會報錯<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> person = &#123; <span class="hljs-attr">name</span>: <span class="hljs-string">&quot;毛毛&quot;</span>, <span class="hljs-attr">gender</span>: <span class="hljs-string">&quot;男&quot;</span> &#125;;<br>person.name = <span class="hljs-string">&quot;鮭魚&quot;</span>;<br>person.age = <span class="hljs-number">27</span>;<br><span class="hljs-built_in">console</span>.log( person );  <span class="hljs-comment">// &#123; name: &quot;鮭魚&quot;, gender: &quot;男&quot;, age: 27 &#125;</span><br></code></pre></td></tr></table></figure></li></ul></li></ul><h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>會使用 <code>let</code> 與 <code>const</code> 後，就比較少使用到 <code>var</code> 了，在宣告<strong>物件型別</strong>或<strong>不會主動修改值</strong>得變數都會建議使用 <code>const</code> 來宣告！這樣比較不容易變動到變數而出現意想不到的 bug。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>程式語言</category>
+      
+      <category>前端</category>
+      
+      <category>JavaScript</category>
+      
+      <category>iT 鐵人賽</category>
+      
+      <category>第 2021 年</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>iT 鐵人賽</tag>
+      
+      <tag>JavaScript</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Day.26 「閉包要謹慎使用！」 —— JavaScript 閉包（Closure）</title>
     <link href="/2021/10/05/2021-10-5-it_ironman-day26/"/>
     <url>/2021/10/05/2021-10-5-it_ironman-day26/</url>

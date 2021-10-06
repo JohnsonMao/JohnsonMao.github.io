@@ -14,11 +14,11 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
   <meta name="theme-color" content="#2f4154">
-  <meta name="description" content="我們前面已經認識了函式作用域，也瞭解了回調函式，但有時候會產生意想不到的事情，造成內存問題，其中一個是閉包。">
+  <meta name="description" content="之前已經介紹了 var 與函式作用域，今天來更仔細的介紹 ES6 新增的 let 、 const以及與它們相關的區塊作用域。">
   <meta name="author" content="Mao">
   <meta name="keywords" content="">
   
-  <title>Day.26 「閉包要謹慎使用！」 —— JavaScript 閉包（Closure） - Mao&#39;s blog</title>
+  <title>Day.27 「var 成為時代的眼淚！」 —— ES6 區塊作用域 與 提升 - Mao&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
 
@@ -158,12 +158,12 @@
 </nav>
 
     <div class="banner" id="banner" parallax=true
-         style="background: url('https://i.imgur.com/2KRYZOP.png') no-repeat center center;
+         style="background: url('https://i.imgur.com/hAS4sZ7.png') no-repeat center center;
            background-size: cover;">
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="Day.26 「閉包要謹慎使用！」 —— JavaScript 閉包（Closure）">
+            <span class="h2" id="subtitle" title="Day.27 「var 成為時代的眼淚！」 —— ES6 區塊作用域 與 提升">
               
             </span>
 
@@ -173,8 +173,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-10-05 16:40" pubdate>
-        2021年10月5日 下午
+      <time datetime="2021-10-06 16:40" pubdate>
+        2021年10月6日 下午
       </time>
     </span>
   
@@ -185,7 +185,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      834 字
+      635 字
     </span>
   
 
@@ -195,7 +195,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      9
+      8
        分钟
     </span>
   
@@ -225,56 +225,56 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Day.26 「閉包要謹慎使用！」 —— JavaScript 閉包（Closure）</h1>
+            <h1 style="display: none">Day.27 「var 成為時代的眼淚！」 —— ES6 區塊作用域 與 提升</h1>
             
             <div class="markdown-body">
-              <h1 id="Day-26-「閉包要謹慎使用！」-——-JavaScript-閉包（Closure）"><a href="#Day-26-「閉包要謹慎使用！」-——-JavaScript-閉包（Closure）" class="headerlink" title="Day.26 「閉包要謹慎使用！」 —— JavaScript 閉包（Closure）"></a>Day.26 「閉包要謹慎使用！」 —— JavaScript 閉包（Closure）</h1><p><img src="https://i.imgur.com/2KRYZOP.png" srcset="/img/loading.gif" lazyload alt="「閉包要謹慎使用！」 —— JavaScript 閉包（Closure）"></p>
-<p>我們前面已經認識了<strong>函式作用域</strong>，也瞭解了<strong>回調函式</strong>，但有時候會產生意想不到的事情，造成內存問題，其中一個是<strong>閉包</strong></p>
-<h2 id="認識閉包"><a href="#認識閉包" class="headerlink" title="認識閉包"></a>認識閉包</h2><h3 id="閉包是如何產生的？"><a href="#閉包是如何產生的？" class="headerlink" title="閉包是如何產生的？"></a>閉包是如何產生的？</h3><p>閉包通常出現在<strong>巢狀函式</strong>中，是<strong>內部函式</strong>使用了<strong>外部函式</strong>的<strong>變數</strong>時，產生<strong>閉包</strong>！</p>
-<h3 id="閉包是什麼？"><a href="#閉包是什麼？" class="headerlink" title="閉包是什麼？"></a>閉包是什麼？</h3><p>首先我們用簡單的範例</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">fn</span>(<span class="hljs-params"></span>) </span>&#123;<br>  <span class="hljs-keyword">var</span> a = <span class="hljs-number">1</span>;<br>  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">plus1</span>(<span class="hljs-params"></span>) </span>&#123;<br>    a++<br>    <span class="hljs-built_in">console</span>.log(a);<br>  &#125;<br>  <span class="hljs-keyword">return</span> plus1;<br>&#125;<br><br><span class="hljs-keyword">var</span> f = fn();<br>f();<br></code></pre></td></tr></table></figure>
+              <h1 id="Day-27-「var-成為時代的眼淚！」-——-ES6-區塊作用域-與-提升"><a href="#Day-27-「var-成為時代的眼淚！」-——-ES6-區塊作用域-與-提升" class="headerlink" title="Day.27 「var 成為時代的眼淚！」 —— ES6 區塊作用域 與 提升"></a>Day.27 「var 成為時代的眼淚！」 —— ES6 區塊作用域 與 提升</h1><p><img src="https://i.imgur.com/hAS4sZ7.png" srcset="/img/loading.gif" lazyload alt="「var 成為時代的眼淚！」 —— ES6 區塊作用域 與 提升"></p>
+<p>之前已經介紹了 <code>var</code> 與<strong>函式作用域</strong>，今天來更仔細的介紹 ES6 新增的 <code>let</code> 、 <code>const</code>以及與它們相關的<strong>區塊作用域</strong></p>
+<h2 id="區塊作用域"><a href="#區塊作用域" class="headerlink" title="區塊作用域"></a>區塊作用域</h2><p>與<strong>函式作用域</strong>有點像，一樣都是作用域內沒有的變數可以<strong>往外獲取</strong>變數，不一樣的是更嚴格謹慎，不只限制在函式上了，連 <code>if else</code> 、 <code>while</code> 、 <code>for</code> 這些循環語句都有限制不能從外往內取，稱為<strong>區塊作用域</strong>（<strong>Block Scope</strong>）。</p>
+<p>以常見的 <code>var</code> 全域汙染為例：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">3</span>; i++) &#123;&#125;<br><span class="hljs-built_in">console</span>.log( i );    <span class="hljs-comment">// 3，成功在 for 迴圈外面獲取到 for 迴圈內的 i = 3</span><br><br><span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> a = <span class="hljs-number">0</span>; a &lt; <span class="hljs-number">3</span>; a++) &#123;&#125;<br><span class="hljs-built_in">console</span>.log( a );    <span class="hljs-comment">// 報錯， a is not defined</span><br></code></pre></td></tr></table></figure>
 
-<p>我們透過 Google Chrome 的開發人員工具查看執行過程</p>
-<p><img src="https://i.imgur.com/nzgr4g1.png" srcset="/img/loading.gif" lazyload alt="Google Chrome 的開發人員工具"></p>
-<p>可以看到在執行到第 8 行的時候，產生了閉包，也就是紅框處！</p>
-<p>由此可見～閉包是在我們<strong>內部函式</strong>使用到了<strong>外部函式的變數</strong>時產生出來。<br>你可能想說第 9 行函式還沒執行呀！？<br>那是因為，函式的<strong>提升</strong>，所以導致執行到函式變數的時候就產生閉包。<br>而這時有被<strong>內部函式</strong>使用的<strong>變數</strong>，就會存在閉包之中！</p>
-<h2 id="常見的閉包"><a href="#常見的閉包" class="headerlink" title="常見的閉包"></a>常見的閉包</h2><h3 id="內部函式-為-外部函式-的返回值"><a href="#內部函式-為-外部函式-的返回值" class="headerlink" title="內部函式 為 外部函式 的返回值"></a>內部函式 為 外部函式 的返回值</h3><p>就是我們上面的範例</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">fn</span>(<span class="hljs-params"></span>) </span>&#123;<br>  <span class="hljs-keyword">var</span> a = <span class="hljs-number">1</span>;<br>  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">plus1</span>(<span class="hljs-params"></span>) </span>&#123;<br>    a++<br>    <span class="hljs-built_in">console</span>.log(a);<br>  &#125;<br>  <span class="hljs-keyword">return</span> plus1;<br>&#125;<br><br><span class="hljs-keyword">var</span> f = fn();<br><br>f();  <span class="hljs-comment">// 2</span><br>f();  <span class="hljs-comment">// 3</span><br></code></pre></td></tr></table></figure>
-
-<p>你會發現！函式內的變數 <code>a</code> 還存在可以累加並<strong>沒有消失</strong>，而這個值就存在 <code>f</code> 函式的閉包中！</p>
-<h3 id="回調函式"><a href="#回調函式" class="headerlink" title="回調函式"></a>回調函式</h3><p>沒錯！回調函式也會產生閉包～如下面範例</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">consoleDelay</span> (<span class="hljs-params">msg, time</span>) </span>&#123;<br>  <span class="hljs-built_in">setTimeout</span>( <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>&#123;<br>    <span class="hljs-built_in">console</span>.log(msg)<br>  &#125;, time)<br>&#125;<br><br>consoleDelay(<span class="hljs-string">&quot;我也是閉包&quot;</span>, <span class="hljs-number">2000</span>);<br></code></pre></td></tr></table></figure>
-
-<p>一樣有形成閉包的條件！內部函式引用了外部函式的變數！</p>
-<p><img src="https://i.imgur.com/QToOFcL.png" srcset="/img/loading.gif" lazyload alt="我也是閉包"></p>
-<h2 id="閉包的作用"><a href="#閉包的作用" class="headerlink" title="閉包的作用"></a>閉包的作用</h2><ol>
-<li><p>一般函式執行完畢後，就會從內存釋放，而閉包則是把函式內的變數，繼續<strong>保留</strong>在內存中（延長了局部變數的生命週期）。</p>
-</li>
-<li><p>一般函式內的變數無法從外部操作，但閉包可以<strong>間接操控</strong>函式內部的變數值。</p>
-</li>
-</ol>
-<h2 id="閉包的優點與缺點"><a href="#閉包的優點與缺點" class="headerlink" title="閉包的優點與缺點"></a>閉包的優點與缺點</h2><h3 id="閉包的優點同時也是缺點"><a href="#閉包的優點同時也是缺點" class="headerlink" title="閉包的優點同時也是缺點"></a>閉包的優點同時也是缺點</h3><ul>
-<li><p>函式執行完後，函式內的局部變數不會釋放，如果這個局部變數還會使用，那就是優點，如果不會使用了，那就變成缺點，因為佔用內存的時間會變長。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">fn</span>(<span class="hljs-params"></span>) </span>&#123;<br>  <span class="hljs-keyword">var</span> arr = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Array</span>(<span class="hljs-number">10000</span>);<br>  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">arrLength</span>(<span class="hljs-params"></span>) </span>&#123;<br>    <span class="hljs-built_in">console</span>.log( <span class="hljs-string">&quot;內存有 &quot;</span> + arr.length + <span class="hljs-string">&quot; 長度的陣列&quot;</span> );<br>  &#125;<br>  <span class="hljs-keyword">return</span> arrLength;<br>&#125;<br><br><span class="hljs-keyword">var</span> f = fn();<br>f();  <span class="hljs-comment">// 內存有 10000 長度的陣列</span><br></code></pre></td></tr></table></figure></li>
-<li><p>容易造成內存<strong>溢出</strong>與<strong>洩漏</strong></p>
+<h2 id="let-的特性"><a href="#let-的特性" class="headerlink" title="let 的特性"></a>let 的特性</h2><p><code>let</code> 跟我們常用的 <code>var</code> 用法非常相似，但也是有不同的地方！</p>
 <ul>
-<li><strong>內存溢出</strong>比較簡單理解，就是內存不夠跑程式而報錯<br><img src="https://i.imgur.com/VyTDNpk.png" srcset="/img/loading.gif" lazyload alt="內存溢出"></li>
-<li><strong>內存洩漏</strong>平常還可以正常執行，但每天洩漏一點，會把內存空間壓縮，更容易導致<strong>內存溢出</strong>，常見的內存洩漏<ul>
-<li>意外使用了<strong>全局變數</strong>（宣告習慣很重要），如：函式內忘記使用宣告，直接使用變數</li>
-<li>沒有及時清理的<strong>計時器</strong>或<strong>回調函式</strong></li>
-<li><strong>閉包</strong></li>
+<li><p><code>let</code> 不可重複宣告</p>
+<ul>
+<li><p>使用 <code>var</code> 重複宣告不會報錯，只會覆蓋掉</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> name = <span class="hljs-string">&quot;毛毛&quot;</span>;<br><span class="hljs-keyword">var</span> name = <span class="hljs-string">&quot;小黃&quot;</span>;  <span class="hljs-comment">// 使用 var 重複宣告不會報錯，只會覆蓋掉</span><br></code></pre></td></tr></table></figure></li>
+<li><p>使用 <code>let</code> 重複宣告會報錯</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">let</span> name = <span class="hljs-string">&quot;毛毛&quot;</span>;<br><span class="hljs-keyword">let</span> name = <span class="hljs-string">&quot;小黃&quot;</span>;  <span class="hljs-comment">// 使用 let 重複宣告會報錯</span><br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>區塊作用域</p>
+<ul>
+<li><p>使用 <code>var</code> 容易汙染全域作用域</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">3</span>; i++) &#123;&#125;<br><span class="hljs-built_in">console</span>.log( i );    <span class="hljs-comment">// 成功在 for 迴圈外面獲取到 i = 3</span><br></code></pre></td></tr></table></figure></li>
+<li><p>使用 <code>let</code> 則能讓變數限制在區塊內</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">3</span>; i++) &#123;&#125;<br><span class="hljs-built_in">console</span>.log( i );    <span class="hljs-comment">// 報錯， i is not defined</span><br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>不存在變數提升</p>
+<ul>
+<li><p>使用 <code>var</code> 會自動提升</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-built_in">console</span>.log(name);  <span class="hljs-comment">// undefined</span><br><span class="hljs-keyword">var</span> name = <span class="hljs-string">&quot;毛毛&quot;</span>;<br></code></pre></td></tr></table></figure></li>
+<li><p>使用 <code>let</code> 宣告就不會提升（也就是俗稱的死區）</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-built_in">console</span>.log(name);  <span class="hljs-comment">// 報錯</span><br><span class="hljs-keyword">let</span> name = <span class="hljs-string">&quot;毛毛&quot;</span>;<br></code></pre></td></tr></table></figure></li>
 </ul>
 </li>
 </ul>
+<h2 id="const-的特性"><a href="#const-的特性" class="headerlink" title="const 的特性"></a>const 的特性</h2><ul>
+<li><p>必須要賦初始值</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> PI;  <span class="hljs-comment">// 報錯</span><br></code></pre></td></tr></table></figure></li>
+<li><p>常數不能修改</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> PI = <span class="hljs-number">3.14159265</span>;<br>PI++  <span class="hljs-comment">// 報錯</span><br></code></pre></td></tr></table></figure></li>
+<li><p>一樣也具有區塊作用域</p>
+</li>
+<li><p>對陣列或物件內的<strong>屬性</strong>做修改，並不會報錯</p>
+<ul>
+<li>因為我們知道物件型別存的是<strong>參考（地址）</strong>，只要 Stack 值不變就不會報錯<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> person = &#123; <span class="hljs-attr">name</span>: <span class="hljs-string">&quot;毛毛&quot;</span>, <span class="hljs-attr">gender</span>: <span class="hljs-string">&quot;男&quot;</span> &#125;;<br>person.name = <span class="hljs-string">&quot;鮭魚&quot;</span>;<br>person.age = <span class="hljs-number">27</span>;<br><span class="hljs-built_in">console</span>.log( person );  <span class="hljs-comment">// &#123; name: &quot;鮭魚&quot;, gender: &quot;男&quot;, age: 27 &#125;</span><br></code></pre></td></tr></table></figure></li>
+</ul>
 </li>
 </ul>
-<h3 id="如何解決"><a href="#如何解決" class="headerlink" title="如何解決"></a>如何解決</h3><ul>
-<li><p>盡量避免濫用閉包</p>
-</li>
-<li><p>及時釋放</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript">f = <span class="hljs-literal">null</span>;  <span class="hljs-comment">// 讓內部函式變成「垃圾物件」，瀏覽器會自動清除</span><br></code></pre></td></tr></table></figure></li>
-</ul>
-<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>我們已經逐步學習 JavaScript 的核心精隨了！也是面試很長考的觀念～</p>
+<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>會使用 <code>let</code> 與 <code>const</code> 後，就比較少使用到 <code>var</code> 了，在宣告<strong>物件型別</strong>或<strong>不會主動修改值</strong>得變數都會建議使用 <code>const</code> 來宣告！這樣比較不容易變動到變數而出現意想不到的 bug。</p>
 
             </div>
             <hr>
@@ -313,18 +313,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/10/06/2021-10-6-it_ironman-day27/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Day.27 「var 成為時代的眼淚！」 —— ES6 區塊作用域 與 提升</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021/10/04/2021-10-4-it_ironman-day25/">
-                        <span class="hidden-mobile">Day.25 「從 事件綁定 與 定時器 認識回調函式！」 —— JavaScript 定時器 & Callback</span>
+                      <a href="/2021/10/05/2021-10-5-it_ironman-day26/">
+                        <span class="hidden-mobile">Day.26 「閉包要謹慎使用！」 —— JavaScript 閉包（Closure）</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -346,8 +340,8 @@
     
       <script type="text/javascript">
         var disqus_config = function() {
-          this.page.url = 'http://example.com/2021/10/05/2021-10-5-it_ironman-day26/';
-          this.page.identifier = '/2021/10/05/2021-10-5-it_ironman-day26/';
+          this.page.url = 'http://example.com/2021/10/06/2021-10-6-it_ironman-day27/';
+          this.page.identifier = '/2021/10/06/2021-10-6-it_ironman-day27/';
         };
         Fluid.utils.loadComments('#disqus_thread', function() {
           var d = document, s = d.createElement('script');
