@@ -50,7 +50,7 @@ btn.addEventListener("click", function(){
 }, false);
 
 btn.addEventListener("click", function(){
-  console.log("我是第一個綁定事件");    // 這樣就會直接"添加"綁定事件，而不會覆蓋
+  console.log("我是第二個綁定事件");    // 這樣就會直接"添加"綁定事件，而不會覆蓋
 }, false);
 
 /*

@@ -68,16 +68,16 @@ console.log( a );    // 報錯， a is not defined
     console.log( i );    // 報錯， i is not defined
     ```
 
-- 不存在變數提升
+- 變數提升效果不同
 
-  - 使用 `var` 會自動提升
+  - 使用 `var` 會自動提升，並顯示**未定義** `undefined`
 
     ```javascript
     console.log(name);  // undefined
     var name = "毛毛";
     ```
   
-  - 使用 `let` 宣告就不會提升（也就是俗稱的死區）
+  - 使用 `let` 宣告比較嚴謹，會直接報錯（也就是俗稱的死區），讓 debug 效率變高
 
     ```javascript
     console.log(name);  // 報錯
