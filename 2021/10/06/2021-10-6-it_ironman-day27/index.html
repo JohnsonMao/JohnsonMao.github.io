@@ -185,7 +185,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      635 字
+      653 字
     </span>
   
 
@@ -252,11 +252,11 @@
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">3</span>; i++) &#123;&#125;<br><span class="hljs-built_in">console</span>.log( i );    <span class="hljs-comment">// 報錯， i is not defined</span><br></code></pre></td></tr></table></figure></li>
 </ul>
 </li>
-<li><p>不存在變數提升</p>
+<li><p>變數提升效果不同</p>
 <ul>
-<li><p>使用 <code>var</code> 會自動提升</p>
+<li><p>使用 <code>var</code> 會自動提升，並顯示<strong>未定義</strong> <code>undefined</code></p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-built_in">console</span>.log(name);  <span class="hljs-comment">// undefined</span><br><span class="hljs-keyword">var</span> name = <span class="hljs-string">&quot;毛毛&quot;</span>;<br></code></pre></td></tr></table></figure></li>
-<li><p>使用 <code>let</code> 宣告就不會提升（也就是俗稱的死區）</p>
+<li><p>使用 <code>let</code> 宣告比較嚴謹，會直接報錯（也就是俗稱的死區），讓 debug 效率變高</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-built_in">console</span>.log(name);  <span class="hljs-comment">// 報錯</span><br><span class="hljs-keyword">let</span> name = <span class="hljs-string">&quot;毛毛&quot;</span>;<br></code></pre></td></tr></table></figure></li>
 </ul>
 </li>
@@ -312,6 +312,12 @@
                 <div class="post-prevnext">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/2021/10/07/2021-10-7-it_ironman-day28/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Day.28 「Promise 初體驗～」 —— ES6 Promise</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">
