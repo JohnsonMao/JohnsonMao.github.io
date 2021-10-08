@@ -1,0 +1,541 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-TW" data-default-color-scheme=&#34;dark&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="ES6 新增了更接近傳統語言寫法的 Class 這個概念，基本上可以當作是一個**語法糖**，絕大部分的功能在 ES5 都可以做到，但 Class 可以讓構造函式的寫法更加清新！">
+  <meta name="author" content="Mao">
+  <meta name="keywords" content="">
+  
+  <title>Day.29 「Class 語法糖～」 —— ES6 Class 構造函式 - Mao&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>毛毛的部落格</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首頁
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                封存
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分類
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                標籤
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                關於
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('https://i.imgur.com/EOelHe0.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Day.29 「Class 語法糖～」 —— ES6 Class 構造函式">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-10-07 14:30" pubdate>
+        2021年10月7日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.1k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      14
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Day.29 「Class 語法糖～」 —— ES6 Class 構造函式</h1>
+            
+            <div class="markdown-body">
+              <h1 id="Day-29-「Class-語法糖～」-——-ES6-Class-構造函式"><a href="#Day-29-「Class-語法糖～」-——-ES6-Class-構造函式" class="headerlink" title="Day.29 「Class 語法糖～」 —— ES6 Class 構造函式"></a>Day.29 「Class 語法糖～」 —— ES6 Class 構造函式</h1><p><img src="https://i.imgur.com/EOelHe0.png" srcset="/img/loading.gif" lazyload alt="「Class 語法糖～」 —— ES6 Class 構造函式"></p>
+<p>ES6 新增了更接近傳統語言寫法的 Class 這個概念，基本上可以當作是一個<strong>語法糖</strong>，絕大部分的功能在 ES5 都可以做到，但 Class 可以讓構造函式的寫法更加清新！</p>
+<blockquote>
+<p>什麼是語法糖？<br>就是新增的語法對原功能沒有什麼影響，主要是給程式開發者更方便的使用。</p>
+</blockquote>
+<h2 id="class-初體驗"><a href="#class-初體驗" class="headerlink" title="class 初體驗"></a>class 初體驗</h2><p>首先，我們先用之前的構造函式</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Person</span> (<span class="hljs-params">name, gender</span>) </span>&#123;<br>  <span class="hljs-built_in">this</span>.name = name,<br>  <span class="hljs-built_in">this</span>.gender = gender<br>&#125;<br>Person.prototype.sayName = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>&#123;     <span class="hljs-comment">// 構造函式方法傳給原型鍊</span><br>  <span class="hljs-built_in">console</span>.log( <span class="hljs-string">&quot;大家好！我是&quot;</span> + <span class="hljs-built_in">this</span>.name );<br>&#125;<br><br><span class="hljs-keyword">const</span> person = <span class="hljs-keyword">new</span> Person(<span class="hljs-string">&quot;毛毛&quot;</span>, <span class="hljs-string">&quot;男&quot;</span>);<br>person.sayName();  <span class="hljs-comment">// &quot;大家好！我是毛毛&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>接著來使用 <code>class</code> 構造函式，來看看差異，可以發現<strong>繼承方法</strong>可以寫在構造函式內，它會<strong>自動</strong>幫我們傳給原型鍊上，而物件資料寫在 <code>constructor</code> 內</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Person</span> </span>&#123;<br>  <span class="hljs-comment">// 構造函式方法，一定要使用 constructor 不能改名</span><br>  <span class="hljs-title">constructor</span> (<span class="hljs-params">name, gender</span>) &#123;<br>    <span class="hljs-built_in">this</span>.name = name;<br>    <span class="hljs-built_in">this</span>.gender = gender;<br>  &#125;<br>  <br>  sayName () &#123;  <span class="hljs-comment">// 添加方法必須使用這個語法</span><br>    <span class="hljs-built_in">console</span>.log( <span class="hljs-string">&quot;大家好！我是&quot;</span> + <span class="hljs-built_in">this</span>.name ); <br>  &#125;<br>&#125;<br><br><span class="hljs-keyword">const</span> person = <span class="hljs-keyword">new</span> Person(<span class="hljs-string">&quot;毛毛&quot;</span>, <span class="hljs-string">&quot;男&quot;</span>);<br>person.sayName();  <span class="hljs-comment">// &quot;大家好！我是毛毛&quot;</span><br><span class="hljs-built_in">console</span>.log(person);<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://i.imgur.com/WRcvc2h.png" srcset="/img/loading.gif" lazyload alt="自動傳給繼承鍊上"></p>
+<h2 id="靜態屬性"><a href="#靜態屬性" class="headerlink" title="靜態屬性"></a>靜態屬性</h2><p>我們都知道構造函式也是物件，ES6 以前構造函式要添加靜態屬性，就是使用物件的方法來添加，因為沒有使用到原型鍊，所以這個屬性是 <code>Person</code> 內的屬性，也就是<strong>靜態屬性</strong>。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Person</span>(<span class="hljs-params"></span>)</span>&#123;&#125;<br>Person.type = <span class="hljs-string">&quot;人類&quot;</span>;<br><br><span class="hljs-keyword">const</span> mao = <span class="hljs-keyword">new</span> Person();<br><span class="hljs-built_in">console</span>.log(mao.type);     <span class="hljs-comment">// undefined</span><br><span class="hljs-built_in">console</span>.log(Person.type);  <span class="hljs-comment">// &quot;人類&quot;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="static-靜態方法"><a href="#static-靜態方法" class="headerlink" title="static 靜態方法"></a>static 靜態方法</h3><p>而 class 有新增靜態方法 <code>static</code>，來實現靜態屬性。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Person</span>()</span>&#123;<br>  <span class="hljs-keyword">static</span> type = <span class="hljs-string">&quot;人類&quot;</span>;<br>&#125;<br><br><span class="hljs-keyword">const</span> mao = <span class="hljs-keyword">new</span> Person();<br><span class="hljs-built_in">console</span>.log(mao.type);     <span class="hljs-comment">// undefined</span><br><span class="hljs-built_in">console</span>.log(Person.type);  <span class="hljs-comment">// &quot;人類&quot;</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="構造函式繼承"><a href="#構造函式繼承" class="headerlink" title="構造函式繼承"></a>構造函式繼承</h2><p>ES6 以前要寫構造函式繼承構造函式時</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">/*  父級構造函式，人  */</span><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Person</span> (<span class="hljs-params">name, gender</span>) </span>&#123;<br>  <span class="hljs-built_in">this</span>.name = name,<br>  <span class="hljs-built_in">this</span>.gender = gender<br>&#125;<br>Person.prototype.sayName = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>&#123;<br>  <span class="hljs-built_in">console</span>.log( <span class="hljs-string">&quot;大家好！我是&quot;</span> + <span class="hljs-built_in">this</span>.name );<br>&#125;<br><br><span class="hljs-comment">/*  子級構造函式，成年人  */</span><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">AdultPerson</span> (<span class="hljs-params">name, gender, age, married</span>) </span>&#123;<br>  Person.call(<span class="hljs-built_in">this</span>, name, gender);  <span class="hljs-comment">// 透過 call 方法來繼承父級構造函式資料</span><br>  <span class="hljs-built_in">this</span>.age = age;<br>  <span class="hljs-built_in">this</span>.married = married;<br>&#125;<br><span class="hljs-comment">/*  設定子級構造函式的原型  */</span><br>AdultPerson.prototype = <span class="hljs-keyword">new</span> Person;<br><span class="hljs-comment">/*  校正子級構造函式的 constructor  */</span><br>AdultPerson.prototype.constructor = AdultPerson;<br><br><span class="hljs-keyword">const</span> mao = <span class="hljs-keyword">new</span> AdultPerson(<span class="hljs-string">&quot;毛毛&quot;</span>, <span class="hljs-string">&quot;男&quot;</span>, <span class="hljs-number">27</span>, <span class="hljs-string">&quot;未婚&quot;</span>);<br>mao.sayName(); <span class="hljs-comment">// &quot;大家好！我是毛毛&quot;</span><br><span class="hljs-built_in">console</span>.log(mao);<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://i.imgur.com/UIg96dj.png" srcset="/img/loading.gif" lazyload alt="子級構造函式繼承父級構造函式"></p>
+<p>可以看到使用子級構造函式，可以繼承父級構造函式的方法 <code>sayName</code>。</p>
+<h3 id="extends-繼承方法"><a href="#extends-繼承方法" class="headerlink" title="extends 繼承方法"></a>extends 繼承方法</h3><p>而 class 有新增繼承方法 <code>extends</code> 與 <code>super</code>，來實現繼承父級構造函式。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Person</span> </span>&#123;<br>  <span class="hljs-comment">// 構造函式方法，一定要使用 constructor 不能改名</span><br>  <span class="hljs-title">constructor</span> (<span class="hljs-params">name, gender</span>) &#123;<br>    <span class="hljs-built_in">this</span>.name = name;<br>    <span class="hljs-built_in">this</span>.gender = gender;<br>  &#125;<br>  <br>  sayName () &#123;  <span class="hljs-comment">// 添加方法必須使用這個語法</span><br>    <span class="hljs-built_in">console</span>.log( <span class="hljs-string">&quot;大家好！我是&quot;</span> + <span class="hljs-built_in">this</span>.name ); <br>  &#125;<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AdultPerson</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Person</span> </span>&#123; <span class="hljs-comment">// 使用 extends 繼承父級構造函式</span><br>  <span class="hljs-title">constructor</span> (<span class="hljs-params">name, gender, age, married</span>) &#123;<br>    <span class="hljs-comment">// 使用 super 調用父級構造函式的屬性方法</span><br>    <span class="hljs-built_in">super</span>(name, gender);   <span class="hljs-comment">// 與 Person.call(this, name, gender) 效果一樣</span><br>    <span class="hljs-built_in">this</span>.age = age;<br>    <span class="hljs-built_in">this</span>.married = married;<br>  &#125;<br>  <span class="hljs-comment">/*  可以自己新增方法  */</span><br>&#125;<br><br><span class="hljs-keyword">const</span> mao = <span class="hljs-keyword">new</span> AdultPerson(<span class="hljs-string">&quot;毛毛&quot;</span>, <span class="hljs-string">&quot;男&quot;</span>, <span class="hljs-number">27</span>, <span class="hljs-string">&quot;未婚&quot;</span>);<br>mao.sayName(); <span class="hljs-comment">// &quot;大家好！我是毛毛&quot;</span><br><span class="hljs-built_in">console</span>.log(mao);<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://i.imgur.com/SQ5hL6e.png" srcset="/img/loading.gif" lazyload alt="子級構造函式繼承父級構造函式"></p>
+<p>使用起來，更簡潔有利～也更加直覺可以判斷是兩個構造函式與之間的關係！</p>
+<h2 id="getter-與-setter"><a href="#getter-與-setter" class="headerlink" title="getter 與 setter"></a>getter 與 setter</h2><p>class 的 <code>get</code> 與 <code>set</code> 方法，<br>在對某個屬性<strong>讀取</strong>時，會調用 <code>get</code> 對應的函式，<br>在對某個屬性<strong>設置</strong>時，會調用 <code>set</code> 對應的函式。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Person</span> </span>&#123;<br>  <span class="hljs-comment">// 構造函式方法，一定要使用 constructor 不能改名</span><br>  <span class="hljs-title">constructor</span> (<span class="hljs-params">name</span>) &#123;<br>    <span class="hljs-built_in">this</span>.name = name;<br>  &#125;<br>  get name () &#123;<br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;名字被讀取&quot;</span>);<br>  &#125;<br>  set name (newVal) &#123;<br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;名字被修改為&quot;</span> + newVal);<br>  &#125;<br>&#125;<br><br><span class="hljs-keyword">const</span> mao = <span class="hljs-keyword">new</span> Person(<span class="hljs-string">&quot;毛毛&quot;</span>);  <span class="hljs-comment">// 這時會自動調 set name 方法，&quot;名字被修改為毛毛&quot;</span><br><span class="hljs-built_in">console</span>.log(mao.name);    <span class="hljs-comment">// 這時會自動調 get name 方法，&quot;名字被讀取&quot;</span><br>mao.name = <span class="hljs-string">&quot;鮭魚&quot;</span>;  <span class="hljs-comment">// 這時會自動調 set name 方法，&quot;名字被修改為鮭魚&quot;</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>Class 這個語法糖，讓我們寫構造函式會更加方便直觀，用過都說回不去了！</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%A8%8B%E5%BC%8F%E8%AA%9E%E8%A8%80/">程式語言</a>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%A8%8B%E5%BC%8F%E8%AA%9E%E8%A8%80/%E5%89%8D%E7%AB%AF/">前端</a>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%A8%8B%E5%BC%8F%E8%AA%9E%E8%A8%80/%E5%89%8D%E7%AB%AF/JavaScript/">JavaScript</a>
+                    
+                      <a class="hover-with-bg" href="/categories/iT-%E9%90%B5%E4%BA%BA%E8%B3%BD/">iT 鐵人賽</a>
+                    
+                      <a class="hover-with-bg" href="/categories/iT-%E9%90%B5%E4%BA%BA%E8%B3%BD/%E7%AC%AC-2021-%E5%B9%B4/">第 2021 年</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/iT-%E9%90%B5%E4%BA%BA%E8%B3%BD/">iT 鐵人賽</a>
+                    
+                      <a class="hover-with-bg" href="/tags/JavaScript/">JavaScript</a>
+                    
+                  </div>
+                
+              </div>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/10/07/2021-10-7-it_ironman-day28/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Day.28 「Promise 初體驗～」 —— ES6 Promise</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/10/06/2021-10-6-it_ironman-day27/">
+                        <span class="hidden-mobile">Day.27 「var 成為時代的眼淚！」 —— ES6 區塊作用域 與 提升</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    
+      <script type="text/javascript">
+        var disqus_config = function() {
+          this.page.url = 'http://example.com/2021/10/07/2021-10-8-it_ironman-day29/';
+          this.page.identifier = '/2021/10/07/2021-10-8-it_ironman-day29/';
+        };
+        Fluid.utils.loadComments('#disqus_thread', function() {
+          var d = document, s = d.createElement('script');
+          s.src = '//' + 'fluid' + '.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', new Date());
+          (d.head || d.body).appendChild(s);
+        });
+      </script>
+    
+    <noscript>Please enable JavaScript to view the comments</noscript>
+  </div>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目錄</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜尋</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">關鍵字</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+    <span>© 2021 <a href="/about">Johnson Mao</a> 毛毛的部落格 | 記錄成長的過程</span> <span> - 本站使用  <a href="https://hexo.io" target="_blank" rel="nofollow noopener">Hexo</a> & <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">Fluid 主題</a>
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            總訪問量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            總訪客數 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
