@@ -1,6 +1,6 @@
 ---
 title: Day.30 「什麼！？ Promise 的語法糖？」 —— ES8 Async & Await
-date: 2021/10/7 14:30:00
+date: 2021/10/9 13:30:00
 index_img: https://i.imgur.com/YhGvJWy.png
 banner_img: https://i.imgur.com/YhGvJWy.png
 categories:

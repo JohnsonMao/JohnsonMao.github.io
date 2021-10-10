@@ -1,6 +1,6 @@
 ---
 title: Day.29 「Class 語法糖～」 —— ES6 Class 構造函式
-date: 2021/10/7 14:30:00
+date: 2021/10/8 16:30:00
 index_img: https://i.imgur.com/EOelHe0.png
 banner_img: https://i.imgur.com/EOelHe0.png
 categories:
