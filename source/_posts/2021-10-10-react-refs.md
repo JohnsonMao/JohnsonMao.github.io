@@ -1,6 +1,6 @@
 ---
 title: React - 三大屬性 Props
-date: 2021/7/31 21:00:00
+date: 2021/10/10 21:00:00
 index_img: https://i.postimg.cc/kMk16Gqq/icons8-react-160.png
 banner_img: https://i.postimg.cc/kMk16Gqq/icons8-react-160.png
 categories:
@@ -10,7 +10,7 @@ tags:
 excerpt: 介紹組件 三大屬性中的 Refs 屬性。
 ---
 
-# ⚛️ React - 三大屬性 **Refs**
+# React - 三大屬性 **Refs**
 
 ![從 0 開始學 React](https://i.postimg.cc/kMk16Gqq/icons8-react-160.png)
 
