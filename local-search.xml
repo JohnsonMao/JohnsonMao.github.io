@@ -4,6 +4,35 @@
   
   
   <entry>
+    <title>React - DOM 的 diffing 算法</title>
+    <link href="/2021/10/14/2021-10-14-react-diffing/"/>
+    <url>/2021/10/14/2021-10-14-react-diffing/</url>
+    
+    <content type="html"><![CDATA[<h1 id="React-DOM-的-diffing-算法"><a href="#React-DOM-的-diffing-算法" class="headerlink" title="React - DOM 的 diffing 算法"></a>React - DOM 的 diffing 算法</h1><p><img src="https://i.postimg.cc/kMk16Gqq/icons8-react-160.png" alt="從 0 開始學 React"></p><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>React 最核心的思想就是 Virtual DOM 與 Diff 演算法，來實現部分變化頁面 SPA 效果。</p><!-- more --><h2 id="虛擬-DOM-中，key-的作用範例"><a href="#虛擬-DOM-中，key-的作用範例" class="headerlink" title="虛擬 DOM 中，key 的作用範例"></a>虛擬 DOM 中，key 的作用範例</h2><p>範例程式碼 - 可以再輸入框輸入東西後按按鈕觀看效果</p><iframe height="300" style="width: 100%;" scrolling="no" title="" src="https://codepen.io/vsfvjiuv-the-typescripter/embed/RwVvKRQ?default-tab=js%2Cresult" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">  See the Pen <a href="https://codepen.io/vsfvjiuv-the-typescripter/pen/RwVvKRQ">  </a> by Johnson Mao (<a href="https://codepen.io/vsfvjiuv-the-typescripter">@vsfvjiuv-the-typescripter</a>)  on <a href="https://codepen.io">CodePen</a>.</iframe><p><img src="https://i.imgur.com/Aht0ETZ.gif" alt="key 使用 index 的影響"></p><ul><li>會發現<code>key</code>設<code>index</code>的<code>input</code>框的內容並不會隨著資料綁定</li></ul><h2 id="經典面試題，虛擬-DOM-中-key-的作用"><a href="#經典面試題，虛擬-DOM-中-key-的作用" class="headerlink" title="經典面試題，虛擬 DOM 中 key 的作用"></a>經典面試題，虛擬 DOM 中 key 的作用</h2><h3 id="React-Vue-中的key有什麼作用？"><a href="#React-Vue-中的key有什麼作用？" class="headerlink" title="React / Vue 中的key有什麼作用？"></a>React / Vue 中的<code>key</code>有什麼作用？</h3><ol><li>簡單的說：<code>key</code>在虛擬 DOM 物件中作用於標記，在更新渲染畫面時，<code>key</code>扮演著重要的角色</li><li>詳細的說：當狀態中的資料發生變化，React 會根據<strong>新資料</strong>，生成新的<strong>虛擬 DOM</strong>，接著 React 進行<strong>新虛擬 DOM</strong> 和 <strong>舊虛擬 DOM</strong> 的 diff 比較<ul><li>舊虛擬 DOM 中，找到和新虛擬 DOM 相同的<code>key</code>：<ul><li>若舊虛擬 DOM 資料沒變，直接使用之前真實 DOM</li><li>若舊虛擬 DOM 資料改變，就生成新的真實 DOM，取代之前真實 DOM</li></ul></li><li>舊虛擬 DOM 中，沒找到與新虛擬 DOM 同樣的<code>key</code>：<ul><li>根據資料創建新的真實 DOM，渲染到畫面上</li></ul></li></ul></li></ol><h3 id="為什麼遍歷列表時，key最好不要用index"><a href="#為什麼遍歷列表時，key最好不要用index" class="headerlink" title="為什麼遍歷列表時，key最好不要用index?"></a>為什麼遍歷列表時，<code>key</code>最好不要用<code>index</code>?</h3><ol><li>用<code>index</code>作為<code>key</code>可能會引發的問題<ul><li>若對資料進行逆序添加，逆序刪除等<strong>破壞順序</strong>的操作<ul><li>會產生沒有必要的真實 DOM 更新，效率低</li></ul></li><li>結構中有包含<strong>輸入類</strong>的 DOM<ul><li>會產生錯誤 DOM 更新，畫面出現問題</li></ul></li><li>若沒有使用逆序添加，逆序刪除等破壞順序的操作<ul><li>則不會產生問題</li></ul></li></ul></li></ol><h3 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h3><ul><li><a href="https://iter01.com/514750.html">深入理解React：diff 演算法</a></li><li><a href="https://www.youtube.com/playlist?list=PLmOn9nNkQxJFJXLvkNsGsoCUxJLqyLGxu">React 全家桶</a></li></ul>]]></content>
+    
+    
+    <categories>
+      
+      <category>程式語言</category>
+      
+      <category>前端</category>
+      
+      <category>React</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>React</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>React - 生命週期</title>
     <link href="/2021/10/13/2021-10-13-react-lifecycle/"/>
     <url>/2021/10/13/2021-10-13-react-lifecycle/</url>

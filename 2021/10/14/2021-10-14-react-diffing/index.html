@@ -14,11 +14,11 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
   <meta name="theme-color" content="#2f4154">
-  <meta name="description" content="什麼是生命週期？就如同人有生老病死，React 組件也有類似的概念！">
+  <meta name="description" content="React 最核心的思想就是 Virtual DOM 與 Diff 演算法，來實現部分變化頁面 SPA 效果。">
   <meta name="author" content="Mao">
   <meta name="keywords" content="">
   
-  <title>React - 生命週期 - Mao&#39;s blog</title>
+  <title>React - DOM 的 diffing 算法 - Mao&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
 
@@ -163,7 +163,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="React - 生命週期">
+            <span class="h2" id="subtitle" title="React - DOM 的 diffing 算法">
               
             </span>
 
@@ -173,8 +173,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-10-13 15:00" pubdate>
-        2021年10月13日 下午
+      <time datetime="2021-10-14 17:00" pubdate>
+        2021年10月14日 下午
       </time>
     </span>
   
@@ -185,7 +185,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      288 字
+      429 字
     </span>
   
 
@@ -195,7 +195,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      3
+      4
        分钟
     </span>
   
@@ -225,88 +225,58 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">React - 生命週期</h1>
+            <h1 style="display: none">React - DOM 的 diffing 算法</h1>
             
             <div class="markdown-body">
-              <h1 id="React-生命週期"><a href="#React-生命週期" class="headerlink" title="React - 生命週期"></a>React - 生命週期</h1><p><img src="https://i.postimg.cc/kMk16Gqq/icons8-react-160.png" srcset="/img/loading.gif" lazyload alt="從 0 開始學 React"></p>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>什麼是生命週期？就如同人有生老病死，React 組件也有類似的概念！</p>
+              <h1 id="React-DOM-的-diffing-算法"><a href="#React-DOM-的-diffing-算法" class="headerlink" title="React - DOM 的 diffing 算法"></a>React - DOM 的 diffing 算法</h1><p><img src="https://i.postimg.cc/kMk16Gqq/icons8-react-160.png" srcset="/img/loading.gif" lazyload alt="從 0 開始學 React"></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>React 最核心的思想就是 Virtual DOM 與 Diff 演算法，來實現部分變化頁面 SPA 效果。</p>
 <!-- more -->
 
-<h2 id="生命週期流程圖"><a href="#生命週期流程圖" class="headerlink" title="生命週期流程圖"></a>生命週期流程圖</h2><p><a target="_blank" rel="noopener" href="https://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/"><img src="https://i.imgur.com/mLgIOhx.png" srcset="/img/loading.gif" lazyload alt="React lefe cycle"></a><br><em>圖片為 React 開發者製作，點擊圖片可以前往該網站</em></p>
-<h2 id="初始化階段"><a href="#初始化階段" class="headerlink" title="初始化階段"></a>初始化階段</h2><p><strong>由<code>ReactDOM.render()</code>觸發，按順序初次渲染</strong></p>
-<ol>
-<li>constructor()<ul>
-<li>初始化</li>
+<h2 id="虛擬-DOM-中，key-的作用範例"><a href="#虛擬-DOM-中，key-的作用範例" class="headerlink" title="虛擬 DOM 中，key 的作用範例"></a>虛擬 DOM 中，key 的作用範例</h2><p>範例程式碼 - 可以再輸入框輸入東西後按按鈕觀看效果</p>
+<iframe height="300" style="width: 100%;" scrolling="no" title="" src="https://codepen.io/vsfvjiuv-the-typescripter/embed/RwVvKRQ?default-tab=js%2Cresult" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a target="_blank" rel="noopener" href="https://codepen.io/vsfvjiuv-the-typescripter/pen/RwVvKRQ">
+  </a> by Johnson Mao (<a target="_blank" rel="noopener" href="https://codepen.io/vsfvjiuv-the-typescripter">@vsfvjiuv-the-typescripter</a>)
+  on <a target="_blank" rel="noopener" href="https://codepen.io">CodePen</a>.
+</iframe>
+
+<p><img src="https://i.imgur.com/Aht0ETZ.gif" srcset="/img/loading.gif" lazyload alt="key 使用 index 的影響"></p>
+<ul>
+<li>會發現<code>key</code>設<code>index</code>的<code>input</code>框的內容並不會隨著資料綁定</li>
+</ul>
+<h2 id="經典面試題，虛擬-DOM-中-key-的作用"><a href="#經典面試題，虛擬-DOM-中-key-的作用" class="headerlink" title="經典面試題，虛擬 DOM 中 key 的作用"></a>經典面試題，虛擬 DOM 中 key 的作用</h2><h3 id="React-Vue-中的key有什麼作用？"><a href="#React-Vue-中的key有什麼作用？" class="headerlink" title="React / Vue 中的key有什麼作用？"></a>React / Vue 中的<code>key</code>有什麼作用？</h3><ol>
+<li>簡單的說：<code>key</code>在虛擬 DOM 物件中作用於標記，在更新渲染畫面時，<code>key</code>扮演著重要的角色</li>
+<li>詳細的說：當狀態中的資料發生變化，React 會根據<strong>新資料</strong>，生成新的<strong>虛擬 DOM</strong>，接著 React 進行<strong>新虛擬 DOM</strong> 和 <strong>舊虛擬 DOM</strong> 的 diff 比較<ul>
+<li>舊虛擬 DOM 中，找到和新虛擬 DOM 相同的<code>key</code>：<ul>
+<li>若舊虛擬 DOM 資料沒變，直接使用之前真實 DOM</li>
+<li>若舊虛擬 DOM 資料改變，就生成新的真實 DOM，取代之前真實 DOM</li>
 </ul>
 </li>
-<li>getDerivedStateFromProps<ul>
-<li>需使用靜態方法 static</li>
-<li>可以接收參數<code>props</code>,<code>state</code></li>
-<li>需返回一個狀態對象 或 <code>null</code></li>
+<li>舊虛擬 DOM 中，沒找到與新虛擬 DOM 同樣的<code>key</code>：<ul>
+<li>根據資料創建新的真實 DOM，渲染到畫面上</li>
 </ul>
 </li>
-<li>render()<ul>
-<li>渲染</li>
-</ul>
-</li>
-<li>componentDidMount()<ul>
-<li>DOM 掛載完成</li>
-</ul>
-</li>
-</ol>
-<h2 id="更新階段"><a href="#更新階段" class="headerlink" title="更新階段"></a>更新階段</h2><p><strong>由組件內部<code>this.setState()</code>或父組件，重新<code>render</code>渲染</strong></p>
-<ol>
-<li>getDerivedStateFromProps<ul>
-<li>需使用靜態方法 static</li>
-<li>可以接收參數<code>props</code>,<code>state</code></li>
-<li>需返回一個狀態對象 或 <code>null</code></li>
-</ul>
-</li>
-<li>shouldComponentUpdate()<ul>
-<li>判斷是否繼續更新</li>
-</ul>
-</li>
-<li>render()<ul>
-<li>渲染</li>
-</ul>
-</li>
-<li>getSnapshotBeforeUpdate<ul>
-<li>更新前執行</li>
-<li>需返回一個值 或 <code>null</code></li>
-<li>返回的快照值會給<code>componentDidUpdate()</code></li>
-</ul>
-</li>
-<li>componentDidUpdate()<ul>
-<li>更新完成</li>
-<li>有三個參數<code>prevProps</code>,<code>prevState</code>,<code>snapshotValue</code></li>
 </ul>
 </li>
 </ol>
-<h2 id="移除階段"><a href="#移除階段" class="headerlink" title="移除階段"></a>移除階段</h2><p><strong>由<code>ReactDOM.unmountComponentAtNode()</code>觸發</strong></p>
-<ol>
-<li>componentWillUnmount()<ul>
-<li>即將卸載</li>
+<h3 id="為什麼遍歷列表時，key最好不要用index"><a href="#為什麼遍歷列表時，key最好不要用index" class="headerlink" title="為什麼遍歷列表時，key最好不要用index?"></a>為什麼遍歷列表時，<code>key</code>最好不要用<code>index</code>?</h3><ol>
+<li>用<code>index</code>作為<code>key</code>可能會引發的問題<ul>
+<li>若對資料進行逆序添加，逆序刪除等<strong>破壞順序</strong>的操作<ul>
+<li>會產生沒有必要的真實 DOM 更新，效率低</li>
 </ul>
 </li>
-</ol>
-<h2 id="常用的三個生命週期"><a href="#常用的三個生命週期" class="headerlink" title="常用的三個生命週期"></a>常用的三個生命週期</h2><ol>
-<li>render()<ul>
-<li>初始化渲染</li>
-<li>更新渲染</li>
+<li>結構中有包含<strong>輸入類</strong>的 DOM<ul>
+<li>會產生錯誤 DOM 更新，畫面出現問題</li>
 </ul>
 </li>
-<li>componentDidMount()<ul>
-<li>開啟監聽</li>
-<li>發送 Ajax 請求</li>
+<li>若沒有使用逆序添加，逆序刪除等破壞順序的操作<ul>
+<li>則不會產生問題</li>
 </ul>
 </li>
-<li>componentWillUnmount()<ul>
-<li>做一些收尾的工作，如：清空定時器</li>
 </ul>
 </li>
 </ol>
 <h3 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h3><ul>
-<li><a target="_blank" rel="noopener" href="https://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/">React 生命週期流程圖</a></li>
+<li><a target="_blank" rel="noopener" href="https://iter01.com/514750.html">深入理解React：diff 演算法</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.youtube.com/playlist?list=PLmOn9nNkQxJFJXLvkNsGsoCUxJLqyLGxu">React 全家桶</a></li>
 </ul>
 
@@ -341,18 +311,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/10/14/2021-10-14-react-diffing/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">React - DOM 的 diffing 算法</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021/10/12/2021-10-12-react-currying/">
-                        <span class="hidden-mobile">React - 高階函數柯里化</span>
+                      <a href="/2021/10/13/2021-10-13-react-lifecycle/">
+                        <span class="hidden-mobile">React - 生命週期</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -374,8 +338,8 @@
     
       <script type="text/javascript">
         var disqus_config = function() {
-          this.page.url = 'http://example.com/2021/10/13/2021-10-13-react-lifecycle/';
-          this.page.identifier = '/2021/10/13/2021-10-13-react-lifecycle/';
+          this.page.url = 'http://example.com/2021/10/14/2021-10-14-react-diffing/';
+          this.page.identifier = '/2021/10/14/2021-10-14-react-diffing/';
         };
         Fluid.utils.loadComments('#disqus_thread', function() {
           var d = document, s = d.createElement('script');
