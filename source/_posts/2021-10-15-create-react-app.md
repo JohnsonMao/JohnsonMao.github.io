@@ -1,5 +1,5 @@
 ---
-title: React 框架
+title: React - 框架
 date: 2021/10/15 15:00:00
 index_img: https://i.postimg.cc/kMk16Gqq/icons8-react-160.png
 banner_img: https://i.postimg.cc/kMk16Gqq/icons8-react-160.png
@@ -10,7 +10,7 @@ tags:
 excerpt: 框架是用來幫助工程師更快速創建模板所需要的配置，讓開發者能更快更工程化的建構出基本的網頁。
 ---
 
-# React 框架
+# React - 框架
 
 ![從 0 開始學 React](https://i.postimg.cc/kMk16Gqq/icons8-react-160.png)
 
