@@ -4,6 +4,35 @@
   
   
   <entry>
+    <title>React - PubSubJS 實現兄弟組件之間傳遞資料</title>
+    <link href="/2021/10/17/2021-10-17-react-pubsubjs/"/>
+    <url>/2021/10/17/2021-10-17-react-pubsubjs/</url>
+    
+    <content type="html"><![CDATA[<h1 id="React-PubSubJS-實現兄弟組件之間傳遞資料"><a href="#React-PubSubJS-實現兄弟組件之間傳遞資料" class="headerlink" title="React - PubSubJS 實現兄弟組件之間傳遞資料"></a>React - PubSubJS 實現兄弟組件之間傳遞資料</h1><p><img src="https://i.postimg.cc/kMk16Gqq/icons8-react-160.png" alt="從 0 開始學 React"></p><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>元件間如果要傳遞資料，都會傳遞給共同的組父元件，進行傳遞，而使用 PubSubJS，可以實現『兄弟』元件間的資料傳遞！</p><!-- more --><h2 id="為什麼要使用-PubSubJS-套件"><a href="#為什麼要使用-PubSubJS-套件" class="headerlink" title="為什麼要使用 PubSubJS 套件"></a>為什麼要使用 PubSubJS 套件</h2><ul><li><p>React 兄弟組件間想要傳遞資料，必須透過共同的父組件</p><p><img src="https://i.imgur.com/XIhyilX.png" alt="正常的傳遞資料"></p></li><li><p>PubSubJS 解決溝通橋梁的問題，可以直接子組件對話</p><p><img src="https://i.imgur.com/bxWluEE.png" alt="PubSubJS 兄弟元件傳遞資料"></p></li><li><p>尤其子組件越多層沒套件會更麻煩，有套件以後維護也更方便</p></li></ul><h2 id="如何使用-PubSubJS-套件"><a href="#如何使用-PubSubJS-套件" class="headerlink" title="如何使用 PubSubJS 套件"></a>如何使用 PubSubJS 套件</h2><h3 id="安裝-PubSubJS-套件-NPM-為例"><a href="#安裝-PubSubJS-套件-NPM-為例" class="headerlink" title="安裝 PubSubJS 套件(NPM 為例)"></a>安裝 PubSubJS 套件(NPM 為例)</h3><ol><li>終端機輸入<code>npm i pubsub-js</code></li></ol><h3 id="引用並使用-PubSubJS-套件"><a href="#引用並使用-PubSubJS-套件" class="headerlink" title="引用並使用 PubSubJS 套件"></a>引用並使用 PubSubJS 套件</h3><ol><li><p>在需要用的組件引入<code>import PubSub from &#39;pubsub-js&#39;</code></p></li><li><p>官方給的簡單案例</p><ul><li><p>負責接收資料的組件</p><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs jsx"><span class="hljs-comment">// 創造一個函式</span><br><span class="hljs-keyword">const</span> mySubscriber = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg, data</span>) </span>&#123;<br>    <span class="hljs-built_in">console</span>.log( msg, data );<br>&#125;;<br><br><span class="hljs-comment">// 新增訂閱消息(消息關鍵字, 函式)，可以搭配生命週期</span><br><span class="hljs-keyword">const</span> token = PubSub.subscribe(<span class="hljs-string">&#x27;MY TOPIC&#x27;</span>, mySubscriber);<br><br><span class="hljs-comment">// 取消訂閱消息，搭配生命週期取消</span><br>PubSub.unsubscribe(mySubscriber);<br></code></pre></td></tr></table></figure></li><li><p>負責傳遞資料的組件</p><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs jsx"><span class="hljs-comment">// 發布消息(消息關鍵字, 要傳遞的資料)</span><br>PubSub.publish(<span class="hljs-string">&#x27;MY TOPIC&#x27;</span>, <span class="hljs-string">&#x27;hello world!&#x27;</span>);<br></code></pre></td></tr></table></figure></li></ul></li></ol><h3 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h3><ul><li><a href="https://github.com/mroderick/PubSubJS">PubSubJS - mroderick</a></li><li><a href="https://www.youtube.com/playlist?list=PLmOn9nNkQxJFJXLvkNsGsoCUxJLqyLGxu">React 全家桶</a></li></ul>]]></content>
+    
+    
+    <categories>
+      
+      <category>程式語言</category>
+      
+      <category>前端</category>
+      
+      <category>React</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>React</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>React - 用 Hello 認識框架組件</title>
     <link href="/2021/10/16/2021-10-16-react-hello_world/"/>
     <url>/2021/10/16/2021-10-16-react-hello_world/</url>
