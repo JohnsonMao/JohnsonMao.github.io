@@ -1,0 +1,598 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-TW" data-default-color-scheme=&#34;dark&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="學會 Route 後，路由也可以帶有參數！並藉由參數傳遞資料～而有三種參數傳遞的方法，下面我們一一介紹！">
+  <meta name="author" content="Mao">
+  <meta name="keywords" content="">
+  
+  <title>React - Route 路由 與 參數 - Mao&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>毛毛的部落格</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首頁
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                封存
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分類
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                標籤
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                關於
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('https://i.postimg.cc/kMk16Gqq/icons8-react-160.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="React - Route 路由 與 參數">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-10-19 14:00" pubdate>
+        2021年10月19日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.4k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      19
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">React - Route 路由 與 參數</h1>
+            
+            <div class="markdown-body">
+              <h1 id="React-Route-路由-與-參數"><a href="#React-Route-路由-與-參數" class="headerlink" title="React - Route 路由 與 參數"></a>React - Route 路由 與 參數</h1><p><img src="https://i.postimg.cc/kMk16Gqq/icons8-react-160.png" srcset="/img/loading.gif" lazyload alt="從 0 開始學 React"></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>學會 Route 後，路由也可以帶有參數！並藉由參數傳遞資料～而有三種參數傳遞的方法，下面我們一一介紹！</p>
+<!-- more -->
+
+<h2 id="傳遞-params-參數"><a href="#傳遞-params-參數" class="headerlink" title="傳遞 params 參數"></a>傳遞 params 參數</h2><ol>
+<li><p>首先為路由組件，傳遞 params 參數</p>
+ <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs jsx"><span class="hljs-comment">// 先初始化 state</span><br>state = &#123;<br>  <span class="hljs-attr">msgArr</span> : [<br>    &#123;<span class="hljs-attr">id</span>:<span class="hljs-string">&#x27;01&#x27;</span>, <span class="hljs-attr">title</span>:<span class="hljs-string">&#x27;消息1&#x27;</span>&#125;,<br>    &#123;<span class="hljs-attr">id</span>:<span class="hljs-string">&#x27;02&#x27;</span>, <span class="hljs-attr">title</span>:<span class="hljs-string">&#x27;消息2&#x27;</span>&#125;,<br>    &#123;<span class="hljs-attr">id</span>:<span class="hljs-string">&#x27;03&#x27;</span>, <span class="hljs-attr">title</span>:<span class="hljs-string">&#x27;消息3&#x27;</span>&#125;,<br>  ]<br>&#125;<br><span class="hljs-function"><span class="hljs-title">render</span>(<span class="hljs-params"></span>)</span>&#123;<br>  <span class="hljs-keyword">const</span> &#123;msgArr&#125; = <span class="hljs-built_in">this</span>.state<br>  <span class="hljs-keyword">return</span>(<br>    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span><br><span class="xml">      <span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span></span><br><span class="xml">        &#123;</span><br><span class="xml">          msgArr.map((msgObj)=&gt;&#123;</span><br><span class="xml">            return (</span><br><span class="xml">              <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">key</span>=<span class="hljs-string">&#123;msgObj.id&#125;</span>&gt;</span></span><br><span class="xml">                &#123;/* 向路由組件傳遞 params 參數，需注意反斜線是 JS 表達是要用&#123;&#125;包起來，多個參數用 / 分隔 */&#125;</span><br><span class="xml">                <span class="hljs-tag">&lt;<span class="hljs-name">Link</span> <span class="hljs-attr">to</span>=<span class="hljs-string">&#123;</span>`/<span class="hljs-attr">home</span>/<span class="hljs-attr">about</span>/$&#123;<span class="hljs-attr">msgObj.id</span>&#125;/$&#123;<span class="hljs-attr">msgObj.title</span>&#125;`&#125;&gt;</span>&#123;msgObj.title&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">Link</span>&gt;</span>&#125;</span><br><span class="xml">              <span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span><br><span class="xml">            )</span><br><span class="xml">          &#125;)</span><br><span class="xml">        &#125;</span><br><span class="xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span></span><br><span class="xml">      &#123;/* 接收 params 參數要用 : 來接收，參數名稱( key )取決於 : 後面的值 */&#125;</span><br><span class="xml">      <span class="hljs-tag">&lt;<span class="hljs-name">Route</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;/home/about/:id/:title&quot;</span> <span class="hljs-attr">component</span>=<span class="hljs-string">&#123;Message&#125;/</span>&gt;</span></span><br><span class="xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br>  )<br>&#125;<br></code></pre></td></tr></table></figure></li>
+<li><p>負責接收 params 參數的路由組件，利用<code>console.log</code>來看傳遞的參數</p>
+ <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs jsx"><span class="hljs-function"><span class="hljs-title">render</span>(<span class="hljs-params"></span>)</span>&#123;<br>  <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">this</span>.props)<br>  <span class="hljs-keyword">return</span>(<br>    ...<br>  )<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p> <img src="https://i.imgur.com/vFzvGyd.png" srcset="/img/loading.gif" lazyload alt="可以看到 match 裡面的 params 有攜帶物件參數"></p>
+</li>
+<li><p>此時 url 後面會攜帶參數，如：<code>.../home/about/01/消息1</code></p>
+</li>
+<li><p>如果要使用 params 參數，就可以利用<code>this.props.match.params</code>來獲取參數</p>
+</li>
+</ol>
+<h3 id="params-參數總結"><a href="#params-參數總結" class="headerlink" title="params 參數總結"></a>params 參數總結</h3><ul>
+<li>路由連結，需攜帶參數，多個參數用<code>/</code>分隔</li>
+<li>註冊路由，需接收參數，使用<code>:</code>來接收參數</li>
+<li>利用<code>this.props.match.params</code>來獲取參數</li>
+</ul>
+<h2 id="傳遞-search-參數"><a href="#傳遞-search-參數" class="headerlink" title="傳遞 search 參數"></a>傳遞 search 參數</h2><ol>
+<li><p>首先為路由組件，傳遞 search 參數</p>
+ <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs jsx"><span class="hljs-comment">// 先初始化 state</span><br>state = &#123;<br>  <span class="hljs-attr">msgArr</span> : [<br>    &#123;<span class="hljs-attr">id</span>:<span class="hljs-string">&#x27;01&#x27;</span>, <span class="hljs-attr">title</span>:<span class="hljs-string">&#x27;消息1&#x27;</span>&#125;,<br>    &#123;<span class="hljs-attr">id</span>:<span class="hljs-string">&#x27;02&#x27;</span>, <span class="hljs-attr">title</span>:<span class="hljs-string">&#x27;消息2&#x27;</span>&#125;,<br>    &#123;<span class="hljs-attr">id</span>:<span class="hljs-string">&#x27;03&#x27;</span>, <span class="hljs-attr">title</span>:<span class="hljs-string">&#x27;消息3&#x27;</span>&#125;,<br>  ]<br>&#125;<br><span class="hljs-function"><span class="hljs-title">render</span>(<span class="hljs-params"></span>)</span>&#123;<br>  <span class="hljs-keyword">const</span> &#123;msgArr&#125; = <span class="hljs-built_in">this</span>.state<br>  <span class="hljs-keyword">return</span>(<br>    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span><br><span class="xml">      <span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span></span><br><span class="xml">        &#123;</span><br><span class="xml">          msgArr.map((msgObj)=&gt;&#123;</span><br><span class="xml">            return (</span><br><span class="xml">              <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">key</span>=<span class="hljs-string">&#123;msgObj.id&#125;</span>&gt;</span></span><br><span class="xml">                &#123;/* 向路由組件傳遞 search 參數，在 ? 後面寫 key=value，多個參數用 &amp; 連接 */&#125;</span><br><span class="xml">                <span class="hljs-tag">&lt;<span class="hljs-name">Link</span> <span class="hljs-attr">to</span>=<span class="hljs-string">&#123;</span>`/<span class="hljs-attr">home</span>/<span class="hljs-attr">about</span>/?<span class="hljs-attr">id</span>=<span class="hljs-string">$&#123;msgObj.id&#125;&amp;title</span>=<span class="hljs-string">$&#123;msgObj.title&#125;</span>`&#125;&gt;</span>&#123;msgObj.title&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">Link</span>&gt;</span>&#125;</span><br><span class="xml">              <span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span><br><span class="xml">            )</span><br><span class="xml">          &#125;)</span><br><span class="xml">        &#125;</span><br><span class="xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span></span><br><span class="xml">      &#123;/* search 參數不需聲明接收 */&#125;</span><br><span class="xml">      <span class="hljs-tag">&lt;<span class="hljs-name">Route</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;/home/about/&quot;</span> <span class="hljs-attr">component</span>=<span class="hljs-string">&#123;Message&#125;/</span>&gt;</span></span><br><span class="xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br>  )<br>&#125;<br></code></pre></td></tr></table></figure></li>
+<li><p>負責接收 search 參數的路由組件，利用<code>console.log</code>來看傳遞的參數</p>
+ <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs jsx"><span class="hljs-function"><span class="hljs-title">render</span>(<span class="hljs-params"></span>)</span>&#123;<br>  <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">this</span>.props)<br>  <span class="hljs-keyword">return</span>(<br>    ...<br>  )<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p> <img src="https://i.imgur.com/b9pUaBz.png" srcset="/img/loading.gif" lazyload alt="可以看到 location 裡面的 search 有攜帶 urlencoded 編碼"></p>
+</li>
+<li><p>在接收 search 參數的組件內使用 React 內建的 JS 庫 - QueryString</p>
+ <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs jsx"><span class="hljs-keyword">import</span> qs <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;querystring&#x27;</span><br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Message</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Component</span> </span>&#123;<br>  <span class="hljs-function"><span class="hljs-title">render</span>(<span class="hljs-params"></span>)</span>&#123;<br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">this</span>.props)<br>    <span class="hljs-keyword">const</span> &#123;search&#125; = <span class="hljs-built_in">this</span>.props.location<br>    &#123;<span class="hljs-comment">/* 需把第一個問號給刪掉，可以使用 slide 來去除第一個問號 */</span>&#125;<br>    <span class="hljs-keyword">const</span> result = qs.parse(search.slide(<span class="hljs-number">1</span>))<br>    <span class="hljs-built_in">console</span>.log(result)<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p> <img src="https://i.imgur.com/zzehsYm.png" srcset="/img/loading.gif" lazyload alt="藉由 querystring 庫裡的 parse 方法，把 urlencoded 轉成物件型態"></p>
+</li>
+<li><p>此時 url 後面會攜帶參數，如：<code>.../home/about/?id=01&amp;title=消息1</code></p>
+</li>
+<li><p>接著就可以利用<code>result</code>的參數，來繼續後面的操作</p>
+</li>
+</ol>
+<h3 id="search-參數總結"><a href="#search-參數總結" class="headerlink" title="search 參數總結"></a>search 參數總結</h3><ul>
+<li>路由連結，需攜帶參數，在<code>?</code>後面寫<code>key=value</code>，多個參數用<code>&amp;</code>連接</li>
+<li>正常註冊路由</li>
+<li>利用<code>this.props.location.search</code>來獲取<code>unlencoded</code></li>
+<li><strong>注意</strong> 獲取到的<code>unlencoded</code>需透過 QueryString 進行解析</li>
+</ul>
+<h2 id="傳遞-state-參數"><a href="#傳遞-state-參數" class="headerlink" title="傳遞 state 參數"></a>傳遞 state 參數</h2><p><strong>注意</strong>：此 state 參數，與組件裡的 state 沒有關係</p>
+<ol>
+<li><p>首先為路由組件，傳遞 state 參數</p>
+ <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs jsx"><span class="hljs-comment">// 先初始化 state</span><br>state = &#123;<br>  <span class="hljs-attr">msgArr</span> : [<br>    &#123;<span class="hljs-attr">id</span>:<span class="hljs-string">&#x27;01&#x27;</span>, <span class="hljs-attr">title</span>:<span class="hljs-string">&#x27;消息1&#x27;</span>&#125;,<br>    &#123;<span class="hljs-attr">id</span>:<span class="hljs-string">&#x27;02&#x27;</span>, <span class="hljs-attr">title</span>:<span class="hljs-string">&#x27;消息2&#x27;</span>&#125;,<br>    &#123;<span class="hljs-attr">id</span>:<span class="hljs-string">&#x27;03&#x27;</span>, <span class="hljs-attr">title</span>:<span class="hljs-string">&#x27;消息3&#x27;</span>&#125;,<br>  ]<br>&#125;<br><span class="hljs-function"><span class="hljs-title">render</span>(<span class="hljs-params"></span>)</span>&#123;<br>  <span class="hljs-keyword">const</span> &#123;msgArr&#125; = <span class="hljs-built_in">this</span>.state<br>  <span class="hljs-keyword">return</span>(<br>    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span><br><span class="xml">      <span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span></span><br><span class="xml">        &#123;</span><br><span class="xml">          msgArr.map((msgObj)=&gt;&#123;</span><br><span class="xml">            return (</span><br><span class="xml">              <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">key</span>=<span class="hljs-string">&#123;msgObj.id&#125;</span>&gt;</span></span><br><span class="xml">                &#123;/* 向路由組件傳遞 state 參數，在 JS 表達式內傳遞物件，物件內要有 pathname, state */&#125;</span><br><span class="xml">                <span class="hljs-tag">&lt;<span class="hljs-name">Link</span> <span class="hljs-attr">to</span>=<span class="hljs-string">&#123;&#123;</span></span></span><br><span class="hljs-tag"><span class="xml">                  <span class="hljs-attr">pathname:</span>&#x27;/<span class="hljs-attr">home</span>/<span class="hljs-attr">about</span>/<span class="hljs-attr">message</span>&#x27;, </span></span><br><span class="hljs-tag"><span class="xml">                  <span class="hljs-attr">state:</span> &#123;</span></span><br><span class="hljs-tag"><span class="xml">                    <span class="hljs-attr">id:</span> <span class="hljs-attr">msgObj.id</span>,</span></span><br><span class="hljs-tag"><span class="xml">                    <span class="hljs-attr">title:</span> <span class="hljs-attr">msgObj.title</span></span></span><br><span class="hljs-tag"><span class="xml">                  &#125;</span></span><br><span class="hljs-tag"><span class="xml">                &#125;&#125;&gt;</span>&#123;msgObj.title&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">Link</span>&gt;</span>&#125;</span><br><span class="xml">              <span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span></span><br><span class="xml">            )</span><br><span class="xml">          &#125;)</span><br><span class="xml">        &#125;</span><br><span class="xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span></span><br><span class="xml">      &#123;/* state 參數不需聲明接收 */&#125;</span><br><span class="xml">      <span class="hljs-tag">&lt;<span class="hljs-name">Route</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;/home/about/&quot;</span> <span class="hljs-attr">component</span>=<span class="hljs-string">&#123;Message&#125;/</span>&gt;</span></span><br><span class="xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br>  )<br>&#125;<br></code></pre></td></tr></table></figure></li>
+<li><p>負責接收 state 參數的路由組件，利用<code>console.log</code>來看傳遞的參數</p>
+ <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs jsx"><span class="hljs-function"><span class="hljs-title">render</span>(<span class="hljs-params"></span>)</span>&#123;<br>  <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">this</span>.props)<br>  <span class="hljs-keyword">return</span>(<br>    ...<br>  )<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p> <img src="https://i.imgur.com/xvAYTv8.png" srcset="/img/loading.gif" lazyload alt="可以看到 location 裡面的 state 有攜帶物件參數"></p>
+</li>
+<li><p>此時 url 後面並不會攜帶參數，如：<code>.../home/about</code></p>
+<p> <strong>注意</strong></p>
+<ul>
+<li>因為沒攜帶參數，所以是藉由<code>history</code>內的<code>location</code>來獲取參數</li>
+<li>如果<code>history</code>清除紀錄，<code>location</code>裡的<code>state</code>會變成<code>undefined</code></li>
+<li>所以要使用判斷表達式，如果是<code>undefined</code>就傳遞空物件，來避免無法預期的出錯</li>
+</ul>
+</li>
+<li><p>如果要使用 state 參數，就可以利用<code>this.props.location.state</code>來獲取參數</p>
+</li>
+</ol>
+<h3 id="state-參數總結"><a href="#state-參數總結" class="headerlink" title="state 參數總結"></a>state 參數總結</h3><ul>
+<li>路由連結，需攜帶參數，在<code>to</code>裡面新增物件<code>&#123;&#123;&#125;&#125;`，最外層的`&#123;&#125;`是 JS 表達式，物件內需有 path 字串 與 state 物件
+- 正常註冊路由
+- 利用`this.props.location.state`來獲取物件參數
+- **備註** 畫面刷新也可以保留參數
+
+## 路由參數總結
+
+- params 參數，最常用
+
+  - 路由連結，需攜帶參數，多個參數用`/`分隔
+  - 註冊路由，需接收參數，使用`:`來接收參數
+  - 利用`this.props.match.params`來獲取參數
+
+- search 參數，也是有使用，但比較麻煩
+
+  - 路由連結，需攜帶參數，在`?`後面寫`key=value`，多個參數用`&`連接
+  - 正常註冊路由
+  - 利用`this.props.location.search`來獲取`unlencoded`
+  - **注意** 獲取到的`unlencoded`需透過 QueryString 進行解析
+
+
+- state 參數，在比較需要隱私的地方會使用
+
+  - 路由連結，需攜帶參數，在`to`裡面新增物件`&#123;&#123;&#125;&#125;</code>，最外層的<code>&#123;&#125;</code>是 JS 表達式，物件內需有 path 字串 與 state 物件<ul>
+<li>正常註冊路由</li>
+<li>利用<code>this.props.location.state</code>來獲取物件參數</li>
+<li><strong>備註</strong> 畫面刷新也可以保留參數</li>
+</ul>
+</li>
+</ul>
+<h3 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://medium.com/itsoktomakemistakes/react-%E4%B8%AD%E5%84%AA%E9%9B%85%E4%BD%BF%E7%94%A8%E7%B6%B2%E5%9D%80%E5%8F%83%E6%95%B8-query-string-540bacd08486">React 中優雅使用網址參數 QueryString</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/playlist?list=PLmOn9nNkQxJFJXLvkNsGsoCUxJLqyLGxu">React 全家桶</a></li>
+</ul>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%A8%8B%E5%BC%8F%E8%AA%9E%E8%A8%80/">程式語言</a>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%A8%8B%E5%BC%8F%E8%AA%9E%E8%A8%80/%E5%89%8D%E7%AB%AF/">前端</a>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%A8%8B%E5%BC%8F%E8%AA%9E%E8%A8%80/%E5%89%8D%E7%AB%AF/React/">React</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/React/">React</a>
+                    
+                  </div>
+                
+              </div>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/10/18/2021-10-18-react-route/">
+                        <span class="hidden-mobile">React - Route 基礎路由</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    
+      <script type="text/javascript">
+        var disqus_config = function() {
+          this.page.url = 'http://example.com/2021/10/19/2021-10-19-react-route_parameter/';
+          this.page.identifier = '/2021/10/19/2021-10-19-react-route_parameter/';
+        };
+        Fluid.utils.loadComments('#disqus_thread', function() {
+          var d = document, s = d.createElement('script');
+          s.src = '//' + 'fluid' + '.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', new Date());
+          (d.head || d.body).appendChild(s);
+        });
+      </script>
+    
+    <noscript>Please enable JavaScript to view the comments</noscript>
+  </div>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目錄</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜尋</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">關鍵字</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+    <span>© 2021 <a href="/about">Johnson Mao</a> 毛毛的部落格 | 記錄成長的過程</span> <span> - 本站使用  <a href="https://hexo.io" target="_blank" rel="nofollow noopener">Hexo</a> & <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">Fluid 主題</a>
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            總訪問量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            總訪客數 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
