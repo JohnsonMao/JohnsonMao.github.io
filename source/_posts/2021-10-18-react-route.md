@@ -47,7 +47,7 @@ excerpt: 為什麼要使用路由？使用路由實作 SPA 網頁，可以減少
   1. 在需使用**導覽連結**的檔案上面引入
 
       ```jsx
-      import { NavㄙLink } from 'react-router-dom';
+      import { NavLink } from 'react-router-dom';
       ```
 
   2. **導覽連結**的`<a href='./your_path'>`標籤
