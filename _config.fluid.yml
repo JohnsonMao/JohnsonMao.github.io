@@ -165,3 +165,8 @@ footer:
     source: "busuanzi"
     pv_format: "總訪問量 {} 次"
     uv_format: "總訪客數 {} 人"
+
+web_analytics:
+  enable: true
+  google: "G-WHF3DFSYXN"
+  gtag: "G-WHF3DFSYXN"
