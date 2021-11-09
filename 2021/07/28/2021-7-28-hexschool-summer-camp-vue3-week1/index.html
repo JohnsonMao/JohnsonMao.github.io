@@ -1,0 +1,616 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-TW" data-default-color-scheme=&#34;dark&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="這裡將會記錄參加 六角學院 Vue 3 新手夏令營（活動已結束） 課程筆記 與 每日任務紀錄，第一周主要是介紹用最簡單方法帶初學者學習 Vue。">
+  <meta name="author" content="Mao">
+  <meta name="keywords" content="">
+  
+  <title>Vue 3 起步走 - Mao&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":"G-WHF3DFSYXN","gtag":"G-WHF3DFSYXN","tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>毛毛的部落格</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首頁
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                封存
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分類
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                標籤
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                關於
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('https://i.imgur.com/E48VuxQ.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Vue 3 起步走">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-07-28 23:00" pubdate>
+        2021年7月28日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.1k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      15
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Vue 3 起步走</h1>
+            
+            <div class="markdown-body">
+              <h1 id="Vue-3-起步走"><a href="#Vue-3-起步走" class="headerlink" title="Vue 3 起步走"></a>Vue 3 起步走</h1><p><a target="_blank" rel="noopener" href="https://johnsonmao.github.io/summer-camp-vue3/week1/"><img src="https://i.imgur.com/E48VuxQ.jpg" srcset="/img/loading.gif" lazyload alt="第一週作業展示，運用了 Vue 指令與 Ajax，點擊圖片可察看成果"></a></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>這裡將會記錄參加 <a target="_blank" rel="noopener" href="https://hackmd.io/@JohnsonMao/Front-end/%2F%40JohnsonMao%2FSummer-Camp-Vue3">六角學院 Vue 3 新手夏令營（活動已結束）</a> 課程筆記 與 每日任務紀錄，第一周主要是介紹用最簡單方法帶初學者學習 Vue。</p>
+<h2 id="課堂重點"><a href="#課堂重點" class="headerlink" title="課堂重點"></a>課堂重點</h2><ul>
+<li>初學 Vue 起手式常用的三個值 <code>data</code> <code>methods</code> <code>mounted</code></li>
+<li>關注點分離，避免大雜燴</li>
+<li>Vue 常用指令，詳情請往下閱讀</li>
+<li>ESModule 使用</li>
+</ul>
+<h2 id="Vue-起手式"><a href="#Vue-起手式" class="headerlink" title="Vue 起手式"></a>Vue 起手式</h2><p><a target="_blank" rel="noopener" href="https://v3.vuejs.org/guide/installation.HTML#vue-devtools">CDN 連結</a><br>語法：<code>&lt;script src=&quot;https://unpkg.com/vue@next&quot;&gt;&lt;/script&gt;</code></p>
+<ol>
+<li><p>使用 createApp 建立起始元件</p>
+</li>
+<li><p>元件內使用最常用的 3 個值</p>
+<ul>
+<li><p>```js<br>data(){</p>
+<pre><code>return&#123;&#125; // 資料
+</code></pre>
+<p>}</p>
+<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs autohotkey"><br>- ```js<br><span class="hljs-title">  methods:</span> &#123;&#125; // 方法<br></code></pre></td></tr></table></figure></li>
+<li><p>```js<br>mounted(){} // 初始化</p>
+<figure class="highlight handlebars"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs handlebars"><span class="xml"></span><br><span class="xml">3. 使用 mount 決定 Vue 的應用程式生成位置</span><br><span class="xml"></span><br><span class="xml">## 關注點分離</span><br><span class="xml"></span><br><span class="xml">![圖片取自六角學院 卡斯伯 的免費直播課程，介紹 Vue 的運作邏輯](https://i.imgur.com/zMu6v5x.png)</span><br><span class="xml"></span><br><span class="xml"></span><br><span class="xml">重要觀念：先定義資料 ( data )，才能在 HTML 中使用</span><br><span class="xml"></span><br><span class="xml">HTML 要讀取 data 資料有以下幾種方法</span><br><span class="xml"></span><br><span class="xml">1. 直接用雙大括號 `</span><span class="hljs-template-variable">&#123;&#123;&#125;&#125;</span><span class="xml">` 包住要讀取的資料</span><br><span class="xml"></span><br><span class="xml">    ```HTML</span><br><span class="xml">    <span class="hljs-comment">&lt;!-- 這裡是 HTML --&gt;</span></span><br><span class="xml">    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;app&quot;</span>&gt;</span></span><br><span class="xml">        </span><span class="hljs-template-variable">&#123;&#123; <span class="hljs-name">title</span> &#125;&#125;</span><span class="xml"></span><br><span class="xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br></code></pre></td></tr></table></figure></li>
+</ul>
+ <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs JS"><span class="hljs-comment">// Vue 起手式</span><br>Vue.createApp(&#123;<br>  <span class="hljs-comment">// data 資料</span><br>  <span class="hljs-function"><span class="hljs-title">data</span>(<span class="hljs-params"></span>)</span> &#123;<br>    <span class="hljs-comment">// 一定要用 return</span><br>    <span class="hljs-keyword">return</span> &#123;<br>      <span class="hljs-attr">title</span>: <span class="hljs-string">&#x27;六角學院 Vue 3 夏令營&#x27;</span>,<br>      <span class="hljs-attr">text</span>: <span class="hljs-string">&#x27;六角學院佛心來的&#x27;</span><br>    &#125;<br>  &#125;,<br>  <span class="hljs-comment">// methods 方法</span><br>  <span class="hljs-attr">methods</span>: &#123;&#125;,<br>  <span class="hljs-comment">// mounted 生命週期，初始化</span><br>  <span class="hljs-function"><span class="hljs-title">mounted</span>(<span class="hljs-params"></span>)</span> &#123;&#125;,<br>&#125;).mount(<span class="hljs-string">&#x27;#app&#x27;</span>); <span class="hljs-comment">// 渲染到 HTML 的 app</span><br></code></pre></td></tr></table></figure></li>
+<li><p>使用<code>v-text</code>or<code>v-model</code>直接傳入資料 ( JS 同上)</p>
+ <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs HTML"><span class="hljs-comment">&lt;!-- 這裡是 HTML --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;app&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">h1</span> <span class="hljs-attr">v-text</span>=<span class="hljs-string">&quot;title&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">v-model</span>=<span class="hljs-string">&quot;text&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br></code></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h2><h3 id="v-model"><a href="#v-model" class="headerlink" title="v-model"></a>v-model</h3><ul>
+<li><p>和 HTML <strong>雙向</strong>綁定 data 資料（會同步兩邊資料）</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs HTML"><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;number&quot;</span> <span class="hljs-attr">v-model</span>=<span class="hljs-string">&quot;num&quot;</span>&gt;</span><br></code></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="v-bind"><a href="#v-bind" class="headerlink" title="v-bind"></a>v-bind</h3><ul>
+<li><p>在 HTML 標籤上進行屬性綁定</p>
+<ul>
+<li>省略語法：直接在屬性前加上 <code>:</code> 省略 <code>v-bind</code></li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs HTML"><span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">:src</span>=<span class="hljs-string">&quot;person.image&quot;</span> <span class="hljs-attr">:alt</span>=<span class="hljs-string">&quot;person.name&quot;</span> <span class="hljs-attr">width</span>=<span class="hljs-string">&quot;100&quot;</span>&gt;</span><br></code></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="v-if-需與下面的-v-else-搭配"><a href="#v-if-需與下面的-v-else-搭配" class="headerlink" title="v-if ( 需與下面的 v-else 搭配 )"></a>v-if ( 需與下面的 v-else 搭配 )</h3><ul>
+<li>將判斷式寫入 <code>&quot;&quot;</code> 或 <code>&#39;&#39;</code> 中，若是 true 則會顯示，false 則不會顯示</li>
+</ul>
+<h3 id="v-else"><a href="#v-else" class="headerlink" title="v-else"></a>v-else</h3><ul>
+<li><p>不用加判斷式，但需要搭配 v-if 一起使用（若要還需要判斷，則使用 v-else-if）</p>
+<p>:warning: <code>v-if</code> <code>v-else</code> 要搭配一起使用才會有效果</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs HTML"><span class="hljs-tag">&lt;<span class="hljs-name">i</span> <span class="hljs-attr">v-if</span>=<span class="hljs-string">&quot;person.gender === &#x27;male&#x27;&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">i</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">i</span> <span class="hljs-attr">v-else-if</span>=<span class="hljs-string">&quot;person.gender === &#x27;female&#x27;&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">i</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">i</span> <span class="hljs-attr">v-else</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">i</span>&gt;</span><br></code></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="v-for"><a href="#v-for" class="headerlink" title="v-for"></a>v-for</h3><ul>
+<li><p>多筆資料透過迴圈方式將資料迭代出來</p>
+<ul>
+<li>people 是 data 中的陣列</li>
+<li>item 代表 people 中，每一個獨立的物件， item 可自定義名稱</li>
+<li>v-for 必須帶 key</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs HTML"><span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">v-for</span>=<span class="hljs-string">&quot;item in people&quot;</span>&gt;</span><br>    &#123;&#123; item.name &#125;&#125;<br>    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;button&quot;</span>&gt;</span>增加<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">:src</span>=<span class="hljs-string">&quot;item.image&quot;</span> <span class="hljs-attr">:alt</span>=<span class="hljs-string">&quot;item.name&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">i</span> <span class="hljs-attr">v-if</span>=<span class="hljs-string">&quot;item.gender === &#x27;male&#x27;&quot;</span></span><br><span class="hljs-tag">        <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;bi bi-gender-male&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">i</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">i</span> <span class="hljs-attr">v-else</span></span><br><span class="hljs-tag">        <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;bi bi-gender-male&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">i</span>&gt;</span><br>    &#123;&#123; item.name &#125;&#125;<br>  <span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>示意圖：<br>  <img src="https://i.imgur.com/EHNwlax.png" srcset="/img/loading.gif" lazyload alt="圖片取自六角學院 卡斯伯 的免費直播課程，介紹 v-for 迴圈的操作"></p>
+</li>
+</ul>
+<h3 id="click"><a href="#click" class="headerlink" title="@click"></a>@click</h3><ul>
+<li><p>在 DOM 元素上加入監聽事件，下方示範 vue 監聽事件以及 jQuery 監聽事件差異</p>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs JQuery">// 這是 jQuery 的寫法<br>$(`#button`).on(&#x27;click&#x27;, function()&#123;<br><br>&#125;);<br></code></pre></td></tr></table></figure>
+  <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs HTML"><span class="hljs-comment">&lt;!--  這是 Vue 在 HTML 上綁定事件的做法  --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;button&quot;</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">&quot;item.cash++&quot;</span>&gt;</span><br>  增加<br><span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br></code></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="methods-方法"><a href="#methods-方法" class="headerlink" title="methods 方法"></a>methods 方法</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs JS"><span class="hljs-comment">// 這是 Vue 透過 methods 給函式</span><br><span class="hljs-attr">methods</span>: &#123;<br>    <span class="hljs-function"><span class="hljs-title">clickAlert</span>(<span class="hljs-params"></span>)</span> &#123; <span class="hljs-comment">// 建議可以縮寫就縮寫（提升程式碼閱讀性）</span><br>        alert(<span class="hljs-string">&#x27;我被觸發了&#x27;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="mounted-生命週期，初始化"><a href="#mounted-生命週期，初始化" class="headerlink" title="mounted 生命週期，初始化"></a>mounted 生命週期，初始化</h3><ul>
+<li><p>使用 this 方式取 data 的值</p>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs JS"><span class="hljs-function"><span class="hljs-title">mounted</span>(<span class="hljs-params"></span>)</span> &#123;<br>  <span class="hljs-comment">// this 本身是個很複雜的知識，但在 Vue 中把它簡單化了。    </span><br>  <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">this</span>.title);<br>  <span class="hljs-comment">// 修改資料範例    </span><br>  <span class="hljs-built_in">this</span>.text = <span class="hljs-string">&#x27;我叫小賀&#x27;</span><br>  <span class="hljs-comment">// Ajax 取的的資料放在這邊初始化渲染</span><br>&#125;<br></code></pre></td></tr></table></figure></li>
+<li><p>網頁載入後只會執行一次，適合做初始化</p>
+</li>
+</ul>
+<h4 id="延伸知識"><a href="#延伸知識" class="headerlink" title="延伸知識"></a>延伸知識</h4><p><img src="https://i.imgur.com/pzMahpd.png" srcset="/img/loading.gif" lazyload alt="圖片取自六角學院 卡斯伯 的免費直播課程，介紹 ESM 的差別"></p>
+<p>我們今天所學的：</p>
+<ul>
+<li>整包載入</li>
+</ul>
+<p>業界推薦使用的 ESModule： Vue-cli也是使用 ESM （優）</p>
+<ul>
+<li>單一模組</li>
+<li>是分別獨立的一個一個方法，ex：createApp、ref、reactive</li>
+</ul>
+<p>擇一使用，不會同時使用兩種載入方法，建議使用 ESModule 的載入方法。</p>
+  <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs HTML"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;module&quot;</span>&gt;</span><span class="javascript"></span><br><span class="javascript">imoport &#123; createApp &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;url&#x27;</span>;</span><br><span class="javascript"></span><br><span class="javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>注意：ESM 如果沒有加 type = “module” 使用 import / export 會報錯</p>
+<h3 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://hackmd.io/@dbFY0UD9SUeKmNXhWf01ew/BkJoW-hn_/%2FBF-LiS7iQvebt7XMn_ruzg">第一堂 - 共筆文件</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=gCd8Kg7avc0&t=2682s">Vue 3 起手式直播教學</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.hexschool.com/2021/07/07/2021-07-07-vue3-summer-camp/">六角學院 Vue 3 夏令營</a></li>
+</ul>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%A8%8B%E5%BC%8F%E8%AA%9E%E8%A8%80/">程式語言</a>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%A8%8B%E5%BC%8F%E8%AA%9E%E8%A8%80/%E5%89%8D%E7%AB%AF/">前端</a>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%A8%8B%E5%BC%8F%E8%AA%9E%E8%A8%80/%E7%A4%BE%E7%BE%A4/">社群</a>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%A8%8B%E5%BC%8F%E8%AA%9E%E8%A8%80/%E7%A4%BE%E7%BE%A4/%E5%85%AD%E8%A7%92%E5%AD%B8%E9%99%A2/">六角學院</a>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%A8%8B%E5%BC%8F%E8%AA%9E%E8%A8%80/%E5%89%8D%E7%AB%AF/Vue/">Vue</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%85%AD%E8%A7%92%E5%AD%B8%E9%99%A2/">六角學院</a>
+                    
+                      <a class="hover-with-bg" href="/tags/Vue-3-%E6%96%B0%E6%89%8B%E5%A4%8F%E4%BB%A4%E7%87%9F/">Vue 3 新手夏令營</a>
+                    
+                  </div>
+                
+              </div>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/07/29/2021-7-29-react-state/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">React - 三大屬性 State</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/07/28/2021-7-28-react-classComponent/">
+                        <span class="hidden-mobile">React - 類式組件</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    
+      <script type="text/javascript">
+        var disqus_config = function() {
+          this.page.url = 'http://example.com/2021/07/28/2021-7-28-hexschool-summer-camp-vue3-week1/';
+          this.page.identifier = '/2021/07/28/2021-7-28-hexschool-summer-camp-vue3-week1/';
+        };
+        Fluid.utils.loadComments('#disqus_thread', function() {
+          var d = document, s = d.createElement('script');
+          s.src = '//' + 'fluid' + '.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', new Date());
+          (d.head || d.body).appendChild(s);
+        });
+      </script>
+    
+    <noscript>Please enable JavaScript to view the comments</noscript>
+  </div>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目錄</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜尋</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">關鍵字</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+    <span>© 2021 <a href="/about">Johnson Mao</a> 毛毛的部落格 | 記錄成長的過程</span> <span> - 本站使用  <a href="https://hexo.io" target="_blank" rel="nofollow noopener">Hexo</a> & <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">Fluid 主題</a>
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            總訪問量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            總訪客數 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+    <!-- Google Analytics -->
+    <script defer>
+      window.ga = window.ga || function () { (ga.q = ga.q || []).push(arguments) };
+      ga.l = +new Date;
+      ga('create', 'G-WHF3DFSYXN', 'auto');
+      ga('send', 'pageview');
+    </script>
+    <script async src='https://www.google-analytics.com/analytics.js'></script>
+  
+
+  
+    <!-- Google gtag.js -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WHF3DFSYXN"></script>
+    <script defer>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-WHF3DFSYXN');
+    </script>
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
