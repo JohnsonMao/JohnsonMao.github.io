@@ -1,5 +1,5 @@
 ---
-title: Vue 3 與指令
+title: Vue 3 Options API
 date: 2021/8/2 23:00:00
 index_img: https://i.imgur.com/s0FUJXG.png
 banner_img: https://i.imgur.com/s0FUJXG.png
