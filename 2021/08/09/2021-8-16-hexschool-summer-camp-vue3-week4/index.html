@@ -1,0 +1,598 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-TW" data-default-color-scheme=&#34;dark&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="這裡將會記錄參加 六角學院 Vue 3 新手夏令營（活動已結束） 課程筆記 與 每日任務紀錄，第四周介紹如何使用 Composition API 與 watch 功能，並了解 Vue 2 與 Vue 3 的差異。">
+  <meta name="author" content="Mao">
+  <meta name="keywords" content="">
+  
+  <title>Vue 3 Composition API - Mao&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":"G-WHF3DFSYXN","gtag":"G-WHF3DFSYXN","tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>毛毛的部落格</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首頁
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                封存
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分類
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                標籤
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                關於
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('https://i.imgur.com/s0FUJXG.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Vue 3 Composition API">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-08-09 23:00" pubdate>
+        2021年8月9日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      983 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      14
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Vue 3 Composition API</h1>
+            
+            <div class="markdown-body">
+              <h1 id="Vue-3-Composition-API"><a href="#Vue-3-Composition-API" class="headerlink" title="Vue 3 Composition API"></a>Vue 3 Composition API</h1><p><a target="_blank" rel="noopener" href="https://johnsonmao.github.io/summer-camp-vue3/week3/"><img src="https://i.imgur.com/s0FUJXG.png" srcset="/img/loading.gif" lazyload alt="第四週作業展示，運用了 Vue Composition API 與 watch 功能，點擊圖片可察看成果"></a></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>這裡將會記錄參加 <a target="_blank" rel="noopener" href="https://hackmd.io/@JohnsonMao/Front-end/%2F%40JohnsonMao%2FSummer-Camp-Vue3">六角學院 Vue 3 新手夏令營（活動已結束）</a> 課程筆記 與 每日任務紀錄，第四周介紹如何使用 Composition API 與 watch 功能，並了解 Vue 2 與 Vue 3 的差異。</p>
+<h2 id="課堂重點"><a href="#課堂重點" class="headerlink" title="課堂重點"></a>課堂重點</h2><ul>
+<li>Option API 與 Composition API 的差異</li>
+<li>了解 Vue 裡面 this 的指向</li>
+<li>生命週期的使用</li>
+<li>ref 與 reative 的差別 ( 略提 )</li>
+</ul>
+<h2 id="Option-API"><a href="#Option-API" class="headerlink" title="Option API"></a>Option API</h2><ul>
+<li>所有功能被依據<strong>程式邏輯</strong>區分</li>
+<li>對初學者來說相當<strong>易學</strong></li>
+<li>缺點：商業、功能邏輯被<strong>拆分</strong>到各處</li>
+</ul>
+<p><img src="https://i.imgur.com/9UUufnj.png" srcset="/img/loading.gif" lazyload alt="圖片取自六角學院 卡斯伯 的免費直播課程，展示 Option API 的程式邏輯"></p>
+<ul>
+<li>藍色代表程式邏輯</li>
+<li>綠色與紅色分別為同一個功能所需要用的邏輯</li>
+</ul>
+<h2 id="Option-API-與-Composition-API-的差異"><a href="#Option-API-與-Composition-API-的差異" class="headerlink" title="Option API 與 Composition API 的差異"></a>Option API 與 Composition API 的差異</h2><ul>
+<li>而 Composition 改善其缺點，將同一個商業、功能邏輯寫在一起</li>
+</ul>
+<p><img src="https://i.imgur.com/mfIeYp4.png" srcset="/img/loading.gif" lazyload alt="圖片取自六角學院 卡斯伯 的免費直播課程，展示 Composition 與 Option 的差別"></p>
+<ul>
+<li>將分散在各處的功能邏輯集中在一起 (分散在各處的顏色集中在一起)</li>
+</ul>
+<h2 id="Composition-API"><a href="#Composition-API" class="headerlink" title="Composition API"></a>Composition API</h2><ul>
+<li>全部整合進<code>setup()</code>內</li>
+<li>高度的彈性</li>
+<li>基於既有的 JS 知識開發</li>
+<li>方便引入函式庫</li>
+<li>所有功能邏輯都各自寫好，不會分散各地</li>
+</ul>
+<p><img src="https://i.imgur.com/epx27MG.png" srcset="/img/loading.gif" lazyload alt="圖片取自六角學院 卡斯伯 的免費直播課程，展示 Composition 的寫法"></p>
+<h2 id="Vue-的-this-指向"><a href="#Vue-的-this-指向" class="headerlink" title="Vue 的 this 指向"></a>Vue 的 this 指向</h2><ul>
+<li>Proxy 是 Vue 在做雙向綁定的重要結構</li>
+<li>在 Option API 可以不知道他</li>
+<li>但在 Composition API 他還蠻重要的</li>
+<li>資料都會放在 Target 裡面<br><img src="https://i.imgur.com/ToIog5E.png" srcset="/img/loading.gif" lazyload alt="Vue 的 this 指向"></li>
+</ul>
+<h2 id="複習-ESM"><a href="#複習-ESM" class="headerlink" title="複習 ESM"></a>複習 ESM</h2><p><a target="_blank" rel="noopener" href="https://cdnjs.com/libraries/vue">CDN 連結</a><br><code>https://cdnjs.cloudflare.com/ajax/libs/vue/3.2.0-beta.7/vue.esm-browser.min.js</code></p>
+<p><img src="https://i.imgur.com/Rc0cV7M.png" srcset="/img/loading.gif" lazyload alt="ESM 比較能依據自己需求來引入所需的功能"></p>
+<h2 id="Composition-API-起手式"><a href="#Composition-API-起手式" class="headerlink" title="Composition API 起手式"></a>Composition API 起手式</h2><h3 id="通常都是使用-ESModule-來操作"><a href="#通常都是使用-ESModule-來操作" class="headerlink" title="通常都是使用 ESModule 來操作"></a>通常都是使用 ESModule 來操作</h3><p>不轉ESM也行，但在composition API使用ESM更符合模組化概念</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-comment">&lt;!-- HTML --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;app&quot;</span>&gt;</span><br>    &#123;&#123; text &#125;&#125;<br>    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span> <span class="hljs-attr">v-model</span>=<span class="hljs-string">&quot;text&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// JS</span><br>&lt;script type=<span class="hljs-string">&quot;module&quot;</span>&gt;<br>    <span class="hljs-comment">// 引入 ESM，script 的 type 記得改成 module</span><br>    <span class="hljs-keyword">import</span> &#123; createApp &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;https://cdnjs.cloudflare.com/ajax/libs/vue/3.2.0-beta.7/vue.esm-browser.min.js&#x27;</span><br>    <span class="hljs-comment">// 用 ESM 就不用 Vue. 開頭</span><br>    <span class="hljs-keyword">const</span> app = createApp(&#123;<br>        <span class="hljs-comment">// Composition API 一定會有 setup</span><br>        <span class="hljs-function"><span class="hljs-title">setup</span>(<span class="hljs-params"></span>)</span> &#123;<br>            <span class="hljs-keyword">const</span> text = <span class="hljs-string">&#x27;卡斯伯棒棒&#x27;</span>;<br>            <span class="hljs-comment">// 需要回傳值，才能在 HTML 使用</span><br>            <span class="hljs-keyword">return</span> &#123;<br>                text<br>            &#125;<br>        &#125;<br>    &#125;);<br>    app.mount(<span class="hljs-string">&#x27;#app&#x27;</span>);<br>&lt;/script&gt;<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://i.imgur.com/DecnIjV.png" srcset="/img/loading.gif" lazyload alt="圖片取自六角學院 卡斯伯 的免費直播課程，卡斯伯棒棒"></p>
+<h3 id="Composition-API-裡雙向綁定，需要引入ref"><a href="#Composition-API-裡雙向綁定，需要引入ref" class="headerlink" title="Composition API 裡雙向綁定，需要引入ref"></a>Composition API 裡雙向綁定，需要引入<code>ref</code></h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs javascript">&lt;script type=<span class="hljs-string">&quot;module&quot;</span>&gt;<br>    <span class="hljs-comment">// 引入 ref</span><br>    <span class="hljs-keyword">import</span> &#123; createApp, ref &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;https://cdnjs.cloudflare.com/ajax/libs/vue/3.2.0-beta.7/vue.esm-browser.min.js&#x27;</span><br>    <span class="hljs-keyword">const</span> app = createApp(&#123;<br>        <span class="hljs-function"><span class="hljs-title">setup</span>(<span class="hljs-params"></span>)</span> &#123;<br>            <span class="hljs-comment">// 使用 ref() 進行雙向綁定</span><br>            <span class="hljs-keyword">const</span> text = ref(<span class="hljs-string">&#x27;卡斯伯棒棒&#x27;</span>);<br>            <span class="hljs-comment">// 需要回傳值，才能在 HTML 使用</span><br>            <span class="hljs-keyword">return</span> &#123;<br>                text<br>            &#125;<br>        &#125;<br>    &#125;);<br>    app.mount(<span class="hljs-string">&#x27;#app&#x27;</span>);<br>&lt;/script&gt;<br></code></pre></td></tr></table></figure>
+
+<h3 id="Composition-API-使用函式"><a href="#Composition-API-使用函式" class="headerlink" title="Composition API 使用函式"></a>Composition API 使用函式</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs javascript">&lt;script type=<span class="hljs-string">&quot;module&quot;</span>&gt;<br>    <span class="hljs-keyword">import</span> &#123; createApp, ref &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;https://cdnjs.cloudflare.com/ajax/libs/vue/3.2.0-beta.7/vue.esm-browser.min.js&#x27;</span><br>    <span class="hljs-keyword">const</span> app = createApp(&#123;<br>        <span class="hljs-function"><span class="hljs-title">setup</span>(<span class="hljs-params"></span>)</span> &#123;<br>            <span class="hljs-keyword">const</span> text = ref(<span class="hljs-string">&#x27;卡斯伯棒棒&#x27;</span>);<br>            <span class="hljs-comment">// 新增你需要的函式</span><br>            <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getText</span>(<span class="hljs-params"></span>) </span>&#123;<br>                <span class="hljs-built_in">console</span>.log( text )<br>            &#125;<br>            <span class="hljs-comment">// 需要回傳值，才能在 HTML 使用</span><br>            <span class="hljs-keyword">return</span> &#123;<br>                text,<br>                getText,<br>            &#125;<br>        &#125;<br>    &#125;);<br>    app.mount(<span class="hljs-string">&#x27;#app&#x27;</span>);<br>&lt;/script&gt;<br></code></pre></td></tr></table></figure>
+
+<h2 id="Composition-API-使用生命週期"><a href="#Composition-API-使用生命週期" class="headerlink" title="Composition API 使用生命週期"></a>Composition API 使用生命週期</h2><h3 id="引入-onMounted"><a href="#引入-onMounted" class="headerlink" title="引入 onMounted"></a>引入 onMounted</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs javascript">&lt;script type=<span class="hljs-string">&quot;module&quot;</span>&gt;<br>    <span class="hljs-keyword">import</span> &#123; createApp, ref, onMounted &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;https://cdnjs.cloudflare.com/ajax/libs/vue/3.2.0-beta.7/vue.esm-browser.min.js&#x27;</span><br>    <span class="hljs-keyword">const</span> app = createApp(&#123;<br>        <span class="hljs-function"><span class="hljs-title">setup</span>(<span class="hljs-params"></span>)</span> &#123;<br>            <span class="hljs-keyword">const</span> text = ref(<span class="hljs-string">&#x27;卡斯伯棒棒&#x27;</span>);<br>            <br>            <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getText</span>(<span class="hljs-params"></span>) </span>&#123;<br>                <span class="hljs-built_in">console</span>.log( text )<br>            &#125;<br>            <span class="hljs-comment">// 新增生命週期</span><br>            onMounted(<span class="hljs-function">()=&gt;</span>&#123;<br>                getText()<br>            &#125;)<br>            <span class="hljs-comment">// 需要回傳值，才能在 HTML 使用</span><br>            <span class="hljs-keyword">return</span> &#123;<br>                text,<br>                getText,<br>            &#125;<br>        &#125;<br>    &#125;);<br>    app.mount(<span class="hljs-string">&#x27;#app&#x27;</span>);<br>&lt;/script&gt;<br></code></pre></td></tr></table></figure>
+
+<h3 id="引入-computed"><a href="#引入-computed" class="headerlink" title="引入 computed"></a>引入 computed</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs javascript">&lt;script type=<span class="hljs-string">&quot;module&quot;</span>&gt;<br>    <span class="hljs-keyword">import</span> &#123; createApp, ref, onMounted, computed &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;https://cdnjs.cloudflare.com/ajax/libs/vue/3.2.0-beta.7/vue.esm-browser.min.js&#x27;</span><br>    <span class="hljs-keyword">const</span> app = createApp(&#123;<br>        <span class="hljs-function"><span class="hljs-title">setup</span>(<span class="hljs-params"></span>)</span> &#123;<br>            <span class="hljs-keyword">const</span> num = ref(<span class="hljs-number">1</span>);<br>            <span class="hljs-comment">// 新增生命週期</span><br>            <span class="hljs-keyword">const</span> doubleNum = computed(<span class="hljs-function">()=&gt;</span>&#123;<br>                <span class="hljs-keyword">return</span> num.value * <span class="hljs-number">2</span><br>            &#125;)<br>            <span class="hljs-comment">// 需要回傳值，才能在 HTML 使用</span><br>            <span class="hljs-keyword">return</span> &#123;<br>                num,<br>                doubleNum,<br>            &#125;<br>        &#125;<br>    &#125;);<br>    app.mount(<span class="hljs-string">&#x27;#app&#x27;</span>);<br>&lt;/script&gt;<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://i.imgur.com/LdFcJrh.gif" srcset="/img/loading.gif" lazyload alt="圖片取自六角學院 卡斯伯 的免費直播課程，computed"></p>
+<h2 id="reative-與-ref-的差別"><a href="#reative-與-ref-的差別" class="headerlink" title="reative 與 ref 的差別"></a>reative 與 ref 的差別</h2><p><img src="https://i.imgur.com/5TW4tz8.png" srcset="/img/loading.gif" lazyload alt="圖片取自六角學院 卡斯伯 的免費直播課程，ref &amp; reative 的差別"></p>
+<h3 id="reative"><a href="#reative" class="headerlink" title="reative"></a>reative</h3><ul>
+<li>非常標準的 Proxy 物件</li>
+<li>限制只能放物件</li>
+<li>覆蓋後會出現不可預期的錯誤</li>
+</ul>
+<h3 id="ref"><a href="#ref" class="headerlink" title="ref"></a>ref</h3><ul>
+<li>沒有任何型別的限制</li>
+<li>會依據放入的型別，而有不同的調整</li>
+<li>一定要使用<code>.value</code>取值</li>
+</ul>
+<h3 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://hackmd.io/@dbFY0UD9SUeKmNXhWf01ew/BkJoW-hn_/%2FQsUHeIKiReaY-Znhe0UyvA">第四堂 - 共筆文件</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.hexschool.com/2021/07/07/2021-07-07-vue3-summer-camp/">六角學院 Vue 3 夏令營</a></li>
+</ul>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%A8%8B%E5%BC%8F%E8%AA%9E%E8%A8%80/">程式語言</a>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%A8%8B%E5%BC%8F%E8%AA%9E%E8%A8%80/%E5%89%8D%E7%AB%AF/">前端</a>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%A8%8B%E5%BC%8F%E8%AA%9E%E8%A8%80/%E7%A4%BE%E7%BE%A4/">社群</a>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%A8%8B%E5%BC%8F%E8%AA%9E%E8%A8%80/%E7%A4%BE%E7%BE%A4/%E5%85%AD%E8%A7%92%E5%AD%B8%E9%99%A2/">六角學院</a>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%A8%8B%E5%BC%8F%E8%AA%9E%E8%A8%80/%E5%89%8D%E7%AB%AF/Vue/">Vue</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%85%AD%E8%A7%92%E5%AD%B8%E9%99%A2/">六角學院</a>
+                    
+                      <a class="hover-with-bg" href="/tags/Vue-3-%E6%96%B0%E6%89%8B%E5%A4%8F%E4%BB%A4%E7%87%9F/">Vue 3 新手夏令營</a>
+                    
+                  </div>
+                
+              </div>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/08/09/2021-8-9-hexschool-summer-camp-vue3-week3/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Vue 3 Options API</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/08/02/2021-8-2-hexschool-summer-camp-vue3-week2/">
+                        <span class="hidden-mobile">Vue 3 與指令</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    
+      <script type="text/javascript">
+        var disqus_config = function() {
+          this.page.url = 'http://example.com/2021/08/09/2021-8-16-hexschool-summer-camp-vue3-week4/';
+          this.page.identifier = '/2021/08/09/2021-8-16-hexschool-summer-camp-vue3-week4/';
+        };
+        Fluid.utils.loadComments('#disqus_thread', function() {
+          var d = document, s = d.createElement('script');
+          s.src = '//' + 'fluid' + '.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', new Date());
+          (d.head || d.body).appendChild(s);
+        });
+      </script>
+    
+    <noscript>Please enable JavaScript to view the comments</noscript>
+  </div>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目錄</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜尋</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">關鍵字</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+    <span>© 2021 <a href="/about">Johnson Mao</a> 毛毛的部落格 | 記錄成長的過程</span> <span> - 本站使用  <a href="https://hexo.io" target="_blank" rel="nofollow noopener">Hexo</a> & <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">Fluid 主題</a>
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            總訪問量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            總訪客數 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+    <!-- Google Analytics -->
+    <script defer>
+      window.ga = window.ga || function () { (ga.q = ga.q || []).push(arguments) };
+      ga.l = +new Date;
+      ga('create', 'G-WHF3DFSYXN', 'auto');
+      ga('send', 'pageview');
+    </script>
+    <script async src='https://www.google-analytics.com/analytics.js'></script>
+  
+
+  
+    <!-- Google gtag.js -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WHF3DFSYXN"></script>
+    <script defer>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-WHF3DFSYXN');
+    </script>
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
