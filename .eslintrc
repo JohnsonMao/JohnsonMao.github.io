@@ -1,0 +1,64 @@
+{
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        }
+    },
+    "env": {
+        "browser": true,
+        "es6": true,
+        "jest": true
+    },
+    "plugins": ["@typescript-eslint"],
+    "extends": [
+        "airbnb",
+        "airbnb/hooks",
+        "next/core-web-vitals",
+        "plugin:react/recommended",
+        "plugin:react/jsx-runtime",
+        "plugin:@typescript-eslint/recommended"
+    ],
+    "rules": {
+        "import/no-cycle": "warn",
+        "import/extensions": "off",
+        "import/no-extraneous-dependencies": [
+            "error",
+            {
+                "devDependencies": [
+                    "**/*.test.ts",
+                    "**/*.test.tsx",
+                    "vite.config.ts"
+                ]
+            }
+        ],
+        "react/require-default-props": "off",
+        "react/jsx-filename-extension": [2, { "extensions": [".jsx", ".tsx"] }],
+        "react/jsx-indent": [2, 4, { "checkAttributes": false }],
+        "react/jsx-indent-props": [2, 4],
+        "react/jsx-props-no-spreading": [2, { "custom": "ignore" }],
+        "react-hooks/exhaustive-deps": "warn",
+        "react/prop-types": "off",
+        "no-shadow": "off",
+        "@typescript-eslint/no-shadow": "warn",
+        "@typescript-eslint/no-empty-function": "off",
+        "@typescript-eslint/indent": ["error", 4],
+        "implicit-arrow-linebreak": "off",
+        "comma-dangle": ["error", "never"],
+        "indent": ["error", 4, { "SwitchCase": 1 }],
+        "object-curly-newline": ["off"],
+        "operator-linebreak": [
+            "error",
+            "after",
+            { "overrides": { "?": "before", ":": "before" } }
+        ]
+    },
+    "settings": {
+        "import/resolver": {
+            "typescript": {}, // this loads <rootdir>/tsconfig.json to eslint
+            "node": {
+                "extensions": [".js", ".jsx", ".ts", ".tsx"]
+            }
+        }
+    }
+}
