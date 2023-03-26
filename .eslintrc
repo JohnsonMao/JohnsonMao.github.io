@@ -14,10 +14,10 @@
     "extends": [
         "airbnb",
         "airbnb/hooks",
-        "next/core-web-vitals",
         "plugin:react/recommended",
         "plugin:react/jsx-runtime",
-        "plugin:@typescript-eslint/recommended"
+        "plugin:@typescript-eslint/recommended",
+        "next/core-web-vitals"
     ],
     "rules": {
         "import/no-cycle": "warn",
@@ -25,10 +25,12 @@
         "import/no-extraneous-dependencies": [
             "error",
             {
+                "dependencies": [
+                    "next.config.js"
+                ],
                 "devDependencies": [
                     "**/*.test.ts",
-                    "**/*.test.tsx",
-                    "vite.config.ts"
+                    "**/*.test.tsx"
                 ]
             }
         ],
