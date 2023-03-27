@@ -5,9 +5,8 @@ const withMDX = require('@next/mdx')({
         // as the package is ESM only
         // https://github.com/remarkjs/remark-gfm#install
         remarkPlugins: [],
-        rehypePlugins: []
-        // If you use `MDXProvider`, uncomment the following line.
-        // providerImportSource: "@mdx-js/react",
+        rehypePlugins: [],
+        providerImportSource: '@mdx-js/react',
     }
 });
 

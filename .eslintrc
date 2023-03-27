@@ -25,13 +25,8 @@
         "import/no-extraneous-dependencies": [
             "error",
             {
-                "dependencies": [
-                    "next.config.js"
-                ],
-                "devDependencies": [
-                    "**/*.test.ts",
-                    "**/*.test.tsx"
-                ]
+                "dependencies": ["next.config.js"],
+                "devDependencies": ["**/*.test.ts", "**/*.test.tsx"]
             }
         ],
         "react/require-default-props": "off",
