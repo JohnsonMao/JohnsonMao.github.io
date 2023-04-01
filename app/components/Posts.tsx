@@ -1,4 +1,5 @@
 import { getSortedPostsData } from '@/lib/posts'
+import PostItem from './PostItem';
 
 function Posts() {
     const posts = getSortedPostsData();
@@ -8,11 +9,7 @@ function Posts() {
             <h2 className="text-4xl font-bold dark:text-white/90">Blog</h2>
             <ul className="w-full">
                 {
-                    posts.map(post => (
-                        <li key={post.id} className="my-4 text-2xl dark:text-white">
-                            {post.title}
-                        </li>
-                    ))
+                    posts.map(post => <PostItem key={post.id} post={post} />)
                 }
             </ul>
         </section>
