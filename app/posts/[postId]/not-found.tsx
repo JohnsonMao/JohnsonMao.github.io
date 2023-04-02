@@ -1,7 +1,5 @@
 function NotFound() {
-    return (
-        <div>此頁面不存在</div>
-    )
+	return <div>此頁面不存在</div>;
 }
 
-export default NotFound
+export default NotFound;
