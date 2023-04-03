@@ -1,3 +1,4 @@
+import { Providers } from './providers';
 import Navbar from './components/Navbar';
 import './globals.css';
 
@@ -8,10 +9,12 @@ export const metadata = {
 
 function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
-		<html lang="en">
+		<html lang="en" suppressHydrationWarning>
 			<body className="dark:bg-slate-800">
-				<Navbar />
-				{children}
+				<Providers>
+					<Navbar />
+					{children}
+				</Providers>
 			</body>
 		</html>
 	);
