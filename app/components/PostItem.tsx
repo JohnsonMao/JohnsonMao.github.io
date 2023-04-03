@@ -17,7 +17,7 @@ function PostItem({ post }: PostItemProps) {
 			>
 				{title}
 			</Link>
-			<p className="text-sm mt-1">{formattedDate}</p>
+			<p className="mt-1 text-sm">{formattedDate}</p>
 		</li>
 	);
 }

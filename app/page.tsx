@@ -3,10 +3,10 @@ import Posts from './components/Posts';
 
 function Home() {
 	return (
-		<main className="px-6 mx-auto">
-			<section className="w-full mx-auto">
+		<main className="mx-auto px-6">
+			<section className="mx-auto w-full">
 				<Image
-					className="border-4 border-black dark:border-slate-500 drop-shadow-xl shadow-black rounded-full mx-auto mt-12"
+					className="mx-auto mt-12 rounded-full border-4 border-black shadow-black drop-shadow-xl dark:border-slate-500"
 					src="/images/mao.jpg"
 					width={200}
 					height={200}
@@ -14,7 +14,7 @@ function Home() {
 					priority
 				/>
 			</section>
-			<p className="my-12 text-3xl text-center dark:text-white">
+			<p className="my-12 text-center text-3xl dark:text-white">
 				Hello and Welcome &nbsp;
 				<span className="whitespace-nowrap">
 					I&apos;m <span className="font-bold">Johnson</span>.

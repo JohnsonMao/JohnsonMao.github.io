@@ -41,8 +41,8 @@ async function Post({ params }: PostProps) {
 	const formattedDate = getFormattedDate(date);
 
 	return (
-		<main className="px-6 prose prose-xl prose-slate dark:prose-invert mx-auto">
-			<h1 className="text-3xl mt-4 mb-0">{title}</h1>
+		<main className="prose prose-xl prose-slate mx-auto px-6 dark:prose-invert">
+			<h1 className="mb-0 mt-4 text-3xl">{title}</h1>
 			<p className="mt-0">{formattedDate}</p>
 			<article>
 				<section dangerouslySetInnerHTML={{ __html: contentHtml }} />
