@@ -1,20 +1,21 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { getPostData, getSortedPostsData } from '@/lib/posts';
-import getFormattedDate from '@/lib/getFormattedDate';
+import { MDXRemote } from 'next-mdx-remote/rsc';
+import { getPostData, getSortedPostList } from '@/lib/posts';
+import formatDate from '@/lib/formatDate';
 
-type PostProps = {
+type PostPageProps = {
 	params: { postId: string };
 };
 
 export function generateStaticParams() {
-	const posts = getSortedPostsData();
+	const posts = getSortedPostList();
 
 	return posts.map((post) => ({ postId: post.id }));
 }
 
-export function generateMetadata({ params }: PostProps) {
-	const posts = getSortedPostsData();
+export function generateMetadata({ params }: PostPageProps) {
+	const posts = getSortedPostList();
 	const { postId } = params;
 	const post = posts.find((post) => post.id === postId);
 
@@ -29,23 +30,23 @@ export function generateMetadata({ params }: PostProps) {
 	};
 }
 
-async function Post({ params }: PostProps) {
-	const posts = getSortedPostsData();
+async function PostPage({ params }: PostPageProps) {
+	const posts = getSortedPostList();
 	const { postId } = params;
 
 	if (!posts.find((post) => post.id !== postId)) {
 		return notFound();
 	}
 
-	const { title, date, contentHtml } = await getPostData(postId);
-	const formattedDate = getFormattedDate(date);
+	const { content, frontmatter } = await getPostData(postId);
+	const formattedDate = formatDate(frontmatter.date);
 
 	return (
 		<main className="prose prose-xl prose-slate mx-auto px-6 dark:prose-invert">
-			<h1 className="mb-0 mt-4 text-3xl">{title}</h1>
+			<h1 className="mb-0 mt-4 text-3xl">{frontmatter.title}</h1>
 			<p className="mt-0">{formattedDate}</p>
 			<article>
-				<section dangerouslySetInnerHTML={{ __html: contentHtml }} />
+				{content}
 				<p>
 					<Link href="/">回首頁</Link>
 				</p>
@@ -54,4 +55,4 @@ async function Post({ params }: PostProps) {
 	);
 }
 
-export default Post;
+export default PostPage;

@@ -1,6 +1,9 @@
 import { Providers } from './providers';
 import Navbar from './components/Navbar';
+
 import './globals.css';
+import './styles/prism-dracula.css';
+import './styles/prism-plus.css';
 
 export const metadata = {
 	title: "Mao's Blog",

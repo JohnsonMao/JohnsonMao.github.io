@@ -1,7 +1,7 @@
 import Image from 'next/image';
-import Posts from './components/Posts';
+import PostList from './components/PostList';
 
-function Home() {
+function HomePage() {
 	return (
 		<main className="mx-auto px-6">
 			<section className="mx-auto w-full">
@@ -20,9 +20,9 @@ function Home() {
 					I&apos;m <span className="font-bold">Johnson</span>.
 				</span>
 			</p>
-			<Posts />
+			<PostList />
 		</main>
 	);
 }
 
-export default Home;
+export default HomePage;
