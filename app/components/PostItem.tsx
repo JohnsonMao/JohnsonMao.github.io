@@ -1,8 +1,8 @@
 import Link from 'next/link';
-import getFormattedDate from '@/lib/getFormattedDate';
+import getFormattedDate from '@/lib/formatDate';
 
 type PostItemProps = {
-	post: Post;
+	post: Post & { id: string };
 };
 
 function PostItem({ post }: PostItemProps) {

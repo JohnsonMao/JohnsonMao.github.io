@@ -1,8 +1,8 @@
-import { getSortedPostsData } from '@/lib/posts';
+import { getSortedPostList } from '@/lib/posts';
 import PostItem from './PostItem';
 
 function Posts() {
-	const posts = getSortedPostsData();
+	const posts = getSortedPostList();
 
 	return (
 		<section className="mx-auto mt-6 max-w-2xl">
