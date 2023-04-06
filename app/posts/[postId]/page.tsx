@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { MDXRemote } from 'next-mdx-remote/rsc';
 import { getPostData, getSortedPostList } from '@/lib/posts';
 import formatDate from '@/lib/formatDate';
 
@@ -8,14 +7,14 @@ type PostPageProps = {
 	params: { postId: string };
 };
 
-export function generateStaticParams() {
-	const posts = getSortedPostList();
+export async function generateStaticParams() {
+	const posts = await getSortedPostList();
 
 	return posts.map((post) => ({ postId: post.id }));
 }
 
-export function generateMetadata({ params }: PostPageProps) {
-	const posts = getSortedPostList();
+export async function generateMetadata({ params }: PostPageProps) {
+	const posts = await getSortedPostList();
 	const { postId } = params;
 	const post = posts.find((post) => post.id === postId);
 
@@ -31,7 +30,7 @@ export function generateMetadata({ params }: PostPageProps) {
 }
 
 async function PostPage({ params }: PostPageProps) {
-	const posts = getSortedPostList();
+	const posts = await getSortedPostList();
 	const { postId } = params;
 
 	if (!posts.find((post) => post.id !== postId)) {
