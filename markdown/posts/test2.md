@@ -11,7 +11,11 @@ date: 2023-03-31
 1. Test1
 2. Test2
 
-```tsx showLineNumbers {8-11}
+|test1|test2|
+|-----|-----|
+|test3|test4|
+
+```tsx:app/page.tsx showLineNumbers {8-11}
 import { Providers } from './providers';
 import Navbar from './components/Navbar';
 

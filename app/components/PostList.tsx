@@ -1,8 +1,8 @@
 import { getSortedPostList } from '@/lib/posts';
 import PostItem from './PostItem';
 
-function Posts() {
-	const posts = getSortedPostList();
+async function PostList() {
+	const posts = await getSortedPostList();
 
 	return (
 		<section className="mx-auto mt-6 max-w-2xl">
@@ -16,4 +16,4 @@ function Posts() {
 	);
 }
 
-export default Posts;
+export default PostList as unknown as () => JSX.Element;
