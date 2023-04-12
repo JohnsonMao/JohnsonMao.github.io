@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { compileMDX } from 'next-mdx-remote/rsc';
 import remarkGfm from 'remark-gfm';
+import rehypeSlug from 'rehype-slug';
 import rehypePrismPlus from 'rehype-prism-plus';
 import rehypeCodeTitles from 'rehype-code-titles';
 
@@ -52,7 +53,7 @@ export async function getPostData(id: string) {
 			parseFrontmatter: true,
 			mdxOptions: {
 				remarkPlugins: [remarkGfm],
-				rehypePlugins: [rehypeCodeTitles, rehypePrismPlus],
+				rehypePlugins: [rehypeSlug, rehypeCodeTitles, rehypePrismPlus],
 			},
 		},
 	});

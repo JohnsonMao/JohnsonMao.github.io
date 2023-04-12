@@ -17,7 +17,9 @@
     "react-icons": "^4.8.0",
     "rehype-code-titles": "^1.2.0",
     "rehype-prism-plus": "^1.5.1",
-    "remark-gfm": "^3.0.1"
+    "rehype-slug": "^5.1.0",
+    "remark-gfm": "^3.0.1",
+    "schema-dts": "^1.1.2"
   },
   "devDependencies": {
     "@svgr/webpack": "^7.0.0",
