@@ -2,7 +2,7 @@
 
 import { useTheme } from 'next-themes';
 
-const ThemeSwitch = () => {
+function ThemeSwitch() {
 	const { theme, setTheme } = useTheme();
 
 	return (
