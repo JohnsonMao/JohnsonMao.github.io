@@ -5,8 +5,8 @@ type PostItemProps = {
 	post: Post & { id: string };
 };
 
-function PostItem(props: PostItemProps) {
-	const { id, title, date } = props.post;
+function PostItem({ post }: PostItemProps) {
+	const { id, title, date } = post;
 	const formattedDate = getFormattedDate(date);
 
 	return (

@@ -1,12 +1,13 @@
 import { Providers } from './providers';
-import Navbar from './components/Navbar';
+import Navbar from '@/components/Navbar';
+import { getSettings } from '@/lib/settings';
 
 import './globals.css';
-import './styles/prism-dracula.css';
-import './styles/prism-plus.css';
+
+const settings = getSettings();
 
 export const metadata = {
-	title: "Mao's Blog",
+	title: settings.title,
 	description: 'Created by Johnson Mao',
 };
 
@@ -15,7 +16,7 @@ function RootLayout({ children }: { children: React.ReactNode }) {
 		<html lang="en" suppressHydrationWarning>
 			<body className="dark:bg-slate-800">
 				<Providers>
-					<Navbar />
+					<Navbar title={settings.title} />
 					{children}
 				</Providers>
 			</body>

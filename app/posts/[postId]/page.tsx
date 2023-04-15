@@ -1,12 +1,13 @@
-import type { Metadata } from 'next';
+import type { Metadata, GetStaticPropsContext } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getPostData, getSortedPostList } from '@/lib/posts';
 import formatDate from '@/lib/formatDate';
 
-type PostPageProps = {
-	params: { postId: string };
-};
+import './prism-dracula.css';
+import './prism-plus.css';
+
+type PostPageProps = GetStaticPropsContext<{ postId: string }>;
 
 export async function generateStaticParams() {
 	const posts = await getSortedPostList();
@@ -15,10 +16,10 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata(
-	props: PostPageProps
+	{ params }: PostPageProps
 ): Promise<Metadata> {
 	const posts = await getSortedPostList();
-	const { postId } = props.params;
+	const postId = params?.postId;
 	const post = posts.find((post) => post.id === postId);
 
 	if (!post) {
@@ -32,11 +33,11 @@ export async function generateMetadata(
 	};
 }
 
-async function PostPage(props: PostPageProps) {
+async function PostPage({ params }: PostPageProps) {
 	const posts = await getSortedPostList();
-	const { postId } = props.params;
+	const postId = params?.postId;
 
-	if (!posts.find((post) => post.id !== postId)) {
+	if (!postId || !posts.find((post) => post.id !== postId)) {
 		return notFound();
 	}
 
