@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "js-yaml": "^4.1.0",
     "next": "13.2.4",
     "next-mdx-remote": "^4.4.1",
     "next-themes": "^0.2.1",

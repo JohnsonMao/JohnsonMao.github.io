@@ -1,7 +1,10 @@
 import Image from 'next/image';
-import PostList from './components/PostList';
+import PostList from '@/components/PostList';
+import { getSortedPostList } from '@/lib/posts';
 
-function HomePage() {
+async function HomePage() {
+	const posts = await getSortedPostList();
+
 	return (
 		<main className="mx-auto px-6">
 			<section className="mx-auto w-full">
@@ -20,7 +23,7 @@ function HomePage() {
 					I&apos;m <span className="font-bold">Johnson</span>.
 				</span>
 			</p>
-			<PostList />
+			<PostList posts={posts} />
 		</main>
 	);
 }
