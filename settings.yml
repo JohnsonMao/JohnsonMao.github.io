@@ -1,1 +1,23 @@
-title: 毛毛筆記
+meta:
+  title: 毛毛筆記
+  description: 這是毛毛的筆記網站
+  authors:
+    - name: Johnson Mao
+      url: https://github.com/JohnsonMao
+
+navbar:
+  title: 毛毛筆記
+  menu:
+    - title: 首頁
+      url: /
+    - title: 封存
+      url: /
+    - title: 類別
+      url: /
+    - title: 標籤
+      url: /
+    - title: 關於
+      url: /
+
+banner:
+  title: 每天都要超越昨天的自己！
