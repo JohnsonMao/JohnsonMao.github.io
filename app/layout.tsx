@@ -1,22 +1,24 @@
-import { Providers } from './providers';
+import type { Metadata } from 'next';
 import Navbar from '@/components/Navbar';
 import { getSettings } from '@/lib/settings';
+import { Providers } from './providers';
 
 import './globals.css';
 
-const settings = getSettings();
+const { meta, navbar } = getSettings();
 
-export const metadata = {
-	title: settings.title,
-	description: 'Created by Johnson Mao',
+export const metadata: Metadata = {
+	title: meta.title,
+	description: meta.description,
+	authors: meta.authors
 };
 
-function RootLayout({ children }: { children: React.ReactNode }) {
+function RootLayout({ children }: React.PropsWithChildren) {
 	return (
 		<html lang="en" suppressHydrationWarning>
 			<body className="dark:bg-slate-800">
 				<Providers>
-					<Navbar title={settings.title} />
+					<Navbar {...navbar} />
 					{children}
 				</Providers>
 			</body>
