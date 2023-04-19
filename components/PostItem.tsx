@@ -1,29 +1,59 @@
 import Link from 'next/link';
+import { BsCalendar4Week } from 'react-icons/bs';
+import { MdOutlineWidgets } from 'react-icons/md';
+import { AiOutlineTags } from 'react-icons/ai';
 import getFormattedDate from '@/lib/formatDate';
-import { BsCalendarWeekFill } from 'react-icons/bs'
 
 type PostItemProps = {
   post: IPost & { id: string };
 };
 
 function PostItem({ post }: PostItemProps) {
-  const { id, title, date, excerpt } = post;
+  const { id, title, date, categories, tags, excerpt } = post;
   const formattedDate = getFormattedDate(date);
 
   return (
     <li key={id} className="mt-4 text-2xl dark:text-white/90">
       <h2 className="text-2xl font-bold dark:text-white/90">
         <Link
-          className="underline hover:text-black/70 dark:hover:text-white/90"
+          className="underline hover:text-black/70 dark:hover:text-white/70"
           href={`/posts/${id}`}
         >
           {title}
         </Link>
       </h2>
       <p className="my-3 text-base">{excerpt}</p>
-      <div className="flex items-center text-sm">
-        <BsCalendarWeekFill className="mr-2" />
-        {formattedDate}
+      <div className="flex flex-wrap gap-x-4 gap-y-1 text-sm">
+        <div className="flex items-center">
+          <BsCalendar4Week className="mr-1" />
+          <time className="whitespace-nowrap">{formattedDate}</time>
+        </div>
+        <div className="flex flex-wrap items-center gap-1">
+          <MdOutlineWidgets className="mr-1" />
+          {categories.map((category) =>
+            category.map((tag) => (
+              <Link
+                key={category + tag}
+                className="whitespace-nowrap hover:text-black/70 dark:hover:text-white/70"
+                href="/"
+              >
+                {tag}
+              </Link>
+            ))
+          )}
+        </div>
+        <div className="flex flex-wrap items-center gap-1">
+          <AiOutlineTags className="mr-1" />
+          {tags.map((tag) => (
+            <Link
+              key={tag}
+              className="whitespace-nowrap hover:text-black/70 dark:hover:text-white/70"
+              href="/"
+            >
+              {tag}
+            </Link>
+          ))}
+        </div>
       </div>
     </li>
   );
