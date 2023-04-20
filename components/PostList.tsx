@@ -8,7 +8,7 @@ type PostListProps = {
 
 function PostList({ posts }: PostListProps) {
   return (
-    <section className="mx-auto mt-6 max-w-2xl">
+    <section className="mx-auto mt-6 max-w-4xl">
       <ul className="w-full">
         {posts.map((post) => (
           <PostItem key={post.id} post={post} />
