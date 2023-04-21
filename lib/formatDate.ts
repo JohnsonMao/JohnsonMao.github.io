@@ -1,5 +1,9 @@
-function formatDate(date: Date | string, locale = 'zh-TW') {
-  return new Intl.DateTimeFormat(locale, { dateStyle: 'long' }).format(
+function formatDate(
+  date: Date | string,
+  locale = 'zh-TW',
+  options: Intl.DateTimeFormatOptions = { dateStyle: 'long' }
+) {
+  return new Intl.DateTimeFormat(locale, options).format(
     typeof date === 'string' ? new Date(date) : date
   );
 }
