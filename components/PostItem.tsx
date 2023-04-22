@@ -16,14 +16,14 @@ function PostItem({ post }: PostItemProps) {
   return (
     <li key={id} className="mt-4 text-2xl dark:text-white/90">
       <article className="flex gap-6">
-        <Image
-          className="shrink-0 object-cover"
-          src={index_img}
-          alt={`${index_img} cover`}
-          width={300}
-          height={200}
-          priority
-        />
+        <div className="relative h-48 w-1/3 shrink-0">
+          <Image
+            className="object-cover"
+            src={index_img}
+            alt={`${title} cover`}
+            fill
+          />
+        </div>
         <div>
           <h2 className="text-2xl font-bold dark:text-white/90">
             <Link
