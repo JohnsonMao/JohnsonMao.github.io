@@ -17,7 +17,6 @@ async function HomePage() {
           width={200}
           height={200}
           alt="Johnson Mao"
-          priority
         />
       </section>
       <p className="my-12 text-center text-3xl dark:text-white">
