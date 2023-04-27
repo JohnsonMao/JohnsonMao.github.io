@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
-import Navbar from '@/components/Navbar';
-import { getSettings } from '@/lib/settings';
+import Navbar from '@components/Navbar';
+import { getSettings } from '@utils/settings';
 import { Providers } from './providers';
 
-import './globals.css';
+import '../assets/css/globals.css';
 
 const { meta, navbar } = getSettings();
 

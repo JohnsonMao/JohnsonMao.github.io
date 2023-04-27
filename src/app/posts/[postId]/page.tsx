@@ -1,11 +1,8 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { getPostData, getSortedPostList } from '@/lib/posts';
-import formatDate from '@/lib/formatDate';
-
-import './prism-dracula.css';
-import './prism-plus.css';
+import { getPostData, getSortedPostList } from '@utils/posts';
+import formatDate from '@utils/formatDate';
 
 type PostPageProps = {
   params: { postId: string };
