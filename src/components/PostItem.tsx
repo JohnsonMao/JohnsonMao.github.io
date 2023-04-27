@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { BsCalendar4Week } from 'react-icons/bs';
 import { MdOutlineWidgets } from 'react-icons/md';
 import { AiOutlineTags } from 'react-icons/ai';
-import getFormattedDate from '@/lib/formatDate';
+import getFormattedDate from '@utils/formatDate';
 
 type PostItemProps = {
   post: IPost & { id: string };
