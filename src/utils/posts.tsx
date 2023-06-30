@@ -8,6 +8,20 @@ import rehypeCodeTitles from 'rehype-code-titles';
 
 const postsDirectory = path.join(process.cwd(), 'markdown', 'posts');
 
+export interface IPost {
+  title: string;
+  date: string | Date;
+  index_img: string;
+  banner_img: string;
+  categories: string[][];
+  tags: string[];
+  excerpt: string;
+}
+
+export interface IPostWithId extends IPost {
+  id: string;
+}
+
 export async function getSortedPostList() {
   const fileNames = fs.readdirSync(postsDirectory);
   const idSet = new Set();

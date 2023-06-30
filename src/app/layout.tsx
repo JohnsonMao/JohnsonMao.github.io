@@ -1,11 +1,11 @@
 import type { Metadata } from 'next';
 import Navbar from '@components/Navbar';
-import { getSettings } from '@utils/settings';
+import { getConfig } from '@utils/config';
 import { Providers } from './providers';
 
 import '../assets/css/globals.css';
 
-const { meta, navbar } = getSettings();
+const { meta, navbar } = getConfig();
 
 export const metadata: Metadata = {
 	title: meta.title,

@@ -1,9 +1,8 @@
-'use client';
-
+import type { IPostWithId } from '@utils/posts';
 import PostItem from './PostItem';
 
 type PostListProps = {
-  posts: (IPost & { id: string })[];
+  posts: IPostWithId[];
 };
 
 function PostList({ posts }: PostListProps) {

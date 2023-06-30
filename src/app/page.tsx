@@ -1,9 +1,9 @@
 import Image from 'next/image';
 import PostList from '@components/PostList';
 import { getSortedPostList } from '@utils/posts';
-import { getSettings } from '@utils/settings';
+import { getConfig } from '@utils/config';
 
-const { banner } = getSettings();
+const { banner } = getConfig();
 
 async function HomePage() {
   const posts = await getSortedPostList();
