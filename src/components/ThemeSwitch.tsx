@@ -1,6 +1,7 @@
 'use client';
 
 import { useTheme } from 'next-themes';
+
 import { BsSunFill, BsMoonFill } from 'react-icons/bs';
 
 function ThemeSwitch() {
