@@ -1,6 +1,8 @@
 import Link from 'next/link';
+
+import type { INavbar } from '@/utils/config';
+
 import ThemeSwitch from './ThemeSwitch';
-import type { INavbar } from '@utils/config';
 
 type NavbarProps = INavbar;
 

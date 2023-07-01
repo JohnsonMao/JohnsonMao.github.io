@@ -1,8 +1,9 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { getPostData, getSortedPostList } from '@utils/posts';
-import formatDate from '@utils/formatDate';
+
+import { getPostData, getSortedPostList } from '@/utils/posts';
+import formatDate from '@/utils/formatDate';
 
 type PostPageProps = {
   params: { postId: string };

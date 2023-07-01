@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
-import Navbar from '@components/Navbar';
-import { getConfig } from '@utils/config';
+
+import Navbar from '@/components/Navbar';
+import { getConfig } from '@/utils/config';
+
 import { Providers } from './providers';
 
 import '../assets/css/globals.css';

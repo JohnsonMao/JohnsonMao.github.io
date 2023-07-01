@@ -6,7 +6,7 @@ import rehypeSlug from 'rehype-slug';
 import rehypePrismPlus from 'rehype-prism-plus';
 import rehypeCodeTitles from 'rehype-code-titles';
 
-const postsDirectory = path.join(process.cwd(), 'markdown', 'posts');
+const POSTS_DIRECTORY = path.join(process.cwd(), 'markdown', 'posts');
 
 export interface IPost {
   title: string;
@@ -22,7 +22,7 @@ export interface IPostWithId extends IPost {
   id: string;
 }
 
-export async function getSortedPostList() {
+export async function getSortedPostList(postsDirectory = POSTS_DIRECTORY) {
   const fileNames = fs.readdirSync(postsDirectory);
   const idSet = new Set();
   const allPostsData = await Promise.all(
@@ -53,7 +53,10 @@ export async function getSortedPostList() {
   return allPostsData.sort((a, b) => (a.date < b.date ? 1 : -1));
 }
 
-export async function getPostData(id: string) {
+export async function getPostData(
+  id: string,
+  postsDirectory = POSTS_DIRECTORY
+) {
   const mdxPath = path.join(postsDirectory, `${id}.mdx`);
   const mdPath = path.join(postsDirectory, `${id}.md`);
   const fullPath = fs.existsSync(mdxPath) ? mdxPath : mdPath;
