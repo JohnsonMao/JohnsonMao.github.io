@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import type { INavbar } from '@/utils/config';
+import type { INavbar } from '@/assets/configs';
 
 import ThemeSwitch from './ThemeSwitch';
 

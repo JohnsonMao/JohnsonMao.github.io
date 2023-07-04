@@ -2,5 +2,5 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
-@import "./prism-dracula.css";
 @import "./prism-plus.css";
+@import "./prism-vsc-dark-plus.css";

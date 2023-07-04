@@ -1,10 +1,10 @@
 import Image from 'next/image';
 
+import config from '@/assets/configs';
 import PostList from '@/components/PostList';
 import { getSortedPostList } from '@/utils/posts';
-import { getConfig } from '@/utils/config';
 
-const { banner } = getConfig();
+const { banner } = config;
 
 async function HomePage() {
   const posts = await getSortedPostList();
