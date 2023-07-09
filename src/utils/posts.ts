@@ -6,7 +6,8 @@ import rehypeSlug from 'rehype-slug';
 import rehypePrismPlus from 'rehype-prism-plus';
 import rehypeCodeTitles from 'rehype-code-titles';
 
-const POSTS_DIRECTORY = path.join(process.cwd(), 'markdown', 'posts');
+import { POSTS_DIRECTORY } from '@/assets/configs/path';
+import Heading from '@/components/Heading';
 
 export interface IPost {
   title: string;
@@ -30,7 +31,7 @@ export async function getSortedPostList(postsDirectory = POSTS_DIRECTORY) {
       const id = fileName.replace(/\.mdx?$/, '');
 
       if (idSet.has(id)) {
-        throw new Error(`Duplicate id "${id}" found in "${fileName}"`);
+        throw Error(`Duplicate id "${id}" found in "${fileName}"`);
       }
       idSet.add(id);
 
@@ -64,7 +65,7 @@ export async function getPostData(
   const { content, frontmatter } = await compileMDX<IPost>({
     source: fileContents,
     components: {
-      h1: (props) => <h2 {...props} />,
+      h1: Heading,
     },
     options: {
       parseFrontmatter: true,
