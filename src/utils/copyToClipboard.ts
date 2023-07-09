@@ -1,9 +1,12 @@
+/**
+ * Implementing a "Copy to Clipboard" functionality while ensuring compatibility
+ * 
+ * https://philstainer.io/blog/copy-code-button-markdown
+ */
 function copyToClipboard(text: string) {
   return new Promise((resolve, reject) => {
-    if (navigator?.clipboard) {
-      const cb = navigator.clipboard;
-
-      cb.writeText(text).then(resolve).catch(reject);
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(text).then(resolve).catch(reject);
     } else {
       try {
         const body = document.querySelector('body');

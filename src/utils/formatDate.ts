@@ -1,3 +1,6 @@
+/**
+ * The function enables language-sensitive date and time formatting.
+ */
 function formatDate(
   date: Date | string,
   locale = 'zh-TW',
