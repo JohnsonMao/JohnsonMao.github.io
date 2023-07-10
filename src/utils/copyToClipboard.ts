@@ -1,7 +1,7 @@
 /**
  * Implementing a "Copy to Clipboard" functionality while ensuring compatibility
  * 
- * https://philstainer.io/blog/copy-code-button-markdown
+ * @see https://philstainer.io/blog/copy-code-button-markdown
  */
 function copyToClipboard(text: string) {
   return new Promise((resolve, reject) => {

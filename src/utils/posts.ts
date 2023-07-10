@@ -6,8 +6,8 @@ import rehypeSlug from 'rehype-slug';
 import rehypePrismPlus from 'rehype-prism-plus';
 import rehypeCodeTitles from 'rehype-code-titles';
 
-import { POSTS_DIRECTORY } from '@/assets/configs/path';
-import Heading from '@/components/Heading';
+import { POSTS_DIRECTORY } from '@/configs/path';
+import Heading from '@/components/common/Heading';
 
 export interface IPost {
   title: string;
@@ -23,17 +23,18 @@ export interface IPostWithId extends IPost {
   id: string;
 }
 
+/** Retrieve posts sorted by date */
 export async function getSortedPostList(postsDirectory = POSTS_DIRECTORY) {
   const fileNames = fs.readdirSync(postsDirectory);
-  const idSet = new Set();
+  const uniqueIdsSet = new Set();
   const allPostsData = await Promise.all(
     fileNames.map(async (fileName) => {
       const id = fileName.replace(/\.mdx?$/, '');
 
-      if (idSet.has(id)) {
+      if (uniqueIdsSet.has(id)) {
         throw Error(`Duplicate id "${id}" found in "${fileName}"`);
       }
-      idSet.add(id);
+      uniqueIdsSet.add(id);
 
       const fullPath = path.join(postsDirectory, fileName);
       const fileContents = fs.readFileSync(fullPath, 'utf8');
@@ -54,7 +55,7 @@ export async function getSortedPostList(postsDirectory = POSTS_DIRECTORY) {
   return allPostsData.sort((a, b) => (a.date < b.date ? 1 : -1));
 }
 
-export async function getPostData(
+export async function getPostDataById(
   id: string,
   postsDirectory = POSTS_DIRECTORY
 ) {

@@ -2,6 +2,8 @@
 
 import { ThemeProvider } from 'next-themes';
 
-export function Providers({ children }: React.PropsWithChildren) {
+function Providers({ children }: React.PropsWithChildren) {
   return <ThemeProvider attribute="class">{children}</ThemeProvider>;
 }
+
+export default Providers

@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
 
-import config from '@/assets/configs';
-import Navbar from '@/components/Navbar';
+import Navbar from '@/components/layouts/Navbar/Navbar';
+import config from '@/configs';
 
-import { Providers } from './providers';
+import Providers from './providers';
 
 import '../assets/css/globals.css';
 

@@ -1,7 +1,7 @@
 import Image from 'next/image';
 
-import config from '@/assets/configs';
-import PostList from '@/components/PostList';
+import PostList from '@/components/layouts/PostList';
+import config from '@/configs';
 import { getSortedPostList } from '@/utils/posts';
 
 const { banner } = config;
