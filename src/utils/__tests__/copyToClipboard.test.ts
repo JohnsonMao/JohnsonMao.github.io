@@ -1,5 +1,26 @@
 import copyToClipboard from '../copyToClipboard';
 
+function setDeviceClipboard(version?: 'new' | 'old') {
+  Object.assign(navigator, { clipboard: undefined });
+  Object.assign(document, { execCommand: undefined });
+
+  switch (version) {
+    case 'new':
+      Object.assign(navigator, {
+        clipboard: {
+          writeText: jest.fn().mockImplementation(() => Promise.resolve()),
+        },
+      });
+      break;
+    case 'old':
+      Object.assign(document, {
+        execCommand: jest.fn().mockImplementation(() => Promise.resolve()),
+      });
+      break;
+    default:
+  }
+}
+
 describe('Copy to clipboard function', () => {
   it('should return error with reject', async () => {
     expect.assertions(1);
@@ -10,9 +31,7 @@ describe('Copy to clipboard function', () => {
   });
 
   it('should call document execCommand', () => {
-    Object.assign(document, {
-      execCommand: jest.fn().mockImplementation(() => Promise.resolve()),
-    });
+    setDeviceClipboard('old');
 
     copyToClipboard('test');
 
@@ -20,11 +39,7 @@ describe('Copy to clipboard function', () => {
   });
 
   it('should call navigator clipboard writeText', () => {
-    Object.assign(navigator, {
-      clipboard: {
-        writeText: jest.fn().mockImplementation(() => Promise.resolve()),
-      },
-    });
+    setDeviceClipboard('new');
 
     copyToClipboard('test');
 

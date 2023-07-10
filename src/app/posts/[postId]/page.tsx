@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
-import { getPostData, getSortedPostList } from '@/utils/posts';
+import { getPostDataById, getSortedPostList } from '@/utils/posts';
 import formatDate from '@/utils/formatDate';
 
 type PostPageProps = {
@@ -42,7 +42,7 @@ async function PostPage({ params }: PostPageProps) {
     return notFound();
   }
 
-  const { content, frontmatter } = await getPostData(postId);
+  const { content, frontmatter } = await getPostDataById(postId);
   const formattedDate = formatDate(frontmatter.date);
 
   return (

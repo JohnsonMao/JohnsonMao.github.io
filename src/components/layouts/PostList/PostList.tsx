@@ -2,7 +2,7 @@ import type { IPostWithId } from '@/utils/posts';
 
 import PostItem from './PostItem';
 
-type PostListProps = {
+export type PostListProps = {
   posts: IPostWithId[];
 };
 

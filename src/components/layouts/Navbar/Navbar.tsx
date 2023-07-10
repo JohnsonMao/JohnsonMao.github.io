@@ -1,10 +1,10 @@
 import Link from 'next/link';
 
-import type { INavbar } from '@/assets/configs';
+import type { INavbar } from '@/configs';
 
-import ThemeSwitch from './ThemeSwitch';
+import ThemeSwitch from '../../common/ThemeSwitch';
 
-type NavbarProps = INavbar;
+export type NavbarProps = INavbar;
 
 function Navbar({ title, menu }: NavbarProps) {
   return (

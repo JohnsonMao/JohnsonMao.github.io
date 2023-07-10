@@ -17,7 +17,7 @@ function PostItem({ post }: PostItemProps) {
   const formattedDate = getFormattedDate(date);
 
   return (
-    <li key={id} className="mt-4 text-2xl dark:text-white/90">
+    <li className="mt-4 text-2xl dark:text-white/90">
       <article className="flex gap-6">
         <div className="relative h-48 w-1/3 shrink-0">
           <Image

@@ -1,5 +1,5 @@
-import { getPostData, getSortedPostList } from '../posts';
-import { SAME_ID_CASE_DIRECTORY } from '@/assets/configs/path';
+import { getPostDataById, getSortedPostList } from '../posts';
+import { SAME_ID_CASE_DIRECTORY } from '@/configs/path';
 
 jest.mock('remark-gfm', () => ({}));
 jest.mock('rehype-slug', () => ({}));
@@ -34,7 +34,7 @@ describe('Get post list function', () => {
 
 describe('Get post data function', () => {
   it('should get post data by mdx file', async () => {
-    const postData = await getPostData('test_A', SAME_ID_CASE_DIRECTORY);
+    const postData = await getPostDataById('test_A', SAME_ID_CASE_DIRECTORY);
 
     expect(postData).toEqual({
       content: '測試文章A',
@@ -44,7 +44,7 @@ describe('Get post data function', () => {
   });
 
   it('should get post data by md file', async () => {
-    const postData = await getPostData('test_C');
+    const postData = await getPostDataById('test_C');
 
     expect(postData).toEqual({
       content: '測試文章C',
