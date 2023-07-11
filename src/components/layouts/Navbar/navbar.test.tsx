@@ -19,11 +19,14 @@ describe('Navbar component', () => {
 
     expect(navbar).toBeInTheDocument();
     expect(navbar.tagName).toBe('NAV');
-    expect(brandLink.textContent).toBe(title);
+
+    expect(brandLink).toHaveTextContent(title);
     expect(brandLink.getAttribute('href')).toBe('/');
-    expect(linkA.textContent).toBe(menu[0].title);
+
+    expect(linkA).toHaveTextContent(menu[0].title);
     expect(linkA.getAttribute('href')).toBe(menu[0].url);
-    expect(linkB.textContent).toBe(menu[1].title);
+
+    expect(linkB).toHaveTextContent(menu[1].title);
     expect(linkB.getAttribute('href')).toBe(menu[1].url);
   });
 });
