@@ -50,7 +50,7 @@ describe('ThemeSwitch component', () => {
     expect(button).toBeInTheDocument();
   });
 
-  it('should correct switch theme', async () => {
+  it('should correctly switch the theme when clicked', async () => {
     setDeviceTheme('dark');
 
     render(
@@ -64,9 +64,11 @@ describe('ThemeSwitch component', () => {
     await userEvent.click(button);
 
     expect(global.Storage.prototype.getItem('theme')).toBe('light');
+    expect(document.documentElement.getAttribute('style')).toBe('color-scheme: light;');
 
     await userEvent.click(button);
 
     expect(global.Storage.prototype.getItem('theme')).toBe('system');
+    expect(document.documentElement.getAttribute('style')).toBe('color-scheme: dark;');
   });
 });
