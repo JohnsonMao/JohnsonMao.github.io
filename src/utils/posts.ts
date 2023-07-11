@@ -8,6 +8,7 @@ import rehypeCodeTitles from 'rehype-code-titles';
 
 import { POSTS_DIRECTORY } from '@/configs/path';
 import Heading from '@/components/common/Heading';
+import CodeBox from '@/components/common/CodeBox';
 
 export interface IPost {
   title: string;
@@ -67,6 +68,7 @@ export async function getPostDataById(
     source: fileContents,
     components: {
       h1: Heading,
+      pre: CodeBox
     },
     options: {
       parseFrontmatter: true,
