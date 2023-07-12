@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 
 function RootLayout({ children }: React.PropsWithChildren) {
 	return (
-		<html lang="en" suppressHydrationWarning>
+		<html lang="en" className="scroll-smooth" suppressHydrationWarning>
 			<body className="dark:bg-slate-800">
 				<Providers>
 					<Navbar {...navbar} />

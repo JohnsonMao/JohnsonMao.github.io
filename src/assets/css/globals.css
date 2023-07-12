@@ -4,3 +4,7 @@
 
 @import "./prism-plus.css";
 @import "./prism-vsc-dark-plus.css";
+
+:root {
+  scroll-padding-top: 72px;
+}
