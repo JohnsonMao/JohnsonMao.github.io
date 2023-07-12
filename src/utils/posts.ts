@@ -7,7 +7,7 @@ import rehypePrismPlus from 'rehype-prism-plus';
 import rehypeCodeTitles from 'rehype-code-titles';
 
 import { POSTS_DIRECTORY } from '@/configs/path';
-import Heading from '@/components/common/Heading';
+import { H1, H2, H3, H4, H5, H6 } from '@/components/common/Heading';
 import CodeBox from '@/components/common/CodeBox';
 
 export interface IPost {
@@ -67,8 +67,13 @@ export async function getPostDataById(
   const { content, frontmatter } = await compileMDX<IPost>({
     source: fileContents,
     components: {
-      h1: Heading,
-      pre: CodeBox
+      h1: H1,
+      h2: H2,
+      h3: H3,
+      h4: H4,
+      h5: H5,
+      h6: H6,
+      pre: CodeBox,
     },
     options: {
       parseFrontmatter: true,
