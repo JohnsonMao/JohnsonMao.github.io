@@ -4,6 +4,7 @@
     "plugin:@typescript-eslint/recommended",
     "plugin:tailwindcss/recommended",
     "plugin:jsx-a11y/recommended",
+    "plugin:sonarjs/recommended",
     "prettier"
   ],
   "plugins": ["tailwindcss"]
