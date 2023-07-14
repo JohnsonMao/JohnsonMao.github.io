@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "clsx": "^1.2.1",
+    "image-size": "^1.0.2",
     "next": "13.2.4",
     "next-mdx-remote": "^4.4.1",
     "next-sitemap": "^4.1.8",
@@ -23,7 +24,9 @@
     "rehype-prism-plus": "^1.5.1",
     "rehype-slug": "^5.1.0",
     "remark-gfm": "^3.0.1",
-    "tailwind-merge": "^1.12.0"
+    "sharp": "^0.32.3",
+    "tailwind-merge": "^1.12.0",
+    "unist-util-visit": "^5.0.0"
   },
   "devDependencies": {
     "@svgr/webpack": "^7.0.0",
@@ -36,6 +39,7 @@
     "@types/react": "^18.0.30",
     "@types/react-dom": "^18.0.11",
     "@types/testing-library__jest-dom": "^5.14.6",
+    "@types/unist": "^3.0.0",
     "@typescript-eslint/eslint-plugin": "^5.57.0",
     "autoprefixer": "^10.4.14",
     "eslint": "^8.36.0",

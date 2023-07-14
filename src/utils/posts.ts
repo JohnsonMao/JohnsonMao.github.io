@@ -10,6 +10,7 @@ import { POSTS_DIRECTORY } from '@/configs/path';
 import { H1, H2, H3, H4, H5, H6 } from '@/components/common/Heading';
 import CodeBox from '@/components/common/CodeBox';
 import Link from '@/components/common/Link';
+import rehypeImageMetadata from '@/plugins/rehypeImageMetadata';
 
 export interface IPost {
   title: string;
@@ -81,7 +82,12 @@ export async function getPostDataById(
       parseFrontmatter: true,
       mdxOptions: {
         remarkPlugins: [remarkGfm],
-        rehypePlugins: [rehypeSlug, rehypeCodeTitles, rehypePrismPlus],
+        rehypePlugins: [
+          rehypeSlug,
+          rehypeCodeTitles,
+          rehypePrismPlus,
+          rehypeImageMetadata,
+        ],
       },
     },
   });
