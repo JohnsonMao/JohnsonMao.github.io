@@ -5,6 +5,8 @@ jest.mock('remark-gfm', () => ({}));
 jest.mock('rehype-slug', () => ({}));
 jest.mock('rehype-prism-plus', () => ({}));
 jest.mock('rehype-code-titles', () => ({}));
+jest.mock('sharp', () => ({}));
+jest.mock('unist-util-visit', () => ({}));
 jest.mock('next-mdx-remote/rsc', () => ({
   compileMDX: ({ source }: { source: string }) => ({
     frontmatter: { date: source.replace(/[^/\d]/g, '') },

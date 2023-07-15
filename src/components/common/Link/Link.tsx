@@ -1,24 +1,21 @@
-import type { AnchorHTMLAttributes, ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import NextLink, { LinkProps as NextLinkProps } from 'next/link';
 import { HiExternalLink } from 'react-icons/hi';
 
 import cn from '@/utils/cn';
 
-type AnchorProps = AnchorHTMLAttributes<HTMLElement>;
-
-type LinkProps = (NextLinkProps | AnchorProps) & {
-  children?: ReactNode;
+type LinkProps = NextLinkProps & {
+  children: ReactNode;
   className?: string;
 };
 
-function Link({ href, className, children, ...attributes }: LinkProps) {
+function Link({ href, className, children, ...otherProps }: LinkProps) {
+  const isInteralLink = typeof href === 'object' || href.startsWith('/');
   const isAnchorLink = typeof href === 'string' && href.startsWith('#');
-  const isInteralLink =
-    typeof href === 'object' || (href && href.startsWith('/'));
 
   if (isInteralLink) {
     return (
-      <NextLink href={href} className={className} {...attributes}>
+      <NextLink href={href} className={className} {...otherProps}>
         {children}
       </NextLink>
     );
@@ -26,7 +23,7 @@ function Link({ href, className, children, ...attributes }: LinkProps) {
 
   if (isAnchorLink) {
     return (
-      <a href={href} className={className} {...attributes}>
+      <a href={href} className={className} {...otherProps}>
         {children}
       </a>
     );
@@ -38,7 +35,7 @@ function Link({ href, className, children, ...attributes }: LinkProps) {
       target="_blank"
       rel="noopener noreferrer"
       className={cn('inline-flex align-top', className)}
-      {...attributes}
+      {...otherProps}
     >
       {children}
       <HiExternalLink />

@@ -12,13 +12,13 @@ function Heading({
   id,
   className,
   children,
-  ...attributes
+  ...otherProps
 }: HeadingProps) {
   return (
     <Component
       id={id}
       className={cn('group relative', className)}
-      {...attributes}
+      {...otherProps}
     >
       <a
         href={id}
