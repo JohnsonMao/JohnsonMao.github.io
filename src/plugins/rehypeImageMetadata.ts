@@ -5,13 +5,10 @@
  * @see https://kylepfromer.com/blog/nextjs-image-component-blog
  */
 import type { Node } from 'unist';
-import imageSize from 'image-size';
+import fs from 'fs';
 import path from 'path';
 import sharp from 'sharp';
 import { visit } from 'unist-util-visit';
-import { promisify } from 'util';
-
-const sizeOf = promisify(imageSize);
 
 /** An `<img>` HAST node */
 interface ImageNode extends Node {
@@ -42,25 +39,25 @@ function filterImageNode(node: ImageNode): boolean {
   return node.properties.src.startsWith('/');
 }
 
-async function getPlaiceholder(src: string) {
-  const metadata = await sharp(src)
+async function getPlaiceholder(buffer: ArrayBufferLike) {
+  const metadata = await sharp(buffer)
     .metadata()
     .then(({ width, height, ...metadata }) => {
       if (!width || !height) {
-        throw Error('Could not get required image metadata');
+        throw new Error('Could not get required image metadata');
       }
 
       return { width, height, ...metadata };
     });
 
-  const pipeline = sharp(src)
+  const pipeline = sharp(buffer)
     .resize(10, 10, {
       fit: 'inside',
     })
     .toFormat('png')
     .modulate({
       brightness: 1,
-      saturation: 1.2,
+      saturation: 1,
     });
 
   const base64 = await pipeline
@@ -76,24 +73,20 @@ async function getPlaiceholder(src: string) {
       throw err;
     });
 
-  return {
-    base64,
-    metadata,
-  };
+  return { base64, metadata };
 }
 
 /** Adds the image's `height` and `width` to it's properties */
-async function addMetadata(node: ImageNode): Promise<void> {
-  const res = await sizeOf(
-    path.join(process.cwd(), 'public', node.properties.src)
-  );
+async function addMetadata(node: ImageNode) {
+  const { src } = node.properties;
+  const imageSrc = src.startsWith('/public') ? src : `/public${src}`;
+  const imageDirectory = path.join(process.cwd(), imageSrc);
+  const file = fs.readFileSync(imageDirectory);
+  const { base64, metadata } = await getPlaiceholder(file.buffer);
 
-  if (!res) throw Error(`Invalid image with src "${node.properties.src}"`);
-
-  const { base64 } = await getPlaiceholder(node.properties.src);
-
-  node.properties.width = res.width;
-  node.properties.height = res.height;
+  node.properties.src = imageSrc.replace('/public', '');
+  node.properties.width = metadata.width;
+  node.properties.height = metadata.height;
   node.properties.base64 = base64;
 }
 

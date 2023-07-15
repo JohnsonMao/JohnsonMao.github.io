@@ -1,3 +1,4 @@
+import type { AnchorHTMLAttributes, ImgHTMLAttributes, FC } from 'react';
 import fs from 'fs';
 import path from 'path';
 import { compileMDX } from 'next-mdx-remote/rsc';
@@ -9,6 +10,7 @@ import rehypeCodeTitles from 'rehype-code-titles';
 import { POSTS_DIRECTORY } from '@/configs/path';
 import { H1, H2, H3, H4, H5, H6 } from '@/components/common/Heading';
 import CodeBox from '@/components/common/CodeBox';
+import Image from '@/components/common/Image';
 import Link from '@/components/common/Link';
 import rehypeImageMetadata from '@/plugins/rehypeImageMetadata';
 
@@ -35,7 +37,7 @@ export async function getSortedPostList(postsDirectory = POSTS_DIRECTORY) {
       const id = fileName.replace(/\.mdx?$/, '');
 
       if (uniqueIdsSet.has(id)) {
-        throw Error(`Duplicate id "${id}" found in "${fileName}"`);
+        throw new Error(`Duplicate id "${id}" found in "${fileName}"`);
       }
       uniqueIdsSet.add(id);
 
@@ -76,7 +78,8 @@ export async function getPostDataById(
       h5: H5,
       h6: H6,
       pre: CodeBox,
-      a: Link,
+      img: Image as FC<ImgHTMLAttributes<HTMLElement>>,
+      a: Link as FC<AnchorHTMLAttributes<HTMLElement>>,
     },
     options: {
       parseFrontmatter: true,
