@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 
-import Navbar from '@/components/layouts/Navbar/Navbar';
+import Navbar from '@/components/layouts/Navbar';
 import config from '@/configs';
 
 import Providers from './providers';
