@@ -42,9 +42,9 @@ export async function getSortedPostList(postsDirectory = POSTS_DIRECTORY) {
       uniqueIdsSet.add(id);
 
       const fullPath = path.join(postsDirectory, fileName);
-      const fileContents = fs.readFileSync(fullPath, 'utf8');
+      const source = fs.readFileSync(fullPath, 'utf8');
       const { frontmatter } = await compileMDX<IPost>({
-        source: fileContents,
+        source,
         options: {
           parseFrontmatter: true,
         },
@@ -67,9 +67,9 @@ export async function getPostDataById(
   const mdxPath = path.join(postsDirectory, `${id}.mdx`);
   const mdPath = path.join(postsDirectory, `${id}.md`);
   const fullPath = fs.existsSync(mdxPath) ? mdxPath : mdPath;
-  const fileContents = fs.readFileSync(fullPath, 'utf8');
+  const source = fs.readFileSync(fullPath, 'utf8');
   const { content, frontmatter } = await compileMDX<IPost>({
-    source: fileContents,
+    source,
     components: {
       h1: H1,
       h2: H2,
@@ -95,5 +95,5 @@ export async function getPostDataById(
     },
   });
 
-  return { id, content, frontmatter };
+  return { id, content, frontmatter, source };
 }
