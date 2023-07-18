@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
+import TableOfContents from '@/components/common/TableOfContents';
 import { getPostDataById, getSortedPostList } from '@/utils/posts';
 import formatDate from '@/utils/formatDate';
 
@@ -42,16 +43,21 @@ async function PostPage({ params }: PostPageProps) {
     return notFound();
   }
 
-  const { content, frontmatter } = await getPostDataById(postId);
+  const { content, frontmatter, source } = await getPostDataById(postId);
   const formattedDate = formatDate(frontmatter.date);
 
   return (
-    <main className="prose prose-xl prose-slate mx-auto px-6 dark:prose-invert">
-      <h1 className="mb-0 mt-4 text-3xl">{frontmatter.title}</h1>
-      <p className="mt-0">{formattedDate}</p>
-      <article>{content}</article>
-      <Link href="/">回首頁</Link>
-    </main>
+    <>
+      <aside className="fixed bottom-0 left-4 top-16 w-40 overflow-auto">
+        <TableOfContents source={source} />
+      </aside>
+      <main className="prose prose-xl prose-slate mx-auto px-6 dark:prose-invert">
+        <h1 className="mb-0 mt-4 text-3xl">{frontmatter.title}</h1>
+        <p className="mt-0">{formattedDate}</p>
+        <article>{content}</article>
+        <Link href="/">回首頁</Link>
+      </main>
+    </>
   );
 }
 
