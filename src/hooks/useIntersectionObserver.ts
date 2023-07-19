@@ -6,15 +6,20 @@ interface UseIntersectionObserverProps extends IntersectionObserverInit {
   elementRef?: RefObject<ElementNode>;
 }
 
+type UseIntersectionObserverResponse = [
+  IntersectionObserverEntry[],
+  (node: ElementNode) => void
+] & {
+  entry: IntersectionObserverEntry[];
+  setElementRef: (node: ElementNode) => void;
+};
+
 function useIntersectionObserver({
   root = null,
   threshold = 0,
   rootMargin,
   elementRef,
-}: UseIntersectionObserverProps = {}): [
-  IntersectionObserverEntry[],
-  (node: ElementNode) => void
-] {
+}: UseIntersectionObserverProps = {}): UseIntersectionObserverResponse {
   const [entry, setEntry] = useState<IntersectionObserverEntry[]>([]);
   const observerRef = useRef<IntersectionObserver>();
   const interalElementRef = useRef<ElementNode>();
@@ -44,7 +49,15 @@ function useIntersectionObserver({
     return () => observerRef.current?.disconnect();
   }, [elementRef, setInteralElementRef]);
 
-  return [entry, setInteralElementRef];
+  const result = [
+    entry,
+    setInteralElementRef,
+  ] as UseIntersectionObserverResponse;
+
+  result.entry = result[0];
+  result.setElementRef = result[1];
+
+  return result;
 }
 
 export default useIntersectionObserver;
