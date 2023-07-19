@@ -42,6 +42,7 @@ describe('Get post data function', () => {
       content: '測試文章A',
       frontmatter: { date: '2023/07/08' },
       id: 'test_A',
+      source: '---\ndate: 2023/07/08\n---\n\n測試文章A',
     });
   });
 
@@ -52,6 +53,7 @@ describe('Get post data function', () => {
       content: '測試文章C',
       frontmatter: { date: '2023/07/09' },
       id: 'test_C',
+      source: '---\ndate: 2023/07/09\n---\n\n測試文章C',
     });
   });
 });
