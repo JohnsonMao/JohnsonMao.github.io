@@ -49,6 +49,9 @@ async function PostPage({ params }: PostPageProps) {
   return (
     <>
       <aside className="fixed bottom-0 left-4 top-16 w-40 overflow-auto">
+        <p className="my-3 text-lg font-semibold text-gray-900 transition-colors dark:text-gray-100">
+          目錄
+        </p>
         <TableOfContents source={source} />
       </aside>
       <main className="prose prose-xl prose-slate mx-auto px-6 dark:prose-invert">
