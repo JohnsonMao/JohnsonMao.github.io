@@ -23,12 +23,9 @@ function TableOfContents({ source }: TableOfContentsProps) {
     const text = raw.replace(/^###*\s/, '');
     const level = raw.slice(0, 3) === '###' ? 3 : 2;
     const slugger = new GithubSlugger();
+    const id = slugger.slug(text);
 
-    return {
-      text,
-      level,
-      id: slugger.slug(text),
-    };
+    return { text, level, id };
   });
 
   useEffect(() => {
@@ -49,30 +46,24 @@ function TableOfContents({ source }: TableOfContentsProps) {
   }, [entry]);
 
   return (
-    <div className="mt-10">
-      <p className="mb-5 text-lg font-semibold text-gray-900 transition-colors dark:text-gray-100">
-        目錄
-      </p>
-      <div className="flex flex-col items-start justify-start">
-        {headings.map((heading, index) => {
-          return (
-            <Link
-              key={index}
-              href={`#${heading.id}`}
-              className={cn(
-                heading.id === activeId
-                  ? 'text-primary-500 hover:text-primary-600 dark:hover:text-primary-400 font-medium'
-                  : 'font-normal text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200',
-                heading.level === 3 && 'pl-4',
-                'mb-3 text-left text-sm transition-colors hover:underline'
-              )}
-            >
-              {heading.text}
-            </Link>
-          );
-        })}
-      </div>
-    </div>
+    <ul>
+      {headings.map((heading) => (
+        <li key={heading.id}>
+          <Link
+            href={`#${heading.id}`}
+            className={cn(
+              'mb-3 text-left text-sm transition-colors hover:underline',
+              heading.id === activeId
+                ? 'font-medium text-primary-500 hover:text-primary-600 dark:hover:text-primary-400'
+                : 'font-normal text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200',
+              heading.level === 3 && 'pl-4'
+            )}
+          >
+            {heading.text}
+          </Link>
+        </li>
+      ))}
+    </ul>
   );
 }
 
