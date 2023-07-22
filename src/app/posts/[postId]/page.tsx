@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 import TableOfContents from '@/components/common/TableOfContents';
+import Comment from '@/components/common/Comment';
 import { getPostDataById, getSortedPostList } from '@/utils/posts';
 import formatDate from '@/utils/formatDate';
 
@@ -59,6 +60,7 @@ async function PostPage({ params }: PostPageProps) {
         <p className="mt-0">{formattedDate}</p>
         <article>{content}</article>
         <Link href="/">回首頁</Link>
+        <Comment />
       </main>
     </>
   );

@@ -46,24 +46,26 @@ function TableOfContents({ source }: TableOfContentsProps) {
   }, [entry]);
 
   return (
-    <ul>
-      {headings.map((heading) => (
-        <li key={heading.id}>
-          <Link
-            href={`#${heading.id}`}
-            className={cn(
-              'mb-3 text-left text-sm transition-colors hover:underline',
-              heading.id === activeId
-                ? 'font-medium text-primary-500 hover:text-primary-600 dark:hover:text-primary-400'
-                : 'font-normal text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200',
-              heading.level === 3 && 'pl-4'
-            )}
-          >
-            {heading.text}
-          </Link>
-        </li>
-      ))}
-    </ul>
+    <nav aria-label="Table of contents">
+      <ul>
+        {headings.map((heading) => (
+          <li key={heading.id}>
+            <Link
+              href={`#${heading.id}`}
+              className={cn(
+                'mb-3 text-left text-sm transition-colors hover:underline',
+                heading.id === activeId
+                  ? 'text-primary-500 hover:text-primary-600 dark:hover:text-primary-400 font-medium'
+                  : 'font-normal text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200',
+                heading.level === 3 && 'pl-4'
+              )}
+            >
+              {heading.text}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </nav>
   );
 }
 

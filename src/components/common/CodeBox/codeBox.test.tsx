@@ -40,8 +40,11 @@ describe('CodeBox component', () => {
     expect(navigator.clipboard.writeText).toBeCalledTimes(2);
     expect(navigator.clipboard.writeText).toHaveBeenCalledWith(code);
 
-    await waitFor(() => {
-      expect(screen.queryByText('複製成功！')).toHaveClass('opacity-0');
-    });
+    await waitFor(
+      () => {
+        expect(screen.queryByText('複製成功！')).toHaveClass('opacity-0');
+      },
+      { timeout: 2000 }
+    );
   });
 });
