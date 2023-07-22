@@ -10,6 +10,9 @@ dependencies:
   github-slugger:
     specifier: ^2.0.0
     version: 2.0.0
+  i18next:
+    specifier: ^23.2.11
+    version: 23.2.11
   next:
     specifier: 13.2.4
     version: 13.2.4(@babel/core@7.22.5)(react-dom@18.2.0)(react@18.2.0)
@@ -114,6 +117,9 @@ devDependencies:
   eslint-plugin-tailwindcss:
     specifier: ^3.10.3
     version: 3.10.3(tailwindcss@3.3.0)
+  i18next-resources-for-ts:
+    specifier: ^1.2.1
+    version: 1.2.1
   jest:
     specifier: ^29.5.0
     version: 29.5.0(@types/node@18.15.10)
@@ -1437,7 +1443,6 @@ packages:
     engines: {node: '>=6.9.0'}
     dependencies:
       regenerator-runtime: 0.13.11
-    dev: true
 
   /@babel/template@7.22.5:
     resolution: {integrity: sha512-X7yV7eiwAxdj9k94NEylvbVHLiVG1nvzCV2EAowhxLTwODV1jl9UzZ48leOC0sH7OnuHrIkllaBgneUykIcZaw==}
@@ -4563,6 +4568,19 @@ packages:
     engines: {node: '>=14.18.0'}
     dev: true
 
+  /i18next-resources-for-ts@1.2.1:
+    resolution: {integrity: sha512-Z2FmlSJZRVUlmcqVnpoe2oxixawSYku2Ez7p1KRF3TsJAhW5JzcynKkeeqlw5Jn6MJHhOpXKvT3eK2UcWt2/aw==}
+    hasBin: true
+    dependencies:
+      '@babel/runtime': 7.22.5
+    dev: true
+
+  /i18next@23.2.11:
+    resolution: {integrity: sha512-MA4FsxOjyCaOZtRDB4yuwjCvqYEioD4G4LlXOn7SO3rnQUlxTufyLsOqfL9MKakeLRBkefe8bqcs0D6Z/xFk1w==}
+    dependencies:
+      '@babel/runtime': 7.22.5
+    dev: false
+
   /iconv-lite@0.6.3:
     resolution: {integrity: sha512-4fCk79wshMdzMp2rH06qWrJE4iolqLhCUH+OiuIgU++RB0+94NlDL81atO7GX55uUKueo0txHNtvEyI6D7WdMw==}
     engines: {node: '>=0.10.0'}
@@ -7002,7 +7020,6 @@ packages:
 
   /regenerator-runtime@0.13.11:
     resolution: {integrity: sha512-kY1AZVr2Ra+t+piVaJ4gxaFaReZVH40AKNo7UCX6W+dEwBo/2oZJzqfuN1qLq1oL45o56cPaTXELwrTh8Fpggg==}
-    dev: true
 
   /regenerator-transform@0.15.1:
     resolution: {integrity: sha512-knzmNAcuyxV+gQCufkYcvOqX/qIIfHLv0u5x79kRxuGojfYVky1f15TzZEu2Avte8QGepvUNTnLskf8E6X6Vyg==}
