@@ -7,16 +7,16 @@ import { BsSunFill, BsMoonFill } from 'react-icons/bs';
 function ThemeSwitch() {
   const { theme, systemTheme, setTheme } = useTheme();
   const isSystemDarkTheme = systemTheme === 'dark';
-  const alternateColor = isSystemDarkTheme ? 'light' : 'dark';
-  const isAlternateColor = theme === alternateColor;
+  const alternateTheme = isSystemDarkTheme ? 'light' : 'dark';
+  const isAlternateTheme = theme === alternateTheme;
 
   const handleClick = () => {
-    setTheme(isAlternateColor ? 'system' : alternateColor);
+    setTheme(isAlternateTheme ? 'system' : alternateTheme);
   };
 
   return (
     <button onClick={handleClick} className="text-white">
-      {isAlternateColor ? <BsMoonFill /> : <BsSunFill />}
+      {isAlternateTheme ? <BsMoonFill /> : <BsSunFill />}
     </button>
   );
 }

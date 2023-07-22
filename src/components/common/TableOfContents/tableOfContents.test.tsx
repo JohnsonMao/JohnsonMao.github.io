@@ -40,8 +40,10 @@ describe('TableOfContents component', () => {
 
     render(<TableOfContents source={source} />);
 
+    const toc = screen.getByRole('navigation');
     const anchorLinks = screen.getAllByRole('link');
 
+    expect(toc).toBeInTheDocument();
     expect(anchorLinks.length).toBe(4);
     expect(anchorLinks[0]).toHaveAttribute('href', '#H2_1');
     expect(anchorLinks[1]).toHaveAttribute('href', '#H3_1-1');
