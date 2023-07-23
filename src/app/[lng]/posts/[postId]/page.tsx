@@ -18,10 +18,9 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({
-  params,
+  params: { postId },
 }: PostPageProps): Promise<Metadata> {
   const posts = await getSortedPostList();
-  const postId = params.postId;
   const post = posts.find((post) => post.id === postId);
 
   if (!post) {
@@ -36,9 +35,8 @@ export async function generateMetadata({
   };
 }
 
-async function PostPage({ params }: PostPageProps) {
+async function PostPage({ params: { postId } }: PostPageProps) {
   const posts = await getSortedPostList();
-  const postId = params.postId;
 
   if (!postId || !posts.find((post) => post.id !== postId)) {
     return notFound();

@@ -2,15 +2,16 @@ import i18n from 'i18next';
 import enCommon from './locales/en/common.json';
 import zhCommon from './locales/zh-TW/common.json';
 
-export const fallbackLng = 'zh-TW';
+export const defaultLocale = 'zh-TW';
+export const locales = [defaultLocale, 'en'] as const;
 
 i18n.init({
-  fallbackLng,
+  fallbackLng: 'en',
   resources: {
     en: {
       common: enCommon,
     },
-    zh: {
+    'zh-TW': {
       common: zhCommon,
     },
   },

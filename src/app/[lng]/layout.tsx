@@ -5,7 +5,7 @@ import config from '@/configs';
 
 import Providers from './providers';
 
-import '../assets/css/globals.css';
+import '@/assets/css/globals.css';
 
 const { meta, navbar } = config;
 
