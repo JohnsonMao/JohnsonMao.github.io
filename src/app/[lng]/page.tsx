@@ -4,7 +4,7 @@ import PostList from '@/components/layouts/PostList';
 import i18n, { locales } from '@/i18n';
 import { getSortedPostList } from '@/utils/posts';
 
-type HomePageProps = {
+export type RootProps = {
   params: {
     lng: (typeof locales)[number];
   };
@@ -14,7 +14,7 @@ export async function generateStaticParams() {
   return locales.map((lng) => ({ lng }));
 }
 
-async function HomePage({ params: { lng } }: HomePageProps) {
+async function RootPage({ params: { lng } }: RootProps) {
   const posts = await getSortedPostList();
   const { t } = i18n;
 
@@ -37,4 +37,4 @@ async function HomePage({ params: { lng } }: HomePageProps) {
   );
 }
 
-export default HomePage;
+export default RootPage;
