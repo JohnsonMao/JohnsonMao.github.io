@@ -14,5 +14,6 @@
     "plugin:sonarjs/recommended",
     "prettier"
   ],
-  "plugins": ["tailwindcss"]
+  "plugins": ["tailwindcss"],
+  "ignorePatterns": ["jest.config.js"]
 }

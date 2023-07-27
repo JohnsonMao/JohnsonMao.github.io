@@ -1,20 +1,11 @@
-import i18n from 'i18next';
-import enCommon from './locales/en/common.json';
-import zhCommon from './locales/zh-TW/common.json';
-
-export const defaultLocale = 'zh-TW';
+const defaultLocale = 'zh-TW';
 export const locales = [defaultLocale, 'en'] as const;
 
-i18n.init({
-  fallbackLng: 'en',
-  resources: {
-    en: {
-      common: enCommon,
-    },
-    'zh-TW': {
-      common: zhCommon,
-    },
-  },
-});
+export type Locale = (typeof locales)[number];
 
-export default i18n;
+const dictionaries = {
+  'zh-TW': () => import('~/locales/zh-TW/common.json').then((module) => module.default),
+  en: () => import('~/locales/en/common.json').then((module) => module.default),
+};
+
+export const getDictionary = async (locale: Locale) => dictionaries[locale]();
