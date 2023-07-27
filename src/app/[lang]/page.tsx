@@ -1,22 +1,13 @@
 import Image from 'next/image';
 
 import PostList from '@/components/layouts/PostList';
-import i18n, { locales } from '@/i18n';
+import { getDictionary } from '@/i18n';
 import { getSortedPostList } from '@/utils/posts';
+import type { RootProps } from './layout';
 
-export type RootProps = {
-  params: {
-    lng: (typeof locales)[number];
-  };
-};
-
-export async function generateStaticParams() {
-  return locales.map((lng) => ({ lng }));
-}
-
-async function RootPage({ params: { lng } }: RootProps) {
+async function RootPage({ params: { lang } }: RootProps) {
   const posts = await getSortedPostList();
-  const { t } = i18n;
+  const dict = await getDictionary(lang);
 
   return (
     <main className="mx-auto px-6">
@@ -30,7 +21,7 @@ async function RootPage({ params: { lng } }: RootProps) {
         />
       </section>
       <p className="my-12 text-center text-3xl dark:text-white">
-        {t('title', { lng, ns: 'common' })}
+        {dict.title}
       </p>
       <PostList posts={posts} />
     </main>
