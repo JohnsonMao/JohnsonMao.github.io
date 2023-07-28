@@ -1,4 +1,3 @@
-import type { AnchorHTMLAttributes, ImgHTMLAttributes, FC } from 'react';
 import fs from 'fs';
 import path from 'path';
 import { compileMDX } from 'next-mdx-remote/rsc';
@@ -78,8 +77,8 @@ export async function getPostDataById(
       h5: H5,
       h6: H6,
       pre: CodeBox,
-      img: Image as FC<ImgHTMLAttributes<HTMLElement>>,
-      a: Link as FC<AnchorHTMLAttributes<HTMLElement>>,
+      img: Image as () => JSX.Element,
+      a: Link as () => JSX.Element,
     },
     options: {
       parseFrontmatter: true,
