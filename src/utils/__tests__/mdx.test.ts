@@ -1,4 +1,4 @@
-import { getPostDataById, getSortedPostList } from '../posts';
+import { getPostDataById, getSortedPostList } from '../mdx';
 import { SAME_ID_CASE_DIRECTORY } from '@/configs/path';
 
 jest.mock('remark-gfm', () => ({}));
