@@ -6,7 +6,7 @@ import { AiOutlineTags } from 'react-icons/ai';
 
 import Link from '@/components/common/Link';
 import getFormattedDate from '@/utils/formatDate';
-import type { IPostWithId } from '@/utils/posts';
+import type { IPostWithId } from '@/utils/mdx';
 
 type PostItemProps = {
   post: IPostWithId;

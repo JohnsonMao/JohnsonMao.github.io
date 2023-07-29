@@ -1,6 +1,5 @@
-const defaultLocale = 'zh-TW';
+export const defaultLocale = 'zh-TW';
 export const locales = [defaultLocale, 'en'] as const;
-
 export type Locale = (typeof locales)[number];
 
 const dictionaries = {

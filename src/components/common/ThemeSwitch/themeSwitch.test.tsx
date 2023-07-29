@@ -7,7 +7,7 @@ import ThemeSwitch from '.';
 
 /**
  * Create a mock of the window.matchMedia function
- * @see https://stackoverflow.com/questions/39830580/jest-test-fails-typeerror-window-matchmedia-is-not-a-function
+ * @see https://jestjs.io/docs/manual-mocks#mocking-methods-which-are-not-implemented-in-jsdom
  */
 export function setDeviceTheme(theme: 'light' | 'dark') {
   Object.defineProperty(window, 'matchMedia', {
@@ -16,8 +16,8 @@ export function setDeviceTheme(theme: 'light' | 'dark') {
       matches: theme === 'dark',
       media: query,
       onchange: null,
-      addListener: jest.fn(), // Deprecated
-      removeListener: jest.fn(), // Deprecated
+      addListener: jest.fn(),
+      removeListener: jest.fn(),
       addEventListener: jest.fn(),
       removeEventListener: jest.fn(),
       dispatchEvent: jest.fn(),

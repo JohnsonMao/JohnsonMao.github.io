@@ -1,11 +1,20 @@
 import Image from 'next/image';
 
 import PostList from '@/components/layouts/PostList';
-import { getDictionary } from '@/i18n';
-import { getSortedPostList } from '@/utils/posts';
-import type { RootProps } from './layout';
+import { Locale, locales, getDictionary } from '@/i18n';
+import { getSortedPostList } from '@/utils/mdx';
 
-async function RootPage({ params: { lang } }: RootProps) {
+export const dynamic = 'force-static';
+
+export async function generateStaticParams() {
+  return locales.map((lang) => ({ lang }));
+}
+
+export type RootPageProps = {
+  params: { lang: Locale };
+};
+
+async function RootPage({ params: { lang } }: RootPageProps) {
   const posts = await getSortedPostList();
   const dict = await getDictionary(lang);
 
@@ -20,9 +29,7 @@ async function RootPage({ params: { lang } }: RootProps) {
           alt="Johnson Mao"
         />
       </section>
-      <p className="my-12 text-center text-3xl dark:text-white">
-        {dict.title}
-      </p>
+      <p className="my-12 text-center text-3xl dark:text-white">{dict.title}</p>
       <PostList posts={posts} />
     </main>
   );
