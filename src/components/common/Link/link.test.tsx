@@ -19,11 +19,9 @@ describe('Link component', () => {
       },
     };
 
-    const keys: <T>(object: T) => (keyof T)[] = Object.keys;
-
     render(
       <>
-        {keys(links).map((key) => (
+        {Object.keys(links).map((key) => (
           <Link key={key} href={links[key].href}>
             {links[key].text}
           </Link>

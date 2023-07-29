@@ -1,28 +1,34 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { locales } from './i18n';
+import { defaultLocale, locales } from './i18n';
+
+const X_LANGUAGE_PREFERENCE = 'X-Language-Preference';
 
 export function middleware(request: NextRequest) {
   // Check if there is any supported locale in the pathname
   const pathname = request.nextUrl.pathname;
+  const response = NextResponse.next();
+
   const pathnameIsMissingLocale = locales.every(
     (locale) => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`
   );
 
-  // Redirect if there is no locale
-  if (pathnameIsMissingLocale) {
-    const locale = 'zh-TW';
+  response.headers.set(X_LANGUAGE_PREFERENCE, 'en');
 
-    // e.g. incoming request is /products
-    // The new URL is now /en-US/products
-    return NextResponse.redirect(
-      new URL(`/${locale}/${pathname}`, request.url)
+  if (pathnameIsMissingLocale) {
+    // e.g. incoming request is /posts
+    // Tell Next.js it should pretend it's /{defaultLocale}/posts
+    return NextResponse.rewrite(
+      new URL(`/${defaultLocale}${pathname}`, request.url),
+      response
     );
   }
+
+  return response;
 }
 
 export const config = {
   matcher: [
     // Skip paths
-    '/((?!_next|assets).*)',
+    '/((?!api|_next/static|_next/image|assets|favicon.ico|sw.js).*)',
   ],
 };

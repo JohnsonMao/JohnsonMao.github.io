@@ -1,4 +1,4 @@
-import type { IPostWithId } from '@/utils/posts';
+import type { IPostWithId } from '@/utils/mdx';
 
 import PostItem from './PostItem';
 

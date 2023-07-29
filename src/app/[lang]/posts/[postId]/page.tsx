@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation';
 
 import TableOfContents from '@/components/common/TableOfContents';
 import Comment from '@/components/common/Comment';
-import { getPostDataById, getSortedPostList } from '@/utils/posts';
+import { getPostDataById, getSortedPostList } from '@/utils/mdx';
 import formatDate from '@/utils/formatDate';
 
 type PostPageProps = {
@@ -24,9 +24,7 @@ export async function generateMetadata({
   const post = posts.find((post) => post.id === postId);
 
   if (!post) {
-    return {
-      title: '此頁面不存在',
-    };
+    return notFound();
   }
 
   return {
@@ -37,8 +35,9 @@ export async function generateMetadata({
 
 async function PostPage({ params: { postId } }: PostPageProps) {
   const posts = await getSortedPostList();
+  const post = posts.find((post) => post.id === postId);
 
-  if (!postId || !posts.find((post) => post.id !== postId)) {
+  if (!post) {
     return notFound();
   }
 
