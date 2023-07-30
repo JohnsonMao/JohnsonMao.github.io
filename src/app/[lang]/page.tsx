@@ -1,7 +1,7 @@
 import Image from 'next/image';
 
+import { Locale, locales, getDictionary } from '~/i18n';
 import PostList from '@/components/layouts/PostList';
-import { Locale, locales, getDictionary } from '@/i18n';
 import { getSortedPostList } from '@/utils/mdx';
 
 export const dynamic = 'force-static';
