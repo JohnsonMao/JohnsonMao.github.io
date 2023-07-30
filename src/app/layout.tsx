@@ -2,10 +2,10 @@ import type { Metadata } from 'next';
 
 import Navbar from '@/components/layouts/Navbar';
 import config from '@/configs';
-import { defaultLocale } from '@/i18n';
-
-import Providers from './providers';
 import '@/assets/css/globals.css';
+
+import Html from './Html';
+import Providers from './providers';
 
 const { meta, navbar } = config;
 
@@ -19,14 +19,14 @@ export const metadata: Metadata = {
 
 function RootLayout({ children }: React.PropsWithChildren) {
   return (
-    <html lang={defaultLocale} className="scroll-smooth" suppressHydrationWarning>
+    <Html>
       <body className="dark:bg-slate-800">
         <Providers>
           <Navbar {...navbar} />
           {children}
         </Providers>
       </body>
-    </html>
+    </Html>
   );
 }
 
