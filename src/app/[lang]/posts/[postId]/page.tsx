@@ -7,8 +7,8 @@ import Comment from '@/components/common/Comment';
 import { getPostDataById, getSortedPostList } from '@/utils/mdx';
 import formatDate from '@/utils/formatDate';
 
-type PostPageProps = {
-  params: { postId: string };
+type PostParams = {
+  params: Partial<{ postId: string }>;
 };
 
 export async function generateStaticParams() {
@@ -19,7 +19,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({
   params: { postId },
-}: PostPageProps): Promise<Metadata> {
+}: PostParams): Promise<Metadata> {
   const posts = await getSortedPostList();
   const post = posts.find((post) => post.id === postId);
 
@@ -33,11 +33,11 @@ export async function generateMetadata({
   };
 }
 
-async function PostPage({ params: { postId } }: PostPageProps) {
+async function PostPage({ params: { postId } }: PostParams) {
   const posts = await getSortedPostList();
   const post = posts.find((post) => post.id === postId);
 
-  if (!post) {
+  if (!postId || !post) {
     return notFound();
   }
 

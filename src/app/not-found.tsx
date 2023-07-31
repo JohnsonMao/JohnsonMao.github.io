@@ -1,16 +1,24 @@
-'use client';
-
 import type { Metadata } from 'next';
-import { usePathname } from 'next/navigation';
+import { headers } from 'next/headers';
+import { getDictionary } from '~/i18n';
+import getLocale from '@/utils/getLocale';
 
-export const metadata: Metadata = {
-  title: '此頁面不存在',
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const acceptLanguage = headers().get('Accept-Language');
+  const lang = getLocale(acceptLanguage);
+  const dict = await getDictionary(lang);
 
-function NotFound() {
-  const pathname = usePathname();
-  console.log(pathname);
-  return <div>此頁面不存在</div>;
+  return {
+    title: dict.notFound.message,
+  };
+}
+
+async function NotFound() {
+  const acceptLanguage = headers().get('Accept-Language');
+  const lang = getLocale(acceptLanguage);
+  const dict = await getDictionary(lang);
+
+  return <div>{dict.notFound.message}</div>;
 }
 
 export default NotFound;

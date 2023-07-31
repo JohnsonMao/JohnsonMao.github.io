@@ -1,20 +1,27 @@
+import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 import Image from 'next/image';
 
-import { Locale, locales, getDictionary } from '~/i18n';
+import { getDictionary } from '~/i18n';
 import PostList from '@/components/layouts/PostList';
 import { getSortedPostList } from '@/utils/mdx';
+import type { RootParams } from './layout';
 
-export const dynamic = 'force-static';
+export async function generateMetadata({
+  params: { lang },
+}: RootParams): Promise<Metadata> {
+  if (!lang) notFound();
 
-export async function generateStaticParams() {
-  return locales.map((lang) => ({ lang }));
+  const dict = await getDictionary(lang);
+
+  return {
+    title: dict.notes,
+  };
 }
 
-export type RootPageProps = {
-  params: { lang: Locale };
-};
+async function RootPage({ params: { lang } }: RootParams) {
+  if (!lang) notFound();
 
-async function RootPage({ params: { lang } }: RootPageProps) {
   const posts = await getSortedPostList();
   const dict = await getDictionary(lang);
 

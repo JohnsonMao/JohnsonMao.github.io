@@ -1,3 +1,5 @@
+import notFound from './notFound';
+
 const en = {
   title: "Mao's Note",
   description: '',
@@ -6,6 +8,7 @@ const en = {
   notes: 'Notes',
   about: 'About',
   tags: 'Tags',
+  notFound,
 };
 
 export default en;

@@ -1,23 +1,37 @@
 import type { Metadata } from 'next';
+import { headers } from 'next/headers';
 
+import { getDictionary } from '~/i18n';
 import Navbar from '@/components/layouts/Navbar';
 import config from '@/configs';
+import getLocale from '@/utils/getLocale';
 import '@/assets/css/globals.css';
 
 import Html from './Html';
 import Providers from './providers';
 
-const { meta, navbar } = config;
+const { navbar } = config;
 
-export const dynamic = 'force-static';
+export async function generateMetadata(): Promise<Metadata> {
+  const acceptLanguage = headers().get('Accept-Language');
+  const lang = getLocale(acceptLanguage);
+  const dict = await getDictionary(lang);
 
-export const metadata: Metadata = {
-  title: meta.title,
-  description: meta.description,
-  authors: meta.authors,
-};
+  return {
+    title: {
+      template: `%s | ${dict.title}`,
+      default: dict.title,
+    },
+    authors: [
+      {
+        name: dict.author,
+        url: dict.github,
+      },
+    ],
+  };
+}
 
-function RootLayout({ children }: React.PropsWithChildren) {
+async function HtmlLayout({ children }: React.PropsWithChildren) {
   return (
     <Html>
       <body className="dark:bg-slate-800">
@@ -30,4 +44,4 @@ function RootLayout({ children }: React.PropsWithChildren) {
   );
 }
 
-export default RootLayout;
+export default HtmlLayout;

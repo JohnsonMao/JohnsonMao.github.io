@@ -1,21 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { Locale, defaultLocale, locales } from '~/i18n';
-
-function getLocale(request: NextRequest) {
-  const acceptLanguage = request.headers.get('Accept-Language');
-
-  if (!acceptLanguage) return defaultLocale;
-
-  // match accept language
-  // e.g. zh-TW,zh;q=0.9,en-US;q=0.8,en;q=0.7 => [ 'zh-TW', 'zh', 'en-US', 'en' ]
-  const languageReg = /([\w]{2,3}-?[\w]{0,3})/gm;
-  const languages = acceptLanguage.match(languageReg);
-  const selectedLocale = languages?.find((language) =>
-    locales.includes(language as Locale)
-  );
-
-  return selectedLocale || defaultLocale;
-}
+import { locales } from '~/i18n';
+import getLocale from '@/utils/getLocale';
 
 export function middleware(request: NextRequest) {
   // Check if there is any supported locale in the pathname
@@ -26,8 +11,9 @@ export function middleware(request: NextRequest) {
 
   if (pathnameIsMissingLocale) {
     // e.g. incoming request is /posts
-    // Tell Next.js it should pretend it's /{defaultLocale}/posts
-    const locale = getLocale(request);
+    // Tell Next.js it should pretend it's /{matchAcceptLocale | defaultLocale}/posts
+    const acceptLanguage = request.headers.get('Accept-Language');
+    const locale = getLocale(acceptLanguage);
 
     return NextResponse.rewrite(new URL(`/${locale}${pathname}`, request.url));
   }
