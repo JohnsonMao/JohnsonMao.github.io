@@ -1,11 +1,9 @@
 'use client';
 
-import { useSelectedLayoutSegment } from 'next/navigation';
-import { defaultLocale } from '~/i18n';
+import useI18n from '@/hooks/useI18n';
 
 function Html({ children }: React.PropsWithChildren) {
-  const selectLayoutSegment = useSelectedLayoutSegment();
-  const lang = selectLayoutSegment || defaultLocale;
+  const { lang } = useI18n();
 
   return (
     <html lang={lang} className="scroll-smooth" suppressHydrationWarning>
