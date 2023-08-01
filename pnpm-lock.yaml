@@ -114,9 +114,6 @@ devDependencies:
   eslint-plugin-tailwindcss:
     specifier: ^3.13.0
     version: 3.13.0(tailwindcss@3.3.3)
-  i18next-resources-for-ts:
-    specifier: ^1.2.1
-    version: 1.2.1
   jest:
     specifier: ^29.6.2
     version: 29.6.2(@types/node@18.17.1)
@@ -4490,13 +4487,6 @@ packages:
   /human-signals@4.3.1:
     resolution: {integrity: sha512-nZXjEF2nbo7lIw3mgYjItAfgQXog3OjJogSbKa2CQIIvSGWcKgeJnQlNXip6NglNzYH45nSRiEVimMvYL8DDqQ==}
     engines: {node: '>=14.18.0'}
-    dev: true
-
-  /i18next-resources-for-ts@1.2.1:
-    resolution: {integrity: sha512-Z2FmlSJZRVUlmcqVnpoe2oxixawSYku2Ez7p1KRF3TsJAhW5JzcynKkeeqlw5Jn6MJHhOpXKvT3eK2UcWt2/aw==}
-    hasBin: true
-    dependencies:
-      '@babel/runtime': 7.22.6
     dev: true
 
   /iconv-lite@0.6.3:

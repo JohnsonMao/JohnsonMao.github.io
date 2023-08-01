@@ -1,24 +1,13 @@
 import type { Metadata } from 'next';
-import { headers } from 'next/headers';
-import { getDictionary } from '~/i18n';
-import getLocale from '@/utils/getLocale';
+import en from '~/i18n/locales/en';
+import NotFound from '@/components/NotFound';
 
-export async function generateMetadata(): Promise<Metadata> {
-  const acceptLanguage = headers().get('Accept-Language');
-  const lang = getLocale(acceptLanguage);
-  const dict = await getDictionary(lang);
+export const metadata: Metadata = {
+  title: en.notFound.message,
+};
 
-  return {
-    title: dict.notFound.message,
-  };
+async function NotFoundPage() {
+  return <NotFound />;
 }
 
-async function NotFound() {
-  const acceptLanguage = headers().get('Accept-Language');
-  const lang = getLocale(acceptLanguage);
-  const dict = await getDictionary(lang);
-
-  return <div>{dict.notFound.message}</div>;
-}
-
-export default NotFound;
+export default NotFoundPage;
