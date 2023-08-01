@@ -7,10 +7,10 @@ import rehypePrismPlus from 'rehype-prism-plus';
 import rehypeCodeTitles from 'rehype-code-titles';
 
 import { POSTS_DIRECTORY } from '@/configs/path';
-import { H1, H2, H3, H4, H5, H6 } from '@/components/common/Heading';
-import CodeBox from '@/components/common/CodeBox';
-import Image from '@/components/common/Image';
-import Link from '@/components/common/Link';
+import { H1, H2, H3, H4, H5, H6 } from '@/components/Heading';
+import CodeBox from '@/components/CodeBox';
+import Image from '@/components/Image';
+import Link from '@/components/Link';
 import rehypeImageMetadata from '@/plugins/rehypeImageMetadata';
 
 export interface IPost {

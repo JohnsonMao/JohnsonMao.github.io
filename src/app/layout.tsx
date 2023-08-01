@@ -1,35 +1,27 @@
 import type { Metadata } from 'next';
-import { headers } from 'next/headers';
 
-import { getDictionary } from '~/i18n';
-import Navbar from '@/components/layouts/Navbar';
+import en from '~/i18n/locales/en';
+import Navbar from '@/components/Navbar';
 import config from '@/configs';
-import getLocale from '@/utils/getLocale';
 import '@/assets/css/globals.css';
 
 import Html from './Html';
-import Providers from './providers';
+import Providers from './Providers';
 
 const { navbar } = config;
 
-export async function generateMetadata(): Promise<Metadata> {
-  const acceptLanguage = headers().get('Accept-Language');
-  const lang = getLocale(acceptLanguage);
-  const dict = await getDictionary(lang);
-
-  return {
-    title: {
-      template: `%s | ${dict.title}`,
-      default: dict.title,
+export const metadata: Metadata = {
+  title: {
+    template: `%s | ${en.title}`,
+    default: en.title,
+  },
+  authors: [
+    {
+      name: en.author,
+      url: en.github,
     },
-    authors: [
-      {
-        name: dict.author,
-        url: dict.github,
-      },
-    ],
-  };
-}
+  ],
+};
 
 async function HtmlLayout({ children }: React.PropsWithChildren) {
   return (

@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import Image from 'next/image';
 
 import { getDictionary } from '~/i18n';
-import PostList from '@/components/layouts/PostList';
+import PostList from '@/components/PostList';
 import { getSortedPostList } from '@/utils/mdx';
 import type { RootParams } from './layout';
 

@@ -2,13 +2,13 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
-import TableOfContents from '@/components/common/TableOfContents';
-import Comment from '@/components/common/Comment';
+import TableOfContents from '@/components/TableOfContents';
+import Comment from '@/components/Comment';
 import { getPostDataById, getSortedPostList } from '@/utils/mdx';
 import formatDate from '@/utils/formatDate';
 
 type PostParams = {
-  params: Partial<{ postId: string }>;
+  params: { postId: string };
 };
 
 export async function generateStaticParams() {
@@ -23,9 +23,7 @@ export async function generateMetadata({
   const posts = await getSortedPostList();
   const post = posts.find((post) => post.id === postId);
 
-  if (!post) {
-    return notFound();
-  }
+  if (!post) return notFound();
 
   return {
     title: post.title,
@@ -37,9 +35,7 @@ async function PostPage({ params: { postId } }: PostParams) {
   const posts = await getSortedPostList();
   const post = posts.find((post) => post.id === postId);
 
-  if (!postId || !post) {
-    return notFound();
-  }
+  if (!post) return notFound();
 
   const { content, frontmatter, source } = await getPostDataById(postId);
   const formattedDate = formatDate(frontmatter.date);

@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import { notFound } from 'next/navigation';
 import { Locale, getDictionary, locales } from '~/i18n';
 
 export const dynamic = 'force-static';
@@ -9,14 +8,12 @@ export async function generateStaticParams() {
 }
 
 export type RootParams = {
-  params: Partial<{ lang: Locale }>;
+  params: { lang: Locale };
 };
 
 export async function generateMetadata({
   params: { lang },
 }: RootParams): Promise<Metadata> {
-  if (!lang) notFound();
-
   const dict = await getDictionary(lang);
 
   return {

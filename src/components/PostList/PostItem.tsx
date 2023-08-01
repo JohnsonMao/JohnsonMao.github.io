@@ -4,9 +4,9 @@ import { BsCalendar4Week } from 'react-icons/bs';
 import { MdOutlineWidgets } from 'react-icons/md';
 import { AiOutlineTags } from 'react-icons/ai';
 
-import Link from '@/components/common/Link';
 import getFormattedDate from '@/utils/formatDate';
 import type { IPostWithId } from '@/utils/mdx';
+import Link from '../Link';
 
 type PostItemProps = {
   post: IPostWithId;
