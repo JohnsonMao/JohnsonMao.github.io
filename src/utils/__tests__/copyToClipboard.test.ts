@@ -1,9 +1,6 @@
 import copyToClipboard from '../copyToClipboard';
 
 function setDeviceClipboard(version?: 'new' | 'old') {
-  Object.assign(navigator, { clipboard: undefined });
-  Object.assign(document, { execCommand: undefined });
-
   switch (version) {
     case 'new':
       Object.assign(navigator, {
@@ -18,10 +15,16 @@ function setDeviceClipboard(version?: 'new' | 'old') {
       });
       break;
     default:
+      Object.assign(navigator, { clipboard: undefined });
+      Object.assign(document, { execCommand: undefined });
   }
 }
 
 describe('Copy to clipboard function', () => {
+  beforeEach(() => {
+    setDeviceClipboard();
+  });
+
   it('should return error with reject', async () => {
     expect.assertions(1);
 
