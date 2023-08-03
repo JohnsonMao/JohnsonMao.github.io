@@ -1,6 +1,5 @@
-import Link from 'next/link';
-
 import type { INavbar } from '@/configs';
+import Link from '@/components/Link';
 
 import ThemeSwitch from '../ThemeSwitch';
 

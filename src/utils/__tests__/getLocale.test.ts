@@ -1,10 +1,11 @@
+import { defaultLocale } from '~/i18n';
 import getLocale from '../getLocale';
 
 describe('get locale function', () => {
-  it('should return the default language code when no argument is provided', () => {
+  it('should return empty string when acceptLanguage is not provided', () => {
     const lang = getLocale();
 
-    expect(lang).toBe('zh-TW');
+    expect(lang).toBe(undefined);
   });
 
   it.each([
@@ -14,7 +15,7 @@ describe('get locale function', () => {
   ])(
     'should extract the preferred language code from the Accept-Language header',
     (acceptLanguage, expected) => {
-      expect(getLocale(acceptLanguage)).toBe(expected);
+      expect(getLocale(acceptLanguage, defaultLocale)).toBe(expected);
     }
   );
 
@@ -25,8 +26,8 @@ describe('get locale function', () => {
     ['/fr-CH/test/path', 'zh-TW'],
   ])(
     'should extract the language code from the path string',
-    (path, expected) => {
-      expect(getLocale(path)).toBe(expected);
+    (pathname, expected) => {
+      expect(getLocale(pathname, defaultLocale)).toBe(expected);
     }
   );
 });

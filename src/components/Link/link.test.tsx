@@ -2,56 +2,47 @@ import { render, screen } from '@testing-library/react';
 
 import Link from '.';
 
+const mockPathname = jest.fn();
+
+jest.mock('next/navigation', () => ({
+  usePathname: () => mockPathname(),
+}));
+
 describe('Link component', () => {
-  it('should render correct element', () => {
-    const links = {
-      anchor: {
-        href: '#anchor',
-        text: 'The anchor link text',
-      },
-      internal: {
-        href: '/internal',
-        text: 'The internal link text',
-      },
-      external: {
-        href: 'https://external.com',
-        text: 'The external link text',
-      },
-    };
+  beforeEach(() => {
+    mockPathname.mockClear();
+  });
 
-    render(
-      <>
-        {Object.keys(links).map((key) => (
-          <Link key={key} href={links[key].href}>
-            {links[key].text}
-          </Link>
-        ))}
-      </>
-    );
+  it.each([
+    ['#anchor', 'The anchor link text'],
+    ['/internal', 'The internal link text'],
+    ['https://external.com', 'The external link text'],
+  ])('should render correct element', (href, name) => {
+    render(<Link href={href}>{name}</Link>);
 
-    const anchorLink = screen.getByRole('link', {
-      name: links.anchor.text,
-    });
-    const internalLink = screen.getByRole('link', {
-      name: links.internal.text,
-    });
-    const externalLink = screen.getByRole('link', {
-      name: links.external.text,
-    });
+    const link = screen.getByRole('link', { name });
 
-    expect(anchorLink).toBeInTheDocument();
-    expect(anchorLink).toHaveTextContent(links.anchor.text);
-    expect(anchorLink).toHaveAttribute('href', links.anchor.href);
-    expect(anchorLink.tagName).toBe('A');
+    expect(link).toBeInTheDocument();
+    expect(link).toHaveTextContent(name);
+    expect(link).toHaveAttribute('href', href);
+    expect(link.tagName).toBe('A');
+  });
 
-    expect(internalLink).toBeInTheDocument();
-    expect(internalLink).toHaveTextContent(links.internal.text);
-    expect(internalLink).toHaveAttribute('href', links.internal.href);
-    expect(internalLink.tagName).toBe('A');
+  it.each([
+    ['/internal', '/internal'],
+    ['/en/internal', '/en/internal'],
+    ['/zh-TW/internal', '/zh-TW/internal'],
+    ['/fr-CH/internal', '/internal'],
+  ])('should render correct link element with pathname %s', (pathname, expected) => {
+    const name = 'internal link';
+    const href = '/internal';
 
-    expect(externalLink).toBeInTheDocument();
-    expect(externalLink).toHaveTextContent(links.external.text);
-    expect(externalLink).toHaveAttribute('href', links.external.href);
-    expect(externalLink.tagName).toBe('A');
+    mockPathname.mockReturnValueOnce(pathname);
+
+    render(<Link href={href}>{name}</Link>);
+
+    const link = screen.getByRole('link', { name });
+
+    expect(link).toHaveAttribute('href', expected);
   });
 });
