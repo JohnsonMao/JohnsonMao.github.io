@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { locales } from '~/i18n';
+import { defaultLocale, locales } from '~/i18n';
 import getLocale from '@/utils/getLocale';
 
 export function middleware(request: NextRequest) {
@@ -12,7 +12,7 @@ export function middleware(request: NextRequest) {
   if (pathnameHasLocalePrefix) return;
 
   const acceptLanguage = request.headers.get('Accept-Language');
-  const locale = getLocale(acceptLanguage);
+  const locale = getLocale(acceptLanguage, defaultLocale);
   const redirectURL = new URL(`/${locale}${pathname}`, request.url);
 
   if (locale !== 'zh-TW') {

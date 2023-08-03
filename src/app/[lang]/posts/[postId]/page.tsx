@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
+import Link from '@/components/Link';
 import TableOfContents from '@/components/TableOfContents';
 import Comment from '@/components/Comment';
 import { getPostDataById, getSortedPostList } from '@/utils/mdx';
