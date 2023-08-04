@@ -6,16 +6,16 @@ import rehypeSlug from 'rehype-slug';
 import rehypePrismPlus from 'rehype-prism-plus';
 import rehypeCodeTitles from 'rehype-code-titles';
 
-import { POSTS_DIRECTORY } from '@/configs/path';
 import { H1, H2, H3, H4, H5, H6 } from '@/components/Heading';
 import CodeBox from '@/components/CodeBox';
 import Image from '@/components/Image';
 import Link from '@/components/Link';
 import rehypeImageMetadata from '@/plugins/rehypeImageMetadata';
+import { DateOrDateString, compareDates } from './date';
 
 export interface IPost {
   title: string;
-  date: string | Date;
+  date: DateOrDateString;
   index_img: string;
   banner_img: string;
   categories: string[][];
@@ -27,9 +27,12 @@ export interface IPostWithId extends IPost {
   id: string;
 }
 
-/** Retrieve posts sorted by date */
-export async function getSortedPostList(postsDirectory = POSTS_DIRECTORY) {
-  const fileNames = fs.readdirSync(postsDirectory);
+const ROOT_PATH = process.cwd();
+
+/** Retrieve markdowns front matter sorted by date */
+export async function getMarkdownsFrontMatter(type: string) {
+  const dirPath = path.join(ROOT_PATH, 'markdown', type);
+  const fileNames = fs.readdirSync(dirPath);
   const uniqueIdsSet = new Set();
   const allPostsData = await Promise.all(
     fileNames.map(async (fileName) => {
@@ -40,31 +43,25 @@ export async function getSortedPostList(postsDirectory = POSTS_DIRECTORY) {
       }
       uniqueIdsSet.add(id);
 
-      const fullPath = path.join(postsDirectory, fileName);
+      const fullPath = path.join(dirPath, fileName);
       const source = fs.readFileSync(fullPath, 'utf8');
       const { frontmatter } = await compileMDX<IPost>({
         source,
-        options: {
-          parseFrontmatter: true,
-        },
+        options: { parseFrontmatter: true },
       });
 
-      return {
-        id,
-        ...frontmatter,
-      };
+      return { ...frontmatter, id };
     })
   );
 
-  return allPostsData.sort((a, b) => (a.date < b.date ? 1 : -1));
+  return allPostsData.sort((a, b) => compareDates(a.date, b.date));
 }
 
-export async function getPostDataById(
-  id: string,
-  postsDirectory = POSTS_DIRECTORY
-) {
-  const mdxPath = path.join(postsDirectory, `${id}.mdx`);
-  const mdPath = path.join(postsDirectory, `${id}.md`);
+/** Retrieve markdown content and front matter for a specific markdown file by its id. */
+export async function getMarkdownById(type: string, id: string) {
+  const dirPath = path.join(ROOT_PATH, 'markdown', type);
+  const mdxPath = path.join(dirPath, `${id}.mdx`);
+  const mdPath = path.join(dirPath, `${id}.md`);
   const fullPath = fs.existsSync(mdxPath) ? mdxPath : mdPath;
   const source = fs.readFileSync(fullPath, 'utf8');
   const { content, frontmatter } = await compileMDX<IPost>({

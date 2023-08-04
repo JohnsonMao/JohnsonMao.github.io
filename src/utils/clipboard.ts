@@ -3,7 +3,7 @@
  * 
  * @see https://philstainer.io/blog/copy-code-button-markdown
  */
-function copyToClipboard(text: string) {
+export function copyToClipboard(text: string) {
   return new Promise((resolve, reject) => {
     if (navigator.clipboard) {
       navigator.clipboard.writeText(text).then(resolve).catch(reject);
@@ -27,5 +27,3 @@ function copyToClipboard(text: string) {
     }
   });
 }
-
-export default copyToClipboard;

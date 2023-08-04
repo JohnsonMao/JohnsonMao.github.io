@@ -1,4 +1,4 @@
-import copyToClipboard from '../copyToClipboard';
+import { copyToClipboard } from '../clipboard';
 
 function setDeviceClipboard(version?: 'new' | 'old') {
   switch (version) {
@@ -28,7 +28,7 @@ describe('Copy to clipboard function', () => {
   it('should return error with reject', async () => {
     expect.assertions(1);
 
-    await expect(copyToClipboard('test')).rejects.toEqual(
+    await expect(copyToClipboard('test')).rejects.toStrictEqual(
       TypeError('document.execCommand is not a function')
     );
   });

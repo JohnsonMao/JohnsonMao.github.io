@@ -5,7 +5,7 @@ const zhTW = {
   description: '',
   author: 'Johnson Mao',
   github: 'https://github.com/JohnsonMao',
-  notes: '筆記',
+  posts: '文章',
   about: '關於',
   tags: '標籤',
   notFound,

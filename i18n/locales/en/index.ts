@@ -5,7 +5,7 @@ const en = {
   description: '',
   author: 'Johnson Mao',
   github: 'https://github.com/JohnsonMao',
-  notes: 'Notes',
+  posts: 'Posts',
   about: 'About',
   tags: 'Tags',
   notFound,

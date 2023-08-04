@@ -4,7 +4,7 @@ import { HTMLAttributes, useRef, useState } from 'react';
 import { AiOutlineCopy } from 'react-icons/ai';
 
 import cn from '@/utils/cn';
-import copyToClipboard from '@/utils/copyToClipboard';
+import { copyToClipboard } from '@/utils/clipboard';
 
 type CodeBoxProps = HTMLAttributes<HTMLPreElement>;
 

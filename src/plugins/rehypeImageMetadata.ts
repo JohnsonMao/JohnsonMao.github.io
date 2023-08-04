@@ -80,8 +80,8 @@ async function getPlaiceholder(buffer: ArrayBufferLike) {
 async function addMetadata(node: ImageNode) {
   const { src } = node.properties;
   const imageSrc = src.startsWith('/public') ? src : `/public${src}`;
-  const imageDirectory = path.join(process.cwd(), imageSrc);
-  const file = fs.readFileSync(imageDirectory);
+  const imagePath = path.join(process.cwd(), imageSrc);
+  const file = fs.readFileSync(imagePath);
   const { base64, metadata } = await getPlaiceholder(file.buffer);
 
   node.properties.src = imageSrc.replace('/public', '');
