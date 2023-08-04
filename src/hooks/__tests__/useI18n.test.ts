@@ -27,7 +27,7 @@ describe('useI18n hook', () => {
       const { result } = renderHook(() => useI18n());
 
       expect(result.current.lang).toBe(expectedLang);
-      expect(result.current.dict).toEqual(expectedDictionary);
+      expect(result.current.dict).toStrictEqual(expectedDictionary);
     }
   );
 });

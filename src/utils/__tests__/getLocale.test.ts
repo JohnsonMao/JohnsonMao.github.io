@@ -2,10 +2,9 @@ import { defaultLocale } from '~/i18n';
 import getLocale from '../getLocale';
 
 describe('get locale function', () => {
-  it('should return empty string when acceptLanguage is not provided', () => {
-    const lang = getLocale();
-
-    expect(lang).toBe(undefined);
+  it('should return undefined when acceptLanguage does not match and defaultLocale is not provided', () => {
+    expect(getLocale()).toBe(undefined);
+    expect(getLocale('/not/match/locale')).toBe(undefined);
   });
 
   it.each([

@@ -4,8 +4,8 @@ import { BsCalendar4Week } from 'react-icons/bs';
 import { MdOutlineWidgets } from 'react-icons/md';
 import { AiOutlineTags } from 'react-icons/ai';
 
-import getFormattedDate from '@/utils/formatDate';
 import type { IPostWithId } from '@/utils/mdx';
+import { formatDate } from '@/utils/date';
 import Link from '../Link';
 
 type PostItemProps = {
@@ -14,7 +14,7 @@ type PostItemProps = {
 
 function PostItem({ post }: PostItemProps) {
   const { id, title, date, categories, tags, excerpt, index_img } = post;
-  const formattedDate = getFormattedDate(date);
+  const formattedDate = formatDate(date);
 
   return (
     <li className="mt-4 text-2xl dark:text-white/90">

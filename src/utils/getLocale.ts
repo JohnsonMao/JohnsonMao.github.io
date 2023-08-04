@@ -11,7 +11,7 @@ import { Locale, isLocale } from '~/i18n';
  * getLocale('zh-TW,zh;q=0.9,en-US;q=0.8,en;q=0.7'); // 'zh-TW'
  * getLocale('/en/pathname'); // 'en'
  * getLocale('/pathname', 'zh-TW'); // 'zh-TW'
- * getLocale(); // undefined
+ * getLocale('/pathname'); // undefined
  */
 function getLocale(
   acceptLanguage: string | null,

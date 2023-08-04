@@ -4,7 +4,7 @@ import Image from 'next/image';
 
 import { getDictionary } from '~/i18n';
 import PostList from '@/components/PostList';
-import { getSortedPostList } from '@/utils/mdx';
+import { getMarkdownsFrontMatter } from '@/utils/mdx';
 import type { RootParams } from './layout';
 
 export async function generateMetadata({
@@ -15,14 +15,14 @@ export async function generateMetadata({
   const dict = await getDictionary(lang);
 
   return {
-    title: dict.notes,
+    title: dict.posts,
   };
 }
 
 async function RootPage({ params: { lang } }: RootParams) {
   if (!lang) notFound();
 
-  const posts = await getSortedPostList();
+  const posts = await getMarkdownsFrontMatter('posts');
   const dict = await getDictionary(lang);
 
   return (
