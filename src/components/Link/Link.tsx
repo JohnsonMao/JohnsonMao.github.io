@@ -1,6 +1,7 @@
 'use client';
 
 import type { ReactNode } from 'react';
+import type { Route } from 'next';
 import { usePathname } from 'next/navigation';
 import NextLink, { LinkProps as NextLinkProps } from 'next/link';
 import { HiExternalLink } from 'react-icons/hi';
@@ -8,22 +9,30 @@ import { HiExternalLink } from 'react-icons/hi';
 import cn from '@/utils/cn';
 import getLocale from '@/utils/getLocale';
 
-type LinkProps = NextLinkProps & {
+type LinkProps<T extends string = string> = (
+  | NextLinkProps<T>
+  | LinkWithoutLocalePathProps
+  | ExternalLinkProps
+) & {
   children: ReactNode;
   className?: string;
 };
 
-function Link({ href, className, children, ...otherProps }: LinkProps) {
+function Link<T extends string = string>({
+  href,
+  className,
+  children,
+  ...otherProps
+}: LinkProps<T>) {
   const pathname = usePathname();
-  const isInteralLink = typeof href === 'object' || href.startsWith('/');
-  const isAnchorLink = typeof href === 'string' && href.startsWith('#');
 
-  if (isInteralLink) {
-    const rootPath = getLocale(pathname);
-    const adjustedHref = rootPath ? `/${rootPath}${href}` : href;
+  const isObjectHref = typeof href === 'object';
+  const isAnchorLink = !isObjectHref && href.startsWith('#');
+  const isInternalLink = !isObjectHref && href.startsWith('/');
 
+  if (isObjectHref) {
     return (
-      <NextLink href={adjustedHref} className={className} {...otherProps}>
+      <NextLink href={href} className={className} {...otherProps}>
         {children}
       </NextLink>
     );
@@ -31,9 +40,24 @@ function Link({ href, className, children, ...otherProps }: LinkProps) {
 
   if (isAnchorLink) {
     return (
-      <a href={href} className={className} {...otherProps}>
+      <NextLink href={href as Route} className={className} {...otherProps}>
         {children}
-      </a>
+      </NextLink>
+    );
+  }
+
+  if (isInternalLink) {
+    const rootPath = getLocale(pathname);
+    const adjustedHref = rootPath ? `/${rootPath}${href}` : href;
+
+    return (
+      <NextLink
+        href={adjustedHref as Route}
+        className={className}
+        {...otherProps}
+      >
+        {children}
+      </NextLink>
     );
   }
 

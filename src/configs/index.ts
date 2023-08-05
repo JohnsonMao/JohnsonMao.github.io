@@ -37,7 +37,7 @@ export interface IMeta {
 
 export interface INavbarLink {
   readonly title: string;
-  readonly url: string;
+  readonly url: `/${string}`;
 }
 
 export interface INavbar {
