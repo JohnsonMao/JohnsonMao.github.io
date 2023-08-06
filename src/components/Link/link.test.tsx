@@ -15,17 +15,18 @@ describe('Link component', () => {
   });
 
   it.each([
-    ['#anchor', 'The anchor link text'],
-    ['/internal', 'The internal link text'],
-    ['https://external.com', 'The external link text'],
-  ])('should render correct element', (href, name) => {
+    ['#anchor', 'The anchor link text', '#anchor'],
+    ['/internal', 'The internal link text', '/internal'],
+    ['https://external.com', 'The external link text', 'https://external.com'],
+    [{ pathname: '/internal' }, 'The object href text', '/internal'],
+  ])('should render correct element', (href, name, expectedHref) => {
     render(<Link href={href as Route}>{name}</Link>);
 
     const link = screen.getByRole('link', { name });
 
     expect(link).toBeInTheDocument();
     expect(link).toHaveTextContent(name);
-    expect(link).toHaveAttribute('href', href);
+    expect(link).toHaveAttribute('href', expectedHref);
     expect(link.tagName).toBe('A');
   });
 
