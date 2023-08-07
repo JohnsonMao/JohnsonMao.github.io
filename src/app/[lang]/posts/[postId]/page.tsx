@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation';
 import Link from '@/components/Link';
 import TableOfContents from '@/components/TableOfContents';
 import Comment from '@/components/Comment';
-import { getMarkdownById, getMarkdownsFrontMatter } from '@/utils/mdx';
+import { getDataById, getAllDataFrontmatter } from '@/utils/mdx';
 import { formatDate } from '@/utils/date';
 
 type PostParams = {
@@ -12,7 +12,7 @@ type PostParams = {
 };
 
 export async function generateStaticParams() {
-  const posts = await getMarkdownsFrontMatter('posts');
+  const posts = await getAllDataFrontmatter('posts');
 
   return posts.map((post) => ({ postId: post.id }));
 }
@@ -20,7 +20,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params: { postId },
 }: PostParams): Promise<Metadata> {
-  const posts = await getMarkdownsFrontMatter('posts');
+  const posts = await getAllDataFrontmatter('posts');
   const post = posts.find((post) => post.id === postId);
 
   if (!post) return notFound();
@@ -32,12 +32,12 @@ export async function generateMetadata({
 }
 
 async function PostPage({ params: { postId } }: PostParams) {
-  const posts = await getMarkdownsFrontMatter('posts');
+  const posts = await getAllDataFrontmatter('posts');
   const post = posts.find((post) => post.id === postId);
 
   if (!post) return notFound();
 
-  const { content, frontmatter, source } = await getMarkdownById(
+  const { content, frontmatter, source } = await getDataById(
     'posts',
     postId
   );

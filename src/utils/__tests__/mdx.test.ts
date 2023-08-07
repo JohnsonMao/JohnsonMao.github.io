@@ -1,4 +1,4 @@
-import { getMarkdownById, getMarkdownsFrontMatter } from '../mdx';
+import { getDataById, getAllDataFrontmatter } from '../mdx';
 
 jest.mock('remark-gfm', () => ({}));
 jest.mock('rehype-slug', () => ({}));
@@ -18,7 +18,7 @@ const SAME_ID_CASE_TYPE = '__mocks__/same_id_case';
 
 describe('Get post list function', () => {
   it('should get post list descending by date', async () => {
-    const postList = await getMarkdownsFrontMatter(PASS_CASE_TYPE);
+    const postList = await getAllDataFrontmatter(PASS_CASE_TYPE);
 
     expect(postList).toStrictEqual([
       { id: 'test_C', date: '2023/07/09' },
@@ -31,7 +31,7 @@ describe('Get post list function', () => {
     expect.assertions(1);
 
     await expect(
-      getMarkdownsFrontMatter(SAME_ID_CASE_TYPE)
+      getAllDataFrontmatter(SAME_ID_CASE_TYPE)
     ).rejects.toStrictEqual(
       Error('Duplicate id "test_A" found in "test_A.mdx"')
     );
@@ -40,7 +40,7 @@ describe('Get post list function', () => {
 
 describe('Get post data function', () => {
   it('should get post data by mdx file', async () => {
-    const postData = await getMarkdownById(PASS_CASE_TYPE, 'test_B');
+    const postData = await getDataById(PASS_CASE_TYPE, 'test_B');
 
     expect(postData).toStrictEqual({
       content: '測試文章B',
@@ -51,7 +51,7 @@ describe('Get post data function', () => {
   });
 
   it('should get post data by md file', async () => {
-    const postData = await getMarkdownById(PASS_CASE_TYPE, 'test_C');
+    const postData = await getDataById(PASS_CASE_TYPE, 'test_C');
 
     expect(postData).toStrictEqual({
       content: '測試文章C',

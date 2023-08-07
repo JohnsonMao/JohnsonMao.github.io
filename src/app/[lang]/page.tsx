@@ -4,7 +4,7 @@ import Image from 'next/image';
 
 import { getDictionary } from '~/i18n';
 import PostList from '@/components/PostList';
-import { getMarkdownsFrontMatter } from '@/utils/mdx';
+import { getAllDataFrontmatter } from '@/utils/mdx';
 import type { RootParams } from './layout';
 
 export async function generateMetadata({
@@ -22,7 +22,7 @@ export async function generateMetadata({
 async function RootPage({ params: { lang } }: RootParams) {
   if (!lang) notFound();
 
-  const posts = await getMarkdownsFrontMatter('posts');
+  const posts = await getAllDataFrontmatter('posts');
   const dict = await getDictionary(lang);
 
   return (

@@ -1,4 +1,4 @@
-import { DateOrDateString, compareDates, formatDate } from '../date';
+import { compareDates, formatDate } from '../date';
 
 describe('Format date function', () => {
   it('should display the date format in Taiwan', () => {

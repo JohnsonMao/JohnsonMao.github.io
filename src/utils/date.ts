@@ -1,5 +1,3 @@
-export type DateOrDateString = Date | `${number}/${number}/${number}`;
-
 /**
  * The function enables language-sensitive date and time formatting.
  *

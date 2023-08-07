@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Locale, getDictionary, locales } from '~/i18n';
+import Navbar, { MenuItem } from '@/components/Navbar';
 
 export const dynamic = 'force-static';
 
@@ -21,17 +22,23 @@ export async function generateMetadata({
       template: `%s | ${dict.title}`,
       default: dict.title,
     },
-    authors: [
-      {
-        name: dict.author,
-        url: dict.github,
-      },
-    ],
   };
 }
 
-function RootLayout({ children }: React.PropsWithChildren) {
-  return children;
+function I18nLayout({ children }: React.PropsWithChildren) {
+  const menu: MenuItem[] = [
+    {
+      text: '文章',
+      href: '/',
+    },
+  ];
+
+  return (
+    <>
+      <Navbar title={"Mao's Notes"} menu={menu} />
+      {children}
+    </>
+  );
 }
 
-export default RootLayout;
+export default I18nLayout;
