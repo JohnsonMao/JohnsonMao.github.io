@@ -9,7 +9,7 @@ import { HiExternalLink } from 'react-icons/hi';
 import cn from '@/utils/cn';
 import getLocale from '@/utils/getLocale';
 
-type LinkProps<T extends string = string> = (
+export type LinkProps<T extends string = string> = (
   | NextLinkProps<T>
   | LinkWithoutLocalePathProps
   | ExternalLinkProps

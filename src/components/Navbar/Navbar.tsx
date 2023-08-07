@@ -1,9 +1,16 @@
-import type { INavbar } from '@/configs';
-import Link from '@/components/Link';
-
+import { Route } from 'next';
+import Link, { LinkProps } from '@/components/Link';
 import ThemeSwitch from '../ThemeSwitch';
 
-export type NavbarProps = INavbar;
+export type MenuItem = {
+  text: string;
+  href: LinkProps['href'];
+};
+
+export type NavbarProps = {
+  title: string;
+  menu: MenuItem[];
+};
 
 function Navbar({ title, menu }: NavbarProps) {
   return (
@@ -13,13 +20,13 @@ function Navbar({ title, menu }: NavbarProps) {
           {title}
         </Link>
         <div className="flex gap-4">
-          {menu.map((navbarLink) => (
+          {menu.map(({ text, href }) => (
             <Link
-              key={navbarLink.title}
-              href={navbarLink.url}
+              key={text}
+              href={href as Route}
               className="text-white/90 no-underline hover:text-white"
             >
-              {navbarLink.title}
+              {text}
             </Link>
           ))}
           <ThemeSwitch />

@@ -11,7 +11,7 @@ import CodeBox from '@/components/CodeBox';
 import Image from '@/components/Image';
 import Link from '@/components/Link';
 import rehypeImageMetadata from '@/plugins/rehypeImageMetadata';
-import { DateOrDateString, compareDates } from './date';
+import { compareDates } from './date';
 
 export interface IPost {
   title: string;
@@ -29,9 +29,9 @@ export interface IPostWithId extends IPost {
 
 const ROOT_PATH = process.cwd();
 
-/** Retrieve markdowns front matter sorted by date */
-export async function getMarkdownsFrontMatter(type: string) {
-  const dirPath = path.join(ROOT_PATH, 'markdown', type);
+/** Retrieve all data front matter sorted by date */
+export async function getAllDataFrontmatter(type: DataType) {
+  const dirPath = path.join(ROOT_PATH, 'data', type);
   const fileNames = fs.readdirSync(dirPath);
   const uniqueIdsSet = new Set();
   const allPostsData = await Promise.all(
@@ -57,9 +57,9 @@ export async function getMarkdownsFrontMatter(type: string) {
   return allPostsData.sort((a, b) => compareDates(a.date, b.date));
 }
 
-/** Retrieve markdown content and front matter for a specific markdown file by its id. */
-export async function getMarkdownById(type: string, id: string) {
-  const dirPath = path.join(ROOT_PATH, 'markdown', type);
+/** Retrieve data content and front matter for a specific data file by its id. */
+export async function getDataById(type: string, id: string) {
+  const dirPath = path.join(ROOT_PATH, 'data', type);
   const mdxPath = path.join(dirPath, `${id}.mdx`);
   const mdPath = path.join(dirPath, `${id}.md`);
   const fullPath = fs.existsSync(mdxPath) ? mdxPath : mdPath;
