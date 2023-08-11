@@ -4,28 +4,29 @@ import { BsCalendar4Week } from 'react-icons/bs';
 import { MdOutlineWidgets } from 'react-icons/md';
 import { AiOutlineTags } from 'react-icons/ai';
 
-import type { IPostWithId } from '@/utils/mdx';
 import { formatDate } from '@/utils/date';
 import Link from '../Link';
 
 type PostItemProps = {
-  post: IPostWithId;
+  post: DataFrontmatter;
 };
 
 function PostItem({ post }: PostItemProps) {
-  const { id, title, date, categories, tags, excerpt, index_img } = post;
+  const { id, title, date, categories, tags, excerpt, image } = post;
   const formattedDate = formatDate(date);
 
   return (
     <li className="mt-4 text-2xl dark:text-white/90">
       <article className="flex gap-6">
         <div className="relative h-48 w-1/3 shrink-0">
-          <Image
-            className="object-cover"
-            src={index_img}
-            alt={`${title} cover`}
-            fill
-          />
+          {image && (
+            <Image
+              className="object-cover"
+              src={image}
+              alt={`${title} cover`}
+              fill
+            />
+          )}
         </div>
         <div>
           <h2 className="text-2xl font-bold dark:text-white/90">

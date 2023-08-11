@@ -1,9 +1,7 @@
-import type { IPostWithId } from '@/utils/mdx';
-
 import PostItem from './PostItem';
 
 export type PostListProps = {
-  posts: IPostWithId[];
+  posts: DataFrontmatter[];
 };
 
 function PostList({ posts }: PostListProps) {

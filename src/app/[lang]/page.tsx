@@ -30,7 +30,7 @@ async function RootPage({ params: { lang } }: RootParams) {
       <section className="mx-auto w-full">
         <Image
           className="mx-auto mt-12 rounded-full border-4 border-black shadow-black drop-shadow-xl dark:border-slate-500"
-          src="/assets/mao.jpg"
+          src="/static/mao.jpg"
           width={200}
           height={200}
           alt="Johnson Mao"
