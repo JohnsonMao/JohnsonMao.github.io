@@ -13,8 +13,8 @@ jest.mock('next-mdx-remote/rsc', () => ({
   }),
 }));
 
-const PASS_CASE_TYPE = '__mocks__/pass_case';
-const SAME_ID_CASE_TYPE = '__mocks__/same_id_case';
+const PASS_CASE_TYPE: DataDirType = '__mocks__/pass_case';
+const SAME_ID_CASE_TYPE: DataDirType = '__mocks__/same_id_case';
 
 describe('Get post list function', () => {
   it('should get post list descending by date', async () => {

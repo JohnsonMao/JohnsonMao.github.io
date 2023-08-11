@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { baseMetadata } from '~/data/metadata';
 import { Locale, getDictionary, locales } from '~/i18n';
 import Navbar, { MenuItem } from '@/components/Navbar';
 
@@ -15,12 +16,19 @@ export type RootParams = {
 export async function generateMetadata({
   params: { lang },
 }: RootParams): Promise<Metadata> {
-  const dict = await getDictionary(lang);
+  const { title } = await getDictionary(lang);
 
   return {
     title: {
-      template: `%s | ${dict.title}`,
-      default: dict.title,
+      template: `%s | ${title}`,
+      default: title,
+    },
+    alternates: {
+      ...baseMetadata.alternates,
+      types: {
+        'application/rss+xml': [{ url: 'rss.xml', title }],
+        'application/atom+xml': [{ url: 'atom.xml', title }],
+      },
     },
   };
 }

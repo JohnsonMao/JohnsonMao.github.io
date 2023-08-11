@@ -13,28 +13,14 @@ import Link from '@/components/Link';
 import rehypeImageMetadata from '@/plugins/rehypeImageMetadata';
 import { compareDates } from './date';
 
-export interface IPost {
-  title: string;
-  date: DateOrDateString;
-  index_img: string;
-  banner_img: string;
-  categories: string[][];
-  tags: string[];
-  excerpt: string;
-}
-
-export interface IPostWithId extends IPost {
-  id: string;
-}
-
 const ROOT_PATH = process.cwd();
 
 /** Retrieve all data front matter sorted by date */
-export async function getAllDataFrontmatter(type: DataType) {
-  const dirPath = path.join(ROOT_PATH, 'data', type);
+export async function getAllDataFrontmatter(dirType: DataDirType) {
+  const dirPath = path.join(ROOT_PATH, 'data', dirType);
   const fileNames = fs.readdirSync(dirPath);
   const uniqueIdsSet = new Set();
-  const allPostsData = await Promise.all(
+  const allData = await Promise.all(
     fileNames.map(async (fileName) => {
       const id = fileName.replace(/\.mdx?$/, '');
 
@@ -45,7 +31,7 @@ export async function getAllDataFrontmatter(type: DataType) {
 
       const fullPath = path.join(dirPath, fileName);
       const source = fs.readFileSync(fullPath, 'utf8');
-      const { frontmatter } = await compileMDX<IPost>({
+      const { frontmatter } = await compileMDX<DataFrontmatter>({
         source,
         options: { parseFrontmatter: true },
       });
@@ -54,7 +40,7 @@ export async function getAllDataFrontmatter(type: DataType) {
     })
   );
 
-  return allPostsData.sort((a, b) => compareDates(a.date, b.date));
+  return allData.sort((a, b) => compareDates(a.date, b.date));
 }
 
 /** Retrieve data content and front matter for a specific data file by its id. */
@@ -64,7 +50,7 @@ export async function getDataById(type: string, id: string) {
   const mdPath = path.join(dirPath, `${id}.md`);
   const fullPath = fs.existsSync(mdxPath) ? mdxPath : mdPath;
   const source = fs.readFileSync(fullPath, 'utf8');
-  const { content, frontmatter } = await compileMDX<IPost>({
+  const { content, frontmatter } = await compileMDX<DataFrontmatter>({
     source,
     components: {
       h1: H1,
