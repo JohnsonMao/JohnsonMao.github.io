@@ -1,0 +1,31 @@
+name: CI workflow
+
+on:
+  pull_request:
+    branches: '**'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🛎️ Checkout
+        uses: actions/checkout@v3
+
+      - name: ⚙️ Setup PNPM
+        uses: pnpm/action-setup@v2.2.1
+        with:
+          version: 8
+
+      - name: 🔧 Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: 🧪 Test Coverage
+        run: pnpm test:coverage
+
+      - name: 📈 Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v3
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+          file: ./coverage/clover.xml
+          fail_ci_if_error: true
