@@ -1,19 +1,22 @@
 import type { Metadata } from 'next';
 
-import { baseMetadata, feedOptions } from '~/data/metadata';
+import { locales } from '~/i18n';
+import { createMetadata, createFeedOptions } from '~/data/metadata';
 import generateRSS from '@/utils/generateRSS';
 import '@/assets/css/globals.css';
 
 import Html from './Html';
 import Providers from './Providers';
 
-export function generateMetadata(): Metadata {
-  generateRSS(feedOptions);
+export async function generateMetadata(): Promise<Metadata> {
+  const allFeedOptions = await Promise.all(locales.map(createFeedOptions));
 
-  return baseMetadata;
+  allFeedOptions.forEach(generateRSS);
+
+  return createMetadata();
 }
 
-async function HtmlLayout({ children }: React.PropsWithChildren) {
+function HtmlLayout({ children }: React.PropsWithChildren) {
   return (
     <Html>
       <body className="dark:bg-slate-800">

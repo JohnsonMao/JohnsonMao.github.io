@@ -1,5 +1,5 @@
 const notFound = {
-  message: "Sorry we couldn'd find this page.",
+  message: "Sorry we couldn't find this page.",
 };
 
 export default notFound;
