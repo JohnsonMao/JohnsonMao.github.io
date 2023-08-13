@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { baseMetadata } from '~/data/metadata';
+import { createMetadata } from '~/data/metadata';
 import { Locale, getDictionary, locales } from '~/i18n';
 import Navbar, { MenuItem } from '@/components/Navbar';
 
@@ -16,7 +16,10 @@ export type RootParams = {
 export async function generateMetadata({
   params: { lang },
 }: RootParams): Promise<Metadata> {
-  const { title } = await getDictionary(lang);
+  const { alternates } = await createMetadata();
+  const {
+    metadata: { title },
+  } = await getDictionary(lang);
 
   return {
     title: {
@@ -24,26 +27,29 @@ export async function generateMetadata({
       default: title,
     },
     alternates: {
-      ...baseMetadata.alternates,
+      ...alternates,
       types: {
-        'application/rss+xml': [{ url: 'rss.xml', title }],
-        'application/atom+xml': [{ url: 'atom.xml', title }],
+        'application/atom+xml': [{ url: `atom.${lang}.xml`, title }],
       },
     },
   };
 }
 
-function I18nLayout({ children }: React.PropsWithChildren) {
+async function I18nLayout({
+  children,
+  params: { lang },
+}: React.PropsWithChildren & RootParams) {
+  const { common, metadata } = await getDictionary(lang);
   const menu: MenuItem[] = [
     {
-      text: '文章',
+      text: common.posts,
       href: '/',
     },
   ];
 
   return (
     <>
-      <Navbar title={"Mao's Notes"} menu={menu} />
+      <Navbar title={metadata.title} menu={menu} />
       {children}
     </>
   );

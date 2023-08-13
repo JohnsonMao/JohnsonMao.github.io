@@ -1,13 +1,10 @@
+import common from './common';
+import metadata from './metadata';
 import notFound from './notFound';
 
 const en = {
-  title: "Mao's Note",
-  description: '',
-  author: 'Johnson Mao',
-  github: 'https://github.com/JohnsonMao',
-  posts: 'Posts',
-  about: 'About',
-  tags: 'Tags',
+  common,
+  metadata,
   notFound,
 };
 

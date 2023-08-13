@@ -1,8 +1,9 @@
 import path from 'path';
 import type { FeedOptions } from 'feed';
+import { defaultLocale } from '~/i18n';
 import generateRSS, { PUBLIC_FEED_PATH } from '../generateRSS';
 
-const mockGenerateFile = jest.fn();
+const mockWriteFile = jest.fn();
 
 jest.mock('feed', () => ({
   Feed: class MockFeed {
@@ -10,20 +11,39 @@ jest.mock('feed', () => ({
     constructor(options: FeedOptions) {
       this._options = options;
     }
-    rss2 = () => `rss2 - ${JSON.stringify(this._options)}`;
     atom1 = () => `atom1 - ${JSON.stringify(this._options)}`;
-    json1 = () => `json1 - ${JSON.stringify(this._options)}`;
   },
 }));
 
 jest.mock('fs', () => ({
   existsSync: () => false,
   mkdirSync: () => undefined,
-  writeFileSync: (...args: unknown[]) => mockGenerateFile(...args),
+  writeFileSync: (...args: unknown[]) => mockWriteFile(...args),
 }));
 
 describe('Generate RSS function', () => {
-  it('should', () => {
+  beforeEach(() => {
+    mockWriteFile.mockClear();
+  });
+
+  it('should generate the rss for the specified language', () => {
+    const testFeedOptions: FeedOptions = {
+      id: 'http://test.generate.rss',
+      title: 'test generate RSS',
+      copyright: `Copyright © ${new Date().getFullYear()}`,
+      language: 'en',
+    };
+
+    generateRSS(testFeedOptions);
+
+    expect(mockWriteFile).toBeCalledTimes(1);
+    expect(mockWriteFile).toBeCalledWith(
+      path.join(PUBLIC_FEED_PATH, 'atom.en.xml'),
+      `atom1 - ${JSON.stringify(testFeedOptions)}`
+    );
+  });
+
+  it('should generate the rss for the default language', () => {
     const testFeedOptions: FeedOptions = {
       id: 'http://test.generate.rss',
       title: 'test generate RSS',
@@ -32,18 +52,10 @@ describe('Generate RSS function', () => {
 
     generateRSS(testFeedOptions);
 
-    expect(mockGenerateFile).toBeCalledTimes(3);
-    expect(mockGenerateFile).toBeCalledWith(
-      path.join(PUBLIC_FEED_PATH, 'feed.xml'),
-      `rss2 - ${JSON.stringify(testFeedOptions)}`
-    );
-    expect(mockGenerateFile).toBeCalledWith(
-      path.join(PUBLIC_FEED_PATH, 'atom.xml'),
+    expect(mockWriteFile).toBeCalledTimes(1);
+    expect(mockWriteFile).toBeCalledWith(
+      path.join(PUBLIC_FEED_PATH, `atom.${defaultLocale}.xml`),
       `atom1 - ${JSON.stringify(testFeedOptions)}`
-    );
-    expect(mockGenerateFile).lastCalledWith(
-      path.join(PUBLIC_FEED_PATH, 'feed.json'),
-      `json1 - ${JSON.stringify(testFeedOptions)}`
     );
   });
 });

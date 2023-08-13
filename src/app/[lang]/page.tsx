@@ -12,10 +12,10 @@ export async function generateMetadata({
 }: RootParams): Promise<Metadata> {
   if (!lang) notFound();
 
-  const dict = await getDictionary(lang);
+  const { common } = await getDictionary(lang);
 
   return {
-    title: dict.posts,
+    title: common.posts,
   };
 }
 
@@ -23,7 +23,7 @@ async function RootPage({ params: { lang } }: RootParams) {
   if (!lang) notFound();
 
   const posts = await getAllDataFrontmatter('posts');
-  const dict = await getDictionary(lang);
+  const { metadata } = await getDictionary(lang);
 
   return (
     <main className="mx-auto px-6">
@@ -34,9 +34,12 @@ async function RootPage({ params: { lang } }: RootParams) {
           width={200}
           height={200}
           alt="Johnson Mao"
+          priority
         />
       </section>
-      <p className="my-12 text-center text-3xl dark:text-white">{dict.title}</p>
+      <p className="my-12 text-center text-3xl dark:text-white">
+        {metadata.title}
+      </p>
       <PostList posts={posts} />
     </main>
   );
