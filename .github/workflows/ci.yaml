@@ -1,11 +1,9 @@
 name: CI workflow
 
-on:
-  pull_request:
-    branches: '**'
+on: [push, pull_request]
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -27,5 +25,4 @@ jobs:
         uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          file: ./coverage/clover.xml
           fail_ci_if_error: true
