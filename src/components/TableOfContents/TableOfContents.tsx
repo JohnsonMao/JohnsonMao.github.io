@@ -45,6 +45,15 @@ function TableOfContents({ source }: TableOfContentsProps) {
     }
   }, [entry]);
 
+  useEffect(() => {
+    if (!window.location.hash) {
+      window.scrollTo({
+        top: 0,
+        behavior: 'instant'
+      })
+    }
+  }, []);
+
   return (
     <nav aria-label="Table of contents">
       <ul>
