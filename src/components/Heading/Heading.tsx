@@ -1,5 +1,6 @@
 import type { HTMLAttributes } from 'react';
 import cn from '@/utils/cn';
+import Link from '../Link';
 
 type HTMLHeadingProps = HTMLAttributes<HTMLHeadingElement>;
 
@@ -20,12 +21,12 @@ function Heading({
       className={cn('group relative', className)}
       {...otherProps}
     >
-      <a
-        href={id}
+      <Link
+        href={`#${id}`}
         className="absolute -left-6 no-underline opacity-0 group-hover:opacity-100"
       >
         #
-      </a>
+      </Link>
       {children}
     </Component>
   );
