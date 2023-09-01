@@ -1,24 +1,24 @@
 import { render, screen } from '@testing-library/react';
 
-import Navbar, { NavbarProps } from '.';
+import Header, { HeaderProps } from '.';
 
-describe('Navbar component', () => {
+describe('Header component', () => {
   it('should render correct element', () => {
-    const title: NavbarProps['title'] = 'Title';
-    const menu: NavbarProps['menu'] = [
+    const title: HeaderProps['title'] = 'Title';
+    const menu: HeaderProps['menu'] = [
       { text: 'menu_A', href: '/posts/a' },
       { text: 'menu_B', href: '/posts/b' },
     ];
 
-    render(<Navbar title={title} menu={menu} />);
+    render(<Header title={title} menu={menu} />);
 
-    const navbar = screen.getByRole('navigation');
+    const header = screen.getByRole('navigation');
     const brandLink = screen.getByRole('link', { name: title });
     const linkA = screen.getByRole('link', { name: menu[0].text });
     const linkB = screen.getByRole('link', { name: menu[1].text });
 
-    expect(navbar).toBeInTheDocument();
-    expect(navbar.tagName).toBe('NAV');
+    expect(header).toBeInTheDocument();
+    expect(header.tagName).toBe('NAV');
 
     expect(brandLink).toHaveTextContent(title);
     expect(brandLink.getAttribute('href')).toBe('/');

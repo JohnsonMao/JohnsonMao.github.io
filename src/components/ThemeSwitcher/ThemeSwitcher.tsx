@@ -4,7 +4,7 @@ import { useTheme } from 'next-themes';
 
 import { BsSunFill, BsMoonFill } from 'react-icons/bs';
 
-function ThemeSwitch() {
+function ThemeSwitcher() {
   const { theme, systemTheme, setTheme } = useTheme();
   const isSystemDarkTheme = systemTheme === 'dark';
   const alternateTheme = isSystemDarkTheme ? 'light' : 'dark';
@@ -21,4 +21,4 @@ function ThemeSwitch() {
   );
 }
 
-export default ThemeSwitch;
+export default ThemeSwitcher;

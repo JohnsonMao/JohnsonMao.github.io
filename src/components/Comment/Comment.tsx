@@ -9,7 +9,7 @@ function Comment(props: HTMLAttributes<HTMLElement>) {
   const { resolvedTheme } = useTheme();
   const isDarkTheme = resolvedTheme === 'dark';
   const giscusTheme = isDarkTheme ? 'noborder_dark' : 'noborder_light';
-
+console.log(resolvedTheme)
   return (
     <div {...props}>
       <Giscus {...giscusConfigs} theme={giscusTheme} />

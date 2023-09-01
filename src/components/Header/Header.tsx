@@ -1,18 +1,18 @@
 import { Route } from 'next';
 import Link, { LinkProps } from '@/components/Link';
-import ThemeSwitch from '../ThemeSwitch';
+import ThemeSwitcher from '../ThemeSwitcher';
 
-export type MenuItem = {
+type MenuItem = {
   text: string;
   href: LinkProps['href'];
 };
 
-export type NavbarProps = {
+export type HeaderProps = {
   title: string;
   menu: MenuItem[];
 };
 
-function Navbar({ title, menu }: NavbarProps) {
+function Header({ title, menu }: HeaderProps) {
   return (
     <nav className="sticky top-0 z-10 bg-slate-600 p-4 drop-shadow-xl">
       <div className="prose prose-xl mx-auto flex justify-between">
@@ -29,11 +29,11 @@ function Navbar({ title, menu }: NavbarProps) {
               {text}
             </Link>
           ))}
-          <ThemeSwitch />
+          <ThemeSwitcher />
         </div>
       </div>
     </nav>
   );
 }
 
-export default Navbar;
+export default Header;
