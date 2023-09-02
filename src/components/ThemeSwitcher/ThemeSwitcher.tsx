@@ -5,18 +5,16 @@ import { useTheme } from 'next-themes';
 import { BsSunFill, BsMoonFill } from 'react-icons/bs';
 
 function ThemeSwitcher() {
-  const { theme, systemTheme, setTheme } = useTheme();
-  const isSystemDarkTheme = systemTheme === 'dark';
-  const alternateTheme = isSystemDarkTheme ? 'light' : 'dark';
-  const isAlternateTheme = theme === alternateTheme;
+  const { resolvedTheme, setTheme } = useTheme();
+  const isDarkTheme = resolvedTheme === 'dark';
 
   const handleClick = () => {
-    setTheme(isAlternateTheme ? 'system' : alternateTheme);
+    setTheme(isDarkTheme ? 'light' : 'dark');
   };
 
   return (
     <button onClick={handleClick} className="text-white">
-      {isAlternateTheme ? <BsMoonFill /> : <BsSunFill />}
+      {isDarkTheme ? <BsSunFill /> : <BsMoonFill />}
     </button>
   );
 }

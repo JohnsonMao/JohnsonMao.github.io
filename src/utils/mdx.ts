@@ -44,8 +44,8 @@ export async function getAllDataFrontmatter(dirType: DataDirType) {
 }
 
 /** Retrieve data content and front matter for a specific data file by its id. */
-export async function getDataById(type: string, id: string) {
-  const dirPath = path.join(ROOT_PATH, 'data', type);
+export async function getDataById(dirType: DataDirType, id: string) {
+  const dirPath = path.join(ROOT_PATH, 'data', dirType);
   const mdxPath = path.join(dirPath, `${id}.mdx`);
   const mdPath = path.join(dirPath, `${id}.md`);
   const fullPath = fs.existsSync(mdxPath) ? mdxPath : mdPath;
