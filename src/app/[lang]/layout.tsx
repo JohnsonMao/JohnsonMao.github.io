@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { createMetadata } from '~/data/metadata';
 import { Locale, getDictionary, locales } from '~/i18n';
-import Navbar, { MenuItem } from '@/components/Navbar';
+import Header, { HeaderProps } from '@/components/Header';
 
 export const dynamic = 'force-static';
 
@@ -40,7 +40,7 @@ async function I18nLayout({
   params: { lang },
 }: React.PropsWithChildren & RootParams) {
   const { common, metadata } = await getDictionary(lang);
-  const menu: MenuItem[] = [
+  const menu: HeaderProps['menu'] = [
     {
       text: common.posts,
       href: '/',
@@ -49,7 +49,7 @@ async function I18nLayout({
 
   return (
     <>
-      <Navbar title={metadata.title} menu={menu} />
+      <Header title={metadata.title} menu={menu} />
       {children}
     </>
   );

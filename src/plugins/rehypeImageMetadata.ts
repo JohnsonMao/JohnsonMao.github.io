@@ -39,7 +39,7 @@ function filterImageNode(node: ImageNode): boolean {
   return node.properties.src.startsWith('/');
 }
 
-async function getPlaiceholder(buffer: ArrayBufferLike) {
+async function getPlaceholder(buffer: ArrayBufferLike) {
   const metadata = await sharp(buffer)
     .metadata()
     .then(({ width, height, ...metadata }) => {
@@ -82,7 +82,7 @@ async function addMetadata(node: ImageNode) {
   const imageSrc = src.startsWith('/public') ? src : `/public${src}`;
   const imagePath = path.join(process.cwd(), imageSrc);
   const file = fs.readFileSync(imagePath);
-  const { base64, metadata } = await getPlaiceholder(file.buffer);
+  const { base64, metadata } = await getPlaceholder(file.buffer);
 
   node.properties.src = imageSrc.replace('/public', '');
   node.properties.width = metadata.width;

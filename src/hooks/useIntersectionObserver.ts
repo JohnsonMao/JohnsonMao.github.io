@@ -22,8 +22,8 @@ function useIntersectionObserver({
 }: UseIntersectionObserverProps = {}): UseIntersectionObserverResponse {
   const [entry, setEntry] = useState<IntersectionObserverEntry[]>([]);
   const observerRef = useRef<IntersectionObserver>();
-  const interalElementRef = useRef<ElementNode>();
-  const setInteralElementRef = useCallback(
+  const internalElementRef = useRef<ElementNode>();
+  const setInternalElementRef = useCallback(
     (node: ElementNode) => {
       const observerParams = { root, rootMargin, threshold };
 
@@ -36,7 +36,7 @@ function useIntersectionObserver({
         observerRef.current.observe(node);
       }
 
-      interalElementRef.current = node;
+      internalElementRef.current = node;
     },
     [root, rootMargin, threshold]
   );
@@ -44,14 +44,14 @@ function useIntersectionObserver({
   useEffect(() => {
     const element = elementRef?.current;
 
-    if (element) setInteralElementRef(element);
+    if (element) setInternalElementRef(element);
 
     return () => observerRef.current?.disconnect();
-  }, [elementRef, setInteralElementRef]);
+  }, [elementRef, setInternalElementRef]);
 
   const result = [
     entry,
-    setInteralElementRef,
+    setInternalElementRef,
   ] as UseIntersectionObserverResponse;
 
   result.entry = result[0];

@@ -1,27 +1,32 @@
 import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { GiscusProps } from '@giscus/react';
+import giscusConfigs from '~/data/giscus';
 
 import Comment from '.';
-import {
-  setDeviceTheme,
-  TestThemeComponent,
-} from '../ThemeSwitch/themeSwitch.test';
+
+const getGiscusProps = jest.fn();
+const mockUseTheme = jest.fn();
+
+jest.mock('@giscus/react', () => (props: GiscusProps) => {
+  getGiscusProps(props);
+  return null;
+});
+jest.mock('next-themes', () => ({
+  useTheme: () => mockUseTheme(),
+}));
 
 describe('Comment component', () => {
-  it('should render correct element', async () => {
-    setDeviceTheme('light');
+  it.each(['light', 'dark'])('should render correct element', async (theme) => {
+    mockUseTheme.mockReturnValue({ resolvedTheme: theme });
 
-    render(
-      <TestThemeComponent>
-        <Comment data-testid="comment" />
-      </TestThemeComponent>
-    );
+    render(<Comment data-testid="comment" />);
 
     const comment = screen.getByTestId('comment');
-    const button = screen.getByRole('button');
+    const expectedProps = JSON.parse(JSON.stringify(giscusConfigs));
 
-    await userEvent.click(button);
+    expectedProps.theme = `noborder_${theme}`;
 
     expect(comment).toBeInTheDocument();
+    expect(getGiscusProps).toHaveBeenCalledWith(expectedProps);
   });
 });

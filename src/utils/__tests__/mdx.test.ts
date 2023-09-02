@@ -1,5 +1,14 @@
 import { getDataById, getAllDataFrontmatter } from '../mdx';
 
+const mockReaddir = jest.fn();
+const mockExists = jest.fn();
+const mockReadFile = jest.fn();
+
+jest.mock('fs', () => ({
+  readdirSync: () => mockReaddir(),
+  existsSync: () => mockExists(),
+  readFileSync: () => mockReadFile(),
+}));
 jest.mock('remark-gfm', () => ({}));
 jest.mock('rehype-slug', () => ({}));
 jest.mock('rehype-prism-plus', () => ({}));
@@ -13,12 +22,20 @@ jest.mock('next-mdx-remote/rsc', () => ({
   }),
 }));
 
-const PASS_CASE_TYPE: DataDirType = '__mocks__/pass_case';
-const SAME_ID_CASE_TYPE: DataDirType = '__mocks__/same_id_case';
-
 describe('Get post list function', () => {
+  beforeEach(() => {
+    mockReaddir.mockClear();
+    mockExists.mockClear();
+    mockReadFile.mockClear();
+  });
+
   it('should get post list descending by date', async () => {
-    const postList = await getAllDataFrontmatter(PASS_CASE_TYPE);
+    mockReaddir.mockReturnValueOnce(['test_A.md', 'test_B.mdx', 'test_C.md']);
+    mockReadFile.mockReturnValueOnce(mockFileA);
+    mockReadFile.mockReturnValueOnce(mockFileB);
+    mockReadFile.mockReturnValueOnce(mockFileC);
+
+    const postList = await getAllDataFrontmatter('posts');
 
     expect(postList).toStrictEqual([
       { id: 'test_C', date: '2023/07/09' },
@@ -28,10 +45,12 @@ describe('Get post list function', () => {
   });
 
   it('should return same id error with reject', async () => {
+    mockReaddir.mockReturnValueOnce(['test_A.md', 'test_A.mdx']);
+    mockReadFile.mockReturnValue('');
     expect.assertions(1);
 
     await expect(
-      getAllDataFrontmatter(SAME_ID_CASE_TYPE)
+      getAllDataFrontmatter('posts')
     ).rejects.toStrictEqual(
       Error('Duplicate id "test_A" found in "test_A.mdx"')
     );
@@ -39,8 +58,17 @@ describe('Get post list function', () => {
 });
 
 describe('Get post data function', () => {
+  beforeEach(() => {
+    mockReaddir.mockClear();
+    mockExists.mockClear();
+    mockReadFile.mockClear();
+  });
+
   it('should get post data by mdx file', async () => {
-    const postData = await getDataById(PASS_CASE_TYPE, 'test_B');
+    mockExists.mockReturnValueOnce(true);
+    mockReadFile.mockReturnValueOnce(mockFileB);
+
+    const postData = await getDataById('posts', 'test_B');
 
     expect(postData).toStrictEqual({
       content: '測試文章B',
@@ -51,7 +79,10 @@ describe('Get post data function', () => {
   });
 
   it('should get post data by md file', async () => {
-    const postData = await getDataById(PASS_CASE_TYPE, 'test_C');
+    mockExists.mockReturnValueOnce(false);
+    mockReadFile.mockReturnValueOnce(mockFileC);
+
+    const postData = await getDataById('posts', 'test_C');
 
     expect(postData).toStrictEqual({
       content: '測試文章C',
@@ -61,3 +92,21 @@ describe('Get post data function', () => {
     });
   });
 });
+
+const mockFileA = `---
+date: 2023/07/08
+---
+
+測試文章A`;
+
+const mockFileB = `---
+date: 2023/07/07
+---
+
+測試文章B`;
+
+const mockFileC = `---
+date: 2023/07/09
+---
+
+測試文章C`;
