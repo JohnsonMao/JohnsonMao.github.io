@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { createMetadata } from '~/data/metadata';
+import { avatarUrl, name, createMetadata } from '~/data/metadata';
 import { Locale, getDictionary, locales } from '~/i18n';
 import Header, { HeaderProps } from '@/components/Header';
 
@@ -39,7 +39,7 @@ async function I18nLayout({
   children,
   params: { lang },
 }: React.PropsWithChildren & RootParams) {
-  const { common, metadata } = await getDictionary(lang);
+  const { common } = await getDictionary(lang);
   const menu: HeaderProps['menu'] = [
     {
       text: common.posts,
@@ -49,7 +49,7 @@ async function I18nLayout({
 
   return (
     <>
-      <Header title={metadata.title} menu={menu} />
+      <Header logoUrl={avatarUrl} logoAlt={name} menu={menu} />
       {children}
     </>
   );

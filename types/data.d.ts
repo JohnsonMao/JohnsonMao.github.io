@@ -1,6 +1,6 @@
 type DateOrDateString = Date | `${number}/${number}/${number}`;
 
-type DataDirType = '__mocks__/pass_case' | '__mocks__/same_id_case' | 'posts';
+type DataDirType = 'posts';
 
 type DataFrontmatter = {
   readonly id: string;

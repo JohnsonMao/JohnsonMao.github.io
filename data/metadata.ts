@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import type { FeedOptions } from 'feed';
 import { Locale, defaultLocale, getDictionary, locales } from '~/i18n';
 
+export const avatarUrl = '/static/mao.jpg';
 export const name = 'Johnson Mao';
 export const email = 'tutelary.maomao@gmail.com';
 export const domainUrl = 'https://mao-note.vercel.app';
