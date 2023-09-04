@@ -1,7 +1,10 @@
-import type { StaticImport } from 'next/dist/shared/lib/get-img-props';
-import Link from '../Link';
-import Image from '../Image';
+'use client';
+
+import { useEffect, useState, useRef } from 'react';
+import cn from '@/utils/cn';
 import ThemeSwitcher from '../ThemeSwitcher';
+import Link from '../Link';
+import Logo, { LogoProps } from './Logo';
 
 type MenuItem = {
   text: string;
@@ -9,39 +12,51 @@ type MenuItem = {
 };
 
 export type HeaderProps = {
-  logoUrl: string | StaticImport;
-  logoAlt: string;
+  logo: LogoProps;
   menu: MenuItem[];
 };
 
-function Header({ logoUrl, logoAlt, menu }: HeaderProps) {
+function Header({ logo, menu }: HeaderProps) {
+  const beforeScrollY = useRef(0);
+  const [hideHeader, setHideHeader] = useState(false);
+
+  const headerClassName = cn(
+    'sticky top-0 z-10 flex translate-y-0 items-center justify-between px-4 pt-2 transition-transform',
+    hideHeader && '-translate-y-full'
+  );
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setHideHeader(beforeScrollY.current - window.scrollY < 0);
+      beforeScrollY.current = window.scrollY;
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
-    <nav className="sticky top-0 z-10 p-4 drop-shadow-xl">
-      <div className="prose prose-xl mx-auto flex justify-between">
-        <Link href="/">
-          <Image
-            className="m-0 rounded-full border-4 border-black shadow-black drop-shadow-xl dark:border-slate-500"
-            width={50}
-            height={50}
-            src={logoUrl}
-            alt={logoAlt}
-            priority
-          />
-        </Link>
-        <div className="flex items-center gap-4">
+    <header className={headerClassName}>
+      <Link href="/">
+        <Logo {...logo} />
+      </Link>
+      <nav>
+        <ul className="flex list-none rounded-full bg-gray-900/60 px-3 backdrop-blur">
           {menu.map(({ text, href }) => (
-            <Link
-              key={text}
-              href={href}
-              className="text-white/90 no-underline hover:text-white"
-            >
-              {text}
-            </Link>
+            <li key={text}>
+              <Link
+                href={href}
+                className="prose prose-xl text-white/90 no-underline hover:text-white"
+              >
+                {text}
+              </Link>
+            </li>
           ))}
-          <ThemeSwitcher />
-        </div>
-      </div>
-    </nav>
+        </ul>
+      </nav>
+      <ThemeSwitcher />
+    </header>
   );
 }
 

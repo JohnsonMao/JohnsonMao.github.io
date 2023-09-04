@@ -40,6 +40,10 @@ async function I18nLayout({
   params: { lang },
 }: React.PropsWithChildren & RootParams) {
   const { common } = await getDictionary(lang);
+  const logo = {
+    src: avatarUrl,
+    alt: name,
+  };
   const menu: HeaderProps['menu'] = [
     {
       text: common.posts,
@@ -49,7 +53,7 @@ async function I18nLayout({
 
   return (
     <>
-      <Header logoUrl={avatarUrl} logoAlt={name} menu={menu} />
+      <Header logo={logo} menu={menu} />
       {children}
     </>
   );

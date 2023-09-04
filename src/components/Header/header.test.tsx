@@ -4,22 +4,19 @@ import Header, { HeaderProps } from '.';
 
 describe('Header component', () => {
   it('should render correct element', () => {
-    const logoAlt = 'test logo image alt';
+    const logo = {
+      src: 'https://external.com/test.jpg',
+      alt: 'test logo image alt',
+    };
     const menu: HeaderProps['menu'] = [
       { text: 'menu_A', href: '/posts/a' },
       { text: 'menu_B', href: '/posts/b' },
     ];
 
-    render(
-      <Header
-        logoUrl="https://external.com/test.jpg"
-        logoAlt={logoAlt}
-        menu={menu}
-      />
-    );
+    render(<Header logo={logo} menu={menu} />);
 
     const header = screen.getByRole('navigation');
-    const brandLink = screen.getByRole('img', { name: logoAlt });
+    const brandLink = screen.getByRole('img', { name: logo.alt });
     const linkA = screen.getByRole('link', { name: menu[0].text });
     const linkB = screen.getByRole('link', { name: menu[1].text });
 
