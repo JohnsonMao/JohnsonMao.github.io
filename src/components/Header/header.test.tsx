@@ -1,38 +1,62 @@
-import { render, screen } from '@testing-library/react';
-
+import { render, screen, waitFor } from '@testing-library/react';
 import Header, { HeaderProps } from '.';
 
 describe('Header component', () => {
   it('should render correct element', () => {
-    const logoAlt = 'test logo image alt';
+    const logo = {
+      src: 'https://external.com/test.jpg',
+      alt: 'test logo image alt',
+    };
     const menu: HeaderProps['menu'] = [
       { text: 'menu_A', href: '/posts/a' },
       { text: 'menu_B', href: '/posts/b' },
     ];
 
-    render(
-      <Header
-        logoUrl="https://external.com/test.jpg"
-        logoAlt={logoAlt}
-        menu={menu}
-      />
-    );
+    render(<Header logo={logo} menu={menu} />);
 
-    const header = screen.getByRole('navigation');
-    const brandLink = screen.getByRole('img', { name: logoAlt });
+    const nav = screen.getByRole('navigation');
+    const brandLink = screen.getByRole('img', { name: logo.alt });
     const linkA = screen.getByRole('link', { name: menu[0].text });
     const linkB = screen.getByRole('link', { name: menu[1].text });
 
-    expect(header).toBeInTheDocument();
-    expect(header.tagName).toBe('NAV');
+    expect(nav).toBeInTheDocument();
+    expect(nav.tagName).toBe('NAV');
 
     expect(brandLink).toBeInTheDocument();
-    expect(brandLink.parentElement?.getAttribute('href')).toBe('/');
+    expect(brandLink.parentElement).toHaveAttribute('href', '/');
 
     expect(linkA).toHaveTextContent(menu[0].text);
-    expect(linkA.getAttribute('href')).toBe(menu[0].href);
+    expect(linkA).toHaveAttribute('href', menu[0].href);
 
     expect(linkB).toHaveTextContent(menu[1].text);
-    expect(linkB.getAttribute('href')).toBe(menu[1].href);
+    expect(linkB).toHaveAttribute('href', menu[1].href);
   });
+
+  it('should hide header on scroll down and show on scroll up', async () => {
+    const logo = {
+      src: 'https://external.com/test.jpg',
+      alt: 'test logo image alt',
+    };
+    const menu: HeaderProps['menu'] = [];
+
+    render(<Header logo={logo} menu={menu} />);
+
+    const header = screen.getByRole('banner');
+
+    expect(header.tagName).toBe('HEADER');
+
+    window.scrollY = 100;
+    window.dispatchEvent(new Event('scroll'));
+    
+    await waitFor(() => {
+      expect(header).toHaveClass('-translate-y-full');
+    })
+
+    window.scrollY = 0;
+    window.dispatchEvent(new Event('scroll'));
+
+    await waitFor(() => {
+      expect(header).not.toHaveClass('-translate-y-full');
+    })
+  })
 });
