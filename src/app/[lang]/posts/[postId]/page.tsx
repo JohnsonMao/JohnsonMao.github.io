@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
+import Container from '@/components/Container';
 import Link from '@/components/Link';
 import TableOfContents from '@/components/TableOfContents';
 import Comment from '@/components/Comment';
@@ -51,13 +52,13 @@ async function PostPage({ params: { postId } }: PostParams) {
         </p>
         <TableOfContents source={source} />
       </aside>
-      <main className="prose prose-xl prose-slate mx-auto px-6 dark:prose-invert">
+      <Container as="main" className="prose prose-xl prose-slate mx-auto px-6 dark:prose-invert">
         <h1 className="mb-0 mt-4 text-3xl">{frontmatter.title}</h1>
         <p className="mt-0">{formattedDate}</p>
         <article>{content}</article>
         <Link href="/">回首頁</Link>
         <Comment />
-      </main>
+      </Container>
     </>
   );
 }

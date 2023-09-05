@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
 import { getDictionary } from '~/i18n';
+import Container from '@/components/Container';
 import PostList from '@/components/PostList';
 import { getAllDataFrontmatter } from '@/utils/mdx';
 import type { RootParams } from './layout';
@@ -25,12 +26,12 @@ async function RootPage({ params: { lang } }: RootParams) {
   const { metadata } = await getDictionary(lang);
 
   return (
-    <main className="mx-auto px-6">
+    <Container as="main" className="mx-auto px-6">
       <p className="my-12 text-center text-3xl dark:text-white">
         {metadata.title}
       </p>
       <PostList posts={posts} />
-    </main>
+    </Container>
   );
 }
 
