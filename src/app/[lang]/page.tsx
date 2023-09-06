@@ -26,7 +26,7 @@ async function RootPage({ params: { lang } }: RootParams) {
   const { metadata } = await getDictionary(lang);
 
   return (
-    <Container as="main" className="mx-auto px-6">
+    <Container as="main">
       <p className="my-12 text-center text-3xl dark:text-white">
         {metadata.title}
       </p>

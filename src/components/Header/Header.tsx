@@ -5,6 +5,7 @@ import cn from '@/utils/cn';
 import ThemeSwitcher from '../ThemeSwitcher';
 import Link from '../Link';
 import Logo, { LogoProps } from './Logo';
+import Container from '../Container';
 
 type MenuItem = {
   text: string;
@@ -37,17 +38,17 @@ function Header({ logo, menu }: HeaderProps) {
   }, []);
 
   return (
-    <header className={headerClassName}>
+    <Container as="header" className={headerClassName}>
       <Link href="/">
         <Logo {...logo} />
       </Link>
       <nav>
-        <ul className="flex list-none rounded-full bg-gray-900/60 px-3 backdrop-blur">
+        <ul className="flex list-none rounded-full bg-gray-900/60 px-2 backdrop-blur-md">
           {menu.map(({ text, href }) => (
             <li key={text}>
               <Link
                 href={href}
-                className="prose prose-xl text-white/90 no-underline hover:text-white"
+                className="block p-2 text-xl leading-none text-white/90 no-underline hover:text-white"
               >
                 {text}
               </Link>
@@ -55,8 +56,8 @@ function Header({ logo, menu }: HeaderProps) {
           ))}
         </ul>
       </nav>
-      <ThemeSwitcher />
-    </header>
+      <ThemeSwitcher className="rounded-full bg-gray-900/60 px-3 py-2 backdrop-blur-md" />
+    </Container>
   );
 }
 
