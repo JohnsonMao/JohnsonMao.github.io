@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { act, render, screen, waitFor } from '@testing-library/react';
 import Header, { HeaderProps } from '.';
 
 describe('Header component', () => {
@@ -45,18 +45,22 @@ describe('Header component', () => {
 
     expect(header.tagName).toBe('HEADER');
 
-    window.scrollY = 100;
-    window.dispatchEvent(new Event('scroll'));
-    
+    act(() => {
+      window.scrollY = 100;
+      window.dispatchEvent(new Event('scroll'));
+    });
+
     await waitFor(() => {
       expect(header).toHaveClass('-translate-y-full');
-    })
+    });
 
-    window.scrollY = 0;
-    window.dispatchEvent(new Event('scroll'));
+    act(() => {
+      window.scrollY = 0;
+      window.dispatchEvent(new Event('scroll'));
+    });
 
     await waitFor(() => {
       expect(header).not.toHaveClass('-translate-y-full');
-    })
-  })
+    });
+  });
 });

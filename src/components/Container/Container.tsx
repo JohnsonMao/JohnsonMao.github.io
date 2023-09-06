@@ -7,7 +7,7 @@ type ContainerProps = {
 
 function Container({ as = 'div', className, ...props }: ContainerProps) {
   const Component = as;
-  const componentClassName = cn('', className);
+  const componentClassName = cn('mx-auto', className);
 
   return <Component className={componentClassName} {...props} />;
 }

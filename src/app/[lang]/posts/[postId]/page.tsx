@@ -52,7 +52,7 @@ async function PostPage({ params: { postId } }: PostParams) {
         </p>
         <TableOfContents source={source} />
       </aside>
-      <Container as="main" className="prose prose-xl prose-slate mx-auto px-6 dark:prose-invert">
+      <Container as="main" className="prose prose-xl prose-slate dark:prose-invert">
         <h1 className="mb-0 mt-4 text-3xl">{frontmatter.title}</h1>
         <p className="mt-0">{formattedDate}</p>
         <article>{content}</article>
