@@ -21,11 +21,6 @@ function Header({ logo, menu }: HeaderProps) {
   const beforeScrollY = useRef(0);
   const [hideHeader, setHideHeader] = useState(false);
 
-  const headerClassName = cn(
-    'sticky top-0 z-10 flex translate-y-0 items-center justify-between px-4 pt-2 transition-transform',
-    hideHeader && '-translate-y-full'
-  );
-
   useEffect(() => {
     const handleScroll = () => {
       setHideHeader(beforeScrollY.current - window.scrollY < 0);
@@ -38,7 +33,13 @@ function Header({ logo, menu }: HeaderProps) {
   }, []);
 
   return (
-    <Container as="header" className={headerClassName}>
+    <Container
+      as="header"
+      className={cn(
+        'sticky top-0 z-10 flex translate-y-0 items-center justify-between px-4 pt-2 transition-transform',
+        hideHeader && '-translate-y-full'
+      )}
+    >
       <Link href="/">
         <Logo {...logo} />
       </Link>
