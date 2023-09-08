@@ -1,8 +1,7 @@
 ---
 title: Day.24 「你點了按鈕～同時也點了網頁本身！」 —— JavaScript 事件冒泡（Event bubbling）
 date: 2021/10/03 16:00:00
-index_img: https://i.imgur.com/oHkbDov.png
-banner_img: https://i.imgur.com/oHkbDov.png
+image: https://i.imgur.com/oHkbDov.png
 categories:
     - [程式語言, 前端, JavaScript]
     - [iT 鐵人賽, 第 2021 年]

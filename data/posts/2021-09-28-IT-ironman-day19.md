@@ -1,8 +1,7 @@
 ---
 title: Day.19 「認識 JavaScript 記憶體堆疊、傳值 與 傳址」 —— JavaScript 物件 與 記憶體
 date: 2021/09/28 16:00:00
-index_img: https://i.imgur.com/PQ6GCWn.png
-banner_img: https://i.imgur.com/PQ6GCWn.png
+image: https://i.imgur.com/PQ6GCWn.png
 categories:
     - [程式語言, 前端, JavaScript]
     - [iT 鐵人賽, 第 2021 年]

@@ -1,8 +1,7 @@
 ---
 title: Day.23 「更加認識 DOM，並初次了解事件綁定」 —— JavaScript DOM
 date: 2021/10/02 17:30:00
-index_img: https://i.imgur.com/slZvdj6.png
-banner_img: https://i.imgur.com/slZvdj6.png
+image: https://i.imgur.com/slZvdj6.png
 categories:
     - [程式語言, 前端, JavaScript]
     - [iT 鐵人賽, 第 2021 年]

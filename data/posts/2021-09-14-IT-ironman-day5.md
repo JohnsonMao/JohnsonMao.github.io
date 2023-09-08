@@ -1,8 +1,7 @@
 ---
 title: Day.5 「我的樣式失靈啦！你有頭緒嗎？」 —— CSS 選擇器 與 權重
 date: 2021/09/14 22:00:00
-index_img: https://i.imgur.com/DGvbCcT.png
-banner_img: https://i.imgur.com/DGvbCcT.png
+image: https://i.imgur.com/DGvbCcT.png
 categories:
     - [程式語言, 前端, CSS]
     - [iT 鐵人賽, 第 2021 年]

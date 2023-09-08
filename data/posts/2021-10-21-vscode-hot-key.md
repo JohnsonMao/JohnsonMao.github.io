@@ -1,8 +1,7 @@
 ---
 title: VS Code 快捷鍵大師，時間就是金錢（圖多）
 date: 2021/10/21 15:40:00
-index_img: https://i.imgur.com/SzMnh4N.png
-banner_img: https://i.imgur.com/SzMnh4N.png
+image: https://i.imgur.com/SzMnh4N.png
 categories:
     - [程式語言, 工具, VS Code]
 tags:

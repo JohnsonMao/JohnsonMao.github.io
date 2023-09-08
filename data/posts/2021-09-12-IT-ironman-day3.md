@@ -1,8 +1,7 @@
 ---
 title: Day.3 「建構網頁的基石！」 —— 使用網頁標籤
 date: 2021/09/12 22:00:00
-index_img: https://i.imgur.com/3myJcyZ.png
-banner_img: https://i.imgur.com/3myJcyZ.png
+image: https://i.imgur.com/3myJcyZ.png
 categories:
     - [程式語言, 前端, HTML]
     - [iT 鐵人賽, 第 2021 年]

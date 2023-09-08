@@ -1,8 +1,7 @@
 ---
 title: Vue 3 起步走
 date: 2021/07/28 23:00:00
-index_img: https://i.imgur.com/E48VuxQ.jpg
-banner_img: https://i.imgur.com/E48VuxQ.jpg
+image: https://i.imgur.com/E48VuxQ.jpg
 categories:
     - [程式語言, 社群, 六角學院]
     - [程式語言, 前端, Vue]

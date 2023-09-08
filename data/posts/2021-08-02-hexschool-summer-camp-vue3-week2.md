@@ -1,8 +1,7 @@
 ---
 title: Vue 3 與指令
 date: 2021/08/02 23:00:00
-index_img: https://i.imgur.com/Xd2g377.png
-banner_img: https://i.imgur.com/Xd2g377.png
+image: https://i.imgur.com/Xd2g377.png
 categories:
     - [程式語言, 社群, 六角學院]
     - [程式語言, 前端, Vue]

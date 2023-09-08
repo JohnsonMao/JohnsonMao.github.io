@@ -1,8 +1,7 @@
 ---
 title: Vue 3 Options API
 date: 2021/08/09 23:00:00
-index_img: https://i.imgur.com/s0FUJXG.png
-banner_img: https://i.imgur.com/s0FUJXG.png
+image: https://i.imgur.com/s0FUJXG.png
 categories:
     - [程式語言, 社群, 六角學院]
     - [程式語言, 前端, Vue]

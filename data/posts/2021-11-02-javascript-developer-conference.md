@@ -1,8 +1,7 @@
 ---
 title: JSDC 2021 開發者年會 參與心得
 date: 2021/11/02 23:00:00
-index_img: https://i.imgur.com/Z5eqYW4.png
-banner_img: https://i.imgur.com/Z5eqYW4.png
+image: https://i.imgur.com/Z5eqYW4.png
 categories:
     - [程式語言, 社群, JSDC]
     - [程式語言, 前端, JavaScript]

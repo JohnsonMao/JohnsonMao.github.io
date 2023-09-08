@@ -1,8 +1,7 @@
 ---
 title: Day.8 「怎麼就這樣脫離文檔流了！」 —— CSS 定位屬性 position & 浮動元素 float
 date: 2021/09/17 22:00:00
-index_img: https://i.imgur.com/n4My3Xy.png
-banner_img: https://i.imgur.com/n4My3Xy.png
+image: https://i.imgur.com/n4My3Xy.png
 categories:
     - [程式語言, 前端, CSS]
     - [iT 鐵人賽, 第 2021 年]

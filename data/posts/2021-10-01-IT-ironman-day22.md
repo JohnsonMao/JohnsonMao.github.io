@@ -1,8 +1,7 @@
 ---
 title: Day.22 「讓我們在更深入函式～」 —— JavaScript call & apply & arguments
 date: 2021/10/01 17:30:00
-index_img: https://i.imgur.com/ejWtzFz.png
-banner_img: https://i.imgur.com/ejWtzFz.png
+image: https://i.imgur.com/ejWtzFz.png
 categories:
     - [程式語言, 前端, JavaScript]
     - [iT 鐵人賽, 第 2021 年]

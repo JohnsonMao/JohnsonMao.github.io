@@ -1,8 +1,7 @@
 ---
 title: Day.10 「沒有 RWD 的網站 === 沒有未來」 —— RWD　響應式網頁設計
 date: 2021/09/19 22:00:00
-index_img: https://i.imgur.com/tJZ3MrQ.png
-banner_img: https://i.imgur.com/tJZ3MrQ.png
+image: https://i.imgur.com/tJZ3MrQ.png
 categories:
     - [程式語言, 前端, CSS]
     - [iT 鐵人賽, 第 2021 年]

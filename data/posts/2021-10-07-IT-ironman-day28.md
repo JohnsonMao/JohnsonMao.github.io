@@ -1,8 +1,7 @@
 ---
 title: Day.28 「Promise 初體驗～」 —— ES6 Promise
 date: 2021/10/07 14:30:00
-index_img: https://i.imgur.com/BnUYCE5.png
-banner_img: https://i.imgur.com/BnUYCE5.png
+image: https://i.imgur.com/BnUYCE5.png
 categories:
     - [程式語言, 前端, JavaScript]
     - [iT 鐵人賽, 第 2021 年]

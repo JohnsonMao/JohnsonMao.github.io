@@ -1,8 +1,7 @@
 ---
 title: Day.15 「條件設定好～讓程式判斷！」 —— JavaScript 條件判斷式
 date: 2021/09/24 16:00:00
-index_img: https://i.imgur.com/Zso8daX.png
-banner_img: https://i.imgur.com/Zso8daX.png
+image: https://i.imgur.com/Zso8daX.png
 categories:
     - [程式語言, 前端, JavaScript]
     - [iT 鐵人賽, 第 2021 年]
