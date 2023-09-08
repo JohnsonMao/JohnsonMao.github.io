@@ -1,8 +1,7 @@
 ---
 title: Day.6 「只要我想，我也能把 div 變 table！」 —— CSS display 屬性
 date: 2021/09/15 22:00:00
-index_img: https://i.imgur.com/ofgbXuv.png
-banner_img: https://i.imgur.com/ofgbXuv.png
+image: https://i.imgur.com/ofgbXuv.png
 categories:
     - [程式語言, 前端, CSS]
     - [iT 鐵人賽, 第 2021 年]

@@ -1,8 +1,7 @@
 ---
 title: Day.25 「從 事件綁定 與 定時器 認識回調函式！」 —— JavaScript 定時器 & Callback
 date: 2021/10/04 16:00:00
-index_img: https://i.imgur.com/oqXdlun.png
-banner_img: https://i.imgur.com/oqXdlun.png
+image: https://i.imgur.com/oqXdlun.png
 categories:
     - [程式語言, 前端, JavaScript]
     - [iT 鐵人賽, 第 2021 年]

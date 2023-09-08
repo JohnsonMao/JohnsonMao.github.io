@@ -1,8 +1,7 @@
 ---
 title: Day.2 「歡迎來到網頁這個世界！」 —— 認識網頁架構
 date: 2021/09/11 22:00:00
-index_img: https://i.imgur.com/xadMCtM.png
-banner_img: https://i.imgur.com/xadMCtM.png
+image: https://i.imgur.com/xadMCtM.png
 categories:
     - [程式語言, 前端, HTML]
     - [iT 鐵人賽, 第 2021 年]

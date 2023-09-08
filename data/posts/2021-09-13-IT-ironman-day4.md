@@ -1,8 +1,7 @@
 ---
 title: Day.4 「CSS 基礎中的基礎！」 —— CSS 盒模型 box-model & 距離單位
 date: 2021/09/13 22:00:00
-index_img: https://i.imgur.com/v6IIogk.png
-banner_img: https://i.imgur.com/v6IIogk.png
+image: https://i.imgur.com/v6IIogk.png
 categories:
     - [程式語言, 前端, HTML]
     - [iT 鐵人賽, 第 2021 年]

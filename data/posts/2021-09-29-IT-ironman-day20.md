@@ -1,8 +1,7 @@
 ---
 title: Day.20 「初步認識 this，中央工廠式的自訂物件～」 —— JavaSript 構造函式
 date: 2021/09/29 16:00:00
-index_img: https://i.imgur.com/MowXDC1.png
-banner_img: https://i.imgur.com/MowXDC1.png
+image: https://i.imgur.com/MowXDC1.png
 categories:
     - [程式語言, 前端, JavaScript]
     - [iT 鐵人賽, 第 2021 年]

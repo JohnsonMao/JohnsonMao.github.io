@@ -1,8 +1,7 @@
 ---
 title: Day.26 「閉包要謹慎使用！」 —— JavaScript 閉包（Closure）
 date: 2021/10/05 16:40:00
-index_img: https://i.imgur.com/2KRYZOP.png
-banner_img: https://i.imgur.com/2KRYZOP.png
+image: https://i.imgur.com/2KRYZOP.png
 categories:
     - [程式語言, 前端, JavaScript]
     - [iT 鐵人賽, 第 2021 年]

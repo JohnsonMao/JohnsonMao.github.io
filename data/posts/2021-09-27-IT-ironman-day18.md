@@ -1,8 +1,7 @@
 ---
 title: Day.18 「從函式物件認識 作用域 與 提升！」 —— JavaScript 函式 & 作用域 & 提升
 date: 2021/09/27 16:00:00
-index_img: https://i.imgur.com/dUL5Ryk.png
-banner_img: https://i.imgur.com/dUL5Ryk.png
+image: https://i.imgur.com/dUL5Ryk.png
 categories:
     - [程式語言, 前端, JavaScript]
     - [iT 鐵人賽, 第 2021 年]

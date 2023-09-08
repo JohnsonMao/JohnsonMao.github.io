@@ -1,8 +1,7 @@
 ---
 title: Day.13 「初步學習 JavaScript 基礎篇」 —— JavaScript 宣告變數 與 基本型別
 date: 2021/09/22 16:00:00
-index_img: https://i.imgur.com/wh1ZT6h.png
-banner_img: https://i.imgur.com/wh1ZT6h.png
+image: https://i.imgur.com/wh1ZT6h.png
 categories:
     - [程式語言, 前端, JavaScript]
     - [iT 鐵人賽, 第 2021 年]

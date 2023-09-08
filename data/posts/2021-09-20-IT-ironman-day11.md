@@ -1,8 +1,7 @@
 ---
 title: Day.11 「利用漸變效果，讓網頁不再死板！」 —— CSS Transform & CSS Transition
 date: 2021/09/20 22:00:00
-index_img: https://i.imgur.com/VoFpU6Q.png
-banner_img: https://i.imgur.com/VoFpU6Q.png
+image: https://i.imgur.com/VoFpU6Q.png
 categories:
     - [程式語言, 前端, CSS]
     - [iT 鐵人賽, 第 2021 年]

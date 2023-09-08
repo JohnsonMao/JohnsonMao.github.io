@@ -1,8 +1,7 @@
 ---
 title: Day.17 「如果基本型別是商品，那物件型別就是購物袋」 —— JavaScript 物件型別
 date: 2021/09/26 15:00:00
-index_img: https://i.imgur.com/6P86wxa.png
-banner_img: https://i.imgur.com/6P86wxa.png
+image: https://i.imgur.com/6P86wxa.png
 categories:
     - [程式語言, 前端, JavaScript]
     - [iT 鐵人賽, 第 2021 年]

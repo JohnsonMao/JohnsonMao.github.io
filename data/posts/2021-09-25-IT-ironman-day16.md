@@ -1,8 +1,7 @@
 ---
 title: Day.16 「重複的事情，交給程式去做！」 —— JavaScript 循環迴圈
 date: 2021/09/25 22:00:00
-index_img: https://i.imgur.com/0bAwQpd.png
-banner_img: https://i.imgur.com/0bAwQpd.png
+image: https://i.imgur.com/0bAwQpd.png
 categories:
     - [程式語言, 前端, JavaScript]
     - [iT 鐵人賽, 第 2021 年]

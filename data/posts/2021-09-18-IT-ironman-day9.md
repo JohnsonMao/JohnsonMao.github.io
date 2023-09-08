@@ -1,8 +1,7 @@
 ---
 title: Day.9 「我介於有與沒有之間～」 —— CSS 偽類選擇器（Pseudo classes） 與 偽元素（Pseudo element）
 date: 2021/09/18 22:00:00
-index_img: https://i.imgur.com/77yUxJL.png
-banner_img: https://i.imgur.com/77yUxJL.png
+image: https://i.imgur.com/77yUxJL.png
 categories:
     - [程式語言, 前端, CSS]
     - [iT 鐵人賽, 第 2021 年]

@@ -1,8 +1,7 @@
 ---
 title: Day.12 「來為網頁添加動畫吧！」 —— CSS 動畫（animation）
 date: 2021/09/21 22:00:00
-index_img: https://i.imgur.com/Z0lYvKC.gif
-banner_img: https://i.imgur.com/Z0lYvKC.gif
+image: https://i.imgur.com/Z0lYvKC.gif
 categories:
     - [程式語言, 前端, CSS]
     - [iT 鐵人賽, 第 2021 年]

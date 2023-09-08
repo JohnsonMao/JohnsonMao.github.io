@@ -1,8 +1,7 @@
 ---
 title: Day.7 「CSS 網頁切版必學，用過都說讚！」 —— CSS 彈性盒模型 Flexbox
 date: 2021/09/16 22:00:00
-index_img: https://i.imgur.com/hLMVxvv.png
-banner_img: https://i.imgur.com/hLMVxvv.png
+image: https://i.imgur.com/hLMVxvv.png
 categories:
     - [程式語言, 前端, CSS]
     - [iT 鐵人賽, 第 2021 年]

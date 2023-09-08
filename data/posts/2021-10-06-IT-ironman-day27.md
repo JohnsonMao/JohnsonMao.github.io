@@ -1,8 +1,7 @@
 ---
 title: Day.27 「var 成為時代的眼淚！」 —— ES6 區塊作用域 與 提升
 date: 2021/10/06 16:40:00
-index_img: https://i.imgur.com/hAS4sZ7.png
-banner_img: https://i.imgur.com/hAS4sZ7.png
+image: https://i.imgur.com/hAS4sZ7.png
 categories:
     - [程式語言, 前端, JavaScript]
     - [iT 鐵人賽, 第 2021 年]
