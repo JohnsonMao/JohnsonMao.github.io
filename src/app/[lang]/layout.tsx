@@ -1,7 +1,8 @@
 import type { Metadata } from 'next';
-import { avatarUrl, name, createMetadata } from '~/data/metadata';
+import { avatarUrl, name, copyright, createMetadata } from '~/data/metadata';
 import { Locale, getDictionary, locales } from '~/i18n';
 import Header, { HeaderProps } from '@/components/Header';
+import Footer from '@/components/Footer';
 
 export const dynamic = 'force-static';
 
@@ -55,6 +56,7 @@ async function I18nLayout({
     <>
       <Header logo={logo} menu={menu} />
       {children}
+      <Footer copyright={copyright} />
     </>
   );
 }

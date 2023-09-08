@@ -42,23 +42,14 @@ function filterImageNode(node: ImageNode): boolean {
 async function getPlaceholder(buffer: ArrayBufferLike) {
   const metadata = await sharp(buffer)
     .metadata()
-    .then(({ width, height, ...metadata }) => {
-      if (!width || !height) {
-        throw new Error('Could not get required image metadata');
-      }
-
-      return { width, height, ...metadata };
+    .catch((err) => {
+      console.error('metadata generation failed', err);
+      throw err;
     });
 
   const pipeline = sharp(buffer)
-    .resize(10, 10, {
-      fit: 'inside',
-    })
-    .toFormat('png')
-    .modulate({
-      brightness: 1,
-      saturation: 1,
-    });
+    .resize(10, 10, { fit: 'inside' })
+    .toFormat('png');
 
   const base64 = await pipeline
     .clone()

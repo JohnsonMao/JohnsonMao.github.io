@@ -7,7 +7,7 @@ export const name = 'Johnson Mao';
 export const email = 'tutelary.maomao@gmail.com';
 export const domainUrl = 'https://mao-note.vercel.app';
 export const githubUrl = 'https://github.com/JohnsonMao';
-export const copyright = `Copyright © ${new Date().getFullYear()} Mao's Notes | ${name}. All rights reserved.`;
+export const copyright = `2023 - PRESENT © Mao's Notes | ${name}`;
 
 export async function createMetadata(
   locale: Locale = defaultLocale

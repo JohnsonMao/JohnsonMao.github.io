@@ -7,9 +7,8 @@ type ContainerProps = {
 
 function Container({ as = 'div', className, ...props }: ContainerProps) {
   const Component = as;
-  const componentClassName = cn('mx-auto', className);
 
-  return <Component className={componentClassName} {...props} />;
+  return <Component className={cn('mx-auto', className)} {...props} />;
 }
 
 export default Container;
