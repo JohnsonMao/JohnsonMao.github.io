@@ -2,8 +2,9 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
 import { getDictionary } from '~/i18n';
+import Card from '@/components/Card';
 import Container from '@/components/Container';
-import PostList from '@/components/PostList';
+import List from '@/components/List';
 import { getAllDataFrontmatter } from '@/utils/mdx';
 import type { RootParams } from './layout';
 
@@ -30,7 +31,7 @@ async function RootPage({ params: { lang } }: RootParams) {
       <p className="my-12 text-center text-3xl dark:text-white">
         {metadata.title}
       </p>
-      <PostList posts={posts} />
+      <List render={Card} items={posts} />
     </Container>
   );
 }
