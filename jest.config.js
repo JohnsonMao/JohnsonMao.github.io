@@ -14,6 +14,7 @@ const jestConfig = {
   collectCoverageFrom: [
     './src/components/**',
     './src/hooks/**',
+    './src/plugins/**',
     './src/utils/**',
   ],
 };

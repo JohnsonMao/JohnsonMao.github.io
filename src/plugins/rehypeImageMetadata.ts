@@ -54,12 +54,7 @@ function filterImageNode(node: ImageNode): boolean {
 
 /** get 10 x 10 base64 image and metadata */
 async function getPlaceholder(buffer: ArrayBufferLike) {
-  const metadata = await sharp(buffer)
-    .metadata()
-    .catch((err) => {
-      console.error('metadata generation failed', err);
-      throw err;
-    });
+  const metadata = await sharp(buffer).metadata();
 
   const pipeline = sharp(buffer)
     .resize(10, 10, { fit: 'inside' })
@@ -72,11 +67,7 @@ async function getPlaceholder(buffer: ArrayBufferLike) {
     .then(
       ({ data, info }) =>
         `data:image/${info.format};base64,${data.toString('base64')}`
-    )
-    .catch((err) => {
-      console.error('base64 generation failed', err);
-      throw err;
-    });
+    );
 
   return { base64, metadata };
 }
@@ -100,7 +91,7 @@ async function addMetadata(node: ImageNode) {
  * Read more about Next.js image: https://nextjs.org/docs/api-reference/next/image#layout
  */
 export default function rehypeImageMetadata() {
-  return async function transformer(tree: ElementNode) {
+  return async function transformer<T extends ElementNode>(tree: T) {
     const promiseImgNodes: Promise<void>[] = [];
 
     visit(tree, 'element', (node) => {
