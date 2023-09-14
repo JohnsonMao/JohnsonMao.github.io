@@ -17,18 +17,18 @@ describe('Image component', () => {
       height: 100,
       alt: 'Test image with base64',
       base64:
-        'data:image/jpg;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=',
+        'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP87wMAAlABTQluYBcAAAAASUVORK5CYII=',
     },
   ])('should render correct element', ({ alt, ...props }) => {
-    render(<Image src="https://external.com/test.jpg" alt={alt} {...props} />);
+    render(<Image src="https://external.com/test.jpg" alt={alt} {...props} style={{ background: '#000' }}/>);
 
     const checkParentElement = props.width === undefined;
 
-    const imageWithoutWidth = screen.getByAltText(alt);
-    expect(imageWithoutWidth.tagName).toBe('IMG');
+    const image = screen.getByAltText(alt);
+    expect(image.tagName).toBe('IMG');
 
     if (checkParentElement) {
-      expect(imageWithoutWidth.parentElement?.tagName).toBe('PICTURE');
+      expect(image.parentElement?.tagName).toBe('PICTURE');
     }
   });
 });
