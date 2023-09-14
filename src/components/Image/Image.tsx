@@ -1,16 +1,29 @@
 import NextImage, { ImageProps as NextImageProps } from 'next/image';
+import cn from '@/utils/cn';
 
 type ImageProps = NextImageProps & { base64?: string };
 
-function Image({ src, height, width, base64, alt, ...otherProps }: ImageProps) {
+const IMAGE_BLUR_DATA =
+  'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP87wMAAlABTQluYBcAAAAASUVORK5CYII=';
+
+function Image({
+  src,
+  height,
+  width,
+  base64,
+  alt,
+  className,
+  ...otherProps
+}: ImageProps) {
   if (!height || !width) {
     return (
-      <picture className="relative block h-96">
+      <picture className={cn('not-prose relative block h-96', className)}>
         <NextImage
           src={src}
           alt={alt}
-          className="m-0 object-contain"
-          sizes="(min-width: 40em) 40em, 100vw"
+          className="object-cover"
+          placeholder="blur"
+          blurDataURL={base64 || IMAGE_BLUR_DATA}
           fill
           {...otherProps}
         />
@@ -24,9 +37,9 @@ function Image({ src, height, width, base64, alt, ...otherProps }: ImageProps) {
       alt={alt}
       height={height}
       width={width}
-      sizes="(min-width: 40em) 40em, 100vw"
-      placeholder={base64 ? 'blur' : 'empty'}
-      blurDataURL={base64}
+      placeholder="blur"
+      blurDataURL={base64 || IMAGE_BLUR_DATA}
+      className={className}
       {...otherProps}
     />
   );
