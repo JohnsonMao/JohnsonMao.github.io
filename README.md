@@ -1,38 +1,48 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Mao's Blog
 
-## Getting Started
+Welcome to My Blog, a simple blog built with Next.js 13 and Markdown for content.
 
-First, run the development server:
+## Tech Stack
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+- Next.js 13
+- React 18
+- TypeScript
+- Tailwind CSS
+- I18n
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Render blog posts from Markdown files.
+- Responsive design for various devices.
+- Light and dark theme.
+- Comments via Giscus.
+<!-- - Multi-language post support. -->
+<!-- - Tags and categories for organizing content. -->
+<!-- - Near perfect lighthouse score -->
+<!-- - SEO friendly with RSS feed, sitemaps and more. -->
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+## Project Structure
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+- `data/`: Contains data-related files.
+  - `posts/`: Markdown files for blog posts.
+  - `giscus.ts`: Configuration for the Giscus comment system.
+  - `metadata.ts`: Metadata and configuration for the blog.
+- `i18n/`: Internationalization and localization files.
+- `public/static/`: Public static images and other assets.
+- `src/`:  The main source code directory.
+  - `app/`: Next.js pages and routing.
+  - `assets/`: Global and component-specific CSS.
+  - `components/`: Reusable React component.
+  - `hooks/`: Custom React hooks.
+  - `plugins/`: Additional plugins or extensions.
+  - `utils/`: Utility functions and helper modules.
+  - `middleware.ts`: Next.js middleware.
+- `types/`:  TypeScript type definitions.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+<!-- ## License -->
 
-## Learn More
+<!-- ## Contributions -->
 
-To learn more about Next.js, take a look at the following resources:
+<!-- Contributions are welcome! Please create a pull request or open an issue for any improvements or bug fixes. -->
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+<!-- ## Contact -->
