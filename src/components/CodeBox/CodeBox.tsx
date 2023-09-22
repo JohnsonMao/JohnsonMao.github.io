@@ -1,38 +1,23 @@
 'use client';
 
-import { HTMLAttributes, useRef, useState } from 'react';
+import { HTMLAttributes, useRef } from 'react';
 import { AiOutlineCopy } from 'react-icons/ai';
 
+import useAutoReset from '@/hooks/useAutoReset';
 import cn from '@/utils/cn';
 import { copyToClipboard } from '@/utils/clipboard';
 
 type CodeBoxProps = HTMLAttributes<HTMLPreElement>;
 
 function CodeBox(props: CodeBoxProps) {
-  const preRef = useRef<HTMLPreElement>(null);
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
-  const [copied, setCopied] = useState(false);
-
-  const resetCopiedState = () => {
-    setCopied(false);
-    timerRef.current = null;
-  };
+  const preElementRef = useRef<HTMLPreElement>(null);
+  const [copied, setCopied] = useAutoReset(false);
 
   const handleClick = () => {
-    const text = preRef.current?.textContent;
-
-    if (timerRef.current) {
-      clearTimeout(timerRef.current);
-      timerRef.current = null;
-    }
+    const text = preElementRef.current?.textContent;
 
     if (text) {
-      copyToClipboard(text)
-        .then(() => {
-          setCopied(true);
-          timerRef.current = setTimeout(resetCopiedState, 1000);
-        })
-        .catch(resetCopiedState);
+      copyToClipboard(text).then(() => setCopied(true));
     }
   };
 
@@ -53,7 +38,7 @@ function CodeBox(props: CodeBoxProps) {
           <AiOutlineCopy />
         </button>
       </div>
-      <pre {...props} ref={preRef} />
+      <pre {...props} ref={preElementRef} />
     </div>
   );
 }
