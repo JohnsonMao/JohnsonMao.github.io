@@ -3,14 +3,10 @@ const nextConfig = {
   reactStrictMode: true,
   experimental: {
     appDir: true,
+    typedRoutes: true,
   },
   images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'i.imgur.com',
-      },
-    ],
+    unoptimized: true,
   },
   webpack: (config) => {
     config.module.rules.push({

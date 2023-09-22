@@ -1,0 +1,51 @@
+import { copyToClipboard } from '../clipboard';
+
+function setDeviceClipboard(version?: 'new' | 'old') {
+  switch (version) {
+    case 'new':
+      Object.assign(navigator, {
+        clipboard: {
+          writeText: jest.fn().mockImplementation(() => Promise.resolve()),
+        },
+      });
+      break;
+    case 'old':
+      Object.assign(document, {
+        execCommand: jest.fn().mockImplementation(() => Promise.resolve()),
+      });
+      break;
+    default:
+      Object.assign(navigator, { clipboard: undefined });
+      Object.assign(document, { execCommand: undefined });
+  }
+}
+
+describe('Copy to clipboard function', () => {
+  beforeEach(() => {
+    setDeviceClipboard();
+  });
+
+  it('should return error with reject', async () => {
+    expect.assertions(1);
+
+    await expect(copyToClipboard('test')).rejects.toStrictEqual(
+      TypeError('document.execCommand is not a function')
+    );
+  });
+
+  it('should call document execCommand', () => {
+    setDeviceClipboard('old');
+
+    copyToClipboard('test');
+
+    expect(document.execCommand).toBeCalled();
+  });
+
+  it('should call navigator clipboard writeText', () => {
+    setDeviceClipboard('new');
+
+    copyToClipboard('test');
+
+    expect(navigator.clipboard.writeText).toHaveBeenCalledWith('test');
+  });
+});

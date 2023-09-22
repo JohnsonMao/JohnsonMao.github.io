@@ -1,29 +1,29 @@
 import type { Metadata } from 'next';
-import Navbar from '@components/Navbar';
-import { getSettings } from '@utils/settings';
-import { Providers } from './providers';
 
-import '../assets/css/globals.css';
+import { locales } from '~/i18n';
+import { createMetadata, createFeedOptions } from '~/data/metadata';
+import generateRSS from '@/utils/generateRSS';
+import '@/assets/css/globals.css';
 
-const { meta, navbar } = getSettings();
+import Html from './Html';
+import Providers from './Providers';
 
-export const metadata: Metadata = {
-	title: meta.title,
-	description: meta.description,
-	authors: meta.authors
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const allFeedOptions = await Promise.all(locales.map(createFeedOptions));
 
-function RootLayout({ children }: React.PropsWithChildren) {
-	return (
-		<html lang="en" suppressHydrationWarning>
-			<body className="dark:bg-slate-800">
-				<Providers>
-					<Navbar {...navbar} />
-					{children}
-				</Providers>
-			</body>
-		</html>
-	);
+  allFeedOptions.forEach(generateRSS);
+
+  return createMetadata();
 }
 
-export default RootLayout;
+function HtmlLayout({ children }: React.PropsWithChildren) {
+  return (
+    <Html>
+      <body className="dark:bg-slate-800">
+        <Providers>{children}</Providers>
+      </body>
+    </Html>
+  );
+}
+
+export default HtmlLayout;
