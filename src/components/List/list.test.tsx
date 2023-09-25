@@ -10,7 +10,7 @@ describe('List component', () => {
 
     const Component = (data: (typeof items)[number]) => <div>{data.text}</div>;
 
-    render(<List render={Component} items={items} />);
+    render(<List Item={Component} items={items} />);
 
     const list = screen.getByRole('list');
 

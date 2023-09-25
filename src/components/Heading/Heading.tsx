@@ -5,16 +5,12 @@ import Link from '../Link';
 type HTMLHeadingProps = HTMLAttributes<HTMLHeadingElement>;
 
 type HeadingProps = {
-  Component?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+  as: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 } & HTMLHeadingProps;
 
-function Heading({
-  Component = 'h2',
-  id,
-  className,
-  children,
-  ...otherProps
-}: HeadingProps) {
+function Heading({ as, id, className, children, ...otherProps }: HeadingProps) {
+  const Component = as;
+
   return (
     <Component
       id={id}
@@ -32,23 +28,11 @@ function Heading({
   );
 }
 
-export const H1 = (props: HTMLHeadingProps) => (
-  <Heading Component="h1" {...props} />
-);
-export const H2 = (props: HTMLHeadingProps) => (
-  <Heading Component="h2" {...props} />
-);
-export const H3 = (props: HTMLHeadingProps) => (
-  <Heading Component="h3" {...props} />
-);
-export const H4 = (props: HTMLHeadingProps) => (
-  <Heading Component="h4" {...props} />
-);
-export const H5 = (props: HTMLHeadingProps) => (
-  <Heading Component="h5" {...props} />
-);
-export const H6 = (props: HTMLHeadingProps) => (
-  <Heading Component="h6" {...props} />
-);
+export const H1 = (props: HTMLHeadingProps) => <Heading as="h1" {...props} />;
+export const H2 = (props: HTMLHeadingProps) => <Heading as="h2" {...props} />;
+export const H3 = (props: HTMLHeadingProps) => <Heading as="h3" {...props} />;
+export const H4 = (props: HTMLHeadingProps) => <Heading as="h4" {...props} />;
+export const H5 = (props: HTMLHeadingProps) => <Heading as="h5" {...props} />;
+export const H6 = (props: HTMLHeadingProps) => <Heading as="h6" {...props} />;
 
 export default Heading;

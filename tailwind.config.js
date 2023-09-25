@@ -7,6 +7,9 @@ const tailwindcssConfig = {
       typography: {
         DEFAULT: {
           css: {
+            a: {
+              textDecoration: 'none'
+            },
             code: {
               margin: '0 4px',
               padding: '2px 4px',

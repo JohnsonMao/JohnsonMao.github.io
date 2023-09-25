@@ -17,11 +17,11 @@ type ListProps<T extends Record<string, unknown>, P extends keyof T> = (
   | ListPropsWithDefaultKey<T>
   | ListPropsWithCustomKey<T, P>
 ) & {
-  render: (props: T) => ReactNode;
+  Item: (props: T) => ReactNode;
 };
 
 function List<T extends Record<string, unknown>, P extends string & keyof T>({
-  render,
+  Item,
   items,
   primaryKey = 'id' as P,
 }: ListProps<T, P>) {
@@ -29,7 +29,9 @@ function List<T extends Record<string, unknown>, P extends string & keyof T>({
     <section>
       <ul className="flex flex-col gap-4">
         {items.map((data) => (
-          <li key={data[primaryKey]}>{render(data)}</li>
+          <li key={data[primaryKey]}>
+            <Item {...data} />
+          </li>
         ))}
       </ul>
     </section>
