@@ -1,11 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 
 /**
- * Custom hook that resets a value to its initial state after a specified delay.
- *
- * @param initialValue - The initial value.
- * @param resetDelayMs - The reset delay in milliseconds. Default is 1000.
- * @returns A tuple containing the current value, and a function to set a new value.
+ * This hook resets a value to its initial state after a specified delay.
  */
 function useAutoReset<T>(initialValue: T, resetDelayMs = 1000) {
   const [internalValue, setInternalValue] = useState(initialValue);

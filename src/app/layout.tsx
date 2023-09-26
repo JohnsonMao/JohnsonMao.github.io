@@ -8,6 +8,8 @@ import '@/assets/css/globals.css';
 import Html from './Html';
 import Providers from './Providers';
 
+export const dynamic = 'force-static';
+
 export async function generateMetadata(): Promise<Metadata> {
   const allFeedOptions = await Promise.all(locales.map(createFeedOptions));
 

@@ -1,15 +1,23 @@
 import { render, screen } from '@testing-library/react';
 
-import zhTW from '~/i18n/locales/zh-TW';
+import en from '~/i18n/locales/en';
 import NotFound from '.';
 
+const mockPathname = jest.fn();
+
+jest.mock('next/navigation', () => ({
+  usePathname: () => mockPathname(),
+}));
+
 describe('NotFound component', () => {
-  it('should render correct element', () => {
+  it('should render correct element', async () => {
+    mockPathname.mockReturnValueOnce('/en/test/path');
+
     render(<NotFound />);
 
-    const heading = screen.getByRole('heading');
+    const heading = await screen.findByRole('heading');
 
     expect(heading).toBeInTheDocument();
-    expect(heading).toHaveTextContent(zhTW.notFound.message)
+    expect(heading).toHaveTextContent(en.notFound.message)
   });
 });
