@@ -31,7 +31,7 @@ async function RootPage({ params: { lang } }: RootParams) {
       <p className="my-12 text-center text-3xl dark:text-white">
         {metadata.title}
       </p>
-      <List render={Card} items={posts} />
+      <List Item={Card} items={posts} />
     </Container>
   );
 }

@@ -6,7 +6,7 @@ describe('Heading component', () => {
   it('should render correct element', () => {
     const name = 'The heading text';
 
-    render(<Heading>{name}</Heading>);
+    render(<Heading as="h2">{name}</Heading>);
 
     const heading = screen.getByRole('heading');
 

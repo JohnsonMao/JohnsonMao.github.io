@@ -35,7 +35,7 @@ function Card({
       <div>
         <h2 className="text-2xl font-bold dark:text-white/90">
           <Link
-            className="underline hover:text-black/70 dark:hover:text-white/70"
+            className="hover:text-black/70 dark:hover:text-white/70"
             href={`/posts/${id}`}
           >
             {title}

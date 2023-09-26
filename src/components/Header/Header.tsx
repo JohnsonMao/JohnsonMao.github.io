@@ -44,7 +44,7 @@ function Header({ logo, menu }: HeaderProps) {
         <Logo {...logo} />
       </Link>
       <nav>
-        <ul className="flex list-none rounded-full bg-gray-900/60 px-2 backdrop-blur-md">
+        <ul className="flex rounded-full bg-gray-900/60 px-2 backdrop-blur-md">
           {menu.map(({ text, href }) => (
             <li key={text}>
               <Link
