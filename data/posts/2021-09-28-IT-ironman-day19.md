@@ -8,7 +8,7 @@ categories:
 tags: 
     - iT 鐵人賽
     - JavaScript
-excerpt: 我們的變數在我們開啟網站時，都會存放在記憶體內，當我們關閉網站時，記憶體也會將這些變數釋放。
+description: 我們的變數在我們開啟網站時，都會存放在記憶體內，當我們關閉網站時，記憶體也會將這些變數釋放。
 ---
 
 ![「認識 JavaScript 記憶體堆疊、傳值 與 傳址」 —— JavaScript 物件 與 記憶體](https://i.imgur.com/PQ6GCWn.png)

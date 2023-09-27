@@ -8,7 +8,7 @@ categories:
 tags: 
     - iT 鐵人賽
     - JavaScript
-excerpt: ES6 新增了更接近傳統語言寫法的 Class 這個概念，基本上可以當作是一個**語法糖**，絕大部分的功能在 ES5 都可以做到，但 Class 可以讓構造函式的寫法更加清新！
+description: ES6 新增了更接近傳統語言寫法的 Class 這個概念，基本上可以當作是一個**語法糖**，絕大部分的功能在 ES5 都可以做到，但 Class 可以讓構造函式的寫法更加清新！
 ---
 
 ![「Class 語法糖～」 —— ES6 Class 構造函式](https://i.imgur.com/EOelHe0.png)

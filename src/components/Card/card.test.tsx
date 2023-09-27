@@ -15,7 +15,7 @@ describe('Card component', () => {
         ['categories_B', 'categories_B_1'],
       ],
       tags: ['tag_A', 'tag_B'],
-      excerpt: 'excerpt test',
+      description: 'description test',
     };
 
     render(<Card {...data} />);
@@ -29,6 +29,6 @@ describe('Card component', () => {
     expect(image).toHaveAttribute('alt', `${data.title} cover`);
     expect(heading).toHaveTextContent(data.title);
     expect(article).toHaveTextContent(formatDate(data.date));
-    expect(article).toHaveTextContent(data.excerpt);
+    expect(article).toHaveTextContent(data.description);
   });
 });

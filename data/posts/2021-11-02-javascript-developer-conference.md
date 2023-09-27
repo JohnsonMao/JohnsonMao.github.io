@@ -8,7 +8,7 @@ categories:
 tags:
     - JSDC
     - JavaScript
-excerpt: 很高興能獲得 Alpha Camp 全額贊助 JSDC 門票，這是我第一次參加 JSDC 開發者年會（英文全名 JavaScript Developer Conference，簡稱JSDC），今年的主題是「JavaScript 過去、現在與未來」。共有四大方向，分別是「跨平台整合」、「區塊鏈應用」、「前端開發與框架」、「語言特性與後端技術」
+description: 很高興能獲得 Alpha Camp 全額贊助 JSDC 門票，這是我第一次參加 JSDC 開發者年會（英文全名 JavaScript Developer Conference，簡稱JSDC），今年的主題是「JavaScript 過去、現在與未來」。共有四大方向，分別是「跨平台整合」、「區塊鏈應用」、「前端開發與框架」、「語言特性與後端技術」
 ---
 
 ![JSDC 2021 開發者年會 參與心得](https://i.imgur.com/Z5eqYW4.png)

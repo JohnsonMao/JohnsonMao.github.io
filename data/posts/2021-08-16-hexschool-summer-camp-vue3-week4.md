@@ -8,7 +8,7 @@ categories:
 tags:
     - 六角學院
     - Vue 3 新手夏令營
-excerpt: 這裡將會記錄參加 六角學院 Vue 3 新手夏令營（活動已結束） 課程筆記 與 每日任務紀錄，第四周介紹如何使用 Composition API 與 watch 功能，並了解 Vue 2 與 Vue 3 的差異。
+description: 這裡將會記錄參加 六角學院 Vue 3 新手夏令營（活動已結束） 課程筆記 與 每日任務紀錄，第四周介紹如何使用 Composition API 與 watch 功能，並了解 Vue 2 與 Vue 3 的差異。
 ---
 
 #  Vue 3 Composition API    

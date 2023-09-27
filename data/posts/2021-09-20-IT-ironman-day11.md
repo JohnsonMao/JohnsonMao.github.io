@@ -8,7 +8,7 @@ categories:
 tags: 
     - iT 鐵人賽
     - CSS
-excerpt: 現在我們會使用基本的偽類選擇器做效果了，但看到變化過程一閃而過、冷冰冰的，想增添更多漸變效果，讓動態效果可以更多變化、更平滑動感，就要使用我們的 transform 與 transition 這兩個屬性。
+description: 現在我們會使用基本的偽類選擇器做效果了，但看到變化過程一閃而過、冷冰冰的，想增添更多漸變效果，讓動態效果可以更多變化、更平滑動感，就要使用我們的 transform 與 transition 這兩個屬性。
 ---
 
 ![「利用漸變效果，讓網頁不再死板！」 —— CSS Transform & CSS Transition](https://i.imgur.com/VoFpU6Q.png)
