@@ -53,14 +53,14 @@ describe('useIntersectionObserver hook', () => {
     expect(mockIntersectionObserver).toBeCalledTimes(1);
     expect(mockObserve).toBeCalledTimes(0);
 
-    act(() => result.current.setElementRef(elementRef.current));
+    act(() => result.current[1](elementRef.current));
 
     expect(mockDisconnect).toBeCalledTimes(0);
     expect(mockObserve).toBeCalledTimes(2);
     expect(mockObserve).toBeCalledWith(elementRef.current[0]);
     expect(mockObserve).toHaveBeenLastCalledWith(elementRef.current[1]);
 
-    act(() => result.current.setElementRef(elementRef.current[0]));
+    act(() => result.current[1](elementRef.current[0]));
 
     expect(mockDisconnect).toBeCalledTimes(1);
     expect(mockObserve).toBeCalledTimes(3);

@@ -4,8 +4,6 @@ import { Locale, getDictionary, locales } from '~/i18n';
 import Header, { HeaderProps } from '@/components/Header';
 import Footer from '@/components/Footer';
 
-export const dynamic = 'force-static';
-
 export async function generateStaticParams() {
   return locales.map((lang) => ({ lang }));
 }
