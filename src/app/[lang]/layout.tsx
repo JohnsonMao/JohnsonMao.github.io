@@ -15,10 +15,9 @@ export type RootParams = {
 export async function generateMetadata({
   params: { lang },
 }: RootParams): Promise<Metadata> {
-  const { alternates } = await createMetadata();
-  const {
-    metadata: { title },
-  } = await getDictionary(lang);
+  const { alternates } = await createMetadata(lang);
+  const { metadata } = await getDictionary(lang);
+  const { title } = metadata;
 
   return {
     title: {

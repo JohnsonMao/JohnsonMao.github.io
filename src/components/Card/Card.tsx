@@ -15,7 +15,7 @@ function Card({
   date,
   categories,
   tags,
-  excerpt,
+  description,
   image,
 }: CardProps) {
   const formattedDate = formatDate(date);
@@ -41,7 +41,7 @@ function Card({
             {title}
           </Link>
         </h2>
-        <p className="my-3 text-base">{excerpt}</p>
+        <p className="my-3 text-base">{description}</p>
         <div className="flex flex-wrap gap-x-4 gap-y-1 text-sm">
           <div className="flex items-center gap-1">
             <BsCalendar4Week />

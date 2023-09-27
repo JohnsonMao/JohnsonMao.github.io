@@ -8,7 +8,7 @@ categories:
 tags: 
     - iT 鐵人賽
     - JavaScript
-excerpt: ES8 新增了 async 與 await 兩個語法，這兩個語法也是為了更方便解決非同步的語法，可以說是 Promise then 的語法糖。
+description: ES8 新增了 async 與 await 兩個語法，這兩個語法也是為了更方便解決非同步的語法，可以說是 Promise then 的語法糖。
 ---
 
 ![「什麼！？ Promise 的語法糖？」 —— ES8 Async & Await](https://i.imgur.com/YhGvJWy.png)

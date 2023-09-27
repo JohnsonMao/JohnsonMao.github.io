@@ -8,7 +8,7 @@ categories:
 tags: 
     - iT 鐵人賽
     - JavaScript
-excerpt: 我們前面已經學習了回調函式（Callback Function）與構造函式（Constrcutor），而 Promise 是 ES6 新增用來解決非同步回調地域的新語法，同時也是一個構造函式！
+description: 我們前面已經學習了回調函式（Callback Function）與構造函式（Constrcutor），而 Promise 是 ES6 新增用來解決非同步回調地域的新語法，同時也是一個構造函式！
 ---
 
 ![「Promise 初體驗～」 —— ES6 Promise](https://i.imgur.com/BnUYCE5.png)

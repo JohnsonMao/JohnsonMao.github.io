@@ -91,6 +91,17 @@ describe('Get post data function', () => {
       source: '---\ndate: 2023/07/09\n---\n\n測試文章C',
     });
   });
+
+  it('should return null when trying to get post data for a non-existing file', async () => {
+    mockExists.mockReturnValueOnce(false);
+    mockReadFile.mockImplementation(() => {
+      throw new Error('File not found');
+    });
+
+    const postData = await getDataById('posts', 'not_found');
+
+    expect(postData).toBe(null);
+  });
 });
 
 const mockFileA = `---

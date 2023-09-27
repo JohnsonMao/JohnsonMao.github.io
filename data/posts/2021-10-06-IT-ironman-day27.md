@@ -8,7 +8,7 @@ categories:
 tags: 
     - iT 鐵人賽
     - JavaScript
-excerpt: 之前已經介紹了 var 與函式作用域，今天來更仔細的介紹 ES6 新增的 let 、 const以及與它們相關的區塊作用域。
+description: 之前已經介紹了 var 與函式作用域，今天來更仔細的介紹 ES6 新增的 let 、 const以及與它們相關的區塊作用域。
 ---
 
 ![「var 成為時代的眼淚！」 —— ES6 區塊作用域 與 提升](https://i.imgur.com/hAS4sZ7.png)

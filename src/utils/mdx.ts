@@ -45,37 +45,41 @@ export async function getAllDataFrontmatter(dirType: DataDirType) {
 
 /** Retrieve data content and front matter for a specific data file by its id. */
 export async function getDataById(dirType: DataDirType, id: string) {
-  const dirPath = path.join(ROOT_PATH, 'data', dirType);
-  const mdxPath = path.join(dirPath, `${id}.mdx`);
-  const mdPath = path.join(dirPath, `${id}.md`);
-  const fullPath = fs.existsSync(mdxPath) ? mdxPath : mdPath;
-  const source = fs.readFileSync(fullPath, 'utf8');
-  const { content, frontmatter } = await compileMDX<DataFrontmatter>({
-    source,
-    components: {
-      h1: H1,
-      h2: H2,
-      h3: H3,
-      h4: H4,
-      h5: H5,
-      h6: H6,
-      pre: CodeBox,
-      img: Image as () => JSX.Element,
-      a: Link as () => JSX.Element,
-    },
-    options: {
-      parseFrontmatter: true,
-      mdxOptions: {
-        remarkPlugins: [remarkGfm],
-        rehypePlugins: [
-          rehypeSlug,
-          rehypeCodeTitles,
-          rehypePrismPlus,
-          rehypeImageMetadata,
-        ],
+  try {
+    const dirPath = path.join(ROOT_PATH, 'data', dirType);
+    const mdxPath = path.join(dirPath, `${id}.mdx`);
+    const mdPath = path.join(dirPath, `${id}.md`);
+    const fullPath = fs.existsSync(mdxPath) ? mdxPath : mdPath;
+    const source = fs.readFileSync(fullPath, 'utf8');
+    const { content, frontmatter } = await compileMDX<DataFrontmatter>({
+      source,
+      components: {
+        h1: H1,
+        h2: H2,
+        h3: H3,
+        h4: H4,
+        h5: H5,
+        h6: H6,
+        pre: CodeBox,
+        img: Image as () => JSX.Element,
+        a: Link as () => JSX.Element,
       },
-    },
-  });
+      options: {
+        parseFrontmatter: true,
+        mdxOptions: {
+          remarkPlugins: [remarkGfm],
+          rehypePlugins: [
+            rehypeSlug,
+            rehypeCodeTitles,
+            rehypePrismPlus,
+            rehypeImageMetadata,
+          ],
+        },
+      },
+    });
 
-  return { id, content, frontmatter, source };
+    return { id, content, frontmatter, source };
+  } catch {
+    return null;
+  }
 }
