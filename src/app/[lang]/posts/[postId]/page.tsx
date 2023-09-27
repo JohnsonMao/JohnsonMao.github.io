@@ -21,27 +21,19 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params: { postId },
 }: PostParams): Promise<Metadata> {
-  const posts = await getAllDataFrontmatter('posts');
-  const post = posts.find((post) => post.id === postId);
+  const post = await getDataById('posts', postId);
 
   if (!post) return notFound();
 
-  return {
-    title: post.title,
-    description: post.excerpt,
-  };
+  return post.frontmatter;
 }
 
 async function PostPage({ params: { postId } }: PostParams) {
-  const posts = await getAllDataFrontmatter('posts');
-  const post = posts.find((post) => post.id === postId);
+  const post = await getDataById('posts', postId);
 
   if (!post) return notFound();
 
-  const { content, frontmatter, source } = await getDataById(
-    'posts',
-    postId
-  );
+  const { content, frontmatter, source } = post;
   const formattedDate = formatDate(frontmatter.date);
 
   return (
