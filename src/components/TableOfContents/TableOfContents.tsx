@@ -35,24 +35,14 @@ function TableOfContents({ source }: TableOfContentsProps) {
   }, [setElementRef]);
 
   useEffect(() => {
-    const visibleHeadings = entry.flatMap((headingElement) => {
-      if (headingElement.isIntersecting) return headingElement;
-      return [];
-    });
+    const visibleHeadings = entry.filter(
+      ({ isIntersecting }) => isIntersecting
+    );
 
     if (visibleHeadings.length > 0) {
       setActiveId(visibleHeadings[0].target.id);
     }
   }, [entry]);
-
-  useEffect(() => {
-    if (!window.location.hash) {
-      window.scrollTo({
-        top: 0,
-        behavior: 'instant'
-      })
-    }
-  }, []);
 
   return (
     <nav aria-label="Table of contents">
