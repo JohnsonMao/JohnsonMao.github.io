@@ -44,8 +44,12 @@ async function I18nLayout({
   };
   const menu: HeaderProps['menu'] = [
     {
-      text: common.posts,
+      text: common.home,
       href: '/',
+    },
+    {
+      text: common.posts,
+      href: '/posts',
     },
   ];
 
