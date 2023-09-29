@@ -5,7 +5,7 @@ import Card from '@/components/Card';
 import Container from '@/components/Container';
 import List from '@/components/List';
 import { getAllDataFrontmatter } from '@/utils/mdx';
-import type { RootParams } from './layout';
+import type { RootParams } from '../layout';
 
 export async function generateMetadata({
   params: { lang },
