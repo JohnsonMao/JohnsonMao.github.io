@@ -2,6 +2,17 @@ import { act, renderHook } from '@testing-library/react';
 import useScroll from '../useScroll';
 
 describe('useScroll hook', () => {
+  beforeAll(() => {
+    const mockRaf = jest.fn();
+
+    mockRaf.mockImplementation((fn: () => void) => {
+      fn();
+      return 1;
+    })
+
+    window.requestAnimationFrame = mockRaf;
+  })
+
   it('should monitor and update scroll position for the window', async () => {
     const { result } = renderHook(() => useScroll());
 

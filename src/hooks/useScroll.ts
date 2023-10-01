@@ -1,4 +1,5 @@
-import { RefObject, useCallback, useEffect, useRef, useState } from 'react';
+import { RefObject, useCallback, useEffect, useRef } from 'react';
+import useRafState from './useRafState';
 
 type ScrollElement = HTMLElement | Window | null;
 
@@ -6,7 +7,7 @@ type ScrollElement = HTMLElement | Window | null;
  * This hook allows tracking the scroll position of a specified DOM element or the window.
  */
 function useScroll(ref?: RefObject<ScrollElement>) {
-  const [scroll, setScroll] = useState({ x: 0, y: 0 });
+  const [scroll, setScroll] = useRafState({ x: 0, y: 0 });
   const internalElementRef = useRef<ScrollElement>(null);
 
   const handleScroll = useCallback(() => {
@@ -17,7 +18,7 @@ function useScroll(ref?: RefObject<ScrollElement>) {
     } else if (element instanceof Element) {
       setScroll({ x: element.scrollLeft, y: element.scrollTop });
     }
-  }, []);
+  }, [setScroll]);
 
   const setInternalElementRef = useCallback(
     (element: ScrollElement) => {
