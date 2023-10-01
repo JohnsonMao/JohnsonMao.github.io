@@ -1,4 +1,4 @@
-import { act, render, renderHook } from '@testing-library/react';
+import { act, renderHook } from '@testing-library/react';
 import useIntersectionObserver from '../useIntersectionObserver';
 
 describe('useIntersectionObserver hook', () => {
@@ -6,12 +6,8 @@ describe('useIntersectionObserver hook', () => {
   const mockObserve = jest.fn();
   const mockUnobserve = jest.fn();
   const mockDisconnect = jest.fn();
-  const elementRef: { current: Element[] } = { current: [] };
-  const pushElementRef = (element: Element | null) =>
-    element && elementRef.current.push(element);
 
   beforeEach(() => {
-    elementRef.current = [];
     mockObserve.mockClear();
     mockUnobserve.mockClear();
     mockDisconnect.mockClear();
@@ -25,12 +21,12 @@ describe('useIntersectionObserver hook', () => {
   });
 
   it('should observe elements when elementRef is provided', () => {
-    render(
-      <div>
-        <h2 ref={pushElementRef}>Test1</h2>
-        <h2 ref={pushElementRef}>Test2</h2>
-      </div>
-    );
+    const elementRef = {
+      current: [
+        document.createElement('h2'),
+        document.createElement('h2')
+      ]
+    }
 
     renderHook(() => useIntersectionObserver({ elementRef }));
 
@@ -41,12 +37,12 @@ describe('useIntersectionObserver hook', () => {
   });
 
   it('should observe and disconnect elements when setElementRef is called', () => {
-    render(
-      <div>
-        <h2 ref={pushElementRef}>Test1</h2>
-        <h2 ref={pushElementRef}>Test2</h2>
-      </div>
-    );
+    const elementRef = {
+      current: [
+        document.createElement('h2'),
+        document.createElement('h2')
+      ]
+    }
 
     const { result } = renderHook(() => useIntersectionObserver());
 
