@@ -1,18 +1,7 @@
-import { act, renderHook } from '@testing-library/react';
+import { act, renderHook, waitFor } from '@testing-library/react';
 import useScroll from '../useScroll';
 
 describe('useScroll hook', () => {
-  beforeAll(() => {
-    const mockRaf = jest.fn();
-
-    mockRaf.mockImplementation((fn: () => void) => {
-      fn();
-      return 1;
-    })
-
-    window.requestAnimationFrame = mockRaf;
-  })
-
   it('should monitor and update scroll position for the window', async () => {
     const { result } = renderHook(() => useScroll());
 
@@ -24,7 +13,9 @@ describe('useScroll hook', () => {
       window.dispatchEvent(new Event('scroll'));
     });
 
-    expect(result.current[0]).toEqual({ x: 100, y: 200 });
+    await waitFor(() => {
+      expect(result.current[0]).toEqual({ x: 100, y: 200 });
+    });
   });
 
   it('should monitor and update scroll position for a specific DOM element', async () => {
@@ -39,7 +30,9 @@ describe('useScroll hook', () => {
       element.dispatchEvent(new Event('scroll'));
     });
 
-    expect(result.current[0]).toEqual({ x: 150, y: 250 });
+    await waitFor(() => {
+      expect(result.current[0]).toEqual({ x: 150, y: 250 });
+    });
   });
 
   it('should monitor and update scroll position after setting the monitored element', async () => {
@@ -55,6 +48,8 @@ describe('useScroll hook', () => {
       element.dispatchEvent(new Event('scroll'));
     });
 
-    expect(result.current[0]).toEqual({ x: 180, y: 280 });
+    await waitFor(() => {
+      expect(result.current[0]).toEqual({ x: 180, y: 280 });
+    });
   });
 });

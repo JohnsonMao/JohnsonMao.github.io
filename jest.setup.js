@@ -6,10 +6,6 @@ import React from 'react';
 // Learn more: https://github.com/testing-library/jest-dom
 import '@testing-library/jest-dom/extend-expect';
 
-const MockImage = ({ src, alt }) => React.createElement('img', { src, alt, });
-
-jest.mock('next/image', () => MockImage);
-
-const noop = () => undefined;
-
-Object.defineProperty(window, 'scrollTo', { value: noop, writable: true });
+jest.mock('next/image', () => function MockImage({ src, alt }) {
+  return React.createElement('img', { src, alt })
+});
