@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 
 import { getDictionary } from '~/i18n';
+import { H1 } from '@/components/Heading';
 import Card from '@/components/Card';
 import Container from '@/components/Container';
 import List from '@/components/List';
@@ -19,13 +20,13 @@ export async function generateMetadata({
 
 async function RootPage({ params: { lang } }: RootParams) {
   const posts = await getAllDataFrontmatter('posts');
-  const { metadata } = await getDictionary(lang);
+  const { common } = await getDictionary(lang);
 
   return (
     <Container as="main">
-      <p className="my-12 text-center text-3xl dark:text-white">
-        {metadata.title}
-      </p>
+      <H1 className="my-12 text-center text-3xl dark:text-white">
+        {common.slogan}
+      </H1>
       <List Item={Card} items={posts} />
     </Container>
   );

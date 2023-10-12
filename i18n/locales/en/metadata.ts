@@ -1,6 +1,6 @@
 const metadata = {
-  title: "Mao's notes",
-  description: 'Notes on Learning Front-end Development',
+  title: "Mao's Corner",
+  description: "Mao's Learning Corner",
 };
 
 export default metadata;

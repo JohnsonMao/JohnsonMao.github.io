@@ -1,6 +1,6 @@
 const metadata = {
-  title: "Mao's notes",
-  description: '學習前端開發的筆記',
+  title: "Mao's Corner",
+  description: '阿毛的學習角落',
 };
 
 export default metadata;
