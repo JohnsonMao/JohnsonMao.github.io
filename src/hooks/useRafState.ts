@@ -10,14 +10,10 @@ const useRafState = <S>(initialState: S | (() => S)) => {
   const setRafState = useCallback((value: S | ((prevState: S) => S)) => {
     cancelAnimationFrame(frame.current);
 
-    frame.current = requestAnimationFrame(() => {
-      setState(value);
-    });
+    frame.current = requestAnimationFrame(() => setState(value));
   }, []);
 
-  useEffect(() => {
-    return () => cancelAnimationFrame(frame.current);
-  }, [])
+  useEffect(() => () => cancelAnimationFrame(frame.current), []);
 
   return [state, setRafState] as const;
 };

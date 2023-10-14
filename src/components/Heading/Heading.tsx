@@ -17,12 +17,14 @@ function Heading({ as, id, className, children, ...otherProps }: HeadingProps) {
       className={cn('group relative', className)}
       {...otherProps}
     >
-      <Link
-        href={`#${id}`}
-        className="absolute -left-6 no-underline opacity-0 group-hover:opacity-100"
-      >
-        #
-      </Link>
+      {id && (
+        <Link
+          href={`#${id}`}
+          className="absolute -left-6 no-underline opacity-0 group-hover:opacity-100"
+        >
+          #
+        </Link>
+      )}
       {children}
     </Component>
   );
