@@ -11,7 +11,7 @@ describe('Heading component', () => {
     const heading = screen.getByRole('heading');
 
     expect(heading).toBeInTheDocument();
-    expect(heading).toHaveTextContent(`#${name}`);
+    expect(heading).toHaveTextContent(name);
     expect(heading.tagName).toBe('H2');
   });
 
@@ -29,7 +29,7 @@ describe('Heading component', () => {
 
     const heading = screen.getByRole('heading');
 
-    expect(heading).toHaveTextContent(`#${name}`);
+    expect(heading).toHaveTextContent(name);
     expect(heading.tagName).toBe(expected);
   });
 });

@@ -15,5 +15,5 @@
     "prettier"
   ],
   "plugins": ["tailwindcss"],
-  "ignorePatterns": ["jest.config.js"]
+  "ignorePatterns": ["**.config.js"]
 }

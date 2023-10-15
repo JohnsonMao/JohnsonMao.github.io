@@ -1,9 +1,14 @@
+const colors = require('tailwindcss/colors');
+
 /** @type {import('tailwindcss').Config} */
 const tailwindcssConfig = {
   content: ['./src/**/*.{js,ts,jsx,tsx}'],
   darkMode: 'class',
   theme: {
     extend: {
+      colors: {
+        primary: { ...colors.cyan, DEFAULT: colors.cyan[500] }
+      },
       typography: {
         DEFAULT: {
           css: {

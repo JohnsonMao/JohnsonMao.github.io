@@ -10,7 +10,14 @@ const Container = forwardRef<HTMLDivElement, ContainerProps>(
     const Component = as;
 
     return (
-      <Component className={cn('mx-auto', className)} ref={ref} {...props} />
+      <Component
+        className={cn(
+          'border-x border-red-50 px-7 md:mx-8 lg:mx-16 lg:px-14',
+          className
+        )}
+        ref={ref}
+        {...props}
+      />
     );
   }
 );

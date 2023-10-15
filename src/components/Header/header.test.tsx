@@ -1,16 +1,28 @@
 import { act, render, screen, waitFor } from '@testing-library/react';
 import Header, { HeaderProps } from '.';
 
+const mockPathname = jest.fn();
+
+jest.mock('next/navigation', () => ({
+  usePathname: () => mockPathname(),
+}));
+
 describe('Header component', () => {
+  const logo = {
+    src: 'https://external.com/test.jpg',
+    alt: 'test logo image alt',
+  };
+  const menu: HeaderProps['menu'] = [
+    { text: 'Home', href: '/' },
+    { text: 'Post', href: '/posts' },
+  ];
+
+  beforeEach(() => {
+    mockPathname.mockClear();
+  });
+
   it('should render correct element', () => {
-    const logo = {
-      src: 'https://external.com/test.jpg',
-      alt: 'test logo image alt',
-    };
-    const menu: HeaderProps['menu'] = [
-      { text: 'menu_A', href: '/posts/a' },
-      { text: 'menu_B', href: '/posts/b' },
-    ];
+    mockPathname.mockReturnValueOnce('/');
 
     render(<Header logo={logo} menu={menu} />);
 
@@ -33,34 +45,79 @@ describe('Header component', () => {
   });
 
   it('should hide header on scroll down and show on scroll up', async () => {
-    const logo = {
-      src: 'https://external.com/test.jpg',
-      alt: 'test logo image alt',
-    };
-    const menu: HeaderProps['menu'] = [];
+    mockPathname.mockReturnValueOnce('/');
 
-    render(<Header logo={logo} menu={menu} />);
+    Object.defineProperty(HTMLElement.prototype, 'clientHeight', {
+      configurable: true,
+      value: 50,
+    });
+
+    render(<Header logo={logo} menu={[]} />);
 
     const header = screen.getByRole('banner');
 
     expect(header.tagName).toBe('HEADER');
 
     act(() => {
-      window.scrollY = 100;
+      window.scrollY = 20;
       window.dispatchEvent(new Event('scroll'));
     });
 
     await waitFor(() => {
-      expect(header).toHaveClass('-translate-y-full');
+      expect(header).toHaveStyle({ '--tw-translate-y': '0px' });
     });
 
     act(() => {
-      window.scrollY = 0;
+      window.scrollY = 170;
       window.dispatchEvent(new Event('scroll'));
     });
 
     await waitFor(() => {
-      expect(header).not.toHaveClass('-translate-y-full');
+      expect(header).toHaveStyle({ '--tw-translate-y': '-50px' });
+    });
+
+    act(() => {
+      window.scrollY = 140;
+      window.dispatchEvent(new Event('scroll'));
+    });
+
+    await waitFor(() => {
+      expect(header).toHaveStyle({ '--tw-translate-y': '-20px' });
+    });
+
+    act(() => {
+      window.scrollY = 80;
+      window.dispatchEvent(new Event('scroll'));
+    });
+
+    await waitFor(() => {
+      expect(header).toHaveStyle({ '--tw-translate-y': '0px' });
     });
   });
+
+  it.each([
+    ['/', menu[0].text],
+    ['/posts', menu[1].text],
+    ['/en', menu[0].text],
+    ['/en/posts', menu[1].text],
+    ['/en/posts/test', menu[1].text],
+  ])(
+    'should render correct active link based on the pathname "%s"',
+    (pathname, activeLinkText) => {
+      mockPathname.mockReturnValueOnce(pathname);
+
+      render(<Header logo={logo} menu={menu} />);
+
+      const links = screen.getAllByRole('link');
+      const activeClassName = 'text-blue-500 hover:text-blue-500';
+
+      links.forEach((link) => {
+        if (link.textContent === activeLinkText) {
+          expect(link).toHaveClass(activeClassName);
+        } else {
+          expect(link).not.toHaveClass(activeClassName);
+        }
+      });
+    }
+  );
 });
