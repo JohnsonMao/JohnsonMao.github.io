@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
 import Container from '@/components/Container';
+import { H1 } from '@/components/Heading';
 import Link from '@/components/Link';
 import TableOfContents from '@/components/TableOfContents';
 import Comment from '@/components/Comment';
@@ -38,13 +39,14 @@ async function PostPage({ params: { postId } }: PostParams) {
 
   return (
     <>
-      <Container
-        as="main"
-        className="prose prose-xl prose-slate dark:prose-invert"
-      >
-        <h1 className="mb-0 mt-4 text-3xl">{frontmatter.title}</h1>
-        <p className="mt-0">{formattedDate}</p>
-        <article>{content}</article>
+      <Container as="main">
+        <H1 className="pb-6 pl-16 pt-12 text-3xl font-bold dark:text-white">
+          {frontmatter.title}
+        </H1>
+        <time className="mt-0">{formattedDate}</time>
+        <article className="prose prose-xl prose-slate mx-auto dark:prose-invert">
+          {content}
+        </article>
         <Link href="/">回首頁</Link>
         <Comment />
       </Container>

@@ -12,8 +12,15 @@ export type LogoProps = {
 };
 
 function Logo({ src, alt, scrollY, scrollThreshold }: LogoProps) {
-  const translateY = clamp(scrollY * -1, scrollThreshold * -1) + scrollThreshold;
-  const scale = 1.5 - clamp(scrollY, scrollThreshold) / (scrollThreshold * 2);
+  const translateY = (
+    clamp(scrollY * -1, scrollThreshold * -1) + scrollThreshold
+  ).toFixed(2);
+
+  const scale = (
+    1.5 -
+    clamp(scrollY, scrollThreshold) / (scrollThreshold * 2)
+  ).toFixed(2);
+
   const style = {
     '--tw-translate-y': `${translateY}px`,
     '--tw-scale-x': scale,
@@ -23,7 +30,7 @@ function Logo({ src, alt, scrollY, scrollThreshold }: LogoProps) {
   return (
     <Link
       href="/"
-      className="origin-top-left translate-y-0 scale-100"
+      className="origin-bottom-left translate-y-0 scale-100"
       style={style}
     >
       <Image

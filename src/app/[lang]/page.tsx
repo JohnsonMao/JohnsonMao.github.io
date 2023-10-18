@@ -14,19 +14,20 @@ export async function generateMetadata({
   const { common } = await getDictionary(lang);
 
   return {
-    title: common.posts,
+    title: common.home,
   };
 }
 
 async function RootPage({ params: { lang } }: RootParams) {
   const posts = await getAllDataFrontmatter('posts');
-  const { common } = await getDictionary(lang);
+  const { metadata } = await getDictionary(lang);
 
   return (
     <Container as="main">
-      <H1 className="py-12 text-center text-3xl dark:text-white">
-        {common.slogan}
+      <H1 className="pb-6 pl-16 pt-12 text-3xl font-bold dark:text-white">
+        {metadata.title}
       </H1>
+      <p className="pb-16 text-xl dark:text-white">{metadata.description}</p>
       <List Item={Card} items={posts} />
     </Container>
   );
