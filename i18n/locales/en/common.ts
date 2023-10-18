@@ -3,7 +3,7 @@ const common = {
   posts: 'Posts',
   about: 'About',
   tags: 'Tags',
-  slogan: 'Making life better, one step at a time',
+  categories: 'Categories',
 };
 
 export default common;
