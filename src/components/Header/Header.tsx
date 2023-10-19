@@ -1,55 +1,76 @@
 'use client';
 
+import type { StaticImport } from 'next/dist/shared/lib/get-img-props';
 import { usePathname } from 'next/navigation';
-import { CSSProperties, useEffect, useState, useRef } from 'react';
+import { CSSProperties, useEffect, useRef } from 'react';
 
 import useScroll from '@/hooks/useScroll';
 import cn from '@/utils/cn';
 import getLocale from '@/utils/getLocale';
 import { clamp } from '@/utils/math';
 
-import ThemeSwitcher from '../ThemeSwitcher';
-import Link from '../Link';
-import Logo, { LogoProps } from './Logo';
 import Container from '../Container';
+import Image from '../Image';
+import Link from '../Link';
+import ThemeSwitcher from '../ThemeSwitcher';
 
 type MenuItem = {
   text: string;
   href: LinkWithoutLocalePathProps['href'];
 };
 
-export type HeaderProps = {
-  logo: Omit<LogoProps, 'scrollY' | 'scrollThreshold'>;
-  menu: MenuItem[];
+type Avatar = {
+  src: string | StaticImport;
+  alt: string;
 };
 
-function Header({ logo, menu }: HeaderProps) {
+export type HeaderProps = {
+  avatar: Avatar;
+  menu: MenuItem[];
+  scrollThreshold?: number;
+};
+
+function Header({ avatar, menu, scrollThreshold = 100 }: HeaderProps) {
   const pathname = usePathname();
-  const [translateY, setTranslateY] = useState(0);
   const [scroll] = useScroll();
   const headerRef = useRef<HTMLDivElement>(null);
-  const headerHeight = useRef(0);
+  const headerTranslateY = useRef(0);
   const previousScrollY = useRef(0);
   const currentScrollY = Math.floor(scroll.y);
-  const scrollThreshold = 120;
+  const avatarTranslateY = (
+    clamp(currentScrollY * -1, scrollThreshold * -1) + scrollThreshold
+  ).toFixed(2);
+  const avatarScale = (
+    1.5 -
+    clamp(currentScrollY, scrollThreshold) / (scrollThreshold * 2)
+  ).toFixed(2);
 
-  useEffect(() => {
-    headerHeight.current = headerRef.current?.clientHeight || 0;
-  }, []);
-
-  useEffect(() => {
+  const calcHeaderTranslateY = () => {
     const scrollY = currentScrollY - scrollThreshold;
 
-    if (scrollY <= 0) return setTranslateY(0);
+    if (scrollY <= 0) return headerTranslateY.current = 0;
 
     const deltaScrollY = previousScrollY.current - scrollY;
+    const headerHeight = headerRef.current?.clientHeight || 0;
+    const newHeaderTranslateY = clamp(
+      headerTranslateY.current + deltaScrollY,
+      headerHeight * -1
+    );
 
     previousScrollY.current = scrollY;
+    headerTranslateY.current = newHeaderTranslateY;
 
-    setTranslateY((pre) =>
-      clamp(pre + deltaScrollY, headerHeight.current * -1)
-    );
-  }, [currentScrollY]);
+    return newHeaderTranslateY;
+  }
+
+  const headerStyles = {
+    '--header-translate-y': `${calcHeaderTranslateY()}px`,
+  } as CSSProperties;
+
+  const avatarStyles = {
+    '--avatar-translate-y': `${avatarTranslateY}px`,
+    '--avatar-scale': avatarScale,
+  } as CSSProperties;
 
   const isActiveLink = (href: LinkWithoutLocalePathProps['href']) => {
     const locale = getLocale(pathname) || '';
@@ -65,14 +86,23 @@ function Header({ logo, menu }: HeaderProps) {
     <Container
       as="header"
       ref={headerRef}
-      className="sticky top-0 z-10 flex translate-y-0 items-center justify-between py-7"
-      style={{ '--tw-translate-y': `${translateY}px` } as CSSProperties}
+      className="sticky top-0 z-10 flex translate-y-[var(--header-translate-y)] items-center justify-between py-7"
+      style={headerStyles}
     >
-      <Logo
-        {...logo}
-        scrollY={currentScrollY}
-        scrollThreshold={scrollThreshold}
-      />
+      <Link
+        href="/"
+        className="origin-bottom-left translate-y-[var(--avatar-translate-y)] scale-[var(--avatar-scale)]"
+        style={avatarStyles}
+      >
+        <Image
+          className="rounded-full shadow-black drop-shadow-xl"
+          width={40}
+          height={40}
+          src={avatar.src}
+          alt={avatar.alt}
+          priority
+        />
+      </Link>
       <nav>
         <ul className="flex rounded-full bg-gray-900/60 px-2 backdrop-blur-md">
           {menu.map(({ text, href }) => (
