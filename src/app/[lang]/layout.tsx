@@ -38,7 +38,7 @@ async function I18nLayout({
   params: { lang },
 }: React.PropsWithChildren & RootParams) {
   const { common } = await getDictionary(lang);
-  const logo = {
+  const avatar = {
     src: avatarUrl,
     alt: name,
   };
@@ -55,7 +55,7 @@ async function I18nLayout({
 
   return (
     <>
-      <Header logo={logo} menu={menu} />
+      <Header avatar={avatar} menu={menu} />
       {children}
       <Footer copyright={copyright} />
     </>
