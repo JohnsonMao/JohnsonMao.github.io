@@ -1,6 +1,6 @@
 import { clamp } from '../math';
 
-describe('get locale function', () => {
+describe('clamp function', () => {
   it.each<[number, number, number, number | undefined]>([
     [15, 15, 20, undefined],
     [-5, -5, -20, undefined],
