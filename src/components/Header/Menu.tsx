@@ -31,7 +31,7 @@ function Menu({ menu }: MenuProps) {
 
   return (
       <nav>
-        <ul className="flex rounded-full bg-gray-900/60 px-2 backdrop-blur-md">
+        <ul className="flex rounded-full bg-gray-900/60 px-2 backdrop-blur-lg">
           {menu.map(({ text, href }) => (
             <li key={text}>
               <Link
