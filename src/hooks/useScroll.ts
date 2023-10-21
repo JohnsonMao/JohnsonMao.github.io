@@ -1,46 +1,65 @@
 import { RefObject, useCallback, useEffect, useRef } from 'react';
-import useRafState from './useRafState';
 
 type ScrollElement = HTMLElement | Window | null;
+
+export type ScrollHandler = (
+  scroll: Record<'x' | 'y', number>,
+  element: ScrollElement
+) => void;
+
+export type UseScroll = {
+  ref?: RefObject<ScrollElement>;
+  initial?: boolean;
+  handler: ScrollHandler;
+};
 
 /**
  * This hook allows tracking the scroll position of a specified DOM element or the window.
  */
-function useScroll(ref?: RefObject<ScrollElement>) {
-  const [scroll, setScroll] = useRafState({ x: 0, y: 0 });
+function useScroll({ ref, initial, handler }: UseScroll) {
   const internalElementRef = useRef<ScrollElement>(null);
 
-  const handleScroll = useCallback(() => {
+  const scrollHandler = useCallback(() => {
     const element = internalElementRef.current;
+    const scroll = { x: 0, y: 0 };
 
     if (element === window) {
-      setScroll({ x: element.scrollX, y: element.scrollY });
+      scroll.x = element.scrollX;
+      scroll.y = element.scrollY;
     } else if (element instanceof Element) {
-      setScroll({ x: element.scrollLeft, y: element.scrollTop });
+      scroll.x = element.scrollLeft;
+      scroll.y = element.scrollTop;
     }
-  }, [setScroll]);
+    handler(scroll, element);
+  }, [handler]);
 
-  const setInternalElementRef = useCallback(
+  const remove = useCallback(() => {
+    internalElementRef.current?.removeEventListener('scroll', scrollHandler);
+  }, [scrollHandler]);
+
+  const register = useCallback(
     (element: ScrollElement) => {
-      internalElementRef.current?.removeEventListener('scroll', handleScroll);
+      internalElementRef.current?.removeEventListener('scroll', scrollHandler);
       internalElementRef.current = element;
-      internalElementRef.current?.addEventListener('scroll', handleScroll);
-      handleScroll();
+      internalElementRef.current?.addEventListener('scroll', scrollHandler);
     },
-    [handleScroll]
+    [scrollHandler]
   );
 
   useEffect(() => {
-    internalElementRef.current = ref?.current || window;
+    const element = ref?.current || window;
 
-    const element = internalElementRef.current;
+    internalElementRef.current = element;
+    element.addEventListener('scroll', scrollHandler);
+    if (initial) scrollHandler();
 
-    element.addEventListener('scroll', handleScroll);
+    return () => element.removeEventListener('scroll', scrollHandler);
+  }, [ref, initial, scrollHandler]);
 
-    return () => element.removeEventListener('scroll', handleScroll);
-  }, [ref, handleScroll]);
-
-  return [scroll, setInternalElementRef] as const;
+  return {
+    remove,
+    register,
+  };
 }
 
 export default useScroll;
