@@ -1,4 +1,4 @@
-type UnaryFunction<A, B> = (a: A) => B;
+export type UnaryFunction<A, B> = (a: A) => B;
 
 /** Processes an input value through a series of functions in sequence. */
 export function pipe<T>(input: T): T;
@@ -19,7 +19,7 @@ export function pipe<T, A, B, C, D>(
   fn1: UnaryFunction<T, A>,
   fn2: UnaryFunction<A, B>,
   fn3: UnaryFunction<B, C>,
-  fn4: UnaryFunction<C, D>,
+  fn4: UnaryFunction<C, D>
 ): D;
 
 export function pipe(
@@ -30,9 +30,16 @@ export function pipe(
 }
 
 /** Restricts the given value within a specified range. */
-export function clamp(value: number, a: number, b = 0) {
+export const clamp = (a: number, b: number) => (value: number) => {
   const min = Math.min(a, b);
   const max = Math.max(a, b);
 
   return Math.min(Math.max(value, min), max);
-}
+};
+
+/** Round a number to a specified number of decimal places. */
+export const toFixedNumber = (digits: number) => (value: number) => {
+  const pow = Math.pow(10, digits);
+
+  return Math.round(value * pow) / pow;
+};
