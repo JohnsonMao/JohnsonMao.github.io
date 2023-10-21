@@ -26,65 +26,75 @@ describe('Header component', () => {
       value: 50,
     });
 
-    render(<Header avatar={avatar} menu={[]} scrollThreshold={120} />);
+    render(<Header avatar={avatar} menu={[]} scrollThreshold={100} />);
 
     const header = screen.getByRole('banner');
 
     expect(header.tagName).toBe('HEADER');
 
     act(() => {
+      window.scrollY = 19;
+      window.dispatchEvent(new Event('scroll'));
       window.scrollY = 20;
       window.dispatchEvent(new Event('scroll'));
     });
 
     await waitFor(() => {
       expect(header).toHaveStyle({ '--header-translate-y': '0px' });
-      expect(header).toHaveStyle({ '--avatar-translate-y': '100.00px' });
-      expect(header).toHaveStyle({ '--avatar-scale': '1.42' });
+      expect(header).toHaveStyle({ '--avatar-translate-y': '80px' });
+      expect(header).toHaveStyle({ '--avatar-scale': '1.4' });
     });
 
     act(() => {
-      window.scrollY = 170;
+      window.scrollY = 98;
       window.dispatchEvent(new Event('scroll'));
-    });
-
-    await waitFor(() => {
-      expect(header).toHaveStyle({ '--header-translate-y': '-50px' });
-      expect(header).toHaveStyle({ '--avatar-translate-y': '0.00px' });
-      expect(header).toHaveStyle({ '--avatar-scale': '1.00' });
-    });
-
-    act(() => {
-      window.scrollY = 140;
-      window.dispatchEvent(new Event('scroll'));
-    });
-
-    await waitFor(() => {
-      expect(header).toHaveStyle({ '--header-translate-y': '-20px' });
-      expect(header).toHaveStyle({ '--avatar-translate-y': '0.00px' });
-      expect(header).toHaveStyle({ '--avatar-scale': '1.00' });
-    });
-
-    act(() => {
-      window.scrollY = 80;
+      window.scrollY = 99;
       window.dispatchEvent(new Event('scroll'));
     });
 
     await waitFor(() => {
       expect(header).toHaveStyle({ '--header-translate-y': '0px' });
-      expect(header).toHaveStyle({ '--avatar-translate-y': '40.00px' });
-      expect(header).toHaveStyle({ '--avatar-scale': '1.17' });
+      expect(header).toHaveStyle({ '--avatar-translate-y': '1px' });
+      expect(header).toHaveStyle({ '--avatar-scale': '1' });
     });
 
     act(() => {
+      window.scrollY = 149;
+      window.dispatchEvent(new Event('scroll'));
+      window.scrollY = 150;
+      window.dispatchEvent(new Event('scroll'));
+    });
+
+    await waitFor(() => {
+      expect(header).toHaveStyle({ '--header-translate-y': '150px' });
+      expect(header).toHaveStyle({ '--avatar-translate-y': '0px' });
+      expect(header).toHaveStyle({ '--avatar-scale': '1' });
+    });
+
+    act(() => {
+      window.scrollY = 251;
+      window.dispatchEvent(new Event('scroll'));
+      window.scrollY = 250;
+      window.dispatchEvent(new Event('scroll'));
+    });
+
+    await waitFor(() => {
+      expect(header).toHaveStyle({ '--header-translate-y': '200px' });
+      expect(header).toHaveStyle({ '--avatar-translate-y': '0px' });
+      expect(header).toHaveStyle({ '--avatar-scale': '1' });
+    });
+
+    act(() => {
+      window.scrollY = 1;
+      window.dispatchEvent(new Event('scroll'));
       window.scrollY = 0;
       window.dispatchEvent(new Event('scroll'));
     });
 
     await waitFor(() => {
-      expect(header).toHaveStyle({ '--header-translate-y': '0px' });
-      expect(header).toHaveStyle({ '--avatar-translate-y': '120.00px' });
-      expect(header).toHaveStyle({ '--avatar-scale': '1.50' });
+      expect(header).toHaveStyle({ '--header-translate-y': '200px' });
+      expect(header).toHaveStyle({ '--avatar-translate-y': '100px' });
+      expect(header).toHaveStyle({ '--avatar-scale': '1.5' });
     });
   });
 
@@ -94,7 +104,7 @@ describe('Header component', () => {
       value: undefined,
     });
 
-    render(<Header avatar={avatar} menu={[]} scrollThreshold={120} />);
+    render(<Header avatar={avatar} menu={[]} scrollThreshold={100} />);
 
     const header = screen.getByRole('banner');
 
@@ -106,9 +116,9 @@ describe('Header component', () => {
     });
 
     await waitFor(() => {
-      expect(header).toHaveStyle({ '--header-translate-y': '0px' });
-      expect(header).toHaveStyle({ '--avatar-translate-y': '0.00px' });
-      expect(header).toHaveStyle({ '--avatar-scale': '1.00' });
+      expect(header).toHaveStyle({ '--header-translate-y': '200px' });
+      expect(header).toHaveStyle({ '--avatar-translate-y': '0px' });
+      expect(header).toHaveStyle({ '--avatar-scale': '1' });
     });
   });
 });
