@@ -1,10 +1,12 @@
 'use client';
 
 import type { StaticImport } from 'next/dist/shared/lib/get-img-props';
-import { CSSProperties, useRef } from 'react';
+import { CSSProperties, useCallback, useRef } from 'react';
 
-import useScroll from '@/hooks/useScroll';
-import { clamp } from '@/utils/math';
+import useScroll, { ScrollHandler } from '@/hooks/useScroll';
+import useRafState from '@/hooks/useRafState';
+import cn from '@/utils/cn';
+import { clamp, pipe, toFixedNumber } from '@/utils/math';
 
 import Container from '../Container';
 import Image from '../Image';
@@ -23,40 +25,77 @@ export type HeaderProps = {
 } & MenuProps;
 
 function Header({ avatar, menu, scrollThreshold = 100 }: HeaderProps) {
-  const [scroll] = useScroll();
+  const [headerFixed, setHeaderFixed] = useRafState(true);
+  const [headerTranslateY, setHeaderTranslateY] = useRafState(0);
+  const [avatarTranslateY, setAvatarTranslateY] = useRafState(0);
+  const [avatarScale, setAvatarScale] = useRafState(0);
   const headerRef = useRef<HTMLDivElement>(null);
-  const headerTranslateY = useRef(0);
   const previousScrollY = useRef(0);
-  const currentScrollY = Math.floor(scroll.y);
-  const avatarTranslateY = (
-    clamp(currentScrollY * -1, scrollThreshold * -1) + scrollThreshold
-  ).toFixed(2);
-  const avatarScale = (
-    1.5 -
-    clamp(currentScrollY, scrollThreshold) / (scrollThreshold * 2)
-  ).toFixed(2);
 
-  const calcHeaderTranslateY = () => {
-    const scrollPosition = currentScrollY - scrollThreshold;
+  const handleHeader = useCallback(
+    (currentScrollY: number, threshold: number) => {
+      const deltaScrollY = currentScrollY - previousScrollY.current;
+      const isScrollingDown = deltaScrollY > 0;
 
-    if (scrollPosition <= 0) {
-      headerTranslateY.current = 0;
-    } else {
-      const deltaScrollY = previousScrollY.current - scrollPosition;
-      const headerHeight = headerRef.current?.clientHeight || 0;
+      previousScrollY.current = currentScrollY;
 
-      previousScrollY.current = scrollPosition;
-      headerTranslateY.current = clamp(
-        headerTranslateY.current + deltaScrollY,
-        headerHeight * -1
+      if (isScrollingDown) {
+        if (currentScrollY < threshold) {
+          setHeaderFixed(true);
+        } else if (headerFixed) {
+          setHeaderTranslateY(currentScrollY);
+          setHeaderFixed(false);
+        }
+      } else {
+        const headerHeight = headerRef.current?.clientHeight || 0;
+        const newHeaderTranslateY = currentScrollY - headerHeight;
+
+        if (newHeaderTranslateY > headerTranslateY) {
+          setHeaderTranslateY(newHeaderTranslateY);
+        } else if (currentScrollY < headerTranslateY) {
+          setHeaderFixed(true);
+        }
+      }
+    },
+    [headerFixed, setHeaderFixed, headerTranslateY, setHeaderTranslateY]
+  );
+
+  const handleAvatar = useCallback(
+    (currentScrollY: number, threshold: number) => {
+      setAvatarTranslateY(
+        pipe(
+          currentScrollY * -1,
+          clamp(0, threshold * -1),
+          (y) => y + threshold,
+          toFixedNumber(2)
+        )
       );
-    }
+      setAvatarScale(
+        pipe(
+          currentScrollY,
+          clamp(0, threshold),
+          (y) => y / (threshold * 2),
+          (y) => 1.5 - y,
+          toFixedNumber(2)
+        )
+      );
+    },
+    [setAvatarTranslateY, setAvatarScale]
+  );
 
-    return headerTranslateY.current;
-  };
+  const scrollHandler = useCallback<ScrollHandler>(
+    ({ y }) => {
+      const currentScrollY = Math.floor(y);
+      handleHeader(currentScrollY, scrollThreshold);
+      handleAvatar(currentScrollY, scrollThreshold);
+    },
+    [scrollThreshold, handleHeader, handleAvatar]
+  );
+
+  useScroll({ handler: scrollHandler, initial: true });
 
   const headerStyles = {
-    '--header-translate-y': `${calcHeaderTranslateY()}px`,
+    '--header-translate-y': `${headerTranslateY}px`,
     '--avatar-translate-y': `${avatarTranslateY}px`,
     '--avatar-scale': avatarScale,
   } as CSSProperties;
@@ -65,7 +104,10 @@ function Header({ avatar, menu, scrollThreshold = 100 }: HeaderProps) {
     <Container
       as="header"
       ref={headerRef}
-      className="sticky top-0 z-10 flex translate-y-[var(--header-translate-y)] items-center justify-between py-7 will-change-transform"
+      className={cn(
+        'sticky top-0 z-10 flex items-center justify-between py-7 will-change-[top]',
+        !headerFixed && 'top-auto translate-y-[var(--header-translate-y)]'
+      )}
       style={headerStyles}
     >
       <Link
