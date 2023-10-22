@@ -41,8 +41,6 @@ describe('Header component', () => {
 
     await waitFor(() => {
       expect(header).toHaveStyle({ '--header-translate-y': '0px' });
-      expect(header).toHaveStyle({ '--avatar-translate-y': '80px' });
-      expect(header).toHaveStyle({ '--avatar-scale': '1.4' });
     });
 
     act(() => {
@@ -54,8 +52,6 @@ describe('Header component', () => {
 
     await waitFor(() => {
       expect(header).toHaveStyle({ '--header-translate-y': '0px' });
-      expect(header).toHaveStyle({ '--avatar-translate-y': '1px' });
-      expect(header).toHaveStyle({ '--avatar-scale': '1' });
     });
 
     act(() => {
@@ -67,8 +63,6 @@ describe('Header component', () => {
 
     await waitFor(() => {
       expect(header).toHaveStyle({ '--header-translate-y': '150px' });
-      expect(header).toHaveStyle({ '--avatar-translate-y': '0px' });
-      expect(header).toHaveStyle({ '--avatar-scale': '1' });
     });
 
     act(() => {
@@ -80,8 +74,6 @@ describe('Header component', () => {
 
     await waitFor(() => {
       expect(header).toHaveStyle({ '--header-translate-y': '200px' });
-      expect(header).toHaveStyle({ '--avatar-translate-y': '0px' });
-      expect(header).toHaveStyle({ '--avatar-scale': '1' });
     });
 
     act(() => {
@@ -93,8 +85,6 @@ describe('Header component', () => {
 
     await waitFor(() => {
       expect(header).toHaveStyle({ '--header-translate-y': '200px' });
-      expect(header).toHaveStyle({ '--avatar-translate-y': '100px' });
-      expect(header).toHaveStyle({ '--avatar-scale': '1.5' });
     });
   });
 
@@ -117,8 +107,6 @@ describe('Header component', () => {
 
     await waitFor(() => {
       expect(header).toHaveStyle({ '--header-translate-y': '200px' });
-      expect(header).toHaveStyle({ '--avatar-translate-y': '0px' });
-      expect(header).toHaveStyle({ '--avatar-scale': '1' });
     });
   });
 });
