@@ -24,12 +24,10 @@ async function RootPage({ params: { lang } }: RootParams) {
 
   return (
     <Container as="main">
-      <div className="py-4">
-        <H1 className="pb-4 pt-16 text-3xl font-bold dark:text-white">
-          {metadata.title}
-        </H1>
-        <p className="pb-16 text-xl dark:text-white">{metadata.description}</p>
-      </div>
+      <H1 className="py-4 text-3xl font-bold dark:text-white">
+        {metadata.title}
+      </H1>
+      <p className="pb-12 text-xl dark:text-white">{metadata.description}</p>
       <List Item={Card} items={posts} />
     </Container>
   );
