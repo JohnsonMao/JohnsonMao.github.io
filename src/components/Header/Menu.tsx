@@ -9,7 +9,7 @@ import Link from '../Link';
 
 type MenuItem = {
   text: string;
-  href: LinkWithoutLocalePathProps['href'];
+  href: DynamicRoutesWithoutLocalePath;
 };
 
 export type MenuProps = {
@@ -19,7 +19,7 @@ export type MenuProps = {
 function Menu({ menu }: MenuProps) {
   const pathname = usePathname();
 
-  const isActiveLink = (href: LinkWithoutLocalePathProps['href']) => {
+  const isActiveLink = (href: DynamicRoutesWithoutLocalePath) => {
     const locale = getLocale(pathname) || '';
     const localePrefix = new RegExp(`^/${locale}/?`);
     const adjustedPathname = pathname.replace(localePrefix, '/');

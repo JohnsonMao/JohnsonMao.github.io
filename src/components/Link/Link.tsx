@@ -26,19 +26,11 @@ function Link<T extends string = string>({
 }: LinkProps<T>) {
   const pathname = usePathname();
 
-  const isObjectHref = typeof href === 'object';
+  const isObjectHref = typeof href === 'object' || href.startsWith('#');
   const isAnchorLink = !isObjectHref && href.startsWith('#');
   const isInternalLink = !isObjectHref && href.startsWith('/');
 
-  if (isObjectHref) {
-    return (
-      <NextLink href={href} className={className} {...otherProps}>
-        {children}
-      </NextLink>
-    );
-  }
-
-  if (isAnchorLink) {
+  if (isObjectHref || isAnchorLink) {
     return (
       <NextLink href={href as Route} className={className} {...otherProps}>
         {children}
@@ -66,7 +58,7 @@ function Link<T extends string = string>({
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className={cn('inline-flex align-top', className)}
+      className={cn('inline-flex', className)}
       {...otherProps}
     >
       {children}
