@@ -13,10 +13,10 @@ describe('useI18n hook', () => {
   });
 
   it.each([
-    ['/test/path', 'zh-TW'],
+    ['/test/path', 'zh'],
     ['/en/test/path', 'en'],
-    ['/zh-TW/test/path', 'zh-TW'],
-    ['/fr-CH/test/path', 'zh-TW'],
+    ['/zh/test/path', 'zh'],
+    ['/fr/test/path', 'zh'],
   ])(
     'should return the correct language code and dictionary',
     (pathname, expected) => {
