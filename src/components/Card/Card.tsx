@@ -1,11 +1,10 @@
-import Image from 'next/image';
-
 import { BsCalendar4Week } from 'react-icons/bs';
 import { MdOutlineWidgets } from 'react-icons/md';
 import { AiOutlineTags } from 'react-icons/ai';
 
 import { formatDate } from '@/utils/date';
 import Link from '../Link';
+import Image from '../Image';
 
 type CardProps = DataFrontmatter;
 
@@ -25,7 +24,7 @@ function Card({
       <div className="relative h-48 w-1/3 shrink-0">
         {image && (
           <Image
-            className="object-cover"
+            className="h-full object-cover"
             src={image}
             alt={`${title} cover`}
             fill

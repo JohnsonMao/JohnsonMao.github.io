@@ -33,8 +33,8 @@ describe('Link component', () => {
   it.each([
     ['/internal', '/internal'],
     ['/en/internal', '/en/internal'],
-    ['/zh-TW/internal', '/zh-TW/internal'],
-    ['/fr-CH/internal', '/internal'],
+    ['/zh/internal', '/zh/internal'],
+    ['/fr/internal', '/internal'],
   ])(
     'should render correct link element with pathname %s',
     (pathname, expected) => {

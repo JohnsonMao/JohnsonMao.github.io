@@ -7,13 +7,13 @@ const tailwindcssConfig = {
   theme: {
     extend: {
       colors: {
-        primary: { ...colors.cyan, DEFAULT: colors.cyan[500] }
+        primary: { ...colors.lime, DEFAULT: colors.lime[500] },
       },
       typography: {
         DEFAULT: {
           css: {
             a: {
-              textDecoration: 'none'
+              textDecoration: 'none',
             },
             code: {
               margin: '0 4px',
@@ -21,6 +21,11 @@ const tailwindcssConfig = {
               borderRadius: '4px',
               background: '#1e1e1e',
               color: '#ff8888',
+            },
+            li: {
+              a: {
+                margin: 0,
+              },
             },
             'code::before': { content: '' },
             'code::after': { content: '' },
