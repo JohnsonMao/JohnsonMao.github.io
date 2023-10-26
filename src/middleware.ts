@@ -15,7 +15,7 @@ export function middleware(request: NextRequest) {
   const locale = getLocale(acceptLanguage, defaultLocale);
   const redirectURL = new URL(`/${locale}${pathname}`, request.url);
 
-  if (locale !== 'zh-TW') {
+  if (locale !== defaultLocale) {
     return NextResponse.redirect(redirectURL);
   }
 
