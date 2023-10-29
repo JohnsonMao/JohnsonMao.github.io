@@ -1,19 +1,10 @@
 import type { Route } from 'next';
 import { render, screen } from '@testing-library/react';
 
+import mockPathname from '~/tests/navigation';
 import Link from '.';
 
-const mockPathname = jest.fn();
-
-jest.mock('next/navigation', () => ({
-  usePathname: () => mockPathname(),
-}));
-
 describe('Link component', () => {
-  beforeEach(() => {
-    mockPathname.mockClear();
-  });
-
   it.each([
     ['#anchor', 'The anchor link text', '#anchor'],
     ['/internal', 'The internal link text', '/internal'],

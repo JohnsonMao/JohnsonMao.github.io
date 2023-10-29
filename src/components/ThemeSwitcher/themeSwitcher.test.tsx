@@ -2,28 +2,10 @@ import type { PropsWithChildren } from 'react';
 import { ThemeProvider } from 'next-themes';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { setDeviceTheme } from '~/tests/theme';
 
 import ThemeSwitcher from '.';
 
-/**
- * Create a mock of the window.matchMedia function
- * @see https://jestjs.io/docs/manual-mocks#mocking-methods-which-are-not-implemented-in-jsdom
- */
-function setDeviceTheme(theme: 'light' | 'dark') {
-  Object.defineProperty(window, 'matchMedia', {
-    writable: true,
-    value: jest.fn().mockImplementation((query) => ({
-      matches: theme === 'dark',
-      media: query,
-      onchange: null,
-      addListener: jest.fn(),
-      removeListener: jest.fn(),
-      addEventListener: jest.fn(),
-      removeEventListener: jest.fn(),
-      dispatchEvent: jest.fn(),
-    })),
-  });
-}
 function TestThemeComponent({ children }: PropsWithChildren) {
   return (
     <ThemeProvider attribute="class">
