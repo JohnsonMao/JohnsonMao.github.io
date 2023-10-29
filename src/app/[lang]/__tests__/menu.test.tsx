@@ -1,21 +1,12 @@
 import { render, screen } from '@testing-library/react';
-import Menu, { MenuProps } from './Menu';
-
-const mockPathname = jest.fn();
-
-jest.mock('next/navigation', () => ({
-  usePathname: () => mockPathname(),
-}));
+import mockPathname from '~/tests/navigation';
+import Menu, { MenuProps } from '../Menu';
 
 describe('Menu component', () => {
   const menu: MenuProps['menu'] = [
     { text: 'Home', href: '/' },
     { text: 'Post', href: '/posts' },
   ];
-
-  beforeEach(() => {
-    mockPathname.mockClear();
-  });
 
   it('should render correct element', () => {
     mockPathname.mockReturnValueOnce('/');

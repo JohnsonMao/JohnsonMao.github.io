@@ -16,7 +16,7 @@ type PostParams = {
 export async function generateStaticParams() {
   const posts = await getAllDataFrontmatter('posts');
 
-  return posts.map((post) => ({ postId: post.id }));
+  return posts.map(({ id }) => ({ postId: id }));
 }
 
 export async function generateMetadata({

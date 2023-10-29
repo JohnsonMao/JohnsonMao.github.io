@@ -12,7 +12,8 @@ const Container = forwardRef<HTMLDivElement, ContainerProps>(
     return (
       <Component
         className={cn(
-          'border-x border-red-50 px-7 md:mx-8 lg:mx-16 lg:px-14',
+          'px-7 md:mx-8 lg:mx-16 lg:px-14',
+          as === 'main' && 'border-2 rounded-lg mt-4 border-gray-500 backdrop-blur',
           className
         )}
         ref={ref}

@@ -1,17 +1,8 @@
 import { renderHook } from '@testing-library/react';
+import mockPathname from '~/tests/navigation';
 import useI18n from '../useI18n';
 
-const mockPathname = jest.fn();
-
-jest.mock('next/navigation', () => ({
-  usePathname: () => mockPathname(),
-}));
-
 describe('useI18n hook', () => {
-  beforeEach(() => {
-    mockPathname.mockClear();
-  });
-
   it.each([
     ['/test/path', 'zh'],
     ['/en/test/path', 'en'],

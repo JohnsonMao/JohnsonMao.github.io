@@ -6,7 +6,7 @@ import rehypeSlug from 'rehype-slug';
 import rehypePrismPlus from 'rehype-prism-plus';
 import rehypeCodeTitles from 'rehype-code-titles';
 
-import { H1, H2, H3, H4, H5, H6 } from '@/components/Heading';
+import { H2, H3, H4, H5, H6 } from '@/components/Heading';
 import CodeBox from '@/components/CodeBox';
 import Image from '@/components/Image';
 import Link from '@/components/Link';
@@ -54,7 +54,7 @@ export async function getDataById(dirType: DataDirType, id: string) {
     const { content, frontmatter } = await compileMDX<DataFrontmatter>({
       source,
       components: {
-        h1: H1,
+        h1: H2,
         h2: H2,
         h3: H3,
         h4: H4,

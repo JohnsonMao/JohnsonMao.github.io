@@ -1,20 +1,15 @@
 import { act, render, screen, waitFor } from '@testing-library/react';
-import Header from '.';
+import Header, { Avatar } from '../Header';
 
 describe('Header component', () => {
-  const avatar = {
-    src: 'https://external.com/test.jpg',
-    alt: 'test avatar image alt',
-  };
+  const avatar = (
+    <Avatar src="https://external.com/test.jpg" alt="test avatar image alt" />
+  );
 
   it('should render correct element', () => {
-    render(<Header avatar={avatar} menu={[]} />);
+    render(<Header avatar={avatar} />);
 
-    const nav = screen.getByRole('navigation');
-    const brandLink = screen.getByRole('img', { name: avatar.alt });
-
-    expect(nav).toBeInTheDocument();
-    expect(nav.tagName).toBe('NAV');
+    const brandLink = screen.getByRole('img');
 
     expect(brandLink).toBeInTheDocument();
     expect(brandLink.parentElement).toHaveAttribute('href', '/');
@@ -26,7 +21,7 @@ describe('Header component', () => {
       value: 50,
     });
 
-    render(<Header avatar={avatar} menu={[]} scrollThreshold={100} />);
+    render(<Header avatar={avatar} scrollThreshold={100} />);
 
     const header = screen.getByRole('banner');
 
@@ -94,7 +89,7 @@ describe('Header component', () => {
       value: undefined,
     });
 
-    render(<Header avatar={avatar} menu={[]} scrollThreshold={100} />);
+    render(<Header avatar={avatar} scrollThreshold={100} />);
 
     const header = screen.getByRole('banner');
 
