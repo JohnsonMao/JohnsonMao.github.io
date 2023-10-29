@@ -1,30 +1,21 @@
 'use client';
 
-import type { StaticImport } from 'next/dist/shared/lib/get-img-props';
 import { CSSProperties, useCallback, useRef, useState } from 'react';
 
+import Container from '@/components/Container';
+import Image from '@/components/Image';
+import Link from '@/components/Link';
 import useScroll, { ScrollHandler } from '@/hooks/useScroll';
 import useRafState from '@/hooks/useRafState';
 import cn from '@/utils/cn';
 import { clamp, pipe, toFixedNumber } from '@/utils/math';
 
-import Container from '../Container';
-import Image from '../Image';
-import Link from '../Link';
-import ThemeSwitcher from '../ThemeSwitcher';
-import Menu, { MenuProps } from './Menu';
-
-type Avatar = {
-  src: string | StaticImport;
-  alt: string;
-};
-
-export type HeaderProps = {
-  avatar: Avatar;
+type HeaderProps = {
+  avatar: React.ReactNode;
   scrollThreshold?: number;
-} & MenuProps;
+} & React.PropsWithChildren;
 
-function Header({ avatar, menu, scrollThreshold = 100 }: HeaderProps) {
+function Header({ avatar, children, scrollThreshold = 100 }: HeaderProps) {
   const [avatarScale, setAvatarScale] = useRafState(0);
   const [willChange, setWillChange] = useState(true);
   const [avatarTranslateY, setAvatarTranslateY] = useState(0);
@@ -98,33 +89,43 @@ function Header({ avatar, menu, scrollThreshold = 100 }: HeaderProps) {
         )}
         style={headerStyles}
       >
-        <Menu menu={menu} />
-        <ThemeSwitcher className="rounded-full bg-gray-900/60 p-3 backdrop-blur-md" />
+        {children}
       </Container>
       <Container
         className={cn(
-          'sticky top-0 z-10 pt-7',
+          'pointer-events-none sticky top-0 z-10 pt-7',
           !headerFixed && 'top-auto translate-y-[var(--avatar-translate-y)]',
           willChange && 'will-change-transform'
         )}
         style={avatarStyles}
       >
-        <Link
-          href="/"
-          className="inline-block origin-bottom-left scale-[var(--avatar-scale)]"
-        >
-          <Image
-            className="rounded-full shadow-black drop-shadow-xl"
-            width={42}
-            height={42}
-            src={avatar.src}
-            alt={avatar.alt}
-            priority
-          />
-        </Link>
+        {avatar}
       </Container>
     </>
   );
 }
+
+type AvatarProps = {
+  src: string;
+  alt: string;
+};
+
+export const Avatar = ({ src, alt }: AvatarProps) => {
+  return (
+    <Link
+      href="/"
+      className="pointer-events-auto inline-block origin-bottom-left scale-[var(--avatar-scale)]"
+    >
+      <Image
+        className="rounded-full shadow-black drop-shadow-xl"
+        width={42}
+        height={42}
+        src={src}
+        alt={alt}
+        priority
+      />
+    </Link>
+  );
+};
 
 export default Header;

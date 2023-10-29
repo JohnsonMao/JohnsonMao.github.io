@@ -1,8 +1,10 @@
 import type { Metadata } from 'next';
 import { avatarUrl, name, copyright, createMetadata } from '~/data/metadata';
 import { Locale, getDictionary, locales } from '~/i18n';
-import Header, { HeaderProps } from '@/components/Header';
-import Footer from '@/components/Footer';
+import ThemeSwitcher from '@/components/ThemeSwitcher';
+import Header, { Avatar } from './Header';
+import Footer from './Footer';
+import Menu, { MenuProps } from './Menu';
 
 export async function generateStaticParams() {
   return locales.map((lang) => ({ lang }));
@@ -36,13 +38,13 @@ export async function generateMetadata({
 async function I18nLayout({
   children,
   params: { lang },
-}: React.PropsWithChildren & RootParams) {
+}: RootParams & React.PropsWithChildren) {
   const { common } = await getDictionary(lang);
   const avatar = {
     src: avatarUrl,
     alt: name,
   };
-  const menu: HeaderProps['menu'] = [
+  const menu: MenuProps['menu'] = [
     {
       text: common.home,
       href: '/',
@@ -55,7 +57,10 @@ async function I18nLayout({
 
   return (
     <>
-      <Header avatar={avatar} menu={menu} />
+      <Header avatar={<Avatar src={avatar.src} alt={avatar.alt} />}>
+        <Menu menu={menu} />
+        <ThemeSwitcher className="rounded-full bg-gray-900/60 p-3 backdrop-blur-md" />
+      </Header>
       {children}
       <Footer copyright={copyright} />
     </>

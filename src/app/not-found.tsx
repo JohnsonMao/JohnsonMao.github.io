@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   title: 'Page not found',
 };
 
-async function NotFoundPage() {
+function NotFoundPage() {
   return <NotFound />;
 }
 
