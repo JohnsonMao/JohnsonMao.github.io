@@ -23,13 +23,17 @@ async function RootPage({ params: { lang } }: RootParams) {
   const { metadata } = await getDictionary(lang);
 
   return (
-    <Container as="main">
-      <H1 className="py-4 text-3xl font-bold dark:text-white">
-        {metadata.title}
-      </H1>
-      <p className="pb-12 text-xl dark:text-white">{metadata.description}</p>
-      <List Item={Card} items={posts} />
-    </Container>
+    <>
+      <Container className="py-8">
+        <H1 className="mb-4 text-3xl font-bold dark:text-white">
+          {metadata.title}
+        </H1>
+        <p className="text-xl dark:text-white">{metadata.description}</p>
+      </Container>
+      <Container as="main" className="py-8">
+        <List Item={Card} items={posts} />
+      </Container>
+    </>
   );
 }
 
