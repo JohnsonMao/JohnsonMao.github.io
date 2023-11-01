@@ -21,7 +21,8 @@ export async function generateMetadata(): Promise<Metadata> {
 function HtmlLayout({ children }: React.PropsWithChildren) {
   return (
     <Html>
-      <body className="body-bg dark:body-bg-dark">
+      <body>
+        <div className="root-background fixed inset-0 -z-50"></div>
         <Providers>{children}</Providers>
       </body>
     </Html>
