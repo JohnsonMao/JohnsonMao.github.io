@@ -37,29 +37,32 @@ const tailwindcssConfig = {
   },
   plugins: [
     require('@tailwindcss/typography'),
-    plugin(({ addUtilities }) => {
-      addUtilities({
-        '.body-bg': {
-          '--color': 'rgba(0, 0, 0, 0.1)',
+    plugin(({ addComponents, theme }) => {
+      addComponents({
+        '.root-background': {
+          '--base-color': theme('colors.zinc.100'),
+          '--line-color': 'rgba(0, 0, 0, 0.04)',
           background: `
             linear-gradient(
               to left,
-              var(--color) 0,
-              var(--color) 1px,
-              transparent 1px,
-              transparent 10px
+              var(--line-color) 0,
+              var(--line-color) 10%,
+              transparent 10%,
+              transparent 100%
             ),
             linear-gradient(
               to top,
-              var(--color) 0,
-              var(--color) 1px,
-              transparent 1px,
-              transparent 10px
-            );`,
+              var(--line-color) 0,
+              var(--line-color) 10%,
+              transparent 10%,
+              transparent 100%
+            ),
+            var(--base-color);`,
           backgroundSize: '10px 10px;'
         },
-        '.body-bg-dark': {
-          '--color': 'rgba(255, 255, 255, 0.05)',
+        '.dark .root-background': {
+          '--base-color': theme('colors.zinc.900'),
+          '--line-color': 'rgba(255, 255, 255, 0.04)',
         }
       })
     })
