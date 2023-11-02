@@ -18,8 +18,8 @@ pre {
   display: block;
   padding-left: 16px;
   padding-right: 16px;
-  margin-left: -16px;
-  margin-right: -16px;
+  margin-left: -13px;
+  margin-right: -13px;
   border-left-width: 4px;
   border-left-color: rgba(31, 41, 55, 0); /* Set code block color */
 }
@@ -33,8 +33,8 @@ pre {
 }
 
 .highlight-line {
-  margin-left: -16px;
-  margin-right: -16px;
+  margin-left: -13px;
+  margin-right: -13px;
   background-color: rgba(55, 65, 81, 0.5); /* Set highlight bg color */
   border-left-width: 4px;
   border-left-color: rgb(59, 130, 246); /* Set highlight accent border color */

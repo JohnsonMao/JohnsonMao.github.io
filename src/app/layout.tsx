@@ -22,7 +22,7 @@ function HtmlLayout({ children }: React.PropsWithChildren) {
   return (
     <Html>
       <body>
-        <div className="root-background fixed inset-0 -z-50"></div>
+        <div className="root-background fixed inset-x-0 top-0 -z-50 h-screen"></div>
         <Providers>{children}</Providers>
       </body>
     </Html>
