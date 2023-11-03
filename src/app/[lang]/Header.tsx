@@ -18,16 +18,13 @@ type HeaderProps = {
 function Header({ avatar, children, scrollThreshold = 100 }: HeaderProps) {
   const [avatarScale, setAvatarScale] = useRafState(0);
   const [willChange, setWillChange] = useState(true);
-  const [avatarTranslateY, setAvatarTranslateY] = useState(0);
   const [headerTranslateY, setHeaderTranslateY] = useState(0);
   const [headerFixed, setHeaderFixed] = useState(true);
-  const headerRef = useRef<HTMLDivElement>(null);
   const previousScrollY = useRef(0);
 
   const scrollHandler = useCallback<ScrollHandler>(
     ({ y }) => {
       const currentScrollY = Math.floor(y);
-      const headerHeight = headerRef.current?.clientHeight || 0;
       const deltaScrollY = currentScrollY - previousScrollY.current;
       const isScrollingDown = deltaScrollY > 0;
 
@@ -37,17 +34,15 @@ function Header({ avatar, children, scrollThreshold = 100 }: HeaderProps) {
         if (currentScrollY < scrollThreshold) {
           setHeaderFixed(true);
         } else if (headerFixed) {
-          setHeaderTranslateY(currentScrollY);
-          setAvatarTranslateY(currentScrollY - headerHeight);
+          setHeaderTranslateY(currentScrollY - scrollThreshold);
           setHeaderFixed(false);
         }
       } else {
-        const newHeaderTranslateY = currentScrollY - headerHeight;
+        const newHeaderTranslateY = currentScrollY - scrollThreshold * 2;
 
         if (newHeaderTranslateY > headerTranslateY) {
           setHeaderTranslateY(newHeaderTranslateY);
-          setAvatarTranslateY(newHeaderTranslateY - headerHeight);
-        } else if (currentScrollY < headerTranslateY) {
+        } else if (currentScrollY - scrollThreshold < headerTranslateY) {
           setHeaderFixed(true);
         }
       }
@@ -69,39 +64,26 @@ function Header({ avatar, children, scrollThreshold = 100 }: HeaderProps) {
   useScroll({ handler: scrollHandler, initial: true });
 
   const headerStyles = {
+    '--header-height': `-${scrollThreshold}px`,
     '--header-translate-y': `${headerTranslateY}px`,
-  } as CSSProperties;
-
-  const avatarStyles = {
-    '--avatar-translate-y': `${avatarTranslateY}px`,
     '--avatar-scale': avatarScale,
   } as CSSProperties;
 
   return (
-    <>
-      <Container
-        as="header"
-        ref={headerRef}
-        className={cn(
-          'sticky top-0 z-10 flex items-center justify-between py-7 before:w-11 before:content-[""]',
-          !headerFixed && 'top-auto translate-y-[var(--header-translate-y)]',
-          willChange && 'will-change-[top]'
-        )}
-        style={headerStyles}
-      >
+    <Container
+      as="header"
+      className={cn(
+        'sticky top-[var(--header-height)] z-10',
+        !headerFixed && 'top-auto translate-y-[var(--header-translate-y)]',
+        willChange && 'will-change-[top]'
+      )}
+      style={headerStyles}
+    >
+      <div className="sticky top-0 z-10 flex items-center justify-between py-7 before:w-11 before:content-['']">
         {children}
-      </Container>
-      <Container
-        className={cn(
-          'pointer-events-none sticky top-0 z-10 pt-7',
-          !headerFixed && 'top-auto translate-y-[var(--avatar-translate-y)]',
-          willChange && 'will-change-transform'
-        )}
-        style={avatarStyles}
-      >
-        {avatar}
-      </Container>
-    </>
+      </div>
+      {avatar}
+    </Container>
   );
 }
 
@@ -112,19 +94,18 @@ type AvatarProps = {
 
 export const Avatar = ({ src, alt }: AvatarProps) => {
   return (
-    <Link
-      href="/"
-      className="pointer-events-auto inline-block origin-bottom-left scale-[var(--avatar-scale)]"
-    >
-      <Image
-        className="rounded-full shadow-black drop-shadow-xl"
-        width={42}
-        height={42}
-        src={src}
-        alt={alt}
-        priority
-      />
-    </Link>
+    <div className="py-7">
+      <Link href="/" className="relative z-10">
+        <Image
+          className="inline-block origin-bottom-left scale-[var(--avatar-scale)] rounded-full border-2 border-transparent"
+          width={44}
+          height={44}
+          src={src}
+          alt={alt}
+          priority
+        />
+      </Link>
+    </div>
   );
 };
 
