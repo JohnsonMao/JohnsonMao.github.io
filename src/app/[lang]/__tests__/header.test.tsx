@@ -16,11 +16,6 @@ describe('Header component', () => {
   });
 
   it('should hide header on scroll down and show on scroll up', async () => {
-    Object.defineProperty(HTMLElement.prototype, 'clientHeight', {
-      configurable: true,
-      value: 50,
-    });
-
     render(<Header avatar={avatar} scrollThreshold={100} />);
 
     const header = screen.getByRole('banner');
@@ -57,18 +52,29 @@ describe('Header component', () => {
     });
 
     await waitFor(() => {
-      expect(header).toHaveStyle({ '--header-translate-y': '150px' });
+      expect(header).toHaveStyle({ '--header-translate-y': '50px' });
     });
 
     act(() => {
-      window.scrollY = 251;
+      window.scrollY = 299;
       window.dispatchEvent(new Event('scroll'));
-      window.scrollY = 250;
+      window.scrollY = 300;
       window.dispatchEvent(new Event('scroll'));
     });
 
     await waitFor(() => {
-      expect(header).toHaveStyle({ '--header-translate-y': '200px' });
+      expect(header).toHaveStyle({ '--header-translate-y': '50px' });
+    });
+
+    act(() => {
+      window.scrollY = 501;
+      window.dispatchEvent(new Event('scroll'));
+      window.scrollY = 500;
+      window.dispatchEvent(new Event('scroll'));
+    });
+
+    await waitFor(() => {
+      expect(header).toHaveStyle({ '--header-translate-y': '300px' });
     });
 
     act(() => {
@@ -79,29 +85,7 @@ describe('Header component', () => {
     });
 
     await waitFor(() => {
-      expect(header).toHaveStyle({ '--header-translate-y': '200px' });
-    });
-  });
-
-  it('should calculate the correct styles even when `clientHeight` is `undefined`', async () => {
-    Object.defineProperty(HTMLElement.prototype, 'clientHeight', {
-      configurable: true,
-      value: undefined,
-    });
-
-    render(<Header avatar={avatar} scrollThreshold={100} />);
-
-    const header = screen.getByRole('banner');
-
-    expect(header.tagName).toBe('HEADER');
-
-    act(() => {
-      window.scrollY = 200;
-      window.dispatchEvent(new Event('scroll'));
-    });
-
-    await waitFor(() => {
-      expect(header).toHaveStyle({ '--header-translate-y': '200px' });
+      expect(header).toHaveStyle({ '--header-translate-y': '300px' });
     });
   });
 });
