@@ -22,7 +22,7 @@ function CodeBox(props: CodeBoxProps) {
   };
 
   return (
-    <div className="group relative">
+    <div className="not-prose group relative">
       <div className="absolute right-0 top-0 z-10 m-2 flex items-center text-white/90">
         <span
           className={cn('text-xs transition-opacity', {
