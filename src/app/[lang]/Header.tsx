@@ -35,10 +35,12 @@ function Header({ avatar, children, scrollThreshold = 100 }: HeaderProps) {
   );
 
   const handleScrollUp = useCallback(
-    (scrollY: number) => {
+    (scrollY: number, deltaScrollY: number) => {
       const newHeaderTranslateY = scrollY - scrollThreshold * 2;
 
-      if (newHeaderTranslateY > headerTranslateY) {
+      if (deltaScrollY < scrollThreshold / -4) {
+        setHeaderFixed(true);
+      } else if (newHeaderTranslateY > headerTranslateY) {
         setHeaderTranslateY(newHeaderTranslateY);
       } else if (scrollY - scrollThreshold < headerTranslateY) {
         setHeaderFixed(true);
@@ -72,7 +74,7 @@ function Header({ avatar, children, scrollThreshold = 100 }: HeaderProps) {
       if (isScrollingDown) {
         handleScrollDown(currentScrollY);
       } else {
-        handleScrollUp(currentScrollY);
+        handleScrollUp(currentScrollY, deltaScrollY);
       }
 
       handleAvatarScale(currentScrollY);
