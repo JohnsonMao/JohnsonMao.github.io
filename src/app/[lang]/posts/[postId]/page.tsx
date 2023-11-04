@@ -39,7 +39,7 @@ async function PostPage({ params: { postId } }: PostParams) {
 
   return (
     <>
-      <Container className="py-8">
+      <Container className="pb-8">
         <H1 className="mb-4 text-3xl font-bold dark:text-white">
           {frontmatter.title}
         </H1>

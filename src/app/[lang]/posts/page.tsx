@@ -24,7 +24,7 @@ async function RootPage({ params: { lang } }: RootParams) {
 
   return (
     <>
-      <Container className="py-8">
+      <Container className="pb-8">
         <H1 className="mb-4 text-3xl font-bold dark:text-white">
           {metadata.title}
         </H1>
