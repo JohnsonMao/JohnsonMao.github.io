@@ -51,10 +51,11 @@ function TableOfContents({ source }: TableOfContentsProps) {
           <li key={heading.id}>
             <Link
               href={`#${heading.id}`}
+              title={heading.text}
               className={cn(
-                'mb-3 text-left text-sm transition-colors hover:underline',
+                'mb-0.5 block overflow-hidden text-ellipsis whitespace-nowrap text-left text-sm transition-colors hover:underline',
                 heading.id === activeId
-                  ? 'text-primary-500 hover:text-primary-600 dark:hover:text-primary-400 font-medium'
+                  ? 'font-medium text-primary-500 hover:text-primary-600 dark:hover:text-primary-400'
                   : 'font-normal text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200',
                 heading.level === 3 && 'pl-4'
               )}

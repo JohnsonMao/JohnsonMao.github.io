@@ -45,19 +45,23 @@ async function PostPage({ params: { postId } }: PostParams) {
         </H1>
         <time>{formattedDate}</time>
       </Container>
-      <Container as="main" className="py-8">
-        <article className="prose prose-xl prose-slate mx-auto dark:prose-invert">
-          {content}
-        </article>
-        <Link href="/">回首頁</Link>
-        <Comment />
+      <Container as="main" className="mx-2 block py-8 lg:flex lg:px-2">
+        <aside className="hidden w-40 shrink-0 lg:block xl:w-60">
+          <nav className="sticky top-[var(--header-height)] px-4">
+            <h4 className="my-3 text-lg font-semibold text-gray-900 transition-colors dark:text-gray-100">
+              目錄
+            </h4>
+            <TableOfContents source={source} />
+          </nav>
+        </aside>
+        <div>
+          <article className="prose prose-xl prose-slate mx-auto dark:prose-invert">
+            {content}
+          </article>
+          <Link href="/">回首頁</Link>
+          <Comment />
+        </div>
       </Container>
-      <aside className="fixed bottom-0 left-4 top-16 w-40 overflow-auto">
-        <p className="my-3 text-lg font-semibold text-gray-900 transition-colors dark:text-gray-100">
-          目錄
-        </p>
-        <TableOfContents source={source} />
-      </aside>
     </>
   );
 }
