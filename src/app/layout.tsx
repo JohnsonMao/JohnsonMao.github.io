@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 
 import { locales } from '~/i18n';
 import { createMetadata, createFeedOptions } from '~/data/metadata';
+import Container from '@/components/Container';
 import generateRSS from '@/utils/generateRSS';
 
 import Html from './Html';
@@ -22,7 +23,9 @@ function HtmlLayout({ children }: React.PropsWithChildren) {
   return (
     <Html>
       <body>
-        <div className="root-background fixed inset-x-0 top-0 -z-50 h-screen"></div>
+        <div className="lattice fixed inset-x-0 top-0 -z-50 h-screen transition-colors">
+          <Container className="h-screen border-x-2 border-zinc-500/5 bg-zinc-100/70 transition-colors dark:bg-zinc-900/70" />
+        </div>
         <Providers>{children}</Providers>
       </body>
     </Html>
