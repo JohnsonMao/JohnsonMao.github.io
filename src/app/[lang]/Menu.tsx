@@ -38,14 +38,14 @@ function Menu({ menu }: MenuProps) {
               href={href}
               className={cn(
                 'relative block p-3 text-xl leading-none no-underline',
-                'text-zinc-700 transition-colors hover:text-primary-500 dark:text-zinc-300 dark:hover:text-primary-500',
+                'text-zinc-700 hover:text-primary-500 dark:text-zinc-300 dark:hover:text-primary-500',
                 activeLinkIndex === index &&
                   'fluorescent-text text-primary-500 dark:text-primary-500'
               )}
             >
               {text}
               {activeLinkIndex === index && (
-                <span className="absolute bottom-0 left-0 h-px w-full translate-y-1/2 bg-gradient-to-l from-transparent from-15% via-primary-500 to-transparent to-85%" />
+                <span className="absolute inset-x-2 bottom-0 h-px translate-y-1/2 bg-gradient-to-l from-transparent via-primary-500 to-transparent" />
               )}
             </Link>
           </li>
