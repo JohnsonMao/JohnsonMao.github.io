@@ -48,7 +48,7 @@ async function PostPage({ params: { postId } }: PostParams) {
       <Container as="main" className="mx-2 block py-8 lg:flex lg:px-2">
         <aside className="hidden w-40 shrink-0 lg:block xl:w-60">
           <nav className="sticky top-[var(--header-height)] px-4">
-            <h4 className="my-3 text-lg font-semibold text-gray-900 transition-colors dark:text-gray-100">
+            <h4 className="my-3 text-lg font-semibold text-gray-900 dark:text-gray-100">
               目錄
             </h4>
             <TableOfContents source={source} />

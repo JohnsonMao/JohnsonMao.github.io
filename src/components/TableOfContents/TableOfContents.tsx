@@ -53,7 +53,7 @@ function TableOfContents({ source }: TableOfContentsProps) {
               href={`#${heading.id}`}
               title={heading.text}
               className={cn(
-                'mb-0.5 block overflow-hidden text-ellipsis whitespace-nowrap text-left text-sm transition-colors hover:underline',
+                'mb-0.5 block overflow-hidden text-ellipsis whitespace-nowrap text-left text-sm hover:underline',
                 heading.id === activeId
                   ? 'font-medium text-primary-500 hover:text-primary-600 dark:hover:text-primary-400'
                   : 'font-normal text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200',

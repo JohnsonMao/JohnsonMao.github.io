@@ -41,7 +41,7 @@ describe('Menu component', () => {
       render(<Menu menu={menu} />);
 
       const links = screen.getAllByRole('link');
-      const activeClassName = 'text-blue-500 hover:text-blue-500';
+      const activeClassName = 'text-primary-500';
 
       links.forEach((link) => {
         if (link.textContent === activeLinkText) {
