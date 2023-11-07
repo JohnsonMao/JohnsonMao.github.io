@@ -9,7 +9,7 @@ describe('Menu component', () => {
   ];
 
   it('should render correct element', () => {
-    mockPathname.mockReturnValueOnce('/');
+    mockPathname.mockReturnValue('/');
 
     render(<Menu menu={menu} />);
 
@@ -36,12 +36,12 @@ describe('Menu component', () => {
   ])(
     'should render correct active link based on the pathname "%s"',
     (pathname, activeLinkText) => {
-      mockPathname.mockReturnValueOnce(pathname);
+      mockPathname.mockReturnValue(pathname);
 
       render(<Menu menu={menu} />);
 
       const links = screen.getAllByRole('link');
-      const activeClassName = 'text-primary-500';
+      const activeClassName = 'neon-text';
 
       links.forEach((link) => {
         if (link.textContent === activeLinkText) {
