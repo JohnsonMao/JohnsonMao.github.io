@@ -30,10 +30,14 @@ function ThemeSwitcher({ className }: ThemeSwitcher) {
   }
 
   return (
-    <button onClick={handleClick} className={className}>
+    <button
+      aria-label="theme switcher"
+      className={className}
+      onClick={handleClick}
+    >
       {isDarkTheme ? (
         <BsMoonFill size="1.25rem" />
-        ) : (
+      ) : (
         <BsSunFill size="1.25rem" />
       )}
     </button>
