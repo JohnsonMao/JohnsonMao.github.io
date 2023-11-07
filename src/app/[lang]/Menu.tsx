@@ -1,5 +1,6 @@
 'use client';
 
+import { CSSProperties, useLayoutEffect, useRef, useState } from 'react';
 import { usePathname } from 'next/navigation';
 
 import Link from '@/components/Link';
@@ -16,6 +17,8 @@ export type MenuProps = {
 };
 
 function Menu({ menu }: MenuProps) {
+  const [offset, setOffset] = useState({ left: 0, width: 16 });
+  const menuRef = useRef<HTMLUListElement>(null);
   const pathname = usePathname();
   const locale = getLocale(pathname) || '';
   const localePrefix = new RegExp(`^/${locale}/?([^/]*)/?`);
@@ -24,11 +27,28 @@ function Menu({ menu }: MenuProps) {
     (item) => item.href === `/${rootPathname}`
   );
 
+  const menuStyle = {
+    '--active-offset-w': (offset.width - 16) / 40,
+    '--active-offset-x': `${offset.left + 8}px`,
+  } as CSSProperties;
+
+  useLayoutEffect(() => {
+    const itemElement = menuRef.current?.children[activeLinkIndex];
+
+    if (itemElement instanceof HTMLElement) {
+      setOffset({
+        left: itemElement.offsetLeft,
+        width: itemElement.offsetWidth,
+      });
+    }
+  }, [activeLinkIndex]);
+
   return (
-    <nav>
+    <nav className="relative" style={menuStyle}>
       <ul
+        ref={menuRef}
         className={cn(
-          'fluorescent-box flex rounded-full px-2 backdrop-blur-sm',
+          'neon-box flex rounded-full px-2 backdrop-blur-sm',
           'bg-zinc-100/80 dark:bg-zinc-900/80'
         )}
       >
@@ -37,20 +57,25 @@ function Menu({ menu }: MenuProps) {
             <Link
               href={href}
               className={cn(
-                'relative block p-3 text-xl leading-none no-underline',
-                'text-zinc-700 hover:text-primary-500 dark:text-zinc-300 dark:hover:text-primary-500',
-                activeLinkIndex === index &&
-                  'fluorescent-text text-primary-500 dark:text-primary-500'
+                'block p-3 text-xl leading-none no-underline',
+                'text-zinc-700 dark:text-zinc-300',
+                activeLinkIndex === index
+                  ? 'neon-text text-primary-600 dark:text-primary-400'
+                  : 'hover:text-primary-700 dark:hover:text-primary-300'
               )}
             >
               {text}
-              {activeLinkIndex === index && (
-                <span className="absolute inset-x-2 bottom-0 h-px translate-y-1/2 bg-gradient-to-l from-transparent via-primary-500 to-transparent" />
-              )}
             </Link>
           </li>
         ))}
       </ul>
+      <span
+        className={cn(
+          'absolute bottom-0 left-0 h-px w-10',
+          'origin-left translate-x-[var(--active-offset-x)] translate-y-1/3 scale-x-[var(--active-offset-w)] scale-y-50 transition-transform',
+          'bg-gradient-to-r from-transparent via-primary-600 to-transparent dark:via-primary-400'
+        )}
+      />
     </nav>
   );
 }

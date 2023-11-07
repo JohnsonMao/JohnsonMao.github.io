@@ -8,7 +8,7 @@ const tailwindcssConfig = {
   theme: {
     extend: {
       colors: {
-        primary: { ...colors.lime, DEFAULT: colors.lime[500] },
+        primary: { ...colors.violet, DEFAULT: colors.violet[500] },
       },
       typography: {
         DEFAULT: {
@@ -40,7 +40,7 @@ const tailwindcssConfig = {
     plugin(({ addComponents, theme }) => {
       addComponents({
         '.lattice': {
-          '--lattice-base-color': theme('colors.stone.100'),
+          '--lattice-base-color': theme('colors.stone.50'),
           '--lattice-line-color': 'rgba(0, 0, 0, 0.04)',
           '--lattice-ratio': '10%',
           '--lattice-size': '10px 10px',
@@ -63,33 +63,33 @@ const tailwindcssConfig = {
           backgroundSize: 'var(--lattice-size);',
         },
         '.dark .lattice': {
-          '--lattice-base-color': theme('colors.stone.900'),
+          '--lattice-base-color': theme('colors.stone.950'),
           '--lattice-line-color': 'rgba(255, 255, 255, 0.04)',
         },
       });
       addComponents({
-        '.fluorescent-box': {
-          '--fluorescent-color': '35, 35, 35',
+        '.neon-box': {
+          '--neon-color': '35, 35, 35',
           background: `
             linear-gradient(
               to top,
-              rgba(var(--fluorescent-color), .1) 0,
-              transparent 50%,
+              rgba(var(--neon-color), .1) 0,
+              transparent 30%,
               transparent 100%
             )`,
           boxShadow: `
-            0 0 1px rgba(var(--fluorescent-color), .8),
-            0 1px 3px rgba(var(--fluorescent-color), .2)`,
+            0 0 1px rgba(var(--neon-color), .8),
+            0 1px 3px rgba(var(--neon-color), .2)`,
         },
-        '.dark .fluorescent-box': {
-          '--fluorescent-color': '220, 220, 220',
+        '.dark .neon-box': {
+          '--neon-color': '220, 220, 220',
         },
-        '.fluorescent-text': {
-          '--fluorescent-color': theme('colors.primary.300'),
-          textShadow: '0 0 .25em var(--fluorescent-color)',
+        '.neon-text': {
+          '--neon-color': theme('colors.primary.400'),
+          textShadow: '0 0 .125em var(--neon-color)',
         },
-        '.dark .fluorescent-text': {
-          '--fluorescent-color': theme('colors.primary.700'),
+        '.dark .neon-text': {
+          '--neon-color': theme('colors.primary.600'),
         },
       });
     }),
