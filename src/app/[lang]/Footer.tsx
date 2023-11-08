@@ -1,4 +1,5 @@
 import Container from '@/components/Container';
+import Link from '@/components/Link';
 
 type FooterProps = {
   copyright: string;
@@ -7,12 +8,12 @@ type FooterProps = {
 function Footer({ copyright }: FooterProps) {
   return (
     <Container as="footer" className="flex justify-center gap-3 ">
-      <a
+      <Link
         rel="license"
         href="https://creativecommons.org/licenses/by-nc-sa/4.0/"
       >
         CC BY-NC-SA 4.0
-      </a>
+      </Link>
       <span>{copyright}</span>
     </Container>
   );
