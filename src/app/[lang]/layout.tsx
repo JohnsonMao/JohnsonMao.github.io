@@ -62,7 +62,7 @@ async function I18nLayout({
         <Menu menu={menu} />
         <ThemeSwitcher
           className={cn(
-            'fluorescent-box rounded-full p-3 backdrop-blur-sm',
+            'neon-box rounded-full p-3 backdrop-blur-sm',
             'bg-zinc-100/80 dark:bg-zinc-900/80'
           )}
         />

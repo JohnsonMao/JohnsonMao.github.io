@@ -24,7 +24,7 @@ function HtmlLayout({ children }: React.PropsWithChildren) {
     <Html>
       <body>
         <div className="lattice fixed inset-x-0 top-0 -z-50 h-screen">
-          <Container className="h-screen border-x-2 border-zinc-500/5 bg-zinc-100/70 dark:bg-zinc-900/70" />
+          <Container className="h-screen bg-zinc-50/70 shadow shadow-zinc-500/50 dark:bg-zinc-950/70" />
         </div>
         <Providers>{children}</Providers>
       </body>
