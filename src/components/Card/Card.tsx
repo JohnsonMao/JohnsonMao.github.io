@@ -3,6 +3,7 @@ import { MdOutlineWidgets } from 'react-icons/md';
 import { AiOutlineTags } from 'react-icons/ai';
 
 import { formatDate } from '@/utils/date';
+import { H2 } from '../Heading';
 import Link from '../Link';
 import Image from '../Image';
 
@@ -31,16 +32,11 @@ function Card({
           />
         )}
       </div>
-      <div>
-        <h2 className="text-2xl font-bold dark:text-white/90">
-          <Link
-            className="hover:text-black/70 dark:hover:text-white/70"
-            href={`/posts/${id}`}
-          >
-            {title}
-          </Link>
-        </h2>
-        <p className="my-3 text-base">{description}</p>
+      <div className="prose prose-slate dark:prose-invert">
+        <H2>
+          <Link href={`/posts/${id}`}>{title}</Link>
+        </H2>
+        <p>{description}</p>
         <div className="flex flex-wrap gap-x-4 gap-y-1 text-sm">
           <div className="flex items-center gap-1">
             <BsCalendar4Week />
@@ -52,7 +48,7 @@ function Card({
               category.map((tag) => (
                 <Link
                   key={category + tag}
-                  className="whitespace-nowrap hover:text-black/70 dark:hover:text-white/70"
+                  className="whitespace-nowrap"
                   href="/"
                 >
                   {tag}
@@ -63,11 +59,7 @@ function Card({
           <div className="flex flex-wrap items-center gap-1">
             <AiOutlineTags />
             {tags.map((tag) => (
-              <Link
-                key={tag}
-                className="whitespace-nowrap hover:text-black/70 dark:hover:text-white/70"
-                href="/"
-              >
+              <Link key={tag} className="whitespace-nowrap" href="/">
                 {tag}
               </Link>
             ))}
