@@ -32,11 +32,11 @@ function Card({
           />
         )}
       </div>
-      <div className="prose prose-slate dark:prose-invert">
+      <div className="prose prose-zinc dark:prose-invert">
         <H2>
           <Link href={`/posts/${id}`}>{title}</Link>
         </H2>
-        <p>{description}</p>
+        <p className="multiline-ellipsis">{description}</p>
         <div className="flex flex-wrap gap-x-4 gap-y-1 text-sm">
           <div className="flex items-center gap-1">
             <BsCalendar4Week />

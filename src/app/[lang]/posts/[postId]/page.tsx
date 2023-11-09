@@ -55,7 +55,7 @@ async function PostPage({ params: { postId } }: PostParams) {
           </nav>
         </aside>
         <div>
-          <article className="prose prose-xl prose-slate mx-auto dark:prose-invert">
+          <article className="prose prose-zinc mx-auto px-4 dark:prose-invert">
             {content}
           </article>
           <Link href="/">回首頁</Link>
