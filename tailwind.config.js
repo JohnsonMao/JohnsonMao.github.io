@@ -10,11 +10,24 @@ const tailwindcssConfig = {
       colors: {
         primary: { ...colors.violet, DEFAULT: colors.violet[500] },
       },
-      typography: {
+      cursor: {
+        auto: 'var(--cursor-auto)',
+        crosshair: 'var(--cursor-crosshair)',
+        pointer: 'var(--cursor-pointer)',
+        grab: 'var(--cursor-grab)',
+        grabbing: 'var(--cursor-grabbing)',
+      },
+      typography: ({ theme }) => ({
         DEFAULT: {
           css: {
             a: {
               textDecoration: 'none',
+              '&:hover': {
+                color: theme('colors.primary.700'),
+              },
+              '.dark &:hover': {
+                color: theme('colors.primary.300'),
+              },
             },
             code: {
               margin: '0 4px',
@@ -32,12 +45,17 @@ const tailwindcssConfig = {
             'code::after': { content: '' },
           },
         },
-      },
+      }),
     },
   },
   plugins: [
     require('@tailwindcss/typography'),
-    plugin(({ addComponents, theme }) => {
+    plugin(({ addBase, addComponents, addUtilities, theme }) => {
+      addBase({
+        a: {
+          cursor: theme('cursor.pointer'),
+        },
+      });
       addComponents({
         '.lattice': {
           '--lattice-base-color': theme('colors.stone.50'),
@@ -92,6 +110,21 @@ const tailwindcssConfig = {
           '--neon-color': theme('colors.primary.600'),
         },
       });
+      addUtilities({
+        '.multiline-ellipsis': {
+          display: '-webkit-box',
+          '-webkit-box-orient': 'vertical',
+          '-webkit-line-clamp': 'var(--webkit-line-clamp, 2)',
+          overflow: 'hidden',
+        }
+      });
+      [3, 4, 5].forEach(number => {
+        addUtilities({
+          [`.multiline-ellipsis-${number}`]: {
+            '--webkit-line-clamp': String(number),
+          }
+        });
+      })
     }),
   ],
 };
