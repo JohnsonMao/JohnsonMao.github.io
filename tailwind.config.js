@@ -52,7 +52,7 @@ const tailwindcssConfig = {
     require('@tailwindcss/typography'),
     plugin(({ addBase, addComponents, addUtilities, theme }) => {
       addBase({
-        a: {
+        'a, button': {
           cursor: theme('cursor.pointer'),
         },
       });

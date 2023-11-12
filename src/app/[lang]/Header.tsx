@@ -105,7 +105,7 @@ function Header({ avatar, children, scrollThreshold = 100 }: HeaderProps) {
       <div className="py-7">
         <div
           className={cn(
-            'relative z-10 inline-block origin-bottom-left scale-[var(--avatar-scale)] rounded-full',
+            'relative z-10 inline-block origin-left scale-[var(--avatar-scale)] rounded-full',
             willChange && 'will-change-transform'
           )}
         >
