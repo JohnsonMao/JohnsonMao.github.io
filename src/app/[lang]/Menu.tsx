@@ -72,7 +72,7 @@ function Menu({ menu }: MenuProps) {
       <span
         className={cn(
           'absolute bottom-0 left-0 h-px w-10',
-          'origin-left translate-x-[var(--active-offset-x)] translate-y-1/3 scale-x-[var(--active-offset-w)] scale-y-50 transition-transform',
+          'origin-left translate-x-[var(--active-offset-x)] translate-y-1/3 scale-x-[var(--active-offset-w)] transition-transform',
           'bg-gradient-to-r from-transparent via-primary-600 to-transparent dark:via-primary-400'
         )}
       />

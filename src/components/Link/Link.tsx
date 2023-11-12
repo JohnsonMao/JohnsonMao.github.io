@@ -45,10 +45,7 @@ function Link<T extends string = string>({
     return (
       <NextLink
         href={adjustedHref as Route}
-        className={cn(
-          'hover:text-primary-700 dark:hover:text-primary-300',
-          className
-        )}
+        className={className}
         {...otherProps}
       >
         {children}
@@ -61,10 +58,7 @@ function Link<T extends string = string>({
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className={cn(
-        'inline-flex hover:text-primary-700 dark:hover:text-primary-300',
-        className
-      )}
+      className={cn('inline-flex', className)}
       {...otherProps}
     >
       {children}

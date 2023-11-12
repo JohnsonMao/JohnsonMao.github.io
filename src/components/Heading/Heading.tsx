@@ -20,7 +20,7 @@ function Heading({ as, id, className, children, ...otherProps }: HeadingProps) {
       {id && (
         <Link
           href={`#${id}`}
-          className="absolute -left-6 no-underline opacity-0 group-hover:opacity-100"
+          className="absolute right-full pr-2 no-underline opacity-0 group-hover:opacity-100"
         >
           #
         </Link>
