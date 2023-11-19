@@ -1,3 +1,3 @@
-import ThemeSwitcher from './ThemeSwitcher';
+import ThemeSwitcherProps from './ThemeSwitcher';
 
-export default ThemeSwitcher;
+export default ThemeSwitcherProps;
