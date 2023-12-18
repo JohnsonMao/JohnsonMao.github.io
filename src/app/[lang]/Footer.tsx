@@ -7,7 +7,7 @@ type FooterProps = {
 
 function Footer({ copyright }: FooterProps) {
   return (
-    <Container as="footer" className="flex justify-center gap-3 ">
+    <Container as="footer" className="flex justify-center gap-3 py-4 ">
       <Link
         rel="license"
         href="https://creativecommons.org/licenses/by-nc-sa/4.0/"

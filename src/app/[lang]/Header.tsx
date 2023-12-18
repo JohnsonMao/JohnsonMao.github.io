@@ -6,9 +6,9 @@ import Container from '@/components/Container';
 import Image from '@/components/Image';
 import Link from '@/components/Link';
 import useScroll, { ScrollHandler } from '@/hooks/useScroll';
-import useRafState from '@/hooks/useRafState';
 import cn from '@/utils/cn';
 import { toFixedNumber } from '@/utils/math';
+import useIsMounted from '@/hooks/useIsMounted';
 
 type HeaderProps = {
   avatar: React.ReactNode;
@@ -16,7 +16,8 @@ type HeaderProps = {
 } & React.PropsWithChildren;
 
 function Header({ avatar, children, scrollThreshold = 100 }: HeaderProps) {
-  const [avatarScale, setAvatarScale] = useRafState(0);
+  const isMounted = useIsMounted();
+  const [avatarScale, setAvatarScale] = useState(0);
   const [headerFixed, setHeaderFixed] = useState(true);
   const [headerTranslateY, setHeaderTranslateY] = useState(0);
   const [willChange, setWillChange] = useState(true);
@@ -55,12 +56,10 @@ function Header({ avatar, children, scrollThreshold = 100 }: HeaderProps) {
       if (scrollY > scrollThreshold) {
         setAvatarScale(1);
       } else {
-        setAvatarScale(
-          toFixedNumber(2)(1.5 - scrollY / (scrollThreshold * 2))
-        );
+        setAvatarScale(toFixedNumber(2)(1.5 - scrollY / (scrollThreshold * 2)));
       }
     },
-    [scrollThreshold, setAvatarScale]
+    [scrollThreshold]
   );
 
   const scrollHandler = useCallback<ScrollHandler>(
@@ -94,8 +93,9 @@ function Header({ avatar, children, scrollThreshold = 100 }: HeaderProps) {
     <Container
       as="header"
       className={cn(
-        'sticky top-auto z-10 translate-y-[var(--header-translate-y)]',
-        headerFixed && 'top-[var(--scroll-threshold)] translate-y-0'
+        'sticky top-auto z-10 translate-y-[var(--header-translate-y)] opacity-0 transition-opacity duration-500 ease-in-out',
+        headerFixed && 'top-[var(--scroll-threshold)] translate-y-0',
+        isMounted && 'opacity-100'
       )}
       style={headerStyles}
     >
@@ -105,7 +105,7 @@ function Header({ avatar, children, scrollThreshold = 100 }: HeaderProps) {
       <div className="py-7">
         <div
           className={cn(
-            'relative z-10 inline-block origin-left scale-[var(--avatar-scale)] rounded-full',
+            'relative z-10 inline-block origin-bottom-left scale-[var(--avatar-scale)] rounded-full',
             willChange && 'will-change-transform'
           )}
         >

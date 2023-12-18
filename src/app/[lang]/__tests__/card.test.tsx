@@ -1,9 +1,9 @@
 import { render, screen } from '@testing-library/react';
 
 import { formatDate } from '@/utils/date';
-import Card from '.';
+import Article from '../Article';
 
-describe('Card component', () => {
+describe('Article component', () => {
   it('should render correct element', () => {
     const data: DataFrontmatter = {
       id: 'test_id',
@@ -18,7 +18,7 @@ describe('Card component', () => {
       description: 'description test',
     };
 
-    render(<Card {...data} />);
+    render(<Article {...data} />);
 
     const article = screen.getByRole('article');
     const image = screen.getByRole('img');

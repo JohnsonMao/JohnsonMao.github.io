@@ -40,9 +40,7 @@ async function PostPage({ params: { postId } }: PostParams) {
   return (
     <>
       <Container className="pb-8">
-        <H1 className="mb-4 text-3xl font-bold dark:text-white">
-          {frontmatter.title}
-        </H1>
+        <H1 className="mb-4 text-3xl font-bold">{frontmatter.title}</H1>
         <time>{formattedDate}</time>
       </Container>
       <Container as="main" className="block py-8 lg:flex lg:px-2">

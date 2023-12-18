@@ -1,12 +1,13 @@
 import type { Metadata } from 'next';
 
 import { getDictionary } from '~/i18n';
-import { H1 } from '@/components/Heading';
-import Card from '@/components/Card';
 import Container from '@/components/Container';
+import { H1 } from '@/components/Heading';
 import List from '@/components/List';
 import { getAllDataFrontmatter } from '@/utils/mdx';
+
 import type { RootParams } from './layout';
+import Article from './Article';
 
 export async function generateMetadata({
   params: { lang },
@@ -25,13 +26,12 @@ async function RootPage({ params: { lang } }: RootParams) {
   return (
     <>
       <Container className="pb-8">
-        <H1 className="mb-4 text-3xl font-bold dark:text-white">
-          {metadata.title}
-        </H1>
-        <p className="text-xl dark:text-white">{metadata.description}</p>
+        <H1 className="mb-4 text-3xl font-bold">{metadata.title}</H1>
+        <p className="text-xl">{metadata.description}</p>
       </Container>
       <Container as="main" className="py-8">
-        <List Item={Card} items={posts} />
+        <p className="mb-4 text-lg">近期文章</p>
+        <List Item={Article} items={posts.slice(0, 4)} />
       </Container>
     </>
   );

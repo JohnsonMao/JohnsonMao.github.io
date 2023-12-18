@@ -2,14 +2,14 @@ import { BsCalendar4Week } from 'react-icons/bs';
 import { MdOutlineWidgets } from 'react-icons/md';
 import { AiOutlineTags } from 'react-icons/ai';
 
+import { H2 } from '@/components/Heading';
+import Image from '@/components/Image';
+import Link from '@/components/Link';
 import { formatDate } from '@/utils/date';
-import { H2 } from '../Heading';
-import Link from '../Link';
-import Image from '../Image';
 
-type CardProps = DataFrontmatter;
+type ArticleProps = DataFrontmatter;
 
-function Card({
+function Article({
   id,
   title,
   date,
@@ -17,7 +17,7 @@ function Card({
   tags,
   description,
   image,
-}: CardProps) {
+}: ArticleProps) {
   const formattedDate = formatDate(date);
 
   return (
@@ -70,4 +70,4 @@ function Card({
   );
 }
 
-export default Card;
+export default Article;
