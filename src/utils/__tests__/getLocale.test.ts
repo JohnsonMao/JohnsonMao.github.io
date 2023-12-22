@@ -2,10 +2,15 @@ import { defaultLocale } from '~/i18n';
 import getLocale from '../getLocale';
 
 describe('get locale function', () => {
-  it('should return undefined when acceptLanguage does not match and defaultLocale is not provided', () => {
-    expect(getLocale()).toBe(undefined);
-    expect(getLocale('/not/match/locale')).toBe(undefined);
-  });
+  it.each([undefined, '/not/match/locale'])(
+    'should return undefined when acceptLanguage does not match and defaultLocale is not provided',
+    (param) => {
+      // Act
+      const result = getLocale(param);
+      // Assert
+      expect(result).toBe(undefined);
+    }
+  );
 
   it.each([
     ['zh-TW,zh;q=0.9,en-US;q=0.8,en;q=0.7', 'zh'],
@@ -14,7 +19,10 @@ describe('get locale function', () => {
   ])(
     'should extract the preferred language code from the Accept-Language header',
     (acceptLanguage, expected) => {
-      expect(getLocale(acceptLanguage, defaultLocale)).toBe(expected);
+      // Act
+      const result = getLocale(acceptLanguage, defaultLocale);
+      // Assert
+      expect(result).toBe(expected);
     }
   );
 
@@ -26,7 +34,10 @@ describe('get locale function', () => {
   ])(
     'should extract the language code from the path string',
     (pathname, expected) => {
-      expect(getLocale(pathname, defaultLocale)).toBe(expected);
+      // Act
+      const result = getLocale(pathname, defaultLocale);
+      // Assert
+      expect(result).toBe(expected);
     }
   );
 });

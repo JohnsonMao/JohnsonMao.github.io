@@ -5,6 +5,7 @@ import Article from '../Article';
 
 describe('Article component', () => {
   it('should render correct element', () => {
+    // Arrange
     const data: DataFrontmatter = {
       id: 'test_id',
       title: 'title test',
@@ -17,13 +18,11 @@ describe('Article component', () => {
       tags: ['tag_A', 'tag_B'],
       description: 'description test',
     };
-
     render(<Article {...data} />);
-
     const article = screen.getByRole('article');
     const image = screen.getByRole('img');
     const heading = screen.getByRole('heading');
-
+    // Assert
     expect(article).toBeInTheDocument();
     expect(image).toHaveAttribute('src', data.image);
     expect(image).toHaveAttribute('alt', `${data.title} cover`);

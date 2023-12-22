@@ -17,30 +17,28 @@ function TestThemeComponent({ children }: PropsWithChildren) {
 
 describe('ThemeSwitch component', () => {
   it('should render correct element', async () => {
+    // Arrange
     setDeviceTheme('light');
-
     render(<TestThemeComponent />);
-
     const button = screen.getByRole('button');
-
+    // Assert
     expect(button).toBeInTheDocument();
   });
 
   it('should correctly switch the theme when clicked', async () => {
+    // Arrange
     setDeviceTheme('dark');
-
     render(<TestThemeComponent />);
-
     const button = screen.getByRole('button');
-
+    // Act
     await userEvent.click(button);
-
+    // Assert
     expect(document.documentElement.getAttribute('style')).toBe(
       'color-scheme: light;'
     );
-
+    // Act
     await userEvent.click(button);
-
+    // Assert
     expect(document.documentElement.getAttribute('style')).toBe(
       'color-scheme: dark;'
     );

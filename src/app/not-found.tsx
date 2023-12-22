@@ -1,12 +1,17 @@
 import type { Metadata } from 'next';
-import NotFound from '@/components/NotFound';
+import { H2 } from '@/components/Heading';
 
 export const metadata: Metadata = {
   title: 'Page not found',
 };
 
 function NotFoundPage() {
-  return <NotFound />;
+  return (
+    <div className="flex h-screen items-center justify-center">
+      <H2>Page not found</H2>
+      <p>Sorry, the page you are looking for does not exist.</p>
+    </div>
+  );
 }
 
 export default NotFoundPage;

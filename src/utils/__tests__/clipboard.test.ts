@@ -26,26 +26,30 @@ describe('Copy to clipboard function', () => {
   });
 
   it('should return error with reject', async () => {
+    // Arrange
     expect.assertions(1);
-
-    await expect(copyToClipboard('test')).rejects.toStrictEqual(
-      TypeError('document.execCommand is not a function')
-    );
+    const expected = TypeError('document.execCommand is not a function');
+    // Act
+    const result = copyToClipboard('test');
+    // Assert
+    await expect(result).rejects.toStrictEqual(expected);
   });
 
   it('should call document execCommand', () => {
+    // Arrange
     setDeviceClipboard('old');
-
+    // Act
     copyToClipboard('test');
-
+    // Assert
     expect(document.execCommand).toBeCalled();
   });
 
   it('should call navigator clipboard writeText', () => {
+    // Arrange
     setDeviceClipboard('new');
-
+    // Act
     copyToClipboard('test');
-
+    // Assert
     expect(navigator.clipboard.writeText).toHaveBeenCalledWith('test');
   });
 });

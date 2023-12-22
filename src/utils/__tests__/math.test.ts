@@ -1,11 +1,20 @@
 import { toFixedNumber } from '../math';
 
 describe('math function', () => {
-  it('should round a number to the specified number of decimal places', () => {
-    const input = 1.3456;
-    expect(toFixedNumber(0)(input)).toBe(1);
-    expect(toFixedNumber(1)(input)).toBe(1.3);
-    expect(toFixedNumber(2)(input)).toBe(1.35);
-    expect(toFixedNumber(3)(input)).toBe(1.346);
-  });
+  it.each([
+    [0, 1],
+    [1, 1.3],
+    [2, 1.35],
+    [3, 1.346],
+  ])(
+    'should round a number to the specified number of decimal places',
+    (digits, expected) => {
+      // Arrange
+      const input = 1.3456;
+      // Act
+      const result = toFixedNumber(digits)(input);
+      // Assert
+      expect(result).toBe(expected);
+    }
+  );
 });

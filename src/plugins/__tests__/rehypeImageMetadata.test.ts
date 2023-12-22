@@ -32,6 +32,7 @@ describe('Rehype image metadata function', () => {
   });
 
   it('should format paragraph with image element to a div', async () => {
+    // Arrange
     const testImageNode: ImageNode = {
       type: 'element',
       tagName: 'img',
@@ -44,15 +45,17 @@ describe('Rehype image metadata function', () => {
       tagName: 'p',
       children: [testImageNode],
     };
+    // Act
     const transformer = rehypeImageMetadata();
     const result = await transformer(testTree);
-
+    // Assert
     expect(result.tagName).toBe('div');
   });
 
   it.each(['/test.jpeg', '/public/test.jpeg'])(
     'should set image properties for src: %s',
     async (src) => {
+      // Arrange
       const width = 2;
       const height = 1;
       const fileType = 'png';
@@ -67,16 +70,20 @@ describe('Rehype image metadata function', () => {
         info: { format: fileType },
         data: base64,
       });
+      // Act
       const transformer = rehypeImageMetadata();
       const result = await transformer(testImageNode);
-
-      expect(result.tagName).toBe(testImageNode.tagName);
-      expect(result.properties.src).toBe(testImageNode.properties.src);
-      expect(result.properties.width).toBe(width);
-      expect(result.properties.height).toBe(height);
-      expect(result.properties.base64).toBe(
-        `data:image/${fileType};base64,${base64}`
-      );
+      // Assert
+      expect(result).toStrictEqual({
+        type: 'element',
+        tagName: testImageNode.tagName,
+        properties: {
+          src: testImageNode.properties.src,
+          width,
+          height,
+          base64: `data:image/${fileType};base64,${base64}`,
+        },
+      });
     }
   );
 });
