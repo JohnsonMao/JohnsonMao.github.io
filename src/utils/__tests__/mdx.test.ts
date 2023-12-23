@@ -30,13 +30,14 @@ describe('Get post list function', () => {
   });
 
   it('should get post list descending by date', async () => {
+    // Arrange
     mockReaddir.mockReturnValueOnce(['test_A.md', 'test_B.mdx', 'test_C.md']);
     mockReadFile.mockReturnValueOnce(mockFileA);
     mockReadFile.mockReturnValueOnce(mockFileB);
     mockReadFile.mockReturnValueOnce(mockFileC);
-
+    // Act
     const postList = await getAllDataFrontmatter('posts');
-
+    // Assert
     expect(postList).toStrictEqual([
       { id: 'test_C', date: '2023/07/09' },
       { id: 'test_A', date: '2023/07/08' },
@@ -45,15 +46,15 @@ describe('Get post list function', () => {
   });
 
   it('should return same id error with reject', async () => {
+    // Arrange
+    const expected = Error('Duplicate id "test_A" found in "test_A.mdx"');
     mockReaddir.mockReturnValueOnce(['test_A.md', 'test_A.mdx']);
     mockReadFile.mockReturnValue('');
     expect.assertions(1);
-
-    await expect(
-      getAllDataFrontmatter('posts')
-    ).rejects.toStrictEqual(
-      Error('Duplicate id "test_A" found in "test_A.mdx"')
-    );
+    // Act
+    const result = getAllDataFrontmatter('posts');
+    // Assert
+    await expect(result).rejects.toStrictEqual(expected);
   });
 });
 
@@ -65,11 +66,12 @@ describe('Get post data function', () => {
   });
 
   it('should get post data by mdx file', async () => {
+    // Arrange
     mockExists.mockReturnValueOnce(true);
     mockReadFile.mockReturnValueOnce(mockFileB);
-
+    // Act
     const postData = await getDataById('posts', 'test_B');
-
+    // Assert
     expect(postData).toStrictEqual({
       content: '測試文章B',
       frontmatter: { date: '2023/07/07' },
@@ -79,11 +81,12 @@ describe('Get post data function', () => {
   });
 
   it('should get post data by md file', async () => {
+    // Arrange
     mockExists.mockReturnValueOnce(false);
     mockReadFile.mockReturnValueOnce(mockFileC);
-
+    // Act
     const postData = await getDataById('posts', 'test_C');
-
+    // Assert
     expect(postData).toStrictEqual({
       content: '測試文章C',
       frontmatter: { date: '2023/07/09' },
@@ -93,13 +96,14 @@ describe('Get post data function', () => {
   });
 
   it('should return null when trying to get post data for a non-existing file', async () => {
+    // Arrange
     mockExists.mockReturnValueOnce(false);
     mockReadFile.mockImplementation(() => {
       throw new Error('File not found');
     });
-
+    // Act
     const postData = await getDataById('posts', 'not_found');
-
+    // Assert
     expect(postData).toBe(null);
   });
 });

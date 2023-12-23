@@ -11,10 +11,10 @@ describe('Link component', () => {
     ['https://external.com', 'The external link text', 'https://external.com'],
     [{ pathname: '/internal' }, 'The object href text', '/internal'],
   ])('should render correct element', (href, name, expectedHref) => {
+    // Arrange
     render(<Link href={href as Route}>{name}</Link>);
-
     const link = screen.getByRole('link', { name });
-
+    // Assert
     expect(link).toBeInTheDocument();
     expect(link).toHaveTextContent(name);
     expect(link).toHaveAttribute('href', expectedHref);
@@ -29,15 +29,13 @@ describe('Link component', () => {
   ])(
     'should render correct link element with pathname %s',
     (pathname, expected) => {
+      // Arrange
       const name = 'internal link';
       const href = '/internal';
-
       mockPathname.mockReturnValueOnce(pathname);
-
       render(<Link href={href}>{name}</Link>);
-
       const link = screen.getByRole('link', { name });
-
+      // Assert
       expect(link).toHaveAttribute('href', expected);
     }
   );

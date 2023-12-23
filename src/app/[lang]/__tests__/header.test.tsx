@@ -1,89 +1,76 @@
 import { act, render, screen, waitFor } from '@testing-library/react';
 import Header, { Avatar } from '../Header';
 
+const scrollDownTo = (to: number) => {
+  act(() => {
+    window.scrollY = to - 1;
+    window.dispatchEvent(new Event('scroll'));
+    window.scrollY = to;
+    window.dispatchEvent(new Event('scroll'));
+  });
+}
+const scrollUpTo = (to: number) => {
+  act(() => {
+    window.scrollY = to + 1;
+    window.dispatchEvent(new Event('scroll'));
+    window.scrollY = to;
+    window.dispatchEvent(new Event('scroll'));
+  });
+}
+
 describe('Header component', () => {
   const avatar = (
     <Avatar src="https://external.com/test.jpg" alt="test avatar image alt" />
   );
 
   it('should render correct element', () => {
+    // Arrange
     render(<Header avatar={avatar} />);
-
     const brandLink = screen.getByRole('img');
-
+    // Assert
     expect(brandLink).toBeInTheDocument();
     expect(brandLink.parentElement).toHaveAttribute('href', '/');
   });
 
   it('should hide header on scroll down and show on scroll up', async () => {
+    // Arrange
     render(<Header avatar={avatar} scrollThreshold={100} />);
-
     const header = screen.getByRole('banner');
-
     expect(header.tagName).toBe('HEADER');
 
-    act(() => {
-      window.scrollY = 19;
-      window.dispatchEvent(new Event('scroll'));
-      window.scrollY = 20;
-      window.dispatchEvent(new Event('scroll'));
-    });
-
+    // Act
+    scrollDownTo(20);
+    // Assert
     await waitFor(() => {
       expect(header).toHaveStyle({ '--header-translate-y': '0px' });
     });
-
-    act(() => {
-      window.scrollY = 98;
-      window.dispatchEvent(new Event('scroll'));
-      window.scrollY = 99;
-      window.dispatchEvent(new Event('scroll'));
-    });
-
+    // Act
+    scrollDownTo(99);
+    // Assert
     await waitFor(() => {
       expect(header).toHaveStyle({ '--header-translate-y': '0px' });
     });
-
-    act(() => {
-      window.scrollY = 149;
-      window.dispatchEvent(new Event('scroll'));
-      window.scrollY = 150;
-      window.dispatchEvent(new Event('scroll'));
-    });
-
+    // Act
+    scrollDownTo(150);
+    // Assert
     await waitFor(() => {
       expect(header).toHaveStyle({ '--header-translate-y': '50px' });
     });
-
-    act(() => {
-      window.scrollY = 299;
-      window.dispatchEvent(new Event('scroll'));
-      window.scrollY = 300;
-      window.dispatchEvent(new Event('scroll'));
-    });
-
+    // Act
+    scrollDownTo(800);
+    // Assert
     await waitFor(() => {
       expect(header).toHaveStyle({ '--header-translate-y': '50px' });
     });
-
-    act(() => {
-      window.scrollY = 501;
-      window.dispatchEvent(new Event('scroll'));
-      window.scrollY = 500;
-      window.dispatchEvent(new Event('scroll'));
-    });
-
+    // Act
+    scrollUpTo(500);
+    // Assert
     await waitFor(() => {
       expect(header).toHaveStyle({ '--header-translate-y': '300px' });
     });
-
-    act(() => {
-      window.scrollY = 1;
-      window.dispatchEvent(new Event('scroll'));
-      window.scrollY = 0;
-      window.dispatchEvent(new Event('scroll'));
-    });
-
+    // Act
+    scrollUpTo(0);
+    // Assert
     await waitFor(() => {
       expect(header).toHaveStyle({ '--header-translate-y': '300px' });
     });

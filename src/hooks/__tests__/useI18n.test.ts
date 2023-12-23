@@ -11,10 +11,10 @@ describe('useI18n hook', () => {
   ])(
     'should return the correct language code and dictionary',
     (pathname, expected) => {
+      // Arrange
       mockPathname.mockReturnValueOnce(pathname);
-
       const { result } = renderHook(() => useI18n());
-
+      // Assert
       expect(result.current.lang).toBe(expected);
     }
   );

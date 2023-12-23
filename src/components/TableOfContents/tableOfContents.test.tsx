@@ -27,8 +27,8 @@ describe('TableOfContents component', () => {
   });
 
   it('should render correct element', () => {
+    // Arrange
     const source = '# H1\n## H2_1\n### H3_1-1\n## H2_2\n### H3_2-1\n';
-
     mockObserverCallback.mockReturnValueOnce([
       {
         isIntersecting: false,
@@ -39,12 +39,10 @@ describe('TableOfContents component', () => {
         target: { id: 'H3_2-1' },
       },
     ])
-
     render(<TableOfContents source={source} />);
-
     const toc = screen.getByRole('navigation');
     const anchorLinks = screen.getAllByRole('link');
-
+    // Assert
     expect(toc).toBeInTheDocument();
     expect(anchorLinks.length).toBe(4);
     expect(anchorLinks[0]).toHaveAttribute('href', '#H2_1');

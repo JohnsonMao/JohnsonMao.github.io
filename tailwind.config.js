@@ -57,7 +57,7 @@ const tailwindcssConfig = {
         },
       });
       addComponents({
-        '.lattice': {
+        '.bg-lattice': {
           '--lattice-base-color': theme('colors.stone.50'),
           '--lattice-line-color': 'rgba(0, 0, 0, 0.04)',
           '--lattice-ratio': '10%',
@@ -80,7 +80,7 @@ const tailwindcssConfig = {
             var(--lattice-base-color);`,
           backgroundSize: 'var(--lattice-size);',
         },
-        '.dark .lattice': {
+        '.dark .bg-lattice': {
           '--lattice-base-color': theme('colors.stone.950'),
           '--lattice-line-color': 'rgba(255, 255, 255, 0.04)',
         },
@@ -112,19 +112,19 @@ const tailwindcssConfig = {
       });
       addUtilities({
         '.multiline-ellipsis': {
+          overflow: 'hidden',
           display: '-webkit-box',
           '-webkit-box-orient': 'vertical',
           '-webkit-line-clamp': 'var(--webkit-line-clamp, 2)',
-          overflow: 'hidden',
-        }
+        },
       });
-      [3, 4, 5].forEach(number => {
+      [3, 4, 5].forEach((number) => {
         addUtilities({
           [`.multiline-ellipsis-${number}`]: {
             '--webkit-line-clamp': String(number),
-          }
+          },
         });
-      })
+      });
     }),
   ],
 };
