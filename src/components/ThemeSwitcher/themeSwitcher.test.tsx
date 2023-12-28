@@ -1,6 +1,6 @@
 import type { PropsWithChildren } from 'react';
 import { ThemeProvider } from 'next-themes';
-import { render, screen } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { setDeviceTheme } from '~/tests/theme';
 
@@ -30,14 +30,15 @@ describe('ThemeSwitch component', () => {
     setDeviceTheme('dark');
     render(<TestThemeComponent />);
     const button = screen.getByRole('button');
+    const user = userEvent.setup();
     // Act
-    await userEvent.click(button);
+    await act(() => user.click(button))
     // Assert
     expect(document.documentElement.getAttribute('style')).toBe(
       'color-scheme: light;'
     );
     // Act
-    await userEvent.click(button);
+    await act(() => user.click(button));
     // Assert
     expect(document.documentElement.getAttribute('style')).toBe(
       'color-scheme: dark;'
