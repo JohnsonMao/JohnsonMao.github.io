@@ -1,0 +1,74 @@
+name: CI Workflow
+
+concurrency: 
+  group: ${{ github.workflow }}-${{ github.head_ref }}
+  cancel-in-progress: true
+
+on:
+  pull_request:
+    branches-ignore:
+      - 'main'
+    paths:
+      - 'src/**'
+  workflow_dispatch:
+
+jobs:
+  init:
+    name: Initial common steps
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🛎️ Checkout
+        uses: actions/checkout@v3
+
+      - name: ⚙️ Setup PNPM
+        uses: pnpm/action-setup@v2.2.1
+        with:
+          version: 8
+
+      - name: 📝 Cache dependencies
+        id: cache-deps
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: deps-node-modules-${{ hashFiles('**/pnpm-lock.yaml') }}
+
+      - name: 🔧 Install dependencies
+        if: steps.cache-deps.outputs.cache-hit != 'true'
+        run: pnpm install --frozen-lockfile
+
+  test:
+    name: Test Coverage
+    runs-on: ubuntu-latest
+    environment: Test
+    timeout-minutes: 10
+    needs: init
+
+    steps:
+      - name: 🛎️ Checkout
+        uses: actions/checkout@v3
+
+      - name: ⚙️ Setup PNPM
+        uses: pnpm/action-setup@v2.2.1
+        with:
+          version: 8
+
+      - name: 📝 Cache dependencies
+        id: cache-deps
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: deps-node-modules-${{ hashFiles('**/pnpm-lock.yaml') }}
+
+      - name: 🔧 Install dependencies
+        if: steps.cache-deps.outputs.cache-hit != 'true'
+        run: pnpm install --frozen-lockfile
+
+      - name: 🧪 Test Coverage
+        run: pnpm test:coverage
+
+      - name: 📈 Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: true
