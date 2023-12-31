@@ -34,8 +34,9 @@ async function PostPage({ params: { postId } }: PostParams) {
 
   if (!post) return notFound();
 
-  const { content, frontmatter, source } = post;
+  const { content, frontmatter } = post;
   const formattedDate = formatDate(frontmatter.date);
+  const id = `article-${postId}`;
 
   return (
     <>
@@ -45,15 +46,21 @@ async function PostPage({ params: { postId } }: PostParams) {
       </Container>
       <Container as="main" className="block py-8 lg:flex lg:px-2">
         <aside className="hidden w-40 shrink-0 lg:block xl:w-60">
-          <nav className="sticky top-[var(--header-height)] px-4">
+          <nav className="top-header-height sticky px-4">
             <h4 className="my-3 text-lg font-semibold text-gray-900 dark:text-gray-100">
               目錄
             </h4>
-            <TableOfContents source={source} />
+            <TableOfContents
+              className="max-h-96 overflow-auto"
+              targetId={`#${id}`}
+            />
           </nav>
         </aside>
         <div>
-          <article className="prose prose-zinc mx-auto px-4 dark:prose-invert">
+          <article
+            id={id}
+            className="prose prose-zinc mx-auto px-4 dark:prose-invert"
+          >
             {content}
           </article>
           <Link href="/">回首頁</Link>

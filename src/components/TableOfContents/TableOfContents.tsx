@@ -1,40 +1,52 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import GithubSlugger from 'github-slugger';
+import { useEffect, useLayoutEffect, useState } from 'react';
 
 import useIntersectionObserver from '@/hooks/useIntersectionObserver';
 import cn from '@/utils/cn';
+import Collapse from '../Collapse';
 import Link from '../Link';
 
 type TableOfContentsProps = {
-  source: string;
+  targetId: `#${string}`;
+  className?: string;
 };
 
-function TableOfContents({ source }: TableOfContentsProps) {
+type Heading = {
+  id: string;
+  text: string | undefined;
+  children?: Heading[];
+};
+
+function TableOfContents({ className, targetId }: TableOfContentsProps) {
   const [activeId, setActiveId] = useState('');
+  const [headings, setHeadings] = useState<Heading[]>([]);
   const [entry, setElementRef] = useIntersectionObserver();
 
-  const headingLines = source
-    .split('\n')
-    .filter((line) => line.match(/^###?\s/));
-
-  const headings = headingLines.map((raw) => {
-    const text = raw.replace(/^###*\s/, '');
-    const level = raw.slice(0, 3) === '###' ? 3 : 2;
-    const slugger = new GithubSlugger();
-    const id = slugger.slug(text);
-
-    return { text, level, id };
-  });
-
   useEffect(() => {
-    setElementRef(
-      Array.from(document.querySelectorAll('article h2, article h3'))
+    const headingElements = Array.from(
+      document.querySelectorAll(`${targetId} h2, ${targetId} h3`)
     );
-  }, [setElementRef]);
+    setElementRef(headingElements);
+    setHeadings(
+      headingElements.reduce<Heading[]>(
+        (result, { id, tagName, textContent }) => {
+          const heading = { id, text: textContent?.slice(1) };
+          const lastHeading = result.at(-1);
 
-  useEffect(() => {
+          if (tagName === 'H2') {
+            result.push(heading);
+          } else if (lastHeading) {
+            lastHeading.children = (lastHeading.children || []).concat(heading);
+          }
+          return result;
+        },
+        []
+      )
+    );
+  }, [targetId, setElementRef]);
+
+  useLayoutEffect(() => {
     const visibleHeadings = entry.filter(
       ({ isIntersecting }) => isIntersecting
     );
@@ -44,24 +56,41 @@ function TableOfContents({ source }: TableOfContentsProps) {
     }
   }, [entry]);
 
+  const isActive = (id: string, children: Heading[]) =>
+    id === activeId || children.some((child) => child.id === activeId);
+
+  const getLinkClassName = (id: string, children: Heading[] = []) =>
+    cn(
+      'transition-colors mb-0.5 block overflow-hidden text-ellipsis whitespace-nowrap hover:underline',
+      isActive(id, children)
+        ? 'text-primary-500 hover:text-primary-600 dark:hover:text-primary-400'
+        : 'text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200'
+    );
+
   return (
-    <nav aria-label="Table of contents">
-      <ul>
-        {headings.map((heading) => (
-          <li key={heading.id}>
-            <Link
-              href={`#${heading.id}`}
-              title={heading.text}
-              className={cn(
-                'mb-0.5 block overflow-hidden text-ellipsis whitespace-nowrap text-left text-sm hover:underline',
-                heading.id === activeId
-                  ? 'font-medium text-primary-500 hover:text-primary-600 dark:hover:text-primary-400'
-                  : 'font-normal text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200',
-                heading.level === 3 && 'pl-4'
-              )}
-            >
-              {heading.text}
+    <nav aria-label="Table of contents" className={className}>
+      <ul className="text-sm">
+        {headings.map(({ id, text, children }) => (
+          <li key={id}>
+            <Link href={`#${id}`} className={getLinkClassName(id, children)}>
+              {text}
             </Link>
+            {children && (
+              <Collapse isOpen={isActive(id, children)}>
+                <ul className="pb-0.5 pl-4">
+                  {children.map((child) => (
+                    <li key={child.id}>
+                      <Link
+                        href={`#${child.id}`}
+                        className={getLinkClassName(child.id)}
+                      >
+                        {child.text}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </Collapse>
+            )}
           </li>
         ))}
       </ul>

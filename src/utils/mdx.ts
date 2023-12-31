@@ -78,7 +78,7 @@ export async function getDataById(dirType: DataDirType, id: string) {
       },
     });
 
-    return { id, content, frontmatter, source };
+    return { id, content, frontmatter };
   } catch {
     return null;
   }

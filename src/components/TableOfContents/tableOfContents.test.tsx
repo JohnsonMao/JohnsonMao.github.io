@@ -1,14 +1,7 @@
 import { render, screen } from '@testing-library/react';
 
+import { H2, H3 } from '../Heading';
 import TableOfContents from '.';
-
-jest.mock(
-  'github-slugger',
-  () =>
-    class GithubSlugger {
-      slug = (text: string) => text;
-    }
-);
 
 describe('TableOfContents component', () => {
   const mockIntersectionObserver = jest.fn();
@@ -16,40 +9,116 @@ describe('TableOfContents component', () => {
 
   beforeEach(() => {
     mockIntersectionObserver.mockImplementation((callback) => {
-      callback(mockObserverCallback())
+      callback(mockObserverCallback());
       return {
         observe: () => null,
         unobserve: () => null,
         disconnect: () => null,
-      }
+      };
     });
     window.IntersectionObserver = mockIntersectionObserver;
   });
 
   it('should render correct element', () => {
-    // Arrange
-    const source = '# H1\n## H2_1\n### H3_1-1\n## H2_2\n### H3_2-1\n';
+    const articleHeadings = [
+      { Heading: H2, id: 'test-1' },
+      { Heading: H3, id: 'test-2' },
+      { Heading: H3, id: 'test-3' },
+      { Heading: H2, id: 'test-4' },
+      { Heading: H2, id: 'test-5' },
+    ];
+    mockObserverCallback.mockReturnValueOnce([]);
+    render(
+      <>
+        <TableOfContents targetId="#test-id" />
+        <article id="test-id">
+          {articleHeadings.map(({ Heading, id }) => (
+            <Heading key={id} id={id}>
+              {id}
+            </Heading>
+          ))}
+        </article>
+      </>
+    );
+    const toc = screen.getByRole('navigation');
+    const anchorLinks = toc.querySelectorAll('a');
+
+    expect(toc).toBeInTheDocument();
+    expect(anchorLinks.length).toBe(5);
+    expect(anchorLinks[0]).toHaveAttribute('href', '#test-1');
+    expect(anchorLinks[1]).toHaveAttribute('href', '#test-2');
+    expect(anchorLinks[2]).toHaveAttribute('href', '#test-3');
+    expect(anchorLinks[3]).toHaveAttribute('href', '#test-4');
+    expect(anchorLinks[4]).toHaveAttribute('href', '#test-5');
+  });
+
+  it('should render correct TOC tree based on article headings', () => {
+    const articleHeadings = [
+      { Heading: H2, id: 'test-1' },
+      { Heading: H3, id: 'test-2' },
+      { Heading: H3, id: 'test-3' },
+      { Heading: H2, id: 'test-4' },
+      { Heading: H2, id: 'test-5' },
+    ];
+    mockObserverCallback.mockReturnValueOnce([]);
+    render(
+      <>
+        <TableOfContents targetId="#test-id" />
+        <article id="test-id">
+          {articleHeadings.map(({ Heading, id }) => (
+            <Heading key={id} id={id}>
+              {id}
+            </Heading>
+          ))}
+        </article>
+      </>
+    );
+    const toc = screen.getByRole('navigation');
+    const menu = toc.querySelectorAll('nav > ul > li');
+    const subMenu = menu[0].querySelectorAll('li');
+
+    expect(toc).toBeInTheDocument();
+    expect(menu.length).toBe(3);
+    expect(subMenu.length).toBe(2);
+  });
+
+  it('should apply the correct active class name', () => {
+    const articleHeadings = [
+      { Heading: H2, id: 'test-1' },
+      { Heading: H3, id: 'test-2' },
+      { Heading: H3, id: 'test-3' },
+      { Heading: H2, id: 'test-4' },
+      { Heading: H2, id: 'test-6' },
+    ];
     mockObserverCallback.mockReturnValueOnce([
       {
         isIntersecting: false,
-        target: { id: 'H2_2' },
+        target: { id: 'test-2' },
       },
       {
         isIntersecting: true,
-        target: { id: 'H3_2-1' },
+        target: { id: 'test-3' },
       },
-    ])
-    render(<TableOfContents source={source} />);
+    ]);
+    render(
+      <>
+        <TableOfContents targetId="#test-id" />
+        <article id="test-id">
+          {articleHeadings.map(({ Heading, id }) => (
+            <Heading key={id} id={id}>
+              {id}
+            </Heading>
+          ))}
+        </article>
+      </>
+    );
     const toc = screen.getByRole('navigation');
-    const anchorLinks = screen.getAllByRole('link');
-    // Assert
-    expect(toc).toBeInTheDocument();
-    expect(anchorLinks.length).toBe(4);
-    expect(anchorLinks[0]).toHaveAttribute('href', '#H2_1');
-    expect(anchorLinks[1]).toHaveAttribute('href', '#H3_1-1');
-    expect(anchorLinks[2]).toHaveAttribute('href', '#H2_2');
-    expect(anchorLinks[2]).not.toHaveClass('font-medium');
-    expect(anchorLinks[3]).toHaveAttribute('href', '#H3_2-1');
-    expect(anchorLinks[3]).toHaveClass('font-medium');
+    const anchorLinks = toc.querySelectorAll('a');
+    const activeClassName = 'text-primary-500';
+
+    expect(anchorLinks[0]).toHaveClass(activeClassName);
+    expect(anchorLinks[1]).not.toHaveClass(activeClassName);
+    expect(anchorLinks[2]).toHaveClass(activeClassName);
+    expect(anchorLinks[3]).not.toHaveClass(activeClassName);
   });
 });
