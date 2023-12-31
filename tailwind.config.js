@@ -55,6 +55,9 @@ const tailwindcssConfig = {
         'a, button': {
           cursor: theme('cursor.pointer'),
         },
+        '.top-header-height': {
+          top: `var(--header-height)`,
+        },
       });
       addComponents({
         '.bg-lattice': {

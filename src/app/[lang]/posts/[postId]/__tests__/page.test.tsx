@@ -30,7 +30,6 @@ describe('[postId] page', () => {
     mockData.mockReturnValueOnce({
       id: 'test-id',
       content: <h2>{testText}</h2>,
-      source: `## ${testText}`,
       frontmatter: {
         date: '2023/10/28',
         title: 'test title',
