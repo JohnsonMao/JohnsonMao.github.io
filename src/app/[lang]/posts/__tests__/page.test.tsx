@@ -6,6 +6,17 @@ jest.mock('@/utils/mdx', () => ({
   getAllDataFrontmatter: () => [],
 }));
 
+jest.mock('next/navigation', () => ({
+  useRouter() {
+    return {
+      prefetch: () => null,
+    };
+  },
+  useSearchParams() {
+    return new URLSearchParams();
+  },
+}));
+
 describe('Posts page', () => {
   it('should render correct element', async () => {
     // Arrange
