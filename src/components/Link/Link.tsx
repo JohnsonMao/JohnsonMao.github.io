@@ -27,10 +27,11 @@ function Link<T extends string = string>({
   const pathname = usePathname();
 
   const isObjectHref = typeof href === 'object' || href.startsWith('#');
+  const isQueryLink = !isObjectHref && href.startsWith('?');
   const isAnchorLink = !isObjectHref && href.startsWith('#');
   const isInternalLink = !isObjectHref && href.startsWith('/');
 
-  if (isObjectHref || isAnchorLink) {
+  if (isObjectHref || isAnchorLink || isQueryLink) {
     return (
       <NextLink href={href as Route} className={className} {...otherProps}>
         {children}

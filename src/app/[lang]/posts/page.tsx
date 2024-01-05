@@ -3,11 +3,10 @@ import type { Metadata } from 'next';
 import { getDictionary } from '~/i18n';
 import Container from '@/components/Container';
 import { H1 } from '@/components/Heading';
-import List from '@/components/List';
 import { getAllDataFrontmatter } from '@/utils/mdx';
 
 import type { RootParams } from '../layout';
-import Article from '../Article';
+import InfiniteList from './InfiniteList';
 
 export async function generateMetadata({
   params: { lang },
@@ -30,7 +29,7 @@ async function RootPage({ params: { lang } }: RootParams) {
         <p className="text-xl">{metadata.description}</p>
       </Container>
       <Container as="main" className="py-8">
-        <List Item={Article} items={posts} />
+        <InfiniteList items={posts} />
       </Container>
     </>
   );

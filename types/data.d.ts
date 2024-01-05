@@ -11,3 +11,9 @@ type DataFrontmatter = {
   readonly description: string;
   readonly image?: string;
 };
+
+type Data = {
+  id: string;
+  content: React.ReactElement;
+  frontmatter: DataFrontmatter;
+};
