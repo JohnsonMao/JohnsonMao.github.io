@@ -1,9 +1,9 @@
-import { Locale, isLocale } from '~/i18n';
+import { Locale, isLocale } from '~/data/i18n';
 
 /**
  * The function get language locale code from the input.
  *
- * Ensures that the selected locale code matches one of the supported locale codes in the ~/i18n file.
+ * Ensures that the selected locale code matches one of the supported locale codes in the ~/data/i18n file.
  *
  * @example
  * import getLocale from '@/utils/getLocale';

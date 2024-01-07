@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import en from '~/i18n/locales/en';
+import en from '~/data/i18n/locales/en.json';
 import Page, { generateMetadata } from '@/app/[lang]/page';
 
 jest.mock('@/utils/mdx', () => ({

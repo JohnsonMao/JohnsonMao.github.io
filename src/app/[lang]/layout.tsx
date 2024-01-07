@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { avatarUrl, name, copyright, createMetadata } from '~/data/metadata';
-import { Locale, getDictionary, locales } from '~/i18n';
+import { Locale, getDictionary, locales } from '~/data/i18n';
 import ThemeSwitcher from '@/components/ThemeSwitcher';
 import Header, { Avatar } from './Header';
 import Footer from './Footer';
@@ -19,8 +19,8 @@ export async function generateMetadata({
   params: { lang },
 }: RootParams): Promise<Metadata> {
   const { alternates } = await createMetadata(lang);
-  const { metadata } = await getDictionary(lang);
-  const { title } = metadata;
+  const { homePage } = await getDictionary(lang);
+  const { title } = homePage;
 
   return {
     title: {

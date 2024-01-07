@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { defaultLocale, locales } from '~/i18n';
+import { defaultLocale, locales } from '~/data/i18n';
 import getLocale from '@/utils/getLocale';
 
 export function middleware(request: NextRequest) {

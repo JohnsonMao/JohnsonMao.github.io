@@ -1,6 +1,6 @@
 import path from 'path';
 import type { FeedOptions } from 'feed';
-import { defaultLocale } from '~/i18n';
+import { defaultLocale } from '~/data/i18n';
 import generateRSS, { PUBLIC_FEED_PATH } from '@/utils/generateRSS';
 
 const mockWriteFile = jest.fn();

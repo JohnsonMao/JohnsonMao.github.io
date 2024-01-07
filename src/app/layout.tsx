@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 
-import { locales } from '~/i18n';
+import { locales } from '~/data/i18n';
 import { createMetadata, createFeedOptions } from '~/data/metadata';
 import Container from '@/components/Container';
 import generateRSS from '@/utils/generateRSS';

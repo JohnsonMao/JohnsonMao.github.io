@@ -14,8 +14,8 @@ describe('InfiniteList component', () => {
         tags: [],
       }));
     mockNavigation.searchParams.mockReturnValue(new URLSearchParams());
-    render(<InfiniteList items={generateMockPosts(20)} />);
-    const link = screen.getByRole('link', { name: '更多文章' });
+    render(<InfiniteList items={generateMockPosts(20)} morePostsText='MorePost' />);
+    const link = screen.getByRole('link', { name: 'MorePost' });
     const list = screen.getByRole('list');
     expect(link).toBeInTheDocument();
     expect(list).toBeInTheDocument();

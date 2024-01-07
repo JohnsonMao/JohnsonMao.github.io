@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 
 function NotFoundPage() {
   return (
-    <div className="flex h-screen items-center justify-center">
+    <div className="flex h-screen flex-col items-center justify-center">
       <H2>Page not found</H2>
       <p>Sorry, the page you are looking for does not exist.</p>
     </div>
