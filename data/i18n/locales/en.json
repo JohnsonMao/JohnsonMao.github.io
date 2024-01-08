@@ -1,0 +1,22 @@
+{
+  "common": {
+    "home": "Home",
+    "posts": "Posts",
+    "about": "About",
+    "tags": "Tags",
+    "categories": "Categories",
+    "latestPosts": "Latest Posts",
+    "morePosts": "More Posts"
+  },
+  "homePage": {
+    "title": "Mao's Corner",
+    "description": "Welcome to Mao's Learning Corner, where I document my study notes. Looking forward to exploring the vast realms of knowledge together with you."
+  },
+  "postsPage": {
+    "title": "Mao's Corner",
+    "description": "Welcome to Mao's Learning Corner, where I document my study notes. Looking forward to exploring the vast realms of knowledge together with you."
+  },
+  "notFound": {
+    "message": "Sorry we couldn't find this page."
+  }
+}

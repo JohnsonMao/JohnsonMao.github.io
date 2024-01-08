@@ -9,11 +9,12 @@ import Article from '../Article';
 
 type InfiniteListProps = {
   items: DataFrontmatter[];
+  morePostsText: string;
 };
 
 const MemoArticle = memo(Article);
 
-function InfiniteList({ items }: InfiniteListProps) {
+function InfiniteList({ items, morePostsText }: InfiniteListProps) {
   const searchParams = useSearchParams();
   const total = items.length;
   const clampLimit = clamp(1, total);
@@ -24,7 +25,7 @@ function InfiniteList({ items }: InfiniteListProps) {
       <List Item={MemoArticle} items={items.slice(0, limit)} />
       {limit < total && (
         <Link href={`?limit=${clampLimit(limit + 10)}`} replace scroll={false}>
-          更多文章
+          {morePostsText}
         </Link>
       )}
     </>

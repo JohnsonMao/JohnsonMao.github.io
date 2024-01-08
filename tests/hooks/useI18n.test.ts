@@ -1,5 +1,5 @@
 import { renderHook } from '@testing-library/react';
-import { defaultLocale } from '~/i18n';
+import { defaultLocale } from '~/data/i18n';
 import mockNavigation from '~/tests/navigation';
 import useI18n from '@/hooks/useI18n';
 

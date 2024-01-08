@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { locales } from '~/i18n';
+import { locales } from '~/data/i18n';
 import mockNavigation from '~/tests/navigation';
 import Layout, { generateMetadata, generateStaticParams } from '@/app/[lang]/layout';
 

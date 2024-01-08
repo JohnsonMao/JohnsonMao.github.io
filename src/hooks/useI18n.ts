@@ -1,5 +1,5 @@
 import { usePathname } from 'next/navigation';
-import { defaultLocale } from '~/i18n';
+import { defaultLocale } from '~/data/i18n';
 import getLocale from '@/utils/getLocale';
 
 /**
