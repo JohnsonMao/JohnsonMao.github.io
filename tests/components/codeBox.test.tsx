@@ -4,9 +4,14 @@ import userEvent from '@testing-library/user-event';
 import CodeBox from '@/components/CodeBox';
 
 const mockCopy = jest.fn();
+let resolve: (value: unknown) => void;
 
 jest.mock('@/utils/clipboard', () => ({
-  copyToClipboard: async (props: string) => mockCopy(props),
+  copyToClipboard: (props: string) =>
+    new Promise((_resolve) => {
+      resolve = _resolve;
+      mockCopy(props);
+    }),
 }));
 
 describe('CodeBox component', () => {
@@ -28,16 +33,18 @@ describe('CodeBox component', () => {
     const user = userEvent.setup();
     expect(screen.queryByText('複製成功！')).toHaveClass('opacity-0');
 
-    await act(() => user.click(copyButton));
-    await act(() => user.click(copyButton));
+    await act(async () => {
+      await user.click(copyButton);
+      resolve(undefined);
+    });
     expect(screen.queryByText('複製成功！')).not.toHaveClass('opacity-0');
-    expect(mockCopy).toHaveBeenCalledTimes(2);
+    expect(mockCopy).toHaveBeenCalledTimes(1);
     expect(mockCopy).toHaveBeenCalledWith(code);
     await waitFor(
       () => {
         expect(screen.queryByText('複製成功！')).toHaveClass('opacity-0');
       },
-      { timeout: 2000 }
+      { timeout: 1500 }
     );
   });
 });
