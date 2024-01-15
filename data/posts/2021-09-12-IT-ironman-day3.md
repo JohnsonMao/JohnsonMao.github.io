@@ -8,7 +8,7 @@ categories:
 tags: 
     - iT 鐵人賽
     - HTML
-excerpt: 雖然會最基礎的 div 和 span 標籤就能夠開始切版了，甚至只靠 div 搭配 CSS 就能做出各種 tag 的效果，但為了良好的 SEO 與 閱讀性，也為了以後不會把別人和自己逼瘋 (?，還是會建議用更適合的標籤來完成網頁。
+description: 雖然會最基礎的 div 和 span 標籤就能夠開始切版了，甚至只靠 div 搭配 CSS 就能做出各種 tag 的效果，但為了良好的 SEO 與 閱讀性，也為了以後不會把別人和自己逼瘋 (?，還是會建議用更適合的標籤來完成網頁。
 ---
 
 ![「建構網頁的基石！」 —— 使用網頁標籤](https://i.imgur.com/3myJcyZ.png)

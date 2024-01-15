@@ -1,20 +1,15 @@
 import { usePathname } from 'next/navigation';
-import { defaultLocale } from '~/i18n';
-import zhTW from '~/i18n/locales/zh-TW';
-import en from '~/i18n/locales/en';
+import { defaultLocale } from '~/data/i18n';
 import getLocale from '@/utils/getLocale';
 
-const dictionaries = {
-  'zh-TW': zhTW,
-  en,
-};
-
+/**
+ * This hook retrieves the language setting based on the current pathname.
+ */
 function useI18n() {
   const pathname = usePathname();
   const lang = getLocale(pathname, defaultLocale);
-  const dict = dictionaries[lang];
 
-  return { lang, dict };
+  return { lang };
 }
 
 export default useI18n;

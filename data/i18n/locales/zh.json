@@ -1,0 +1,22 @@
+{
+  "common": {
+    "home": "首頁",
+    "posts": "文章",
+    "about": "關於",
+    "tags": "標籤",
+    "categories": "分類",
+    "latestPosts": "最新文章",
+    "morePosts": "更多文章"
+  },
+  "homePage": {
+    "title": "Mao's Corner",
+    "description": "歡迎來到阿毛的學習角落，這裡記錄著我的學習筆記，期待與你一同探索廣闊的知識領域。"
+  },
+  "postsPage": {
+    "title": "Mao's Corner",
+    "description": "歡迎來到阿毛的學習角落，這裡記錄著我的學習筆記，期待與你一同探索廣闊的知識領域。"
+  },
+  "notFound": {
+    "message": "抱歉！找不到此頁面。"
+  }
+}

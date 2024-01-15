@@ -8,7 +8,7 @@ categories:
 tags: 
     - iT 鐵人賽
     - JavaScript
-excerpt: JavaScript 是個弱型別語言，在宣告變數時，不像其他語言需要先指定型別那麼嚴謹，宣告的變數名會對應記憶體位子，把其值存入記憶體中，之後要取出值，只要藉由變數名，就能找到對應的值。
+description: JavaScript 是個弱型別語言，在宣告變數時，不像其他語言需要先指定型別那麼嚴謹，宣告的變數名會對應記憶體位子，把其值存入記憶體中，之後要取出值，只要藉由變數名，就能找到對應的值。
 ---
 
 ![JavaScript 宣告變數 與 基本型別](https://i.imgur.com/wh1ZT6h.png)

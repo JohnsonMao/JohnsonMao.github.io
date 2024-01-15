@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import type { FeedOptions } from 'feed';
-import { Locale, defaultLocale, getDictionary, locales } from '~/i18n';
+import { Locale, defaultLocale, getDictionary, locales } from '~/data/i18n';
 
 export const avatarUrl = '/static/mao.jpg';
 export const name = 'Johnson Mao';
@@ -13,7 +13,7 @@ export async function createMetadata(
   locale: Locale = defaultLocale
 ): Promise<Metadata> {
   const {
-    metadata: { title, description },
+    homePage: { title, description },
   } = await getDictionary(locale);
 
   return {
@@ -50,7 +50,7 @@ export async function createMetadata(
 
 export async function createFeedOptions(locale: Locale): Promise<FeedOptions> {
   const {
-    metadata: { title, description },
+    homePage: { title, description },
   } = await getDictionary(locale);
 
   return {

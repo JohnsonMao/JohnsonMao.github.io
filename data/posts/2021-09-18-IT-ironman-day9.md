@@ -8,7 +8,7 @@ categories:
 tags: 
     - iT 鐵人賽
     - CSS
-excerpt: 偽（Pseudo）這個意思有虛幻虛無的意思，類選擇器是用來處理 DOM 操作不了選擇器，偽元素則是原本並沒有在 HTML DOM 中，是透過 CSS 創造出來的元素。
+description: 偽（Pseudo）這個意思有虛幻虛無的意思，類選擇器是用來處理 DOM 操作不了選擇器，偽元素則是原本並沒有在 HTML DOM 中，是透過 CSS 創造出來的元素。
 
 ---
 

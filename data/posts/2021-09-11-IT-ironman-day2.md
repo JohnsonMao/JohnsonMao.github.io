@@ -8,7 +8,7 @@ categories:
 tags: 
     - iT 鐵人賽
     - HTML
-excerpt: 上一篇有講到網頁三兄弟，其中有一個老大哥負責撐起這個世界，那就是 HTML ，少了 HTML 這個根基，就不會有網頁。只有 HTML 的世界是非常無聊的，這時 CSS 和 Javascript 接連出現，為網頁世界創造更多的可能！
+description: 上一篇有講到網頁三兄弟，其中有一個老大哥負責撐起這個世界，那就是 HTML ，少了 HTML 這個根基，就不會有網頁。只有 HTML 的世界是非常無聊的，這時 CSS 和 Javascript 接連出現，為網頁世界創造更多的可能！
 ---
 
 ![「歡迎來到網頁這個世界！」 —— 認識網頁架構](https://i.imgur.com/xadMCtM.png)

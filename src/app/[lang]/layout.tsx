@@ -1,10 +1,11 @@
 import type { Metadata } from 'next';
 import { avatarUrl, name, copyright, createMetadata } from '~/data/metadata';
-import { Locale, getDictionary, locales } from '~/i18n';
-import Header, { HeaderProps } from '@/components/Header';
-import Footer from '@/components/Footer';
-
-export const dynamic = 'force-static';
+import { Locale, getDictionary, locales } from '~/data/i18n';
+import ThemeSwitcher from '@/components/ThemeSwitcher';
+import Header, { Avatar } from './Header';
+import Footer from './Footer';
+import Menu, { MenuProps } from './Menu';
+import cn from '@/utils/cn';
 
 export async function generateStaticParams() {
   return locales.map((lang) => ({ lang }));
@@ -17,10 +18,9 @@ export type RootParams = {
 export async function generateMetadata({
   params: { lang },
 }: RootParams): Promise<Metadata> {
-  const { alternates } = await createMetadata();
-  const {
-    metadata: { title },
-  } = await getDictionary(lang);
+  const { alternates } = await createMetadata(lang);
+  const { homePage } = await getDictionary(lang);
+  const { title } = homePage;
 
   return {
     title: {
@@ -39,22 +39,34 @@ export async function generateMetadata({
 async function I18nLayout({
   children,
   params: { lang },
-}: React.PropsWithChildren & RootParams) {
+}: RootParams & React.PropsWithChildren) {
   const { common } = await getDictionary(lang);
-  const logo = {
+  const avatar = {
     src: avatarUrl,
     alt: name,
   };
-  const menu: HeaderProps['menu'] = [
+  const menu: MenuProps['menu'] = [
+    {
+      text: common.home,
+      href: '/',
+    },
     {
       text: common.posts,
-      href: '/',
+      href: '/posts',
     },
   ];
 
   return (
     <>
-      <Header logo={logo} menu={menu} />
+      <Header avatar={<Avatar src={avatar.src} alt={avatar.alt} />}>
+        <Menu menu={menu} />
+        <ThemeSwitcher
+          className={cn(
+            'neon-box rounded-full p-3 backdrop-blur-sm',
+            'bg-zinc-100/80 dark:bg-zinc-900/80'
+          )}
+        />
+      </Header>
       {children}
       <Footer copyright={copyright} />
     </>

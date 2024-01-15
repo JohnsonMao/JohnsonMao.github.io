@@ -1,38 +1,39 @@
 import type { Metadata } from 'next';
-import { notFound } from 'next/navigation';
 
-import { getDictionary } from '~/i18n';
-import Card from '@/components/Card';
+import { getDictionary } from '~/data/i18n';
 import Container from '@/components/Container';
+import { H1 } from '@/components/Heading';
 import List from '@/components/List';
 import { getAllDataFrontmatter } from '@/utils/mdx';
+
 import type { RootParams } from './layout';
+import Article from './Article';
 
 export async function generateMetadata({
   params: { lang },
 }: RootParams): Promise<Metadata> {
-  if (!lang) notFound();
-
   const { common } = await getDictionary(lang);
 
   return {
-    title: common.posts,
+    title: common.home,
   };
 }
 
 async function RootPage({ params: { lang } }: RootParams) {
-  if (!lang) notFound();
-
   const posts = await getAllDataFrontmatter('posts');
-  const { metadata } = await getDictionary(lang);
+  const { homePage, common } = await getDictionary(lang);
 
   return (
-    <Container as="main">
-      <p className="my-12 text-center text-3xl dark:text-white">
-        {metadata.title}
-      </p>
-      <List render={Card} items={posts} />
-    </Container>
+    <>
+      <Container className="pb-8">
+        <H1 className="mb-4 text-3xl font-bold">{homePage.title}</H1>
+        <p className="text-xl">{homePage.description}</p>
+      </Container>
+      <Container as="main" className="py-8">
+        <p className="mb-4 text-lg">{common.latestPosts}</p>
+        <List Item={Article} items={posts.slice(0, 4)} />
+      </Container>
+    </>
   );
 }
 

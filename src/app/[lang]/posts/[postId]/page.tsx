@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
 import Container from '@/components/Container';
+import { H1 } from '@/components/Heading';
 import Link from '@/components/Link';
 import TableOfContents from '@/components/TableOfContents';
 import Comment from '@/components/Comment';
@@ -15,49 +16,56 @@ type PostParams = {
 export async function generateStaticParams() {
   const posts = await getAllDataFrontmatter('posts');
 
-  return posts.map((post) => ({ postId: post.id }));
+  return posts.map(({ id }) => ({ postId: id }));
 }
 
 export async function generateMetadata({
   params: { postId },
 }: PostParams): Promise<Metadata> {
-  const posts = await getAllDataFrontmatter('posts');
-  const post = posts.find((post) => post.id === postId);
+  const post = await getDataById('posts', postId);
 
   if (!post) return notFound();
 
-  return {
-    title: post.title,
-    description: post.excerpt,
-  };
+  return post.frontmatter;
 }
 
 async function PostPage({ params: { postId } }: PostParams) {
-  const posts = await getAllDataFrontmatter('posts');
-  const post = posts.find((post) => post.id === postId);
+  const post = await getDataById('posts', postId);
 
   if (!post) return notFound();
 
-  const { content, frontmatter, source } = await getDataById(
-    'posts',
-    postId
-  );
+  const { content, frontmatter } = post;
   const formattedDate = formatDate(frontmatter.date);
+  const id = `article-${postId}`;
 
   return (
     <>
-      <aside className="fixed bottom-0 left-4 top-16 w-40 overflow-auto">
-        <p className="my-3 text-lg font-semibold text-gray-900 transition-colors dark:text-gray-100">
-          目錄
-        </p>
-        <TableOfContents source={source} />
-      </aside>
-      <Container as="main" className="prose prose-xl prose-slate dark:prose-invert">
-        <h1 className="mb-0 mt-4 text-3xl">{frontmatter.title}</h1>
-        <p className="mt-0">{formattedDate}</p>
-        <article>{content}</article>
-        <Link href="/">回首頁</Link>
-        <Comment />
+      <Container className="pb-8">
+        <H1 className="mb-4 text-3xl font-bold">{frontmatter.title}</H1>
+        <time>{formattedDate}</time>
+      </Container>
+      <Container as="main" className="block py-8 lg:flex lg:px-2">
+        <aside className="hidden w-40 shrink-0 lg:block xl:w-60">
+          <nav className="top-header-height sticky px-4">
+            <h4 className="my-3 text-lg font-semibold text-gray-900 dark:text-gray-100">
+              目錄
+            </h4>
+            <TableOfContents
+              className="max-h-96 overflow-auto"
+              targetId={`#${id}`}
+            />
+          </nav>
+        </aside>
+        <div>
+          <article
+            id={id}
+            className="prose prose-zinc mx-auto px-4 dark:prose-invert"
+          >
+            {content}
+          </article>
+          <Link href="/">回首頁</Link>
+          <Comment />
+        </div>
       </Container>
     </>
   );

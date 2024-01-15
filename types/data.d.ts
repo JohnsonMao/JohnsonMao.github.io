@@ -8,6 +8,12 @@ type DataFrontmatter = {
   readonly date: DateOrDateString;
   readonly categories: string[][];
   readonly tags: string[];
-  readonly excerpt: string;
+  readonly description: string;
   readonly image?: string;
+};
+
+type Data = {
+  id: string;
+  content: React.ReactElement;
+  frontmatter: DataFrontmatter;
 };

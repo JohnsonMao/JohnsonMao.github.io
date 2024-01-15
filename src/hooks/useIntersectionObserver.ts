@@ -6,20 +6,15 @@ interface UseIntersectionObserverProps extends IntersectionObserverInit {
   elementRef?: RefObject<ElementNode>;
 }
 
-type UseIntersectionObserverResponse = [
-  IntersectionObserverEntry[],
-  (node: ElementNode) => void
-] & {
-  entry: IntersectionObserverEntry[];
-  setElementRef: (node: ElementNode) => void;
-};
-
+/**
+ * This Hook provides a way to observe the intersection of a DOM element with its nearest scrollable ancestor or the viewport.
+ */
 function useIntersectionObserver({
   root = null,
   threshold = 0,
   rootMargin,
   elementRef,
-}: UseIntersectionObserverProps = {}): UseIntersectionObserverResponse {
+}: UseIntersectionObserverProps = {}) {
   const [entry, setEntry] = useState<IntersectionObserverEntry[]>([]);
   const observerRef = useRef<IntersectionObserver>();
   const internalElementRef = useRef<ElementNode>();
@@ -49,15 +44,7 @@ function useIntersectionObserver({
     return () => observerRef.current?.disconnect();
   }, [elementRef, setInternalElementRef]);
 
-  const result = [
-    entry,
-    setInternalElementRef,
-  ] as UseIntersectionObserverResponse;
-
-  result.entry = result[0];
-  result.setElementRef = result[1];
-
-  return result;
+  return [entry, setInternalElementRef] as const;
 }
 
 export default useIntersectionObserver;
