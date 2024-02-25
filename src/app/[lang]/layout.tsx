@@ -19,12 +19,12 @@ export async function generateMetadata({
   params: { lang },
 }: RootParams): Promise<Metadata> {
   const { alternates } = await createMetadata(lang);
-  const { homePage } = await getDictionary(lang);
-  const { title } = homePage;
+  const { common } = await getDictionary(lang);
+  const { title } = common;
 
   return {
     title: {
-      template: `%s | ${title}`,
+      template: `%s - ${title}`,
       default: title,
     },
     alternates: {

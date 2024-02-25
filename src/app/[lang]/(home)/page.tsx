@@ -6,7 +6,7 @@ import { H1 } from '@/components/Heading';
 import List from '@/components/List';
 import { getAllDataFrontmatter } from '@/utils/mdx';
 
-import type { RootParams } from './layout';
+import type { RootParams } from '../layout';
 import Article from './Article';
 
 export async function generateMetadata({

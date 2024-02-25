@@ -13,12 +13,13 @@ export async function createMetadata(
   locale: Locale = defaultLocale
 ): Promise<Metadata> {
   const {
-    homePage: { title, description },
+    common: { title },
+    homePage: { description },
   } = await getDictionary(locale);
 
   return {
     title: {
-      template: `%s | ${title}`,
+      template: `%s - ${title}`,
       default: title,
     },
     description,
