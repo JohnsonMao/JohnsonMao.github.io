@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import en from '~/data/i18n/locales/en.json';
-import Page, { generateMetadata } from '@/app/[lang]/page';
+import Page, { generateMetadata } from '@/app/[lang]/(home)/page';
 
 jest.mock('@/utils/mdx', () => ({
   getAllDataFrontmatter: () => [],

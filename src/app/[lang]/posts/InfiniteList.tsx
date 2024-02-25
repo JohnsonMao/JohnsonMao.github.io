@@ -5,7 +5,7 @@ import { useSearchParams } from 'next/navigation';
 import Link from '@/components/Link';
 import List from '@/components/List';
 import { clamp } from '@/utils/math';
-import Article from '../Article';
+import Article from '../(home)/Article';
 
 type InfiniteListProps = {
   items: DataFrontmatter[];

@@ -1,5 +1,6 @@
 {
   "common": {
+    "title": "Mao's Corner",
     "home": "首頁",
     "posts": "文章",
     "about": "關於",
@@ -9,12 +10,12 @@
     "morePosts": "更多文章"
   },
   "homePage": {
-    "title": "Mao's Corner",
-    "description": "歡迎來到阿毛的學習角落，這裡記錄著我的學習筆記，期待與你一同探索廣闊的知識領域。"
+    "title": "嗨！我是阿毛，是一位前端工程師。",
+    "description": "歡迎來到阿毛的角落，這裡記錄著我學習的筆記。"
   },
   "postsPage": {
-    "title": "Mao's Corner",
-    "description": "歡迎來到阿毛的學習角落，這裡記錄著我的學習筆記，期待與你一同探索廣闊的知識領域。"
+    "title": "歡迎參觀我的文章！",
+    "description": "如果你對任何內容有疑問或想法，請隨時在留言區分享，我期待與你進行交流和討論。"
   },
   "notFound": {
     "message": "抱歉！找不到此頁面。"

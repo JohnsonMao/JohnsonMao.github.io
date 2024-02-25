@@ -1,5 +1,6 @@
 {
   "common": {
+    "title": "Mao's Corner",
     "home": "Home",
     "posts": "Posts",
     "about": "About",
@@ -9,12 +10,12 @@
     "morePosts": "More Posts"
   },
   "homePage": {
-    "title": "Mao's Corner",
-    "description": "Welcome to Mao's Learning Corner, where I document my study notes. Looking forward to exploring the vast realms of knowledge together with you."
+    "title": "Hi! I'm Mao, a frontend engineer.",
+    "description": "Welcome to Mao's Corner, where I document my learning notes."
   },
   "postsPage": {
-    "title": "Mao's Corner",
-    "description": "Welcome to Mao's Learning Corner, where I document my study notes. Looking forward to exploring the vast realms of knowledge together with you."
+    "title": "Welcome to visit my posts!",
+    "description": "If you have any questions or thoughts about any content, please feel free to share in the comments section. I look forward to engaging in conversation and discussion with you."
   },
   "notFound": {
     "message": "Sorry we couldn't find this page."

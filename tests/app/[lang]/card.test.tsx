@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 
 import { formatDate } from '@/utils/date';
-import Article from '@/app/[lang]/Article';
+import Article from '@/app/[lang]/(home)/Article';
 
 describe('Article component', () => {
   it('should render correct element', () => {
