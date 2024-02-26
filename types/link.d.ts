@@ -6,7 +6,9 @@ type DynamicRoutesWithoutLocalePath =
     : never;
 
 type LinkWithoutLocalePathProps = {
-  href: DynamicRoutesWithoutLocalePath;
+  href:
+    | DynamicRoutesWithoutLocalePath
+    | `${DynamicRoutesWithoutLocalePath}#${string}`;
 };
 
 type ExternalLinkProps = {

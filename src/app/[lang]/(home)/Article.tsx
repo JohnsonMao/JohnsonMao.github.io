@@ -32,7 +32,7 @@ function Article({
           />
         )}
       </div>
-      <div className="prose prose-zinc dark:prose-invert">
+      <div id={id} className="prose prose-zinc dark:prose-invert">
         <H2>
           <Link href={`/posts/${id}`}>{title}</Link>
         </H2>
