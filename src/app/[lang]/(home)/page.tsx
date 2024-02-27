@@ -2,7 +2,8 @@ import type { Metadata } from 'next';
 
 import { getDictionary } from '~/data/i18n';
 import Container from '@/components/Container';
-import { H1 } from '@/components/Heading';
+import { H1, H2 } from '@/components/Heading';
+import Button from '@/components/Button';
 import List from '@/components/List';
 import { getAllDataFrontmatter } from '@/utils/mdx';
 
@@ -22,6 +23,7 @@ export async function generateMetadata({
 async function RootPage({ params: { lang } }: RootParams) {
   const posts = await getAllDataFrontmatter('posts');
   const { homePage, common } = await getDictionary(lang);
+  const nextPostId = posts.at(4)?.id || '';
 
   return (
     <>
@@ -30,8 +32,13 @@ async function RootPage({ params: { lang } }: RootParams) {
         <p className="text-xl">{homePage.description}</p>
       </Container>
       <Container as="main" className="py-8">
-        <p className="mb-4 text-lg">{common.latestPosts}</p>
+        <H2 className="mb-6 text-center text-2xl">{common.latestPosts}</H2>
         <List Item={Article} items={posts.slice(0, 4)} />
+        <div className="my-4 flex justify-center">
+          <Button href={`/posts#${nextPostId}`} className="text-lg">
+            {common.morePosts}
+          </Button>
+        </div>
       </Container>
     </>
   );

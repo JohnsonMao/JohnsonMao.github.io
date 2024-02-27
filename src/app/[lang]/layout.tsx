@@ -5,7 +5,6 @@ import ThemeSwitcher from '@/components/ThemeSwitcher';
 import Header, { Avatar } from './Header';
 import Footer from './Footer';
 import Menu, { MenuProps } from './Menu';
-import cn from '@/utils/cn';
 
 export async function generateStaticParams() {
   return locales.map((lang) => ({ lang }));
@@ -60,12 +59,7 @@ async function I18nLayout({
     <>
       <Header avatar={<Avatar src={avatar.src} alt={avatar.alt} />}>
         <Menu menu={menu} />
-        <ThemeSwitcher
-          className={cn(
-            'neon-box rounded-full p-3 backdrop-blur-sm',
-            'bg-zinc-100/80 dark:bg-zinc-900/80'
-          )}
-        />
+        <ThemeSwitcher />
       </Header>
       {children}
       <Footer copyright={copyright} />
