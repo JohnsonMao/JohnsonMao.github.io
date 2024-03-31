@@ -1,13 +1,14 @@
 import type { Metadata } from 'next';
 import type { FeedOptions } from 'feed';
 import { Locale, defaultLocale, getDictionary, locales } from '~/data/i18n';
+import { common } from '~/data/i18n/locales/en.json';
 
 export const avatarUrl = '/static/mao.jpg';
 export const name = 'Johnson Mao';
 export const email = 'tutelary.maomao@gmail.com';
-export const domainUrl = 'https://mao-note.vercel.app';
+export const domainUrl = 'https://amao.vercel.app';
 export const githubUrl = 'https://github.com/JohnsonMao';
-export const copyright = `2023 - PRESENT © Mao's Notes | ${name}`;
+export const copyright = `2023 - PRESENT © ${common.title}`;
 
 export async function createMetadata(
   locale: Locale = defaultLocale
