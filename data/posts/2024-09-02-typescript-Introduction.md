@@ -66,11 +66,11 @@ interface IPerson {
   name: string;
 }
 
-const logName = (person: IPerson) => {
+const echoName = (person: IPerson) => {
   console.log(person.name);
 };
 
-logName({ name: "Mao" });
+echoName({ name: "Mao" });
 ```
 
 這時你在終端機打 `tsc` (把 ts 檔案編譯成 js 的指令)，就會發現新增了一個 `dist` 的資料夾內有 main.js 的檔案，並且這個 js 已經轉換兼容 ES5 的語法
