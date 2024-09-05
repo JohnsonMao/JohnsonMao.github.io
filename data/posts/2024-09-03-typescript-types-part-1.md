@@ -14,7 +14,7 @@ description: 我們都知道 TypeScript 是 JavaScript 的超集，所以在介�
 
 我們都知道 TypeScript 是 JavaScript 的超集，所以在介紹 TypeScript 的型別之前，我們先介紹一下 JavaScript 原本就有的型別。
 
-### JavaScript 有的型別
+## JavaScript 有的型別
 
 - `string`: 表示字串
     ```ts
@@ -55,7 +55,7 @@ description: 我們都知道 TypeScript 是 JavaScript 的超集，所以在介�
     ```
 - `object`: 除了原始型別外，都是物件型別，包含但不限於 Array, Function, Date, Error 等，後續在詳細介紹
 
-### TypeScript 擴充的型別
+## TypeScript 擴充的型別
 
 TypeScript 除了有以上的型別外，還擴充了以下這些型別：
 
@@ -64,7 +64,7 @@ TypeScript 除了有以上的型別外，還擴充了以下這些型別：
     let price: any = 1000;
     price = '$1,000';
     ```
-- `unknown`: 與 any 類似，但更安全。使用 unknown 型別時，必須先進行型別檢查後才能對其進行操作，否則會報錯
+- `unknown`: 與 any 類似，但更安全。使用 unknown 型別時，必須先進行型別檢查後才能對其進行操作，否則會報錯，通常用於你不確定這個值的型別
     ```ts
     let something: unknown = 1000;
     // 需要型別檢查才能用那個型別的方法
@@ -78,7 +78,7 @@ TypeScript 除了有以上的型別外，還擴充了以下這些型別：
         throw new Error(message);
     }
     ```
-- `void`: 表示沒有任何值的型別，通常用於不返回值的函式
+- `void`: 表示沒有任何值的型別，通常用於不返回值的函式，讓後續使用這個函式的人，不要去使用這個函式的返回值做邏輯判斷。
     ```ts
     function logMessage(message: string): void {
         console.log(message);
@@ -88,7 +88,7 @@ TypeScript 除了有以上的型別外，還擴充了以下這些型別：
     const result = logMessage('test');
     if (result) {} // 報錯：無法對 'void' 類型的運算式測試真實性
     ```
-- `tuple`: 元組型別，表示一個已知數量和型別的元素數組
+- `tuple`: 元組型別，表示一個已知數量和型別的元素數組。
     ```ts
     let tuple: [string, number];
     tuple = ["one", 2];
@@ -103,7 +103,7 @@ TypeScript 除了有以上的型別外，還擴充了以下這些型別：
     const myGender: Gender = Gender.Man;
     ```
 
-### TypeScript 自定義型別的方式
+## TypeScript 自定義型別的方式
 
 就跟 JavaScript 可以宣告變數，為了方便複用型別，TypeScript 也有關鍵字是用來宣告型別，至於更進階的用法，我們後續揭曉，先知道這個方式可以定義自己要使用的型別
 
