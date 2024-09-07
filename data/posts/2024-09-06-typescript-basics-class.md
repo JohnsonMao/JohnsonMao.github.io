@@ -1,6 +1,6 @@
 ---
-title: TypeScript 基礎 Part 4：物件導向與類別基礎
-date: 2024/09/06 23:40:02
+title: TypeScript 基礎：物件導向與類別基礎
+date: 2024/09/06 23:35:42
 categories:
     - [程式語言, 前端, TypeScript]
     - [iT 鐵人賽, 第 2024 年]
@@ -9,7 +9,8 @@ tags:
     - TypeScript
 description: 類別是一個基礎的物件導向設計（Object-Oriented Programming, OOP），是一種以物件為中心的編程範式，強調模擬現實世界的實體與行為。類別將資料（屬性）和行為（方法）整合在一起，方便定義和操作不同的物件實例。
 ---
-## 前言
+
+## 什麼是類別？
 
 類別是一個基礎的物件導向設計（Object-Oriented Programming, OOP），是一種以物件為中心的編程範式，強調模擬現實世界的實體與行為。類別將資料（屬性）和行為（方法）整合在一起，方便定義和操作不同的物件實例。
 
@@ -33,7 +34,7 @@ class Person {
 }
 
 const person = new Person('阿毛', 18);
-person.speak();    // 嗨！我的名字是阿毛，我今年18歲。
+person.speak(); // 嗨！我的名字是阿毛，我今年18歲。
 ```
 
 ### 繼承（Inheritance）
@@ -55,8 +56,8 @@ class Employee extends Person {
 }
 
 const employee = new Employee('阿毛', 18, '前端工程師');
-employee.speak();       // 嗨！我的名字是阿毛，我今年18歲。
-employee.introduce();   // 我是阿毛，是前端工程師。
+employee.speak(); // 嗨！我的名字是阿毛，我今年18歲。
+employee.introduce(); // 我是阿毛，是前端工程師。
 ```
 
 ### 覆寫方法（Override method）
@@ -71,7 +72,7 @@ class Ironman extends Person {
 }
 
 const ironman = new Ironman('阿毛', 18);
-ironman.speak();       // 阿毛正在努力撰寫鐵人賽文章...
+ironman.speak(); // 阿毛正在努力撰寫鐵人賽文章...
 ```
 ### 簡寫形式
 
@@ -79,6 +80,7 @@ TypeScript 提供了一個建構子參數的簡寫形式來直接定義和初始
 
 ```ts
 class Person {
+    // 通過修飾詞簡化原本的寫法
     constructor(public name: string, public age: number) {}
 
     speak() {
@@ -87,7 +89,7 @@ class Person {
 }
 
 const person = new Person('阿毛', 18);
-person.speak();    // 嗨！我的名字是阿毛，我今年18歲。
+person.speak(); // 嗨！我的名字是阿毛，我今年18歲。
 ```
 
 ## 屬性修飾詞
@@ -129,13 +131,14 @@ class Ironman extends Person {
     }
 }
 
-const person = new Person('阿毛', 18);
-person.speak();    // 嗨！我的名字是阿毛，我今年18歲。
+const ironman = new Ironman('阿毛', 18);
+ironman.speak(); // 嗨！我的名字是阿毛，我今年18歲。
+ironman.write(); // 阿毛正在努力撰寫鐵人賽文章...
 
-// 下面這三個都被受保護，無法訪問
-// person.name
-// person.age
-// person.getInfo()
+// Error: 下面這三個都是受保護屬性，只可從類別 'Person' 及其子類別中存取。
+// console.log(ironman.name);
+// console.log(ironman.age);
+// ironman.getInfo();
 ```
 
 ### 私有修飾詞（private）
@@ -152,20 +155,20 @@ class Person {
 }
 
 class Ironman extends Person {
-    speak() {
+    write() {
         // this.name 一樣可以正常使用
         console.log(`${this.name}正在努力撰寫鐵人賽文章...`);
     }
     getSuperclassPrivate() {
-        // 下面這個為私有屬性，無法訪問
-        // console.log(this.idCard);
+        // Error: 'idCard' 是私用屬性，只可從類別 'Person' 中存取。
+        // return this.idCard;
     }
 }
 const ironman = new Ironman('阿毛', 18, 'A123456789');
-ironman.speak();    // 阿毛正在努力撰寫鐵人賽文章...。
+ironman.write();    // 阿毛正在努力撰寫鐵人賽文章...。
 
-// 下面這個為私有屬性，無法訪問
-// ironman.idCard
+// Error: 'idCard' 是私用屬性，只可從類別 'Person' 中存取。
+// console.log(ironman.idCard);
 ```
 
 ### 只讀修飾詞（readonly）
@@ -176,18 +179,19 @@ ironman.speak();    // 阿毛正在努力撰寫鐵人賽文章...。
 class Ironman {
     constructor(public readonly title: string) {}
 
-    getTitle() {
+    showTitle() {
         console.log(`鐵人賽文章標題：「${this.title}」`);
     }
 }
 
-const myBook = new Book('TypeScript 完全指南：從語法基礎到高級功能的系統學習');
-myBook.describe();  // 鐵人賽文章標題：「TypeScript 完全指南：從語法基礎到高級功能的系統學習」
+const ironman = new Ironman('TypeScript 完全指南：從語法基礎到高級功能的系統學習');
+ironman.showTitle();  // 鐵人賽文章標題：「TypeScript 完全指南：從語法基礎到高級功能的系統學習」
 
-// 下面這個因為是只讀的，所以報錯顯示不能更改
-// myBook.title = '我想變更標題';
+// Error: 因為 'title' 為唯讀屬性，所以無法指派至 'title'。
+// ironman.title = '我想變更標題';
 ```
 
-### 參考文獻
+## 參考文獻
 
 - [Day 12. 機動藍圖・介面宣告 X 使用介面 - TypeScript Interface Intro.](https://ithelp.ithome.com.tw/articles/10215584)
+- [TypeScript 5 Masterclass: OOP and classes - Build a Full-Stack App !](https://www.youtube.com/watch?v=k0Vjjcz-YK4&list=PLzb46hGUzitC1kGzPcy8tlQNxYbFsuqMO&index=4&t=114s)

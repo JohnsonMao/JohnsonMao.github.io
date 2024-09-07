@@ -1,6 +1,6 @@
 ---
 title: TypeScript 簡介
-date: 2024/09/02 20:20:00
+date: 2024/09/02 20:51:20
 categories:
     - [程式語言, 前端, TypeScript]
     - [iT 鐵人賽, 第 2024 年]

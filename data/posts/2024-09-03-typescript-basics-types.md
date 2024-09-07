@@ -1,6 +1,6 @@
 ---
-title: TypeScript 型別 Part 1
-date: 2024/09/03 21:37:00
+title: TypeScript 基礎：基本型別
+date: 2024/09/03 21:45:05
 categories:
     - [程式語言, 前端, TypeScript]
     - [iT 鐵人賽, 第 2024 年]
@@ -14,7 +14,7 @@ description: 我們都知道 TypeScript 是 JavaScript 的超集，所以在介�
 
 我們都知道 TypeScript 是 JavaScript 的超集，所以在介紹 TypeScript 的型別之前，我們先介紹一下 JavaScript 原本就有的型別。
 
-## JavaScript 有的型別
+### JavaScript 有的型別
 
 - `string`: 表示字串
     ```ts
@@ -55,7 +55,7 @@ description: 我們都知道 TypeScript 是 JavaScript 的超集，所以在介�
     ```
 - `object`: 除了原始型別外，都是物件型別，包含但不限於 Array, Function, Date, Error 等，後續在詳細介紹
 
-## TypeScript 擴充的型別
+### TypeScript 擴充的型別
 
 TypeScript 除了有以上的型別外，還擴充了以下這些型別：
 
@@ -103,7 +103,7 @@ TypeScript 除了有以上的型別外，還擴充了以下這些型別：
     const myGender: Gender = Gender.Man;
     ```
 
-## TypeScript 自定義型別的方式
+### TypeScript 自定義型別的方式
 
 就跟 JavaScript 可以宣告變數，為了方便複用型別，TypeScript 也有關鍵字是用來宣告型別，至於更進階的用法，我們後續揭曉，先知道這個方式可以定義自己要使用的型別
 
@@ -131,3 +131,4 @@ TypeScript 除了有以上的型別外，還擴充了以下這些型別：
 這個大大真的寫得超詳細，推薦去看看
 
 - [Day 02. 前線維護・型別推論 X 註記 - Type Inference & Annotation](https://ithelp.ithome.com.tw/articles/10214719)
+- [TypeScript 5 Masterclass: Introduction to types - Build a Full-Stack App !](https://www.youtube.com/watch?v=cA6CzmzGsx8&list=PLzb46hGUzitC1kGzPcy8tlQNxYbFsuqMO&index=2)

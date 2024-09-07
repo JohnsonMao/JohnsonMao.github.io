@@ -1,6 +1,6 @@
 ---
-title: TypeScript 型別 Part 2
-date: 2024/09/04 22:39:22
+title: TypeScript 基礎：物件、陣列與函式型別
+date: 2024/09/04 22:46:44
 categories:
     - [程式語言, 前端, TypeScript]
     - [iT 鐵人賽, 第 2024 年]
@@ -14,9 +14,11 @@ description: 物件型別在 TypeScript 中非常重要，因為它們允許我�
 
 上一篇的文章中，我們介紹了 TypeScript 的基本型別，如 string、number、boolean ...等。這一部分將進一步探討 TypeScript 中的物件型別，這些型別允許我們更靈活地描述和操作複雜的資料結構。
 
+## 物件型別
+
 物件型別在 TypeScript 中非常重要，因為它們允許我們定義複雜的資料結構，包括陣列、函式、列舉...等。這些型別幫助我們在開發中建立更嚴謹且易於維護的程式碼。
 
-## 物件型別 (Object)
+### 物件型別 (Object)
 
 Object 物件是一種鍵值對（key-value pairs）的集合，每個鍵（key）對應一個值（value）。
 
@@ -44,7 +46,7 @@ interface Person4 {
 
 看到這裡，你應該對 `type` 與 `interface` 定義物件的差異在哪感到好奇，這裡先賣個關子，後續介紹更多後再來說明。
 
-## 陣列型別 (Array)
+### 陣列型別 (Array)
 
 Array 型別用來表示一組相同型別的元素集合。
 
@@ -71,7 +73,7 @@ const tuple1: [string, number] = ['one', 2];
 const tuple2: [string, ...number[]] = ['one', 2, 3, 4];
 ```
 
-## 函式型別 (Function)
+### 函式型別 (Function)
 
 上一篇的文章中，在演示 `void` 就有稍微看到函式的寫法了，我們可以為函式定義型別，包括函式參數和返回值的型別。
 
@@ -95,7 +97,7 @@ interface SumFn2 {
 }
 ```
 
-## 列舉型別 (Enum)
+### 列舉型別 (Enum)
 
 上一篇有稍微提到，`enum`（列舉型別）是一個特別的型別，用來定義一組命名常數。
 這些常數可以是數字或字串，並且 enum 型別的值是唯一的，這讓代碼更具可讀性和可維護性。
@@ -142,3 +144,4 @@ enum 比較特別，編譯打包時，也會跟的編譯到 JavaScript 中，犧
 ## 參考文獻
 
 - [Day 03. 前線維護・物件型別 X 完整性理論 - Object Types Basics](https://ithelp.ithome.com.tw/articles/10214840)
+- [TypeScript 5 Masterclass: Introduction to types - Build a Full-Stack App !](https://www.youtube.com/watch?v=cA6CzmzGsx8&list=PLzb46hGUzitC1kGzPcy8tlQNxYbFsuqMO&index=2&t=442s)
