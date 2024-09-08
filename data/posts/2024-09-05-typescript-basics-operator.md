@@ -7,12 +7,12 @@ categories:
 tags: 
     - iT 鐵人賽
     - TypeScript
-description: 在前幾篇中，我們介紹了 TypeScript 的基本型別與物件型別。在本篇中，將深入探討進階的型別系統，包括聯合型別、交集型別、型別斷言等，並討論 type 與 interface 的相似與不同之處。
+description: 在前幾篇中，我們介紹了 TypeScript 的基本型別與物件型別。在本篇中，將深入探討進階的型別系統，包括聯合型別、交集型別、型別斷言、索引型別、非空斷言操作符等。
 ---
 
 ## 前言
 
-在前幾篇中，我們介紹了 TypeScript 的基本型別與物件型別。在本篇中，將深入探討進階的型別系統，包括聯合型別、交集型別、型別斷言等，並討論 type 與 interface 的相似與不同之處。
+在前幾篇中，我們介紹了 TypeScript 的基本型別與物件型別。在本篇中，將深入探討進階的型別系統，包括聯合型別、交集型別、型別斷言、索引型別、非空斷言操作符等。
 
 ## 聯合型別 (Union Types)
 
@@ -111,6 +111,26 @@ function calculateDiscountedPrice(price: number, discount?: number): number {
 }
 ```
 
+## 索引型別（Indexable Type）
+
+允許你定義可以用索引存取的物件型別。這意味著你可以使用索引（通常是字串或數字）來存取物件的屬性，並且可以為這些屬性指定特定的型別。這對於需要動態存取或編寫動態屬性的物件非常有用。
+
+```ts
+interface StringIndexable {
+    [key: string]: number;  // 索引簽名，字串索引對應數字型別
+}
+
+const scores: StringIndexable = {
+    math: 95,
+    english: 88,
+    science: 92
+};
+
+console.log(scores.math); // 95
+```
+
+> 此外 PropertyKey 是常規物件可以使用的索引型別，他同時聯集了 `string | number | symbol`
+
 ## 非空斷言操作符 non-null assertion operator
 
 非空斷言操作符 `!` 用來告訴 TypeScript 編譯器，某個值不會是 null 或 undefined，即使編譯器推斷它可能是。這個操作符允許我們在不進行明確檢查的情況下，繼續操作這個值。
@@ -125,110 +145,6 @@ element!.className = "active";
 // 但更好的做法會是用判斷的方式推斷
 if (element) element.className = "active";
 ```
-
-## type 與 interface 的相同與不同點
-
-在 TypeScript 中，`type` 和 `interface` 都能用於定義型別，但它們有一些相同點和不同點。了解這些異同可以幫助你在不同情況下選擇最合適的工具來定義型別。
-
-### 相同的地方
-
-都可以定義物件型別
-
-```ts
-// 使用 interface 定義物件型別
-interface Person1 {
-  name: string;
-  age: number;
-}
-
-// 使用 type 定義物件型別
-type Person2 = {
-  name: string;
-  age: number;
-};
-```
-
-都有辦法可以擴展物件
-
-```ts
-// 透過 extends 繼承另一個物件
-interface Employee1 extends Person1 {
-    position: string;
-}
-
-// 透過 & 融合不同物件
-type Employee2 = Person2 & {
-    position: string;
-};
-
-```
-
-### 不同的地方
-
-interface 無法定義一些型別。
-
-```ts
-type Name = string;
-
-// interface 就不能定義原始型別、tuple...
-```
-
-interface 聲明同名會自動合併，type 不能聲明同名
-
-```ts
-// 可以多次聲明同名的 interface，TypeScript 會自動合併這些聲明。
-// type 不能這樣重複聲明同名
-interface Person { // 1.0.0 版本定義的
-    name: string;
-}
-
-// other code
-
-interface Person { // 1.0.X 版本多新增
-    age: number;
-}
-
-// 最終等同於，方便大型專案擴展型別
-interface Person {
-    name: string;
-    age: number;
-}
-```
-
-interface 繼承物件比 type 交集更嚴謹
-
-```ts
-type PersonType = {
-  id: string
-}
-
-// 並不會提示警告 id 變成了 never 的型別
-type EmployeeType = PersonType & {
-  id: number;
-}
-
-interface PersonInterface {
-  id: string
-}
-
-/*
-Error: 介面 'EmployeeInterface' 不正確地擴充介面 'PersonInterface'。
-        屬性 'id' 的類型不相容。
-         類型 'number' 不可指派給類型 'string'。
-*/
-interface EmployeeInterface extends PersonInterface {
-  id: number;
-}
-```
-
-### 綜合比較
-
-在實際使用中，`type` 和 `interface` 都有其優勢，選擇哪一個主要取決於具體需求和團隊偏好。
-
-以我個人而言，如果需要定義物件的結構、擴展和合併的能力，我會選擇使用 `interface` 來定義，其餘都使用 `type` 的方式定義。
-
-不過 type 在編輯器中會顯示結構還蠻方便的。
-![image](https://hackmd.io/_uploads/HyzJgLPh0.png)
 
 ## 參考文獻
 
