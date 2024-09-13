@@ -1,6 +1,6 @@
 ---
 title: TypeScript 進階：型別推斷與映射
-date: 2024/09/09 22:59:52
+date: 2024/09/12 22:47:25
 categories:
     - [程式語言, 前端, TypeScript]
     - [iT 鐵人賽, 第 2024 年]
@@ -24,13 +24,13 @@ description: 上一篇介紹了條件型別後，這次介紹的型別推斷會�
 
 ```ts
 type ReturnType<T extends (...args: any) => any> = T extends (
-  ...args: any
+    ...args: any
 ) => infer R
-  ? R
-  : never;
+    ? R
+    : never;
 
 function getCurrentTime(): number {
-  return Date.now();
+    return Date.now();
 }
 
 type CurrentTime = ReturnType<typeof getCurrentTime>;
@@ -47,10 +47,10 @@ type CurrentTime = ReturnType<typeof getCurrentTime>;
 type Item<T> = T extends (infer U)[] ? U : never;
 
 const escapeRooms = [
-  { name: '鎮魂曲', time: 100 },
-  { name: '騎士詭途', time: 160 },
-  { name: '冒險王', time: 150 },
-  { name: '辛亥隧道', time: 100 },
+    { name: '鎮魂曲', time: 100 },
+    { name: '騎士詭途', time: 160 },
+    { name: '冒險王', time: 150 },
+    { name: '辛亥隧道', time: 100 },
 ];
 
 type EscapeRoomType = Item<typeof escapeRooms>;
@@ -108,17 +108,17 @@ type MouseEvent = EventType<'onMouseUp' | 'onMouseDown'>;
 
 ```ts
 type Mutable<T> = {
-  -readonly [P in keyof T]: T[P];
+    -readonly [P in keyof T]: T[P];
 };
 
 const readonlyObj = {
-  name: 'Johnson Mao',
-  age: 18,
+    name: 'Johnson Mao',
+    age: 18,
 } as const;
 
 const mutableObj: Mutable<typeof readonlyObj> = {
-  name: 'Johnson Mao',
-  age: 18,
+    name: 'Johnson Mao',
+    age: 18,
 };
 
 mutableObj.name = 'Mao';
@@ -141,8 +141,8 @@ const api = {
     getAuthor: () => ({ name: 'Johnson Mao' }),
     getPosts: () => [
         {
-          title: 'TypeScript 進階：型別推斷與映射',
-          content: '我是內文'
+            title: 'TypeScript 進階：型別推斷與映射',
+            content: '我是內文'
         }
     ],
 };
