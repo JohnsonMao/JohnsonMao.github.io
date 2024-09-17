@@ -1,7 +1,7 @@
 ---
-title: TypeScript 必備：非同步與 Promise
+title: TypeScript 進階：非同步與 Promise
 date: 2024/09/14 21:07:31
-image: https://ithelp.ithome.com.tw/upload/images/20240914/20140224KKtpk0N1gP.png
+image: https://ithelp.ithome.com.tw/upload/images/20240917/20140224HIcGkOGSd5.png
 categories:
     - [程式語言, 前端, TypeScript]
     - [iT 鐵人賽, 第 2024 年]
@@ -11,7 +11,7 @@ tags:
 description: 雖然 TypeScript 並沒有針對非同步與 Promise 做特別的處理，但所有程式語言，都會遇到非同步處理的挑戰，這一篇會稍微說明為何在現代應用中，需要使用 Promise、async/await 等非同步的技術，並說明 TypeScript 在這些情境中提供哪些型別來幫助我們更好的處理非同步的型別處理。
 ---
 
-![cover](https://ithelp.ithome.com.tw/upload/images/20240914/20140224KKtpk0N1gP.png)
+![cover](https://ithelp.ithome.com.tw/upload/images/20240917/20140224HIcGkOGSd5.png)
 
 ## 前言
 

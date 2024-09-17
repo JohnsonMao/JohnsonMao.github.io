@@ -1,6 +1,7 @@
 ---
-title: TypeScript 必備：函式重載與 this
+title: TypeScript 進階：函式重載與 this
 date: 2024/09/13 23:52:40
+image: https://ithelp.ithome.com.tw/upload/images/20240917/20140224J9sduWgFqK.png
 categories:
     - [程式語言, 前端, TypeScript]
     - [iT 鐵人賽, 第 2024 年]
@@ -9,6 +10,8 @@ tags:
     - TypeScript
 description: 在 JavaScript 裡，沒有內建的函式重載（Function Overloading）功能，但在 TypeScript 中，我們可以透過型別註解來模擬此功能。此外，this 是 JavaScript 中常見且具挑戰性的概念，透過 TypeScript 的類別與介面，可以更精確地控制 this 的行為。
 ---
+
+![cover](https://ithelp.ithome.com.tw/upload/images/20240917/20140224J9sduWgFqK.png)
 
 ## 前言
 

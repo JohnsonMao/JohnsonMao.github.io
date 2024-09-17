@@ -1,7 +1,7 @@
 ---
 title: TypeScript 必備：模組 Module
 date: 2024/09/15 22:41:39
-image: https://ithelp.ithome.com.tw/upload/images/20240915/20140224mTt4kTYO0D.png
+image: https://ithelp.ithome.com.tw/upload/images/20240917/20140224disBos5a7K.png
 categories:
     - [程式語言, 前端, TypeScript]
     - [iT 鐵人賽, 第 2024 年]
@@ -11,7 +11,7 @@ tags:
 description: 模組化是現代程式開發中不可或缺的一部分。模組允許我們將程式碼拆分為更小的可重用單位，從而提高了程式碼的可維護性和可讀性。在 TypeScript 中，我們使用 import 和 export 關鍵字來實現模組的匯入與匯出，並透過 npm 來管理第三方套件和依賴。
 ---
 
-![cover](https://ithelp.ithome.com.tw/upload/images/20240915/20140224mTt4kTYO0D.png)
+![cover](https://ithelp.ithome.com.tw/upload/images/20240917/20140224disBos5a7K.png)
 
 ## 前言
 
@@ -133,7 +133,7 @@ import { divide } from "@deepUtils";
 
 ### 匯入型別（import type）
 
-import type 是 TypeScript 中的一個語法，用於只匯入型別資訊，雖然 TypeScript 本身打包就會過濾掉型別，但如果有搭配其他打包編譯工具，如： Babel，可能會讓打包工具不知道這個匯入是型別還是具體功能，導致打包完成後，匯入的型別沒有移除，輕則多打包一點東西，嚴重會運行不起來。
+`import type` 是 TypeScript 中的一個語法，用於只匯入型別資訊，雖然 TypeScript 本身打包就會過濾掉型別，但如果有搭配其他打包編譯工具，如： Babel，可能會讓打包工具不知道這個匯入是型別還是具體功能，導致打包完成後，匯入的型別沒有移除，輕則多打包一點東西，嚴重會運行不起來。
 
 
 使用方式如下：

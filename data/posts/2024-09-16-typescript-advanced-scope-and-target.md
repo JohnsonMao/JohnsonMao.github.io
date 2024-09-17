@@ -1,5 +1,5 @@
 ---
-title: TypeScript 配置：編譯範圍與目標
+title: TypeScript 進階：編譯範圍與版本
 date: 2024/09/16 23:41:51
 image: https://ithelp.ithome.com.tw/upload/images/20240916/20140224iThCEbocms.png
 categories:
