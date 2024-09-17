@@ -1,7 +1,7 @@
 ---
 title: TypeScript 必備：模組 Module
 date: 2024/09/15 22:41:39
-image: https://ithelp.ithome.com.tw/upload/images/20240914/20140224KKtpk0N1gP.png
+image: https://ithelp.ithome.com.tw/upload/images/20240915/20140224mTt4kTYO0D.png
 categories:
     - [程式語言, 前端, TypeScript]
     - [iT 鐵人賽, 第 2024 年]
@@ -11,7 +11,7 @@ tags:
 description: 模組化是現代程式開發中不可或缺的一部分。模組允許我們將程式碼拆分為更小的可重用單位，從而提高了程式碼的可維護性和可讀性。在 TypeScript 中，我們使用 import 和 export 關鍵字來實現模組的匯入與匯出，並透過 npm 來管理第三方套件和依賴。
 ---
 
-![https://ithelp.ithome.com.tw/upload/images/20240915/20140224mTt4kTYO0D.png](https://ithelp.ithome.com.tw/upload/images/20240915/20140224mTt4kTYO0D.png)
+![cover](https://ithelp.ithome.com.tw/upload/images/20240915/20140224mTt4kTYO0D.png)
 
 ## 前言
 
@@ -114,7 +114,7 @@ npm install -D typescript @types/node
 在大型專案中，為了簡化匯入路徑，我們可以在 tsconfig.json 中使用路徑別名。設定路徑別名可以幫助我們避免繁瑣的相對路徑。
 
 例如：我有個檔案放在很深的資料夾內，如下圖
-![https://ithelp.ithome.com.tw/upload/images/20240915/20140224bl0zXHMcsh.png](https://ithelp.ithome.com.tw/upload/images/20240915/20140224bl0zXHMcsh.png)
+![深層資料夾](https://ithelp.ithome.com.tw/upload/images/20240915/20140224bl0zXHMcsh.png)
 
 那我們可以透過修改 tsconfig.json 中使用路徑別名，定義自己的別名與其對應的路徑
 

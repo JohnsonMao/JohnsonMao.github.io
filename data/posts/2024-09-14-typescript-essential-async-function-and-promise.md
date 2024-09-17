@@ -11,7 +11,7 @@ tags:
 description: 雖然 TypeScript 並沒有針對非同步與 Promise 做特別的處理，但所有程式語言，都會遇到非同步處理的挑戰，這一篇會稍微說明為何在現代應用中，需要使用 Promise、async/await 等非同步的技術，並說明 TypeScript 在這些情境中提供哪些型別來幫助我們更好的處理非同步的型別處理。
 ---
 
-![https://ithelp.ithome.com.tw/upload/images/20240914/20140224KKtpk0N1gP.png](https://ithelp.ithome.com.tw/upload/images/20240914/20140224KKtpk0N1gP.png)
+![cover](https://ithelp.ithome.com.tw/upload/images/20240914/20140224KKtpk0N1gP.png)
 
 ## 前言
 
@@ -132,7 +132,7 @@ type PromiseData = ReturnType<typeof getPost>;
 
 就可以輕鬆地取出函式的回傳型別，而這些 TypeScript 內建的工具型別本身也是透過泛型與 `infer` 進行型別推斷的，我們可以透過 `cmd/control` + 滑鼠左鍵點進去查看 TypeScript 是怎麼實作這些工具型別的。
 
-![https://ithelp.ithome.com.tw/upload/images/20240914/20140224Yo74B0RGdZ.png](https://ithelp.ithome.com.tw/upload/images/20240914/20140224Yo74B0RGdZ.png)
+![typescript 內建型別](https://ithelp.ithome.com.tw/upload/images/20240914/20140224Yo74B0RGdZ.png)
 
 ### Awaited 型別
 
