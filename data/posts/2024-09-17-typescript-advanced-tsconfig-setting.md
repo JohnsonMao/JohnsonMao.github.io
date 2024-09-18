@@ -40,7 +40,7 @@ TypeScript 官方很貼心，在我們透過 `tsc --init` 生成出設定檔時�
     用於配置 TypeScript 如何與 JavaScript 程式碼互動，例如設定如何檢查 JavaScript 檔案的類型等等，通常也都直接使用預設值即可。
 - Type Checking（類型檢查）
     用於配置 TypeScript 類型檢查器的行為，例如設定類型檢查的嚴格程度、是否開啟嚴格的 Null 檢查，稍後會再稍微說明。
-8. Completeness（檢查完整性）
+- Completeness（檢查完整性）
     用於配置 TypeScript 編譯器如何檢查程式碼的完整性，例如是否跳過第三方套件檔案的型別檢查，通常情況都是跳過第三方函式庫的類型檢查，除非想要嚴謹到連第三方函式庫的型別你都想檢查再調整。
 
 ## 類型檢查（Type Checking）
