@@ -72,7 +72,7 @@ const person = new Person();
 
 ## 實作裝飾器功能
 
-我們已經知道了如何使用裝飾器了，接下來要介紹如何實作裝飾器的功能，我們可以利用泛型的方式來定義參數的型別，屬性裝飾器會傳兩個參數，分別為 `target`（實例成員的類別） 與 `key`（屬性成員名稱）
+我們已經知道了如何使用裝飾器了，接下來要介紹如何實作裝飾器的功能，我們可以利用泛型的方式來定義參數的型別，屬性裝飾器會傳兩個參數，分別為 `target`（被裝飾類別的建構子） 與 `key`（被裝飾類別的屬性名稱）
 
 ```ts
 function watchValue<T, K extends keyof T & string>(target: T, key: K) {
@@ -112,5 +112,6 @@ person.name = "Mao";
 
 ## 參考資料
 
+- [十分鐘帶你了解 TypeScript Decorator](https://oldmo860617.medium.com/%E5%8D%81%E5%88%86%E9%90%98%E5%B8%B6%E4%BD%A0%E4%BA%86%E8%A7%A3-typescript-decorator-48c2ae9e246d)
 - [TypeScript 5 Masterclass: TypeScript Decorators - Build a Full-Stack App !](https://www.youtube.com/watch?v=h_f8e246YgQ&list=PLzb46hGUzitC1kGzPcy8tlQNxYbFsuqMO&index=13)
 - [裝飾器 ( Decorators )](https://ithelp.ithome.com.tw/articles/10330160)

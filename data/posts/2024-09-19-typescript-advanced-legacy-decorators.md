@@ -120,7 +120,7 @@ function limitDeposit<T extends { limit: number }>(target: T, key: string, descr
 const myWallet = new Wallet(500); // 設定單次存款上限為 500 元
 
 myWallet.addMoney(100); // 已存入 100 元，目前餘額：100 元
-myWallet.addMoney(600); // 存款失敗：單次存款不能超過 600 元
+myWallet.addMoney(600); // 存款失敗：單次存款不能超過 500 元
 ```
 
 ## 屬性裝飾器（Property Decorator）
