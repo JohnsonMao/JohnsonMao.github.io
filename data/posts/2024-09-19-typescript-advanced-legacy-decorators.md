@@ -1,7 +1,7 @@
 ---
 title: TypeScript 進階：舊版裝飾器
 date: 2024/09/19 23:26:07
-image: https://ithelp.ithome.com.tw/upload/images/20240918/20140224vbe9TdorME.png
+image: https://ithelp.ithome.com.tw/upload/images/20240919/20140224BMWkTkEKiF.png
 categories:
     - [程式語言, 前端, TypeScript]
     - [iT 鐵人賽, 第 2024 年]
