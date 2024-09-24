@@ -37,6 +37,20 @@ taskRouter.get('/', (req, res) => {
 export default taskRouter;
 ```
 
+並調整原本的 `main.ts` 檔案，將路由掛載到 `/task` 路徑下：
+
+```ts
+// src/main.ts
+
+import taskRouter from './routes/task.route';
+
+class Server {
+    // ...
+    this.app.use('/task', taskRouter);
+    // ...
+}
+```
+
 ## 使用 REST Client 測試 API
 
 為了測試 API，我們可以使用 REST Client、Thunder Client 或 Postman 等測試 API 的工具，本系列的範例都會使用 REST Client 來測。
