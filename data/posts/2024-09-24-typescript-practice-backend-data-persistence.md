@@ -23,7 +23,7 @@ description: 在這篇文章中，我們將學習如何在 TypeScript 後端應�
 
 ### 建立資料庫類別
 
-首先，我們需要在 src/database 目錄下新增 index.ts 檔案。我們會使用單例模式來確保資料庫類別在整個應用中只被實例化一次。
+首先，我們需要在 `src/database` 目錄下新增 `index.ts` 檔案。我們會使用單例模式來確保資料庫類別在整個應用中只被實例化一次。
 
 ```ts
 import fs from 'fs/promises';
@@ -80,7 +80,7 @@ export default class Database {
 }
 ```
 
-### CRUD 功能
+## CRUD 功能
 
 接下來，我們會實作典型的 CRUD 功能，分別處理資料的新增、讀取、更新與刪除。
 
@@ -91,16 +91,16 @@ export default class Database {
 ```ts
 export default class Database {
     // ...
-    public async create<T extends Data>(
+    public async create<T extends Omit<Data, 'id'>>(
         module: string,
         data: T
     ): Promise<string> {
         const db = await this.readDB();
-        const _id = crypto.randomUUID();
+        const id = crypto.randomUUID();
         if (!Array.isArray(db[module])) db[module] = [];
-        db[module].push({ _id, ...data });
+        db[module].push({ ...data, id });
         await this.writeDB(db);
-        return _id;
+        return id;
     }
 }
 ```
