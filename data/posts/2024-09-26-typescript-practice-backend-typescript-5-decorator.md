@@ -100,7 +100,9 @@ const methodDecoratorFactory = (method: Method) => {
     return (path: string = '') => {
         return (_: Function, ctx: ClassMethodDecoratorContext) => {
             const metadataRouters = ctx.metadata[MetadataKeys.ROUTERS];
-            const routers = Array.isArray(metadataRouters) ? metadataRouters : [];
+            const routers: z.infer<typeof routerConfigSchema>[] = Array.isArray(metadataRouters)
+                ? metadataRouters
+                : [];
 
             routers.push({
                 method,
