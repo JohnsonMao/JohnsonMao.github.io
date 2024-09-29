@@ -1,6 +1,7 @@
 ---
 title: TypeScript 進階：條件型別與靜態分析
 date: 2024/09/09 22:59:52
+image: https://ithelp.ithome.com.tw/upload/images/20240929/20140224nPMxMxR6hp.png
 categories:
     - [程式語言, 前端, TypeScript]
     - [iT 鐵人賽, 第 2024 年]
@@ -9,6 +10,8 @@ tags:
     - TypeScript
 description: 在前面介紹完基礎泛型後，接下來要介紹的是 TypeScript 中一個強大且靈活的功能——條件型別（Conditional Types）。本篇將深入探討條件型別的應用，包括如何用它來實現型別的深度唯讀，並進一步說明 TypeScript 中的常數（const）怎麼定義與區別。
 ---
+
+![cover](https://ithelp.ithome.com.tw/upload/images/20240929/20140224nPMxMxR6hp.png)
 
 ## 前言
 
@@ -26,15 +29,15 @@ T extends U ? X : Y
 
 ### 實際案例：自訂判斷型別（If）
 
-這是一個基於條件型別的簡單型別工具，用來模擬 JavaScript 中的 if 條件判斷。If 根據布林值類型 C，返回型別 T 或型別 F。
+這是一個基於條件型別的簡單型別工具，用來模擬程式語言中的 if 條件判斷。If 根據布林值類型 C，返回型別 T 或型別 F。
 
 ```ts
 type If<C extends boolean, T, F> = C extends true ? T : F;
 ```
 
 語法解析：
-- `C extends boolean`：確保 C 是布林值型別。
-- `C extends true ? T : F`：當 C 為 `true` 時，返回 T 型別，否則返回 F。
+- `C extends boolean`：約束泛型 C 是布林值型別。
+- `C extends true ? T : F`：當泛型 C 為 `true` 時，返回泛型 T 的型別，否則返回泛型 F 的型別。
 
 實際應用就會像下面範例這樣，是不是很簡單！
 
@@ -49,30 +52,30 @@ type B = If<false, 'Yes', 'No'>; // B 為 'No'
 
 ```ts
 type DeepReadonly<T> = {
-  readonly [P in keyof T]: T[P] extends object
-    ? DeepReadonly<T[P]>
-    : T[P];
+  readonly [K in keyof T]: T[K] extends object
+    ? DeepReadonly<T[K]>
+    : T[K];
 };
 ```
 
 語法解析
-- `[P in keyof T]`：這是映射型別的基本語法，遍歷型別 T 中的每個屬性 P。
-- `readonly`：將屬性 P 設為 readonly，這樣它就不能被重新賦值。
-- `T[P] extends object ? DeepReadonly<T[P]> : T[P]`：這是條件型別，用來檢查屬性 `T[P]` 是否是物件。如果是物件，則遞迴 `DeepReadonly`，否則保持原本的型別。
+- `[K in keyof T]`：這是映射型別的基本語法，遍歷型別 T 中的每個屬性 K。
+- `readonly`：將屬性 K 設為 readonly，這樣它就不能被重新賦值。
+- `T[K] extends object ? DeepReadonly<T[K]> : T[K]`：這是條件型別，用來檢查屬性 `T[K]` 是否是物件。如果是物件，則遞迴 `DeepReadonly`，否則保持原本的型別。
+
+但除了自訂深度唯獨型別，其實 TypeScript 也有斷言語法可以將變數斷言成常數。
 
 ## 常數斷言（as const）
 
-但除了自訂深度唯獨型別，其實 TypeScript 也有斷言語法可以將變數斷言常數。
+`const` 這個關鍵字是用來宣告不可重新賦值的變數。但在 TypeScript 中，`as const` 更進一步的將**物件**型別的所有屬性標記為 readonly，並將值的型別轉化為更具體的字面型別（Literal types）。
 
-`const` 這個關鍵字是用來宣告不可重新賦值的變數。但在 TypeScript 中，`as const` 更進一步，將**物件**型別的所有屬性標記為 readonly，並將值的型別轉化為更具體的字面型別（literal types）。
-
-![image](https://hackmd.io/_uploads/rkKQ_NyTR.png)
+![常數斷言](https://ithelp.ithome.com.tw/upload/images/20240912/20140224wmVbD3GVwc.png)
 
 使用方式就是用類型斷言的方式 `as const` 後，person 的所有屬性都會設為唯讀，並且型別是具體的字面型別，而非一般的 `string` 或 `number`。
 
 ### 實際案例：常數定義中的應用
 
-當處理一些不希望被修改的固定值，例如下面示範的顏色常數，可以使用 `as const` 提升型別安全性。
+當處理一些不希望被修改的固定值，例如下面示範的顏色設定檔，就可以使用 `as const` 降低型別在開發階段誤改的可能性。
 
 ```ts
 const COLORS = {
@@ -90,9 +93,11 @@ getColorHex('red');
 // getColorHex('yellow');
 ```
 
-> typeof 補充：
-typeof 除了在 JavaScript 中是用來判斷型別外，也是 TypeScript 中的一個語法，用來將我們的變數轉換成型別。
-> 在上例中，keyof typeof COLORS 返回的是字串聯集 'red' | 'green' | 'blue'，是將 COLORS 轉成型別後，在由 keyof 把 key 抽出來
+### typeof 獲取變數型別
+
+上面的範例中有使用到 `typeof` 這個運算子，`typeof` 除了在 JavaScript 中是用來獲取型別的字串外，也是 TypeScript 中用來將我們的變數轉換成對應型別，提升定義型別的方便性。
+
+![取型別](https://ithelp.ithome.com.tw/upload/images/20240912/20140224WsuiQG0LV8.png)
 
 ## 常數泛型（const type parameters）
 
@@ -137,10 +142,14 @@ const names3 = getNamesExactly({ names: ["Mao"] });
 之前有稍微介紹了 enum 是 TypeScript 提供的枚舉型別，用來定義一組有名稱的常數。const enum 是一個犧牲一些功能優化程式碼體積的版本，它會在編譯過程中被內嵌到程式碼中，從而減少額外的編譯代碼，但相對的也會少一些方便的功能。
 
 - enum 編譯後的程式碼
-    ![image](https://hackmd.io/_uploads/HkrnxlUhC.png)
+    ![編譯後的程式碼](https://ithelp.ithome.com.tw/upload/images/20240912/20140224zPJuGMFJrz.png)
 
 - const enum 編譯後的程式碼
-    ![image](https://hackmd.io/_uploads/Bkwvcxxa0.png)
+    ![編譯後的程式碼](https://ithelp.ithome.com.tw/upload/images/20240912/20140224ferocDvMPX.png)
+
+## 總結
+
+條件型別與靜態分析是 TypeScript 中強大且靈活的功能。通過條件型別，我們可以根據動態條件生成複雜型別結構；而靜態分析功能則進一步加強了型別的精確性，特別是在處理常數與唯讀資料時。掌握這些工具，將幫助開發者在大型專案中實現更強的型別安全性與程式碼健壯性。
 
 ## 參考文獻
 

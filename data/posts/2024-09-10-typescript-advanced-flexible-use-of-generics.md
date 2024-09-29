@@ -1,121 +1,192 @@
 ---
 title: TypeScript 進階：泛型入門與核心概念
 date: 2024/09/10 15:16:19
+image: https://ithelp.ithome.com.tw/upload/images/20240929/20140224VmIGct2k3v.png
 categories:
     - [程式語言, 前端, TypeScript]
     - [iT 鐵人賽, 第 2024 年]
 tags: 
     - iT 鐵人賽
     - TypeScript
-description: 前面的文章已經有稍微介紹了介面（interface）的用法，介面能夠幫助我們定義物件應該有哪些屬性和方法，從而提供一種強型別的約束機制，讓開發者更容易組織代碼並進行程式設計。
+description: 本文將深入探討泛型在進階應用中的強大能力，包括預設泛型型別、泛型約束、工具型別等，展示如何利用泛型來處理更複雜的型別操作。
 ---
 
-## 什麼是泛型？
+![cover](https://ithelp.ithome.com.tw/upload/images/20240929/20140224VmIGct2k3v.png)
 
-泛型（Generics）是一種設計模式，允許開發者在撰寫程式時不必預先定義具體的型別，而是讓程式更具通用性與靈活性。這樣的設計可在函式、類別、介面中使用，實現不同型別的資料處理需求，並確保型別安全。
+## 前言
 
-## 為何使用泛型？
+前一篇介紹了泛型的基本用法與核心概念。本文將深入探討泛型在進階應用中的強大能力，包括預設泛型型別、泛型約束、工具型別等，展示如何利用泛型來處理更複雜的型別操作。
 
-泛型的核心價值在於提供「型別靈活性」與「型別安全」。當開發者需要撰寫能處理多種型別的邏輯時，泛型可以減少重複程式碼，避免為每個型別撰寫不同版本的函式或類別，同時還能維持程式的強型別特性，避免潛在的型別錯誤。
+## 泛型的預設型別
 
-### 具體範例：沒有泛型的解法
-
-假設我們有一個需求：將不同型別的資料轉換為陣列。如果不使用泛型，可能需要針對不同型別撰寫多個函式。
+當你希望使用泛型時，有預設的型別，來增加程式的使用便利性，可以在泛型後面用 `=` 操作符來賦予型別給這個泛型。
 
 ```ts
-function toArrayFromNumber(num: number): number[] {
-    return [num];
+class DataStorage<T = string> {
+  private data: T[] = [];
+
+  addItem(item: T): void {
+    this.data.push(item);
+  }
+
+  getItems(): T[] {
+    return this.data;
+  }
 }
 
-function toArrayFromString(str: string): string[] {
-    return [str];
-}
+const textStorage = new DataStorage(); // 預設型別為 string
+textStorage.addItem('Hello');
+console.log(textStorage.getItems()); // ['Hello']
+
+const numberStorage = new DataStorage<number>();
+numberStorage.addItem(0);
+console.log(numberStorage.getItems()); // [0]
 ```
 
-這種方法顯然不具備可擴展性，每增加一個型別，就需要新增一個函式版本。
+這裡的 `DataStorage` 類別提供了一個預設泛型型別 string，如果在實例化時未指定型別，則會使用預設型別，這提升了使用的方便性。當然，你也可以在實例化時，指定具體的泛型型別。
 
-## 泛型的基本使用
+### 如果沒預設泛型會怎樣
 
-### 函式使用泛型
+當這個例子如果沒有預設型別時，會因為在我們實例化類別時，TypeScript 沒辦法根據實例化的當下自動推斷這個泛型的型別，此時這個泛型就會是 `unknown`。
 
-泛型最常見的使用場景是函式，可以透過 `toArrayByParam<T>` 裡面的 `T` 定義泛型參數，且可以取任意名稱，不一定要是 `T`，且可以定義多個泛型。
+所以通常不預設泛型，就需要強迫使用這個類別的人，具體指定一個型別。
 
-```ts
-function toArrayByParam<T>(param: T): T[] {
-    return [param];
-}
-```
+![https://ithelp.ithome.com.tw/upload/images/20240910/20140224lMGOaKHSVN.png](https://ithelp.ithome.com.tw/upload/images/20240910/20140224lMGOaKHSVN.png)
 
-在使用函式時，可以明確的傳入型別，就會根據泛型來限制你傳的參數
+## 泛型約束
 
-```ts
-const str1 = toArrayByParam<string>('明確的表示要 string 的泛型');
-// str1 是 string[] 型別
+泛型約束允許你對泛型參數施加一定的限制，讓泛型變得更加精確可控。
 
-// Error: 類型 'number' 的引數不可指派給類型 'string' 的參數。
-const str2 = toArrayByParam<string>(0);
-```
+在某些情況下，我們不僅需要泛型能接受多種型別，還希望限制泛型需要符合某些特定條件，可以使用 `extends` 來約束泛型的型別。
 
-也可以利用類型推斷，不明確傳入型別，TypeScript 也會自動根據你傳的參數推斷出型別
+### keyof 獲取物件屬性
+
+keyof 關鍵字能讓我們獲取型別的屬性，搭配泛型約束，可以讓參數限制到只能選該型別的屬性。
 
 ```ts
-const str3 = toArrayByParam('利用類型推斷是 string 的泛型');
-// str3 推斷為 string[] 型別
-
-const num = toArrayByParam(0);
-// num 推斷為 number[] 型別
-```
-
-### 類別使用泛型
-
-泛型不僅可以應用在函式上，還可以應用在類別中。這讓類別可以在定義時保持靈活性，並在實例化時確定具體的型別。
-
-```ts
-class Box<T> {
-    constructor(protected contents: T) {}
-
-    getContents(): T {
-        return this.contents;
-    }
+function getProperty<
+    T extends Record<string, unknown>,
+    K extends keyof T
+>(obj: T, key: K) {
+  return obj[key];
 }
 
-const stringBox = new Box('Hello');
-const content = stringBox.getContents();
-// content 是 string 型別
+const person = { name: 'Johnson Mao', age: 18 };
+constage name = getProperty(person, 'name'));
+// name 是 string 型別
 ```
+在這裡，K 被限制為 T 物件的屬性鍵，保證在使用時，只能存取合法的屬性。這種模式經常用於需要動態存取物件屬性的函式中。
 
-### 介面使用泛型
+### 泛型約束的其他應用
 
-泛型也可以與介面結合，來定義具有靈活型別的物件結構。
+你可以將泛型參數限制為實現特定屬性或方法的型別，例如：要求傳入的參數具有 `length` 屬性
 
 ```ts
-interface ApiResponse<T> {
-    data: T;
-    status: number;
-    message: string;
+interface Lengthwise {
+  length: number;
 }
 
-const userResponse: ApiResponse<{ name: string; age: number }> = {
-    data: { name: 'Johnson Mao', age: 18 },
-    status: 200,
-    message: 'Success'
+function logLength<T extends Lengthwise>(item: T): void {
+  console.log(item.length);
+}
+
+logLength([1, 2, 3]); // 3
+logLength('Hello'); // 5
+// logLength(10); // Error: 類型 'number' 的引數不可指派給類型 'Lengthwise' 的參數。
+```
+
+這種泛型約束在處理陣列、字串等具備 length 屬性的型別時非常有用。
+
+## 利用泛型的實用工具型別
+
+在前面幾篇文章中，有介紹了 `Record` 與 `Array`，這些利用泛型來回傳型別的工具，
+在實際開發中，還有很多好用的內建工具型別，這些工具型別利用了泛型的特性來簡化常見的型別操作。
+
+## Partial
+
+將傳入的型別**第一層**屬性都改成可選的狀態，需注意嵌套的深層物件並不會變動唷！
+
+```ts
+type PersonType = {
+  name: string;
+  box: {
+    height: number;
+    width: number;
+  };
+};
+
+/**
+ * Partial<PersonType> 回傳的型別等同於
+ * 
+ *  type PersonType = {
+ *    name?: string;
+ *    box?: {
+ *      height: number;
+ *      width: number;
+ *    };
+ *  };
+ */
+ 
+function updateObject<T>(obj: T, partialObj: Partial<T>): T {
+  return { ...obj, ...partialObj };
+}
+
+const person: PersonType = {
+  name: 'Johnson Mao',
+  box: {
+    height: 100,
+    width: 100,
+  },
+};
+updatePerson(person, { name: 'Mao' }); // 這樣就可以傳想修改的屬性了
+```
+
+## Required
+
+是 Partial 的反向操作，適合用在需要確保物件完整性的場景，將傳入的型別**第一層**屬性都改成必有的狀態，同樣的需注意嵌套的深層物件並不會變動唷！
+
+```ts
+type PersonType = {
+  name?: string;
+  box?: {
+    height?: number;
+    width?: number;
+  };
+};
+
+const person: Required<PersonType> = {
+  name: 'John', 
+  box: {} // Required 只有第一層會改成必有的狀態，嵌套的則保持原狀
 };
 ```
 
-## 總結
-在前面的章節中，我們已經多次接觸到泛型的應用，例如：
+## Readonly
 
-- 物件型別中的 `Record<string, boolean>`，用來表示一個鍵為 `string`，值為 `boolean` 的物件。
-- 陣列型別中的 `Array<number>`，用來表示一個數字型別的陣列。
+將傳入的型別**第一層**屬性設為唯讀，防止資料被意外修改，適合不可變資料結構的場景，同樣的需注意嵌套的深層物件並不會變動唷！
 
-泛型在 TypeScript 中隨處可見，不僅適用於自定義資料結構，還廣泛應用於許多內建的 TypeScript 與 JavaScript 方法中。例如：
+```ts
+interface Ironman {
+  title: string;
+  posts: { title: string, content: string }[]
+}
 
-- 在 DOM 操作中，我們可以使用泛型來指定元素的型別：`document.querySelector<HTMLInputElement>('#input-id');`
-- JavaScript 常用的 `Object.fromEntries` 方法也可以透過泛型明確指定資料結構：`Object.fromEntries<number>([]);`
+const ironman: Readonly<Ironman> = {
+  title: 'TypeScript 完全指南：從語法基礎到高級功能的系統學習',
+  posts: []
+}
 
-透過泛型，TypeScript 提供了極大的型別靈活性與安全性，讓開發者在實現強類型的同時，保持程式碼的靈活與可重用。
+// 因為 'title' 為唯讀屬性，所以無法指派至 'title'。
+// ironman.title = '我想變更標題';
+
+// 嵌套的物件屬性可以修改
+ironman.posts[0] = {
+  title: 'TypeScript 進階：靈活應用泛型',
+  content: ''
+}
+```
 
 ## 參考文獻
 
-- [Day 42. 通用武裝・泛用型別 X 型別參數化 - TypeScript Generics Introduction](https://ithelp.ithome.com.tw/articles/10226113)
+- [Day 43. 通用武裝・泛型註記 X 推論未來 - TypeScript Generic Declaration & Annotation](https://ithelp.ithome.com.tw/articles/10226311)
+- [到底是什麼意思？Typescript Partial<Type>](https://ithelp.ithome.com.tw/m/articles/10273198)
 - [TypeScript 5 Masterclass: TypeScript Generics - Build a Full-Stack App !](https://www.youtube.com/watch?v=pFmdH-9e0i8&list=PLzb46hGUzitC1kGzPcy8tlQNxYbFsuqMO&index=5)

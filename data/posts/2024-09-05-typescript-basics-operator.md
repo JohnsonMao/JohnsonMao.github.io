@@ -1,6 +1,7 @@
 ---
 title: TypeScript 基礎：進階型別與操作符
 date: 2024/09/05 23:32:15
+image: https://ithelp.ithome.com.tw/upload/images/20240929/20140224wMuRSUMR6F.png
 categories:
     - [程式語言, 前端, TypeScript]
     - [iT 鐵人賽, 第 2024 年]
@@ -10,9 +11,11 @@ tags:
 description: 在前幾篇中，我們介紹了 TypeScript 的基本型別與物件型別。在本篇中，將深入探討進階的型別系統，包括聯合型別、交集型別、型別斷言、索引型別、非空斷言操作符等。
 ---
 
+![cover](https://ithelp.ithome.com.tw/upload/images/20240929/20140224wMuRSUMR6F.png)
+
 ## 前言
 
-在前幾篇中，我們介紹了 TypeScript 的基本型別與物件型別。在本篇中，將深入探討進階的型別系統，包括聯合型別、交集型別、型別斷言、索引型別、非空斷言操作符等。
+在前幾篇中，我們介紹了 TypeScript 的基本型別與物件型別。在本篇中，將深入探討進階的型別系統，包括聯合型別、交集型別、型別斷言等。
 
 ## 聯合型別 (Union Types)
 

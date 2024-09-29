@@ -1,6 +1,7 @@
 ---
 title: TypeScript 進階：泛型入門與核心概念
 date: 2024/09/09 22:59:52
+image: https://ithelp.ithome.com.tw/upload/images/20240929/20140224fGUlmQdkj4.png
 categories:
     - [程式語言, 前端, TypeScript]
     - [iT 鐵人賽, 第 2024 年]
@@ -9,6 +10,8 @@ tags:
     - TypeScript
 description: 前面的文章已經有稍微介紹了介面（interface）的用法，介面能夠幫助我們定義物件應該有哪些屬性和方法，從而提供一種強型別的約束機制，讓開發者更容易組織代碼並進行程式設計。
 ---
+
+![cover](https://ithelp.ithome.com.tw/upload/images/20240929/20140224fGUlmQdkj4.png)
 
 ## 什麼是泛型？
 
@@ -82,6 +85,7 @@ class Box<T> {
 const stringBox = new Box('Hello');
 const content = stringBox.getContents();
 // content 是 string 型別
+
 ```
 
 ### 介面使用泛型

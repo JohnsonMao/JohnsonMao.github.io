@@ -1,6 +1,7 @@
 ---
 title: TypeScript 基礎：基本型別
 date: 2024/09/03 21:45:05
+image: https://ithelp.ithome.com.tw/upload/images/20240929/20140224hcJWLVI7ui.png
 categories:
     - [程式語言, 前端, TypeScript]
     - [iT 鐵人賽, 第 2024 年]
@@ -9,6 +10,8 @@ tags:
     - TypeScript
 description: 我們都知道 TypeScript 是 JavaScript 的超集，所以在介紹 TypeScript 的型別之前，我們先介紹一下 JavaScript 原本就有的型別。
 ---
+
+![cover](https://ithelp.ithome.com.tw/upload/images/20240929/20140224hcJWLVI7ui.png)
 
 ## 基礎型別
 

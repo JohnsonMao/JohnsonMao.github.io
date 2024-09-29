@@ -1,6 +1,7 @@
 ---
 title: TypeScript 基礎：物件、陣列與函式型別
 date: 2024/09/04 22:46:44
+image: https://ithelp.ithome.com.tw/upload/images/20240929/20140224eoZStu6jYX.png
 categories:
     - [程式語言, 前端, TypeScript]
     - [iT 鐵人賽, 第 2024 年]
@@ -9,6 +10,8 @@ tags:
     - TypeScript
 description: 物件型別在 TypeScript 中非常重要，因為它們允許我們定義複雜的資料結構，包括陣列、函式、列舉...等。這些型別幫助我們在開發中建立更嚴謹且易於維護的程式碼。
 ---
+
+![cover](https://ithelp.ithome.com.tw/upload/images/20240929/20140224eoZStu6jYX.png)
 
 ## 前言
 
@@ -139,7 +142,7 @@ function handle(direction: Direction) {
 
 enum 比較特別，編譯打包時，也會跟的編譯到 JavaScript 中，犧牲一點程式碼體積，提升可讀性與維護性。
 
-![image](https://hackmd.io/_uploads/HkrnxlUhC.png)
+![打包](https://ithelp.ithome.com.tw/upload/images/20240904/201402249it8tMMJWd.png)
 
 ## 參考文獻
 

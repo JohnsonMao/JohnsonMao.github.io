@@ -1,6 +1,7 @@
 ---
-title: TypeScript 基礎：介面
+title: TypeScript 基礎：介面 interface
 date: 2024/09/08 15:18:38
+image: https://ithelp.ithome.com.tw/upload/images/20240929/20140224wnLythlBEo.png
 categories:
     - [程式語言, 前端, TypeScript]
     - [iT 鐵人賽, 第 2024 年]
@@ -9,6 +10,8 @@ tags:
     - TypeScript
 description: 前面的文章已經有稍微介紹了介面（interface）的用法，介面能夠幫助我們定義物件應該有哪些屬性和方法，從而提供一種強型別的約束機制，讓開發者更容易組織代碼並進行程式設計。
 ---
+
+![cover](https://ithelp.ithome.com.tw/upload/images/20240929/20140224wnLythlBEo.png)
 
 ## 前言
 
@@ -149,7 +152,7 @@ const person: PersonInterface = {
 以我個人而言，如果需要定義物件的結構、擴展和合併的能力，我會選擇使用 `interface` 來定義，其餘都使用 `type` 的方式定義。
 
 不過 type 在編輯器中會顯示結構還蠻方便的。
-![image](https://hackmd.io/_uploads/B1O31052R.png)
+![畫面](https://ithelp.ithome.com.tw/upload/images/20240908/201402243cVeXOy5Yn.png)
 
 ## 介面（interface）vs 型別（type）
 
@@ -236,9 +239,10 @@ const person: PersonInterface = {
         }
 
         /**
-         * Error: 介面 'EmployeeInterface' 不正確地擴充介面 'PersonInterface'。
-         *         屬性 'id' 的類型不相容。
-         *          類型 'number' 不可指派給類型 'string'。
+         * Error:
+         * 介面 'EmployeeInterface' 不正確地擴充介面 'PersonInterface'。
+         *  屬性 'id' 的類型不相容。
+         *   類型 'number' 不可指派給類型 'string'。
          */
         interface EmployeeInterface extends PersonInterface {
             id: number;
