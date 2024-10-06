@@ -188,5 +188,5 @@ ironman.posts[0] = {
 ## 參考文獻
 
 - [Day 43. 通用武裝・泛型註記 X 推論未來 - TypeScript Generic Declaration & Annotation](https://ithelp.ithome.com.tw/articles/10226311)
-- [到底是什麼意思？Typescript Partial<Type>](https://ithelp.ithome.com.tw/m/articles/10273198)
+- [到底是什麼意思？Typescript Partial](https://ithelp.ithome.com.tw/m/articles/10273198)
 - [TypeScript 5 Masterclass: TypeScript Generics - Build a Full-Stack App !](https://www.youtube.com/watch?v=pFmdH-9e0i8&list=PLzb46hGUzitC1kGzPcy8tlQNxYbFsuqMO&index=5)
