@@ -1,37 +1,74 @@
 'use client';
 
-import { useEffect, useLayoutEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
-import useIntersectionObserver from '@/hooks/useIntersectionObserver';
+import { HEADER_HEIGHT } from '~/constants';
 import cn from '@/utils/cn';
+import useScroll, { ScrollHandler } from '@/hooks/useScroll';
 import Collapse from './Collapse';
 import Link from './Link';
+
+type HeadingType = {
+  id: string;
+  offsetTop: number;
+  text: string | undefined;
+  children?: HeadingType[];
+};
+
+type HeadingOffsetType = {
+  id: string;
+  offsetTop: number;
+};
 
 type TableOfContentsProps = {
   targetId: `#${string}`;
   className?: string;
+  scrollThreshold?: number;
 };
 
-type Heading = {
-  id: string;
-  text: string | undefined;
-  children?: Heading[];
-};
-
-function TableOfContents({ className, targetId }: TableOfContentsProps) {
+function TableOfContents({
+  className,
+  targetId,
+  scrollThreshold = HEADER_HEIGHT,
+}: TableOfContentsProps) {
   const [activeId, setActiveId] = useState('');
-  const [headings, setHeadings] = useState<Heading[]>([]);
-  const [entry, setElementRef] = useIntersectionObserver();
+  const [headings, setHeadings] = useState<HeadingType[]>([]);
+  const headingOffsets = useMemo<HeadingOffsetType[]>(
+    () =>
+      headings
+        .flatMap<HeadingOffsetType>(({ id, offsetTop, children }) => [
+          { id, offsetTop },
+          ...(children || []).map<HeadingOffsetType>((child) => ({
+            id: child.id,
+            offsetTop: child.offsetTop,
+          })),
+        ])
+        .sort((a, b) => b.offsetTop - a.offsetTop),
+    [headings]
+  );
+
+  const handleScroll = useCallback<ScrollHandler>(
+    ({ y }) => {
+      const visibleHeading = headingOffsets.find(
+        ({ offsetTop }) => Math.ceil(y + scrollThreshold) >= offsetTop
+      );
+      setActiveId(visibleHeading?.id || '');
+    },
+    [headingOffsets, scrollThreshold]
+  );
+
+  useScroll({ handler: handleScroll, initial: true });
 
   useEffect(() => {
     const headingElements = Array.from(
-      document.querySelectorAll(`${targetId} h2, ${targetId} h3`)
+      document.querySelectorAll<HTMLHeadingElement>(
+        `${targetId} h2, ${targetId} h3`
+      )
     );
-    setElementRef(headingElements);
     setHeadings(
-      headingElements.reduce<Heading[]>(
-        (result, { id, tagName, textContent }) => {
-          const heading = { id, text: textContent?.slice(1) };
+      headingElements.reduce<HeadingType[]>(
+        (result, { id, offsetTop, tagName, textContent }) => {
+          const heading = { id, offsetTop, text: textContent?.slice(1) };
           const lastHeading = result.at(-1);
 
           if (tagName === 'H2') {
@@ -44,22 +81,12 @@ function TableOfContents({ className, targetId }: TableOfContentsProps) {
         []
       )
     );
-  }, [targetId, setElementRef]);
+  }, [targetId]);
 
-  useLayoutEffect(() => {
-    const visibleHeadings = entry.filter(
-      ({ isIntersecting }) => isIntersecting
-    );
-
-    if (visibleHeadings.length > 0) {
-      setActiveId(visibleHeadings[0].target.id);
-    }
-  }, [entry]);
-
-  const isActive = (id: string, children: Heading[]) =>
+  const isActive = (id: string, children: HeadingType[]) =>
     id === activeId || children.some((child) => child.id === activeId);
 
-  const getLinkClassName = (id: string, children: Heading[] = []) =>
+  const getLinkClassName = (id: string, children: HeadingType[] = []) =>
     cn(
       'transition-colors mb-0.5 block overflow-hidden text-ellipsis whitespace-nowrap hover:underline',
       isActive(id, children)
@@ -69,7 +96,7 @@ function TableOfContents({ className, targetId }: TableOfContentsProps) {
 
   return (
     <nav aria-label="Table of contents" className={className}>
-      <ul className="text-sm">
+      <ul className="group text-sm">
         {headings.map(({ id, text, children }) => (
           <li key={id}>
             <Link href={`#${id}`} className={getLinkClassName(id, children)}>

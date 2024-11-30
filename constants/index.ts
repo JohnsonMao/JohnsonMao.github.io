@@ -1,6 +1,6 @@
-import type { GiscusProps } from "@giscus/react";
+import type { GiscusProps } from '@giscus/react';
 
-const giscusConfigs: GiscusProps = {
+export const GISCUS_CONFIGS: GiscusProps = {
   repo: 'JohnsonMao/JohnsonMao.github.io',
   repoId: 'MDEwOlJlcG9zaXRvcnkzOTU2NjE1MDM=',
   category: 'Announcements',
@@ -12,4 +12,4 @@ const giscusConfigs: GiscusProps = {
   loading: 'lazy',
 };
 
-export default giscusConfigs;
+export const HEADER_HEIGHT = 100;
