@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { GiscusProps } from '@giscus/react';
-import giscusConfigs from '~/data/giscus';
+import { GISCUS_CONFIGS } from '~/constants';
 import Comment from '@/components/Comment';
 
 const getGiscusProps = jest.fn();
@@ -24,7 +24,7 @@ describe('Comment component', () => {
     render(<Comment />);
     const comment = screen.getByTestId('comment');
     const expectedProps: GiscusProps = JSON.parse(
-      JSON.stringify(giscusConfigs)
+      JSON.stringify(GISCUS_CONFIGS)
     );
     expectedProps.theme = `noborder_${theme}`;
     expect(comment).toBeInTheDocument();
