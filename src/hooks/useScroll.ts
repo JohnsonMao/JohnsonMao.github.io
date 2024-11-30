@@ -7,7 +7,7 @@ export type ScrollHandler = (
   element: ScrollElement
 ) => void;
 
-export type UseScroll = {
+export type UseScrollProps = {
   ref?: RefObject<ScrollElement>;
   initial?: boolean;
   handler: ScrollHandler;
@@ -16,7 +16,7 @@ export type UseScroll = {
 /**
  * This hook allows tracking the scroll position of a specified DOM element or the window.
  */
-function useScroll({ ref, initial, handler }: UseScroll) {
+function useScroll({ ref, initial, handler }: UseScrollProps) {
   const internalElementRef = useRef<ScrollElement>(null);
 
   const scrollHandler = useCallback(() => {
@@ -38,23 +38,20 @@ function useScroll({ ref, initial, handler }: UseScroll) {
   }, [scrollHandler]);
 
   const register = useCallback(
-    (element: ScrollElement) => {
-      internalElementRef.current?.removeEventListener('scroll', scrollHandler);
+    (element: ScrollElement, initial = false) => {
+      remove();
       internalElementRef.current = element;
       internalElementRef.current?.addEventListener('scroll', scrollHandler);
+      if (initial) scrollHandler();
+      return remove;
     },
-    [scrollHandler]
+    [scrollHandler, remove]
   );
 
   useEffect(() => {
     const element = ref?.current || window;
-
-    internalElementRef.current = element;
-    element.addEventListener('scroll', scrollHandler);
-    if (initial) scrollHandler();
-
-    return () => element.removeEventListener('scroll', scrollHandler);
-  }, [ref, initial, scrollHandler]);
+    return register(element, initial);
+  }, [ref, initial, register]);
 
   return {
     remove,
