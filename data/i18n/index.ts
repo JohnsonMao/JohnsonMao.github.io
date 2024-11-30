@@ -8,7 +8,8 @@ const dictionaries: Record<Locale, () => Promise<Dictionary>> = {
   en: () => import('./locales/en.json'),
 };
 
-export const getDictionary = (locale: Locale) => dictionaries[locale]();
-
 export const isLocale = (language: string): language is Locale =>
   locales.findIndex((locale) => locale === language) > -1;
+
+export const getDictionary = (locale: Locale) =>
+  isLocale(locale) ? dictionaries[locale]() : dictionaries[defaultLocale]();
