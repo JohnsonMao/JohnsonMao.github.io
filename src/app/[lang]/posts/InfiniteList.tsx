@@ -2,10 +2,10 @@
 
 import { memo } from 'react';
 import { useSearchParams } from 'next/navigation';
-import Link from '@/components/Link';
+import Button from '@/components/Button';
 import List from '@/components/List';
 import { clamp } from '@/utils/math';
-import Article from '../Article';
+import Article from '../(home)/Article';
 
 type InfiniteListProps = {
   items: DataFrontmatter[];
@@ -24,9 +24,15 @@ function InfiniteList({ items, morePostsText }: InfiniteListProps) {
     <>
       <List Item={MemoArticle} items={items.slice(0, limit)} />
       {limit < total && (
-        <Link href={`?limit=${clampLimit(limit + 10)}`} replace scroll={false}>
-          {morePostsText}
-        </Link>
+        <div className="my-4 flex justify-center">
+          <Button
+            href={`?limit=${clampLimit(limit + 10)}`}
+            scroll={false}
+            replace
+          >
+            {morePostsText}
+          </Button>
+        </div>
       )}
     </>
   );

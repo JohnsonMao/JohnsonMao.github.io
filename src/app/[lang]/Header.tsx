@@ -2,6 +2,7 @@
 
 import { CSSProperties, useCallback, useRef, useState } from 'react';
 
+import { HEADER_HEIGHT } from '~/constants';
 import Container from '@/components/Container';
 import Image from '@/components/Image';
 import Link from '@/components/Link';
@@ -15,7 +16,7 @@ type HeaderProps = {
   scrollThreshold?: number;
 } & React.PropsWithChildren;
 
-function Header({ avatar, children, scrollThreshold = 100 }: HeaderProps) {
+function Header({ avatar, children, scrollThreshold = HEADER_HEIGHT }: HeaderProps) {
   const isMounted = useIsMounted();
   const [avatarScale, setAvatarScale] = useState(0);
   const [headerFixed, setHeaderFixed] = useState(true);
@@ -52,7 +53,7 @@ function Header({ avatar, children, scrollThreshold = 100 }: HeaderProps) {
 
   const handleAvatarScale = useCallback(
     (scrollY: number) => {
-      setWillChange(scrollY < scrollThreshold + 100);
+      setWillChange(scrollY < scrollThreshold + HEADER_HEIGHT);
       if (scrollY > scrollThreshold) {
         setAvatarScale(1);
       } else {
