@@ -1,14 +1,7 @@
 import type { Metadata } from 'next';
 import type { FeedOptions } from 'feed';
+import { WEBSITE_CONFIGS } from '~/constants';
 import { Locale, defaultLocale, getDictionary, locales } from '~/data/i18n';
-import { common } from '~/data/i18n/locales/en.json';
-
-export const avatarUrl = '/static/mao.jpg';
-export const name = 'Johnson Mao';
-export const email = 'tutelary.maomao@gmail.com';
-export const domainUrl = 'https://amao.vercel.app';
-export const githubUrl = 'https://github.com/JohnsonMao';
-export const copyright = `2023 - PRESENT © ${common.title}`;
 
 export async function createMetadata(
   locale: Locale = defaultLocale
@@ -24,7 +17,7 @@ export async function createMetadata(
       default: title,
     },
     description,
-    metadataBase: new URL(domainUrl),
+    metadataBase: new URL(WEBSITE_CONFIGS.domainUrl),
     applicationName: title,
     keywords: ['frontend', 'notes'],
     referrer: 'origin',
@@ -32,8 +25,8 @@ export async function createMetadata(
     robots: 'index, follow',
     authors: [
       {
-        name,
-        url: githubUrl,
+        name: WEBSITE_CONFIGS.authorName,
+        url: WEBSITE_CONFIGS.authorUrl,
       },
     ],
     alternates: {
@@ -56,21 +49,21 @@ export async function createFeedOptions(locale: Locale): Promise<FeedOptions> {
   } = await getDictionary(locale);
 
   return {
-    id: domainUrl,
+    id: WEBSITE_CONFIGS.domainUrl,
     title,
-    copyright,
+    copyright: WEBSITE_CONFIGS.copyright,
     description,
-    link: domainUrl,
+    link: WEBSITE_CONFIGS.domainUrl,
     language: locale,
     author: {
-      name,
-      email,
-      link: domainUrl,
+      name: WEBSITE_CONFIGS.authorName,
+      email: WEBSITE_CONFIGS.authorEmail,
+      link: WEBSITE_CONFIGS.authorUrl,
     },
     // image
     // favicon
     feedLinks: {
-      atom: `${domainUrl}/feed/atom.xml`,
+      atom: `${WEBSITE_CONFIGS.domainUrl}/feed/atom.xml`,
     },
   };
 }

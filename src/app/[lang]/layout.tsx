@@ -1,10 +1,11 @@
 import type { Metadata } from 'next';
-import { avatarUrl, name, copyright, createMetadata } from '~/data/metadata';
+import { createMetadata } from '~/data/metadata';
 import { Locale, getDictionary, locales } from '~/data/i18n';
 import ThemeSwitcher from '@/components/ThemeSwitcher';
 import Header, { Avatar } from './Header';
 import Footer from './Footer';
 import Menu, { MenuProps } from './Menu';
+import { WEBSITE_CONFIGS } from '~/constants';
 
 export async function generateStaticParams() {
   return locales.map((lang) => ({ lang }));
@@ -41,8 +42,8 @@ async function I18nLayout({
 }: RootParams & React.PropsWithChildren) {
   const { common } = await getDictionary(lang);
   const avatar = {
-    src: avatarUrl,
-    alt: name,
+    src: WEBSITE_CONFIGS.avatarUrl,
+    alt: WEBSITE_CONFIGS.authorName,
   };
   const menu: MenuProps['menu'] = [
     {
@@ -62,7 +63,7 @@ async function I18nLayout({
         <ThemeSwitcher />
       </Header>
       {children}
-      <Footer copyright={copyright} />
+      <Footer copyright={WEBSITE_CONFIGS.copyright} />
     </>
   );
 }

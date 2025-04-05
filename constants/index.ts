@@ -13,3 +13,13 @@ export const GISCUS_CONFIGS: GiscusProps = {
 };
 
 export const HEADER_HEIGHT = 100;
+
+export const WEBSITE_CONFIGS = {
+  title: "Mao's Corner",
+  avatarUrl: '/static/mao.jpg',
+  authorName: 'Johnson Mao',
+  authorEmail: 'tutelary.maomao@gmail.com',
+  authorUrl: 'https://github.com/JohnsonMao',
+  domainUrl: 'https://amao.vercel.app',
+  copyright: `2023 - PRESENT © Johnson Mao`,
+};
