@@ -8,6 +8,7 @@ describe('useIntersectionObserver hook', () => {
   const mockDisconnect = jest.fn();
 
   beforeEach(() => {
+    mockIntersectionObserver.mockClear();
     mockObserve.mockClear();
     mockUnobserve.mockClear();
     mockDisconnect.mockClear();
@@ -42,17 +43,18 @@ describe('useIntersectionObserver hook', () => {
       ]
     }
     const { result } = renderHook(() => useIntersectionObserver());
+    const [_, setElementRef] = result.current;
     expect(mockIntersectionObserver).toHaveBeenCalledTimes(1);
     expect(mockObserve).toHaveBeenCalledTimes(0);
 
-    act(() => result.current[1](elementRef.current));
-    expect(mockDisconnect).toHaveBeenCalledTimes(0);
+    act(() => setElementRef(elementRef.current));
+    expect(mockDisconnect).toHaveBeenCalledTimes(1);
     expect(mockObserve).toHaveBeenCalledTimes(2);
     expect(mockObserve).toHaveBeenCalledWith(elementRef.current[0]);
     expect(mockObserve).toHaveBeenLastCalledWith(elementRef.current[1]);
 
-    act(() => result.current[1](elementRef.current[0]));
-    expect(mockDisconnect).toHaveBeenCalledTimes(1);
+    act(() => setElementRef(elementRef.current[0]));
+    expect(mockDisconnect).toHaveBeenCalledTimes(2);
     expect(mockObserve).toHaveBeenCalledTimes(3);
     expect(mockObserve).toHaveBeenLastCalledWith(elementRef.current[0]);
   });
