@@ -16,33 +16,40 @@ function useIntersectionObserver({
   elementRef,
 }: UseIntersectionObserverProps = {}) {
   const [entry, setEntry] = useState<IntersectionObserverEntry[]>([]);
-  const observerRef = useRef<IntersectionObserver>();
   const internalElementRef = useRef<ElementNode>();
-  const setInternalElementRef = useCallback(
-    (node: ElementNode) => {
-      const observerParams = { root, rootMargin, threshold };
+  const observerRef = useRef<IntersectionObserver | null>(null);
 
-      observerRef.current?.disconnect();
-      observerRef.current = new IntersectionObserver(setEntry, observerParams);
+  const setInternalElementRef = useCallback((node: ElementNode) => {
+    const observer = observerRef.current;
 
-      if (Array.isArray(node)) {
-        node.forEach((_node) => observerRef.current?.observe(_node));
-      } else if (node) {
-        observerRef.current.observe(node);
-      }
+    observer?.disconnect();
 
-      internalElementRef.current = node;
-    },
-    [root, rootMargin, threshold]
-  );
+    if (Array.isArray(node)) {
+      node.filter(Boolean).forEach((item) => observer?.observe(item));
+    } else if (node) {
+      observer?.observe(node);
+    }
+
+    internalElementRef.current = node;
+  }, []);
 
   useEffect(() => {
     const element = elementRef?.current;
+    const observer = observerRef.current;
+
+    observerRef.current = new IntersectionObserver(setEntry, {
+      root,
+      rootMargin,
+      threshold,
+    });
 
     if (element) setInternalElementRef(element);
 
-    return () => observerRef.current?.disconnect();
-  }, [elementRef, setInternalElementRef]);
+    return () => {
+      observer?.disconnect();
+      observerRef.current = null;
+    };
+  }, [elementRef, root, rootMargin, threshold, setInternalElementRef]);
 
   return [entry, setInternalElementRef] as const;
 }
