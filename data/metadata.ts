@@ -1,7 +1,7 @@
-import type { Metadata } from 'next';
 import type { FeedOptions } from 'feed';
+import type { Metadata } from 'next';
 import { WEBSITE_CONFIGS } from '~/constants';
-import { Locale, defaultLocale, getDictionary, locales } from '~/data/i18n';
+import { defaultLocale, getDictionary, Locale, locales } from '~/data/i18n';
 
 export async function createMetadata(
   locale: Locale = defaultLocale

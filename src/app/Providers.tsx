@@ -1,7 +1,7 @@
 'use client';
 
-import { ThemeProvider } from 'next-themes';
 import { AppProgressBar } from 'next-nprogress-bar';
+import { ThemeProvider } from 'next-themes';
 
 function Providers({ children }: React.PropsWithChildren) {
   return (

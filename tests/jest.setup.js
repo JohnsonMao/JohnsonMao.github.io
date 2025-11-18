@@ -6,6 +6,10 @@ import React from 'react';
 // Learn more: https://github.com/testing-library/jest-dom
 import '@testing-library/jest-dom/extend-expect';
 
-jest.mock('next/image', () => function MockImage({ src, alt }) {
-  return React.createElement('img', { src, alt })
-});
+jest.mock(
+  'next/image',
+  () =>
+    function MockImage({ src, alt }) {
+      return React.createElement('img', { src, alt });
+    }
+);

@@ -9,7 +9,7 @@ const dictionaries: Record<Locale, () => Promise<Dictionary>> = {
 };
 
 export const isLocale = (language: string): language is Locale =>
-  locales.findIndex((locale) => locale === language) > -1;
+  locales.indexOf(language as Locale) > -1;
 
 export const getDictionary = (locale: Locale) =>
   isLocale(locale) ? dictionaries[locale]() : dictionaries[defaultLocale]();

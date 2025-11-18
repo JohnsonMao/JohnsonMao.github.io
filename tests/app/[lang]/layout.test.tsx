@@ -1,7 +1,10 @@
 import { render, screen } from '@testing-library/react';
+import Layout, {
+  generateMetadata,
+  generateStaticParams,
+} from '@/app/[lang]/layout';
 import { locales } from '~/data/i18n';
 import mockNavigation from '~/tests/navigation';
-import Layout, { generateMetadata, generateStaticParams } from '@/app/[lang]/layout';
 
 describe('I18n layout', () => {
   it('should render correct element', async () => {
@@ -9,7 +12,7 @@ describe('I18n layout', () => {
     mockNavigation.pathname.mockReturnValueOnce('/');
     const layout = await Layout({
       children: <h2>{testText}</h2>,
-      params: { lang: 'en' }
+      params: { lang: 'en' },
     });
     render(layout);
 
@@ -33,7 +36,7 @@ describe('I18n layout', () => {
 
   it('should generate correct static params', async () => {
     const staticParams = await generateStaticParams();
-    const expected = locales.map(lang => ({ lang }));
+    const expected = locales.map((lang) => ({ lang }));
     expect(staticParams).toStrictEqual(expected);
   });
 });

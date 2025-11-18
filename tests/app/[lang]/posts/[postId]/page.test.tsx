@@ -1,9 +1,9 @@
 import { render, screen } from '@testing-library/react';
-import mockNavigation from '~/tests/navigation';
 import Page, {
   generateMetadata,
   generateStaticParams,
 } from '@/app/[lang]/posts/[postId]/page';
+import mockNavigation from '~/tests/navigation';
 
 const mockDataList = jest.fn();
 const mockData = jest.fn();

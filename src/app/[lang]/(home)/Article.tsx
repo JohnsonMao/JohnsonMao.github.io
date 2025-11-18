@@ -1,6 +1,6 @@
+import { AiOutlineTags } from 'react-icons/ai';
 import { BsCalendar4Week } from 'react-icons/bs';
 import { MdOutlineWidgets } from 'react-icons/md';
-import { AiOutlineTags } from 'react-icons/ai';
 
 import { H2 } from '@/components/Heading';
 import Image from '@/components/Image';

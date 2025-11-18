@@ -1,19 +1,17 @@
 import fs from 'fs';
-import path from 'path';
 import { compileMDX } from 'next-mdx-remote/rsc';
-import remarkGfm from 'remark-gfm';
-import rehypeSlug from 'rehype-slug';
-import rehypePrismPlus from 'rehype-prism-plus';
+import path from 'path';
+import type { JSX } from 'react';
 import rehypeCodeTitles from 'rehype-code-titles';
-
-import { H2, H3, H4, H5, H6 } from '@/components/Heading';
+import rehypePrismPlus from 'rehype-prism-plus';
+import rehypeSlug from 'rehype-slug';
+import remarkGfm from 'remark-gfm';
 import CodeBox from '@/components/CodeBox';
+import { H2, H3, H4, H5, H6 } from '@/components/Heading';
 import Image from '@/components/Image';
 import Link from '@/components/Link';
 import rehypeImageMetadata from '@/plugins/rehypeImageMetadata';
 import { compareDates } from './date';
-
-import type { JSX } from "react";
 
 const ROOT_PATH = process.cwd();
 

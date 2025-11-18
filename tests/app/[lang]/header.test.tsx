@@ -8,7 +8,7 @@ const scrollDownTo = (to: number) => {
     window.scrollY = to;
     window.dispatchEvent(new Event('scroll'));
   });
-}
+};
 const scrollUpTo = (to: number) => {
   act(() => {
     window.scrollY = to + 1;
@@ -16,7 +16,7 @@ const scrollUpTo = (to: number) => {
     window.scrollY = to;
     window.dispatchEvent(new Event('scroll'));
   });
-}
+};
 
 describe('Header component', () => {
   const avatar = (

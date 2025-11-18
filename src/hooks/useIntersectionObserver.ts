@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState, RefObject } from 'react';
+import { RefObject, useCallback, useEffect, useRef, useState } from 'react';
 
 type ElementNode = Element | Element[] | null;
 
@@ -25,7 +25,9 @@ function useIntersectionObserver({
     observer?.disconnect();
 
     if (Array.isArray(node)) {
-      node.filter(Boolean).forEach((item) => observer?.observe(item));
+      node.filter(Boolean).forEach((item) => {
+        observer?.observe(item);
+      });
     } else if (node) {
       observer?.observe(node);
     }

@@ -1,4 +1,4 @@
-import cn from "@/utils/cn";
+import cn from '@/utils/cn';
 
 describe('TailwindCSS className merge (cn) function', () => {
   it('should return current className', () => {

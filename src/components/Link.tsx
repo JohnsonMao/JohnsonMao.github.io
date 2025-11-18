@@ -1,9 +1,9 @@
 'use client';
 
-import type { ReactNode } from 'react';
 import type { Route } from 'next';
-import { usePathname } from 'next/navigation';
 import NextLink, { LinkProps as NextLinkProps } from 'next/link';
+import { usePathname } from 'next/navigation';
+import type { ReactNode } from 'react';
 import { HiExternalLink } from 'react-icons/hi';
 
 import cn from '@/utils/cn';

@@ -1,7 +1,7 @@
-import { render, screen } from '@testing-library/react';
 import { GiscusProps } from '@giscus/react';
-import { GISCUS_CONFIGS } from '~/constants';
+import { render, screen } from '@testing-library/react';
 import Comment from '@/components/Comment';
+import { GISCUS_CONFIGS } from '~/constants';
 
 const getGiscusProps = jest.fn();
 const mockUseTheme = jest.fn();

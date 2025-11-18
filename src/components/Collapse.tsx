@@ -1,7 +1,7 @@
 'use client';
 
-import { useRef, ReactNode, HTMLAttributes } from 'react';
-import { useSpring, animated } from '@react-spring/web';
+import { animated, useSpring } from '@react-spring/web';
+import { HTMLAttributes, ReactNode, useRef } from 'react';
 
 type CollapseProps = {
   isOpen: boolean;

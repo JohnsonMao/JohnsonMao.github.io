@@ -1,13 +1,12 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-
+import Comment from '@/components/Comment';
 import Container from '@/components/Container';
 import { H1 } from '@/components/Heading';
 import Link from '@/components/Link';
 import TableOfContents from '@/components/TableOfContents';
-import Comment from '@/components/Comment';
-import { getDataById, getAllDataFrontmatter } from '@/utils/mdx';
 import { formatDate } from '@/utils/date';
+import { getAllDataFrontmatter, getDataById } from '@/utils/mdx';
 
 type PostParams = {
   params: Promise<{ postId: string }>;
@@ -22,9 +21,7 @@ export async function generateStaticParams() {
 export async function generateMetadata(props: PostParams): Promise<Metadata> {
   const params = await props.params;
 
-  const {
-    postId
-  } = params;
+  const { postId } = params;
 
   const post = await getDataById('posts', postId);
 
@@ -36,9 +33,7 @@ export async function generateMetadata(props: PostParams): Promise<Metadata> {
 async function PostPage(props: PostParams) {
   const params = await props.params;
 
-  const {
-    postId
-  } = params;
+  const { postId } = params;
 
   const post = await getDataById('posts', postId);
 
@@ -51,13 +46,13 @@ async function PostPage(props: PostParams) {
   return (
     <>
       <Container className="pb-8">
-        <H1 className="mb-4 text-3xl font-bold">{frontmatter.title}</H1>
+        <H1 className="mb-4 font-bold text-3xl">{frontmatter.title}</H1>
         <time>{formattedDate}</time>
       </Container>
       <Container as="main" className="block py-8 lg:flex lg:px-2">
         <aside className="hidden w-40 shrink-0 lg:block xl:w-60">
-          <nav className="top-header-height sticky px-4">
-            <h4 className="my-3 text-lg font-semibold text-gray-900 dark:text-gray-100">
+          <nav className="sticky top-header-height px-4">
+            <h4 className="my-3 font-semibold text-gray-900 text-lg dark:text-gray-100">
               目錄
             </h4>
             <TableOfContents
@@ -69,7 +64,7 @@ async function PostPage(props: PostParams) {
         <div>
           <article
             id={id}
-            className="prose prose-zinc mx-auto px-4 dark:prose-invert"
+            className="prose prose-zinc dark:prose-invert mx-auto px-4"
           >
             {content}
           </article>

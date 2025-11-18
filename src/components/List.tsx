@@ -7,7 +7,7 @@ type ListPropsWithDefaultKey<T extends Record<string, unknown>> = {
 
 type ListPropsWithCustomKey<
   T extends Record<string, unknown>,
-  P extends keyof T
+  P extends keyof T,
 > = {
   primaryKey: P;
   items: (T & Record<P, Key>)[];

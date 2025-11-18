@@ -1,7 +1,7 @@
-import type { Route } from 'next';
 import { render, screen } from '@testing-library/react';
-import mockNavigation from '~/tests/navigation';
+import type { Route } from 'next';
 import Link from '@/components/Link';
+import mockNavigation from '~/tests/navigation';
 
 describe('Link component', () => {
   it.each([
@@ -24,15 +24,12 @@ describe('Link component', () => {
     ['/en/internal', '/en/internal'],
     ['/zh/internal', '/zh/internal'],
     ['/fr/internal', '/internal'],
-  ])(
-    'should render correct link element with pathname %s',
-    (pathname, expected) => {
-      const name = 'internal link';
-      const href = '/internal';
-      mockNavigation.pathname.mockReturnValueOnce(pathname);
-      render(<Link href={href}>{name}</Link>);
-      const link = screen.getByRole('link', { name });
-      expect(link).toHaveAttribute('href', expected);
-    }
-  );
+  ])('should render correct link element with pathname %s', (pathname, expected) => {
+    const name = 'internal link';
+    const href = '/internal';
+    mockNavigation.pathname.mockReturnValueOnce(pathname);
+    render(<Link href={href}>{name}</Link>);
+    const link = screen.getByRole('link', { name });
+    expect(link).toHaveAttribute('href', expected);
+  });
 });

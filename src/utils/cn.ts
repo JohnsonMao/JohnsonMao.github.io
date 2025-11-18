@@ -6,7 +6,7 @@ import { twMerge } from 'tailwind-merge';
  *
  * @example
  * import cn from '@/utils/cn';
- * 
+ *
  * cn('bg-blue-500 text-white/90', { 'bg-red-500': true });
  * // 'text-white/90 bg-red-500'
  */

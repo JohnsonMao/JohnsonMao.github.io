@@ -1,4 +1,4 @@
-import { Locale, isLocale } from '~/data/i18n';
+import { isLocale, Locale } from '~/data/i18n';
 
 /**
  * The function get language locale code from the input.

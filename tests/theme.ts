@@ -1,4 +1,3 @@
-
 /**
  * Create a mock of the window.matchMedia function
  * @see https://jestjs.io/docs/manual-mocks#mocking-methods-which-are-not-implemented-in-jsdom

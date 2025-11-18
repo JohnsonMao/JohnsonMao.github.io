@@ -1,4 +1,4 @@
-import { copyToClipboard } from "@/utils/clipboard";
+import { copyToClipboard } from '@/utils/clipboard';
 
 function setDeviceClipboard(version?: 'new' | 'old') {
   switch (version) {
