@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 
 import { locales } from '~/data/i18n';
 import { createMetadata, createFeedOptions } from '~/data/metadata';
@@ -18,6 +18,10 @@ export async function generateMetadata(): Promise<Metadata> {
 
   return createMetadata();
 }
+
+export const viewport: Viewport = {
+  themeColor: '#000000',
+};
 
 function HtmlLayout({ children }: React.PropsWithChildren) {
   return (

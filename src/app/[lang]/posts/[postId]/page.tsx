@@ -10,7 +10,7 @@ import { getDataById, getAllDataFrontmatter } from '@/utils/mdx';
 import { formatDate } from '@/utils/date';
 
 type PostParams = {
-  params: { postId: string };
+  params: Promise<{ postId: string }>;
 };
 
 export async function generateStaticParams() {
@@ -19,9 +19,13 @@ export async function generateStaticParams() {
   return posts.map(({ id }) => ({ postId: id }));
 }
 
-export async function generateMetadata({
-  params: { postId },
-}: PostParams): Promise<Metadata> {
+export async function generateMetadata(props: PostParams): Promise<Metadata> {
+  const params = await props.params;
+
+  const {
+    postId
+  } = params;
+
   const post = await getDataById('posts', postId);
 
   if (!post) return notFound();
@@ -29,7 +33,13 @@ export async function generateMetadata({
   return post.frontmatter;
 }
 
-async function PostPage({ params: { postId } }: PostParams) {
+async function PostPage(props: PostParams) {
+  const params = await props.params;
+
+  const {
+    postId
+  } = params;
+
   const post = await getDataById('posts', postId);
 
   if (!post) return notFound();

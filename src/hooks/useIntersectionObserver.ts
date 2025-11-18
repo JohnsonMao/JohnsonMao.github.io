@@ -3,7 +3,7 @@ import { useCallback, useEffect, useRef, useState, RefObject } from 'react';
 type ElementNode = Element | Element[] | null;
 
 interface UseIntersectionObserverProps extends IntersectionObserverInit {
-  elementRef?: RefObject<ElementNode>;
+  elementRef?: RefObject<ElementNode | null>;
 }
 
 /**
@@ -16,7 +16,7 @@ function useIntersectionObserver({
   elementRef,
 }: UseIntersectionObserverProps = {}) {
   const [entry, setEntry] = useState<IntersectionObserverEntry[]>([]);
-  const internalElementRef = useRef<ElementNode>();
+  const internalElementRef = useRef<ElementNode>(undefined);
   const observerRef = useRef<IntersectionObserver | null>(null);
 
   const setInternalElementRef = useCallback((node: ElementNode) => {

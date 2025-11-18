@@ -10,9 +10,13 @@ import { getAllDataFrontmatter } from '@/utils/mdx';
 import type { RootParams } from '../layout';
 import Article from './Article';
 
-export async function generateMetadata({
-  params: { lang },
-}: RootParams): Promise<Metadata> {
+export async function generateMetadata(props: RootParams): Promise<Metadata> {
+  const params = await props.params;
+
+  const {
+    lang
+  } = params;
+
   const { common } = await getDictionary(lang);
 
   return {
@@ -20,7 +24,13 @@ export async function generateMetadata({
   };
 }
 
-async function RootPage({ params: { lang } }: RootParams) {
+async function RootPage(props: RootParams) {
+  const params = await props.params;
+
+  const {
+    lang
+  } = params;
+
   const posts = await getAllDataFrontmatter('posts');
   const { homePage, common } = await getDictionary(lang);
   const nextPostId = posts.at(4)?.id || '';

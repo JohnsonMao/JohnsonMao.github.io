@@ -1,8 +1,8 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from "next/server";
 import { defaultLocale, locales } from '~/data/i18n';
 import getLocale from '@/utils/getLocale';
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   // Check if there is any supported locale in the pathname
   const pathname = request.nextUrl.pathname;
   const pathnameHasLocalePrefix = locales.some(

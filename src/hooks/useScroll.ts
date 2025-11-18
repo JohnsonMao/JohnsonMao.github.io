@@ -8,7 +8,7 @@ export type ScrollHandler = (
 ) => void;
 
 export type UseScrollProps = {
-  ref?: RefObject<ScrollElement>;
+  ref?: RefObject<ScrollElement | null>;
   initial?: boolean;
   handler: ScrollHandler;
 };

@@ -21,7 +21,6 @@ export async function createMetadata(
     applicationName: title,
     keywords: ['frontend', 'notes'],
     referrer: 'origin',
-    themeColor: '#000000',
     robots: 'index, follow',
     authors: [
       {

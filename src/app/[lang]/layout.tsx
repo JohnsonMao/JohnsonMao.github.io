@@ -12,12 +12,16 @@ export async function generateStaticParams() {
 }
 
 export type RootParams = {
-  params: { lang: Locale };
+  params: Promise<{ lang: Locale }>;
 };
 
-export async function generateMetadata({
-  params: { lang },
-}: RootParams): Promise<Metadata> {
+export async function generateMetadata(props: RootParams): Promise<Metadata> {
+  const params = await props.params;
+
+  const {
+    lang
+  } = params;
+
   const { alternates } = await createMetadata(lang);
   const { common } = await getDictionary(lang);
   const { title } = common;
@@ -36,10 +40,17 @@ export async function generateMetadata({
   };
 }
 
-async function I18nLayout({
-  children,
-  params: { lang },
-}: RootParams & React.PropsWithChildren) {
+async function I18nLayout(props: RootParams & React.PropsWithChildren) {
+  const params = await props.params;
+
+  const {
+    lang
+  } = params;
+
+  const {
+    children
+  } = props;
+
   const { common } = await getDictionary(lang);
   const avatar = {
     src: WEBSITE_CONFIGS.avatarUrl,

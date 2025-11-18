@@ -13,6 +13,8 @@ import Link from '@/components/Link';
 import rehypeImageMetadata from '@/plugins/rehypeImageMetadata';
 import { compareDates } from './date';
 
+import type { JSX } from "react";
+
 const ROOT_PATH = process.cwd();
 
 /** Retrieve all data front matter sorted by date */
