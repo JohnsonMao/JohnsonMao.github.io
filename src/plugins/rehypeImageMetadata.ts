@@ -53,7 +53,7 @@ function filterImageNode(node: ImageNode): boolean {
 }
 
 /** get 10 x 10 base64 image and metadata */
-async function getPlaceholder(buffer: ArrayBufferLike) {
+async function getPlaceholder(buffer: ArrayBuffer) {
   const metadata = await sharp(buffer).metadata();
 
   const pipeline = sharp(buffer)
