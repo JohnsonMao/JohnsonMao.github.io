@@ -1,15 +1,15 @@
+import mockNavigation from '~/tests/navigation';
 import { renderHook } from '@testing-library/react';
 import useI18n from '@/hooks/useI18n';
 import { defaultLocale } from '~/data/i18n';
-import mockNavigation from '~/tests/navigation';
 
 describe('useI18n hook', () => {
   it.each([
     ['/test/path', defaultLocale],
     ['/en/test/path', 'en'],
     ['/zh/test/path', 'zh'],
-    ['/fr/test/path', 'zh'],
-  ])('should return the correct language code and dictionary', (pathname, expected) => {
+    ['/fr/test/path', defaultLocale],
+  ])('should return the correct language code and dictionary, pathname: %s, expected: %s', (pathname, expected) => {
     mockNavigation.pathname.mockReturnValueOnce(pathname);
     const { result } = renderHook(() => useI18n());
     expect(result.current.lang).toBe(expected);

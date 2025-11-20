@@ -1,6 +1,6 @@
+import mockNavigation from '~/tests/navigation';
 import { render, screen } from '@testing-library/react';
 import InfiniteList from '@/app/[lang]/posts/InfiniteList';
-import mockNavigation from '~/tests/navigation';
 
 describe('InfiniteList component', () => {
   it('should render correct element', () => {

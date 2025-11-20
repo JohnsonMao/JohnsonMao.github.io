@@ -1,7 +1,7 @@
+import mockNavigation from '~/tests/navigation';
 import { render, screen } from '@testing-library/react';
 import Page, { generateMetadata } from '@/app/[lang]/posts/page';
 import en from '~/data/i18n/locales/en.json';
-import mockNavigation from '~/tests/navigation';
 
 jest.mock('@/utils/mdx', () => ({
   getAllDataFrontmatter: () => [],
@@ -13,7 +13,7 @@ describe('Posts page', () => {
   });
 
   it('should render correct element', async () => {
-    const page = await Page({ params: { lang: 'en' } });
+    const page = await Page({ params: Promise.resolve({ lang: 'en' }) });
     render(page);
     const heading = await screen.findByRole('heading', { level: 1 });
     expect(heading).toBeInTheDocument();
@@ -21,7 +21,7 @@ describe('Posts page', () => {
 
   it('should generate correct metadata', async () => {
     const metadata = await generateMetadata({
-      params: { lang: 'en' },
+      params: Promise.resolve({ lang: 'en' }),
     });
     expect(metadata).toStrictEqual({ title: en.common.posts });
   });
