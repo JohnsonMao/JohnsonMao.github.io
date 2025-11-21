@@ -8,21 +8,16 @@ import TableOfContents from '@/components/TableOfContents';
 import { formatDate } from '@/utils/date';
 import { getAllDataFrontmatter, getDataById } from '@/utils/mdx';
 
-type PostParams = {
-  params: Promise<{ postId: string }>;
-};
-
 export async function generateStaticParams() {
   const posts = await getAllDataFrontmatter('posts');
 
   return posts.map(({ id }) => ({ postId: id }));
 }
 
-export async function generateMetadata(props: PostParams): Promise<Metadata> {
-  const params = await props.params;
-
-  const { postId } = params;
-
+export async function generateMetadata({
+  params,
+}: PageProps<'/[lang]/posts/[postId]'>): Promise<Metadata> {
+  const { postId } = await params;
   const post = await getDataById('posts', postId);
 
   if (!post) return notFound();
@@ -30,11 +25,8 @@ export async function generateMetadata(props: PostParams): Promise<Metadata> {
   return post.frontmatter;
 }
 
-async function PostPage(props: PostParams) {
-  const params = await props.params;
-
-  const { postId } = params;
-
+async function PostPage({ params }: PageProps<'/[lang]/posts/[postId]'>) {
+  const { postId } = await params;
   const post = await getDataById('posts', postId);
 
   if (!post) return notFound();

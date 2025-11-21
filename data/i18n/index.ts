@@ -11,5 +11,5 @@ const dictionaries: Record<Locale, () => Promise<Dictionary>> = {
 export const isLocale = (language: string): language is Locale =>
   locales.indexOf(language as Locale) > -1;
 
-export const getDictionary = (locale: Locale) =>
+export const getDictionary = (locale: string) =>
   isLocale(locale) ? dictionaries[locale]() : dictionaries[defaultLocale]();

@@ -4,14 +4,12 @@ import { H1 } from '@/components/Heading';
 import { getAllDataFrontmatter } from '@/utils/mdx';
 import { getDictionary } from '~/data/i18n';
 
-import type { RootParams } from '../layout';
 import InfiniteList from './InfiniteList';
 
-export async function generateMetadata(props: RootParams): Promise<Metadata> {
-  const params = await props.params;
-
-  const { lang } = params;
-
+export async function generateMetadata({
+  params,
+}: PageProps<'/[lang]/posts'>): Promise<Metadata> {
+  const { lang } = await params;
   const { common } = await getDictionary(lang);
 
   return {
@@ -19,11 +17,8 @@ export async function generateMetadata(props: RootParams): Promise<Metadata> {
   };
 }
 
-async function RootPage(props: RootParams) {
-  const params = await props.params;
-
-  const { lang } = params;
-
+async function RootPage({ params }: PageProps<'/[lang]/posts'>) {
+  const { lang } = await params;
   const posts = await getAllDataFrontmatter('posts');
   const { postsPage, common } = await getDictionary(lang);
 

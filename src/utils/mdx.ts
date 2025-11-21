@@ -6,6 +6,7 @@ import rehypeCodeTitles from 'rehype-code-titles';
 import rehypePrismPlus from 'rehype-prism-plus';
 import rehypeSlug from 'rehype-slug';
 import remarkGfm from 'remark-gfm';
+
 import CodeBox from '@/components/CodeBox';
 import { H2, H3, H4, H5, H6 } from '@/components/Heading';
 import Image from '@/components/Image';

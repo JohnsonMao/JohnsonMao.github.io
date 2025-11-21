@@ -16,7 +16,7 @@ function useIntersectionObserver({
   elementRef,
 }: UseIntersectionObserverProps = {}) {
   const [entry, setEntry] = useState<IntersectionObserverEntry[]>([]);
-  const internalElementRef = useRef<ElementNode>(undefined);
+  const internalElementRef = useRef<ElementNode>(null);
   const observerRef = useRef<IntersectionObserver | null>(null);
 
   const setInternalElementRef = useCallback((node: ElementNode) => {

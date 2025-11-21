@@ -6,26 +6,24 @@ import List from '@/components/List';
 import { getAllDataFrontmatter } from '@/utils/mdx';
 import { getDictionary } from '~/data/i18n';
 
-import type { RootParams } from '../layout';
 import Article from './Article';
 
-export async function generateMetadata(props: RootParams): Promise<Metadata> {
-  const params = await props.params;
-
-  const { lang } = params;
-
+export async function generateMetadata({
+  params,
+}: PageProps<'/[lang]'>): Promise<Metadata> {
+  const { lang } = await params;
   const { common } = await getDictionary(lang);
 
   return {
-    title: common.home,
+    title: {
+      template: `%s - ${common.home}`,
+      default: common.home,
+    },
   };
 }
 
-async function RootPage(props: RootParams) {
-  const params = await props.params;
-
-  const { lang } = params;
-
+async function RootPage({ params }: PageProps<'/[lang]'>) {
+  const { lang } = await params;
   const posts = await getAllDataFrontmatter('posts');
   const { homePage, common } = await getDictionary(lang);
   const nextPostId = posts.at(4)?.id || '';

@@ -4,7 +4,7 @@ import { WEBSITE_CONFIGS } from '~/constants';
 import { defaultLocale, getDictionary, Locale, locales } from '~/data/i18n';
 
 export async function createMetadata(
-  locale: Locale = defaultLocale
+  locale: string = defaultLocale
 ): Promise<Metadata> {
   const {
     common: { title },
