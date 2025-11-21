@@ -1,7 +1,7 @@
 import type { FeedOptions } from 'feed';
 import path from 'path';
+import { defaultLocale } from '#/data/i18n';
 import generateRSS, { PUBLIC_FEED_PATH } from '@/utils/generateRSS';
-import { defaultLocale } from '~/data/i18n';
 
 const mockWriteFile = jest.fn();
 const mockAtom1 = (options: unknown) => `atom1 - ${JSON.stringify(options)}`;

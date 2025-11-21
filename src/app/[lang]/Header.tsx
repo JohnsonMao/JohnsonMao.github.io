@@ -1,6 +1,7 @@
 'use client';
 
 import { CSSProperties, useCallback, useRef, useState } from 'react';
+import { HEADER_HEIGHT } from '#/constants';
 import Container from '@/components/Container';
 import Image from '@/components/Image';
 import Link from '@/components/Link';
@@ -8,7 +9,6 @@ import useIsMounted from '@/hooks/useIsMounted';
 import useScroll, { ScrollHandler } from '@/hooks/useScroll';
 import cn from '@/utils/cn';
 import { toFixedNumber } from '@/utils/math';
-import { HEADER_HEIGHT } from '~/constants';
 
 type HeaderProps = {
   avatar: React.ReactNode;

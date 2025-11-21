@@ -1,7 +1,7 @@
 import { renderHook } from '@testing-library/react';
+import { defaultLocale } from '#/data/i18n';
+import mockNavigation from '#/tests/navigation';
 import useI18n from '@/hooks/useI18n';
-import { defaultLocale } from '~/data/i18n';
-import mockNavigation from '~/tests/navigation';
 
 describe('useI18n hook', () => {
   it.each([

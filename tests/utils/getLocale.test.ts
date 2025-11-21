@@ -1,5 +1,5 @@
+import { defaultLocale } from '#/data/i18n';
 import getLocale from '@/utils/getLocale';
-import { defaultLocale } from '~/data/i18n';
 
 describe('get locale function', () => {
   it.each([

@@ -1,7 +1,7 @@
 import { Feed, FeedOptions } from 'feed';
 import fs from 'fs';
 import path from 'path';
-import { defaultLocale } from '~/data/i18n';
+import { defaultLocale } from '#/data/i18n';
 
 export const PUBLIC_FEED_PATH = path.join(process.cwd(), 'public', 'feed');
 

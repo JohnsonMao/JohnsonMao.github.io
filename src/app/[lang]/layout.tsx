@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
+import { WEBSITE_CONFIGS } from '#/constants';
+import { getDictionary, locales } from '#/data/i18n';
+import { createMetadata } from '#/data/metadata';
 import ThemeSwitcher from '@/components/ThemeSwitcher';
-import { WEBSITE_CONFIGS } from '~/constants';
-import { getDictionary, locales } from '~/data/i18n';
-import { createMetadata } from '~/data/metadata';
 import Footer from './Footer';
 import Header, { Avatar } from './Header';
 import Menu, { MenuProps } from './Menu';

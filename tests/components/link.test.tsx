@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import type { Route } from 'next';
+import mockNavigation from '#/tests/navigation';
 import Link from '@/components/Link';
-import mockNavigation from '~/tests/navigation';
 
 describe('Link component', () => {
   it.each([

@@ -1,10 +1,10 @@
 import { render, screen } from '@testing-library/react';
+import { locales } from '#/data/i18n';
+import mockNavigation from '#/tests/navigation';
 import Layout, {
   generateMetadata,
   generateStaticParams,
 } from '@/app/[lang]/layout';
-import { locales } from '~/data/i18n';
-import mockNavigation from '~/tests/navigation';
 
 describe('I18n layout', () => {
   it('should render correct element', async () => {

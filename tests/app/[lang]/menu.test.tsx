@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
+import mockNavigation from '#/tests/navigation';
 import Menu, { MenuProps } from '@/app/[lang]/Menu';
-import mockNavigation from '~/tests/navigation';
 
 describe('Menu component', () => {
   it('should render correct element', () => {

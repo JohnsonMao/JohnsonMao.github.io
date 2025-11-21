@@ -15,7 +15,7 @@ const jestConfig = {
   ],
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
-    '^~/(.*)$': '<rootDir>/$1',
+    '^#/(.*)$': '<rootDir>/$1',
   },
 };
 

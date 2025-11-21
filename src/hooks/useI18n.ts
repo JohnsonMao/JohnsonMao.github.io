@@ -1,6 +1,6 @@
 import { usePathname } from 'next/navigation';
+import { defaultLocale } from '#/data/i18n';
 import getLocale from '@/utils/getLocale';
-import { defaultLocale } from '~/data/i18n';
 
 /**
  * This hook retrieves the language setting based on the current pathname.

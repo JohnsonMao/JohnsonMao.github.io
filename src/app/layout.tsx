@@ -1,8 +1,8 @@
 import type { Metadata, Viewport } from 'next';
+import { locales } from '#/data/i18n';
+import { createFeedOptions, createMetadata } from '#/data/metadata';
 import Container from '@/components/Container';
 import generateRSS from '@/utils/generateRSS';
-import { locales } from '~/data/i18n';
-import { createFeedOptions, createMetadata } from '~/data/metadata';
 
 import Html from './Html';
 import Providers from './Providers';

@@ -1,9 +1,9 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { HEADER_HEIGHT } from '#/constants';
 import useScroll, { ScrollHandler } from '@/hooks/useScroll';
 import cn from '@/utils/cn';
-import { HEADER_HEIGHT } from '~/constants';
 import Collapse from './Collapse';
 import Link from './Link';
 

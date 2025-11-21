@@ -1,10 +1,10 @@
 import type { Metadata } from 'next';
+import { getDictionary } from '#/data/i18n';
 import Button from '@/components/Button';
 import Container from '@/components/Container';
 import { H1, H2 } from '@/components/Heading';
 import List from '@/components/List';
 import { getAllDataFrontmatter } from '@/utils/mdx';
-import { getDictionary } from '~/data/i18n';
 
 import Article from './Article';
 
