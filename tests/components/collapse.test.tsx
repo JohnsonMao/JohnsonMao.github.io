@@ -1,5 +1,5 @@
-import { render, screen, waitFor } from '@testing-library/react';
 import { Globals } from '@react-spring/web';
+import { render, screen, waitFor } from '@testing-library/react';
 import Collapse from '@/components/Collapse';
 
 describe('Collapse component', () => {

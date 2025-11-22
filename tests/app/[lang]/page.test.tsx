@@ -1,5 +1,4 @@
 import { render, screen } from '@testing-library/react';
-import en from '~/data/i18n/locales/en.json';
 import Page, { generateMetadata } from '@/app/[lang]/(home)/page';
 
 jest.mock('@/utils/mdx', () => ({
@@ -8,7 +7,10 @@ jest.mock('@/utils/mdx', () => ({
 
 describe('Root page component', () => {
   it('should render correct element', async () => {
-    const page = await Page({ params: { lang: 'en' } });
+    const page = await Page({
+      params: Promise.resolve({ lang: 'en' }),
+      searchParams: Promise.resolve({}),
+    });
     render(page);
     const heading = await screen.findByRole('heading', { level: 1 });
     expect(heading).toBeInTheDocument();
@@ -16,8 +18,14 @@ describe('Root page component', () => {
 
   it('should generate correct metadata', async () => {
     const metadata = await generateMetadata({
-      params: { lang: 'en' },
+      params: Promise.resolve({ lang: 'en' }),
+      searchParams: Promise.resolve({}),
     });
-    expect(metadata).toStrictEqual({ title: en.common.home });
+    expect(metadata).toStrictEqual({
+      title: {
+        template: '%s - Home',
+        default: 'Home',
+      },
+    });
   });
 });

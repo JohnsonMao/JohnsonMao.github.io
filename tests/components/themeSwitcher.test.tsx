@@ -1,8 +1,8 @@
-import type { PropsWithChildren } from 'react';
-import { ThemeProvider } from 'next-themes';
 import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { setDeviceTheme } from '~/tests/theme';
+import { ThemeProvider } from 'next-themes';
+import type { PropsWithChildren } from 'react';
+import { setDeviceTheme } from '#/tests/theme';
 import ThemeSwitcher from '@/components/ThemeSwitcher';
 
 function TestThemeComponent({ children }: PropsWithChildren) {

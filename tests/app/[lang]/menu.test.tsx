@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import mockNavigation from '~/tests/navigation';
+import mockNavigation from '#/tests/navigation';
 import Menu, { MenuProps } from '@/app/[lang]/Menu';
 
 describe('Menu component', () => {
@@ -27,20 +27,17 @@ describe('Menu component', () => {
     ['Home', 'Post', '/en'],
     ['Post', 'Home', '/en/posts'],
     ['Post', 'Home', '/en/posts/test'],
-  ])(
-    'should render correct active link based on the pathname "%s"',
-    (activeLinkText, otherLinkText, pathname) => {
-      const menu: MenuProps['menu'] = [
-        { text: 'Home', href: '/' },
-        { text: 'Post', href: '/posts' },
-      ];
-      mockNavigation.pathname.mockReturnValue(pathname);
-      render(<Menu menu={menu} />);
-      const activeLink = screen.getByRole('link', { name: activeLinkText });
-      const otherLink = screen.getByRole('link', { name: otherLinkText });
-      const activeClassName = 'neon-text';
-      expect(activeLink).toHaveClass(activeClassName);
-      expect(otherLink).not.toHaveClass(activeClassName);
-    }
-  );
+  ])('should render correct active link based on the pathname "%s"', (activeLinkText, otherLinkText, pathname) => {
+    const menu: MenuProps['menu'] = [
+      { text: 'Home', href: '/' },
+      { text: 'Post', href: '/posts' },
+    ];
+    mockNavigation.pathname.mockReturnValue(pathname);
+    render(<Menu menu={menu} />);
+    const activeLink = screen.getByRole('link', { name: activeLinkText });
+    const otherLink = screen.getByRole('link', { name: otherLinkText });
+    const activeClassName = 'neon-text';
+    expect(activeLink).toHaveClass(activeClassName);
+    expect(otherLink).not.toHaveClass(activeClassName);
+  });
 });

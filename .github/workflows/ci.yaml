@@ -24,7 +24,7 @@ jobs:
       - name: ⚙️ Setup PNPM
         uses: pnpm/action-setup@v4
         with:
-          version: 8
+          version: 10
 
       - name: 📝 Cache dependencies
         id: cache-deps
@@ -51,7 +51,7 @@ jobs:
       - name: ⚙️ Setup PNPM
         uses: pnpm/action-setup@v4
         with:
-          version: 8
+          version: 10
 
       - name: 📝 Cache dependencies
         id: cache-deps

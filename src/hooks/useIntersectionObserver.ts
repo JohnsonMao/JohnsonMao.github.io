@@ -1,9 +1,9 @@
-import { useCallback, useEffect, useRef, useState, RefObject } from 'react';
+import { RefObject, useCallback, useEffect, useRef, useState } from 'react';
 
 type ElementNode = Element | Element[] | null;
 
 interface UseIntersectionObserverProps extends IntersectionObserverInit {
-  elementRef?: RefObject<ElementNode>;
+  elementRef?: RefObject<ElementNode | null>;
 }
 
 /**
@@ -16,7 +16,7 @@ function useIntersectionObserver({
   elementRef,
 }: UseIntersectionObserverProps = {}) {
   const [entry, setEntry] = useState<IntersectionObserverEntry[]>([]);
-  const internalElementRef = useRef<ElementNode>();
+  const internalElementRef = useRef<ElementNode>(null);
   const observerRef = useRef<IntersectionObserver | null>(null);
 
   const setInternalElementRef = useCallback((node: ElementNode) => {
@@ -25,7 +25,9 @@ function useIntersectionObserver({
     observer?.disconnect();
 
     if (Array.isArray(node)) {
-      node.filter(Boolean).forEach((item) => observer?.observe(item));
+      node.filter(Boolean).forEach((item) => {
+        observer?.observe(item);
+      });
     } else if (node) {
       observer?.observe(node);
     }

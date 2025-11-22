@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import mockNavigation from '~/tests/navigation';
+import mockNavigation from '#/tests/navigation';
 import InfiniteList from '@/app/[lang]/posts/InfiniteList';
 
 describe('InfiniteList component', () => {
@@ -14,7 +14,9 @@ describe('InfiniteList component', () => {
         tags: [],
       }));
     mockNavigation.searchParams.mockReturnValue(new URLSearchParams());
-    render(<InfiniteList items={generateMockPosts(20)} morePostsText='MorePost' />);
+    render(
+      <InfiniteList items={generateMockPosts(20)} morePostsText="MorePost" />
+    );
     const link = screen.getByRole('link', { name: 'MorePost' });
     const list = screen.getByRole('list');
     expect(link).toBeInTheDocument();

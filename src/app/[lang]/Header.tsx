@@ -1,22 +1,25 @@
 'use client';
 
 import { CSSProperties, useCallback, useRef, useState } from 'react';
-
-import { HEADER_HEIGHT } from '~/constants';
+import { HEADER_HEIGHT } from '#/constants';
 import Container from '@/components/Container';
 import Image from '@/components/Image';
 import Link from '@/components/Link';
+import useIsMounted from '@/hooks/useIsMounted';
 import useScroll, { ScrollHandler } from '@/hooks/useScroll';
 import cn from '@/utils/cn';
 import { toFixedNumber } from '@/utils/math';
-import useIsMounted from '@/hooks/useIsMounted';
 
 type HeaderProps = {
   avatar: React.ReactNode;
   scrollThreshold?: number;
 } & React.PropsWithChildren;
 
-function Header({ avatar, children, scrollThreshold = HEADER_HEIGHT }: HeaderProps) {
+function Header({
+  avatar,
+  children,
+  scrollThreshold = HEADER_HEIGHT,
+}: HeaderProps) {
   const isMounted = useIsMounted();
   const [avatarScale, setAvatarScale] = useState(0);
   const [headerFixed, setHeaderFixed] = useState(true);

@@ -11,7 +11,7 @@ function Container({ as = 'div', className, ...props }: ContainerProps) {
   return (
     <Component
       className={cn(
-        'px-7 mx-4 max-w-6xl lg:px-14 sm:mx-8 md:mx-12 lg:mx-14 xl:mx-auto',
+        'mx-4 max-w-6xl px-7 sm:mx-8 md:mx-12 lg:mx-14 lg:px-14 xl:mx-auto',
         className
       )}
       {...props}

@@ -1,7 +1,7 @@
 'use client';
 
-import { memo } from 'react';
 import { useSearchParams } from 'next/navigation';
+import { memo } from 'react';
 import Button from '@/components/Button';
 import List from '@/components/List';
 import { clamp } from '@/utils/math';

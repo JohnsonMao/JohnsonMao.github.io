@@ -1,26 +1,29 @@
 import type { Metadata } from 'next';
-
-import { getDictionary } from '~/data/i18n';
+import { getDictionary } from '#/data/i18n';
+import Button from '@/components/Button';
 import Container from '@/components/Container';
 import { H1, H2 } from '@/components/Heading';
-import Button from '@/components/Button';
 import List from '@/components/List';
 import { getAllDataFrontmatter } from '@/utils/mdx';
 
-import type { RootParams } from '../layout';
 import Article from './Article';
 
 export async function generateMetadata({
-  params: { lang },
-}: RootParams): Promise<Metadata> {
+  params,
+}: PageProps<'/[lang]'>): Promise<Metadata> {
+  const { lang } = await params;
   const { common } = await getDictionary(lang);
 
   return {
-    title: common.home,
+    title: {
+      template: `%s - ${common.home}`,
+      default: common.home,
+    },
   };
 }
 
-async function RootPage({ params: { lang } }: RootParams) {
+async function RootPage({ params }: PageProps<'/[lang]'>) {
+  const { lang } = await params;
   const posts = await getAllDataFrontmatter('posts');
   const { homePage, common } = await getDictionary(lang);
   const nextPostId = posts.at(4)?.id || '';
@@ -28,7 +31,7 @@ async function RootPage({ params: { lang } }: RootParams) {
   return (
     <>
       <Container className="pb-8">
-        <H1 className="mb-4 text-3xl font-bold">{homePage.title}</H1>
+        <H1 className="mb-4 font-bold text-3xl">{homePage.title}</H1>
         <p className="text-xl">{homePage.description}</p>
       </Container>
       <Container as="main" className="py-8">

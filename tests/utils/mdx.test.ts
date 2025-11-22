@@ -1,4 +1,4 @@
-import { getDataById, getAllDataFrontmatter } from '@/utils/mdx';
+import { getAllDataFrontmatter, getDataById } from '@/utils/mdx';
 
 const mockReaddir = jest.fn();
 const mockExists = jest.fn();

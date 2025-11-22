@@ -39,3 +39,8 @@ next-env.d.ts
 # personal
 .vscode
 .swc
+
+# cursor
+.cursor
+.specstory
+.cursorindexingignore

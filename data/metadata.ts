@@ -1,10 +1,10 @@
-import type { Metadata } from 'next';
 import type { FeedOptions } from 'feed';
-import { WEBSITE_CONFIGS } from '~/constants';
-import { Locale, defaultLocale, getDictionary, locales } from '~/data/i18n';
+import type { Metadata } from 'next';
+import { WEBSITE_CONFIGS } from '#/constants';
+import { defaultLocale, getDictionary, Locale, locales } from '#/data/i18n';
 
 export async function createMetadata(
-  locale: Locale = defaultLocale
+  locale: string = defaultLocale
 ): Promise<Metadata> {
   const {
     common: { title },
@@ -21,7 +21,6 @@ export async function createMetadata(
     applicationName: title,
     keywords: ['frontend', 'notes'],
     referrer: 'origin',
-    themeColor: '#000000',
     robots: 'index, follow',
     authors: [
       {

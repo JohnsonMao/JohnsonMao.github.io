@@ -1,7 +1,7 @@
 'use client';
 
-import { CSSProperties, useLayoutEffect, useRef, useState } from 'react';
 import { usePathname } from 'next/navigation';
+import { CSSProperties, useLayoutEffect, useRef, useState } from 'react';
 
 import Link from '@/components/Link';
 import cn from '@/utils/cn';

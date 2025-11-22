@@ -23,11 +23,8 @@ describe('useIntersectionObserver hook', () => {
 
   it('should observe elements when elementRef is provided', () => {
     const elementRef = {
-      current: [
-        document.createElement('h2'),
-        document.createElement('h2')
-      ]
-    }
+      current: [document.createElement('h2'), document.createElement('h2')],
+    };
     renderHook(() => useIntersectionObserver({ elementRef }));
     expect(mockIntersectionObserver).toHaveBeenCalledTimes(1);
     expect(mockObserve).toHaveBeenCalledTimes(2);
@@ -37,11 +34,8 @@ describe('useIntersectionObserver hook', () => {
 
   it('should observe and disconnect elements when setElementRef is called', () => {
     const elementRef = {
-      current: [
-        document.createElement('h2'),
-        document.createElement('h2')
-      ]
-    }
+      current: [document.createElement('h2'), document.createElement('h2')],
+    };
     const { result } = renderHook(() => useIntersectionObserver());
     const [_, setElementRef] = result.current;
     expect(mockIntersectionObserver).toHaveBeenCalledTimes(1);

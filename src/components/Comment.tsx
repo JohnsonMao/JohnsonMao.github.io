@@ -1,8 +1,8 @@
 'use client';
 
-import { useTheme } from 'next-themes';
-import { GISCUS_CONFIGS } from '~/constants';
 import Giscus from '@giscus/react';
+import { useTheme } from 'next-themes';
+import { GISCUS_CONFIGS } from '#/constants';
 
 function Comment() {
   const { resolvedTheme } = useTheme();

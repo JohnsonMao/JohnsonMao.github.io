@@ -1,7 +1,7 @@
 'use client';
 
 import { useTheme } from 'next-themes';
-import { BsSunFill, BsMoonFill } from 'react-icons/bs';
+import { BsMoonFill, BsSunFill } from 'react-icons/bs';
 import useIsMounted from '@/hooks/useIsMounted';
 import Button from './Button';
 

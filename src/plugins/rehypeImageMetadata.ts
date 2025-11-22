@@ -4,11 +4,12 @@
  *
  * @see https://kylepfromer.com/blog/nextjs-image-component-blog
  */
-import type { ElementType } from 'react';
-import type { Node } from 'unist';
+
 import fs from 'fs';
 import path from 'path';
+import type { ElementType } from 'react';
 import sharp from 'sharp';
+import type { Node } from 'unist';
 import { visit } from 'unist-util-visit';
 
 /** All element HAST node */
@@ -53,7 +54,7 @@ function filterImageNode(node: ImageNode): boolean {
 }
 
 /** get 10 x 10 base64 image and metadata */
-async function getPlaceholder(buffer: ArrayBufferLike) {
+async function getPlaceholder(buffer: ArrayBuffer) {
   const metadata = await sharp(buffer).metadata();
 
   const pipeline = sharp(buffer)

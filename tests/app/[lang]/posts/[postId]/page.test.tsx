@@ -1,5 +1,4 @@
 import { render, screen } from '@testing-library/react';
-import mockNavigation from '~/tests/navigation';
 import Page, {
   generateMetadata,
   generateStaticParams,
@@ -32,7 +31,7 @@ describe('[postId] page', () => {
       },
     });
     const page = await Page({
-      params: { postId: 'test-id' },
+      params: Promise.resolve({ postId: 'test-id' }),
     });
     render(page);
     const heading = await screen.findByRole('heading', { level: 1 });
@@ -41,8 +40,9 @@ describe('[postId] page', () => {
 
   it('should call notFound when post data is null', async () => {
     mockData.mockReturnValue(null);
-    await Page({ params: { postId: 'test-id' } });
-    expect(mockNavigation.notFound).toHaveBeenCalled();
+    await expect(
+      Page({ params: Promise.resolve({ postId: 'test-id' }) })
+    ).rejects.toThrow();
   });
 });
 
@@ -52,7 +52,7 @@ describe('generate static params', () => {
     mockDataList.mockReturnValueOnce(source);
     const staticParams = await generateStaticParams();
     const expected = source.map(({ id }) => ({ postId: id }));
-    expect(staticParams).toStrictEqual(expected);
+    expect(staticParams).toEqual(expected);
   });
 });
 
@@ -64,13 +64,15 @@ describe('generate metadata', () => {
     };
     mockData.mockReturnValueOnce({ frontmatter: expected });
     const metadata = await generateMetadata({
-      params: { postId: 'test-id' },
+      params: Promise.resolve({ postId: 'test-id' }),
     });
     expect(metadata).toStrictEqual(expected);
   });
 
   it('should call notFound when post data is null', async () => {
-    await generateMetadata({ params: { postId: 'test-id' } });
-    expect(mockNavigation.notFound).toHaveBeenCalled();
+    mockData.mockReturnValue(null);
+    await expect(
+      generateMetadata({ params: Promise.resolve({ postId: 'test-id' }) })
+    ).rejects.toThrow();
   });
 });

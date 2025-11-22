@@ -10,12 +10,12 @@ const jestConfig = {
   testEnvironment: 'jest-environment-jsdom',
   collectCoverageFrom: [
     '<rootDir>/src/**/*.{ts,tsx}',
-    '!<rootDir>/src/middleware.ts',
+    '!<rootDir>/src/proxy.ts',
     '!<rootDir>/src/app/*.tsx',
   ],
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
-    '^~/(.*)$': '<rootDir>/$1',
+    '^#/(.*)$': '<rootDir>/$1',
   },
 };
 

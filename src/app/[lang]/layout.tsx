@@ -1,23 +1,20 @@
 import type { Metadata } from 'next';
-import { createMetadata } from '~/data/metadata';
-import { Locale, getDictionary, locales } from '~/data/i18n';
+import { WEBSITE_CONFIGS } from '#/constants';
+import { getDictionary, locales } from '#/data/i18n';
+import { createMetadata } from '#/data/metadata';
 import ThemeSwitcher from '@/components/ThemeSwitcher';
-import Header, { Avatar } from './Header';
 import Footer from './Footer';
+import Header, { Avatar } from './Header';
 import Menu, { MenuProps } from './Menu';
-import { WEBSITE_CONFIGS } from '~/constants';
 
 export async function generateStaticParams() {
   return locales.map((lang) => ({ lang }));
 }
 
-export type RootParams = {
-  params: { lang: Locale };
-};
-
 export async function generateMetadata({
-  params: { lang },
-}: RootParams): Promise<Metadata> {
+  params,
+}: LayoutProps<'/[lang]'>): Promise<Metadata> {
+  const { lang } = await params;
   const { alternates } = await createMetadata(lang);
   const { common } = await getDictionary(lang);
   const { title } = common;
@@ -36,10 +33,8 @@ export async function generateMetadata({
   };
 }
 
-async function I18nLayout({
-  children,
-  params: { lang },
-}: RootParams & React.PropsWithChildren) {
+async function I18nLayout({ children, params }: LayoutProps<'/[lang]'>) {
+  const { lang } = await params;
   const { common } = await getDictionary(lang);
   const avatar = {
     src: WEBSITE_CONFIGS.avatarUrl,

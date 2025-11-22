@@ -1,6 +1,6 @@
 /**
  * Implementing a "Copy to Clipboard" functionality while ensuring compatibility
- * 
+ *
  * @see https://philstainer.io/blog/copy-code-button-markdown
  */
 export function copyToClipboard(text: string) {
