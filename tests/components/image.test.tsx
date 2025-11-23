@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen } from '#/tests/__helpers__/test-utils';
 import Image from '@/components/Image';
 
 describe('Image component', () => {

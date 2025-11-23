@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen } from '#/tests/__helpers__/test-utils';
 import mockNavigation from '#/tests/navigation';
 import Menu, { MenuProps } from '@/app/[lang]/Menu';
 
@@ -16,28 +16,29 @@ describe('Menu component', () => {
     expect(nav).toBeInTheDocument();
     expect(nav.tagName).toBe('NAV');
     expect(linkA).toHaveTextContent(menu[0].text);
-    expect(linkA).toHaveAttribute('href', menu[0].href);
+    expect(linkA).toHaveAttribute('href', '/en');
     expect(linkB).toHaveTextContent(menu[1].text);
-    expect(linkB).toHaveAttribute('href', menu[1].href);
+    expect(linkB).toHaveAttribute('href', '/en/posts');
   });
 
   it.each([
-    ['Home', 'Post', '/'],
-    ['Post', 'Home', '/posts'],
-    ['Home', 'Post', '/en'],
-    ['Post', 'Home', '/en/posts'],
-    ['Post', 'Home', '/en/posts/test'],
-  ])('should render correct active link based on the pathname "%s"', (activeLinkText, otherLinkText, pathname) => {
+    ['Home', 'Post', '/', '/'],
+    ['Post', 'Home', '/posts', '/posts'],
+    ['Home', 'Post', '/en', '/'],
+    ['Post', 'Home', '/en/posts', '/posts'],
+    ['Post', 'Home', '/en/posts/test', '/posts'],
+  ])('should render correct active link based on the pathname "%s"', (activeLinkText, otherLinkText, _pathname, expectedPathname) => {
     const menu: MenuProps['menu'] = [
       { text: 'Home', href: '/' },
       { text: 'Post', href: '/posts' },
     ];
-    mockNavigation.pathname.mockReturnValue(pathname);
+    // usePathname from @/i18n/navigation returns pathname without locale
+    // Set the mock before rendering
+    mockNavigation.i18nPathname.mockReturnValue(expectedPathname);
     render(<Menu menu={menu} />);
     const activeLink = screen.getByRole('link', { name: activeLinkText });
     const otherLink = screen.getByRole('link', { name: otherLinkText });
-    const activeClassName = 'neon-text';
-    expect(activeLink).toHaveClass(activeClassName);
-    expect(otherLink).not.toHaveClass(activeClassName);
+    expect(activeLink).toHaveClass('neon-text');
+    expect(otherLink).not.toHaveClass('neon-text');
   });
 });

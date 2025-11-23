@@ -2,6 +2,10 @@ const mockPathname = jest.fn();
 const mockRouter = jest.fn();
 const mockSearchParams = jest.fn();
 const mockNotFound = jest.fn();
+const mockI18nPathname = jest.fn();
+const mockI18nRouter = jest.fn();
+const mockRedirect = jest.fn();
+const mockGetPathname = jest.fn();
 
 jest.mock('next/navigation', () => ({
   notFound: () => mockNotFound(),
@@ -10,11 +14,29 @@ jest.mock('next/navigation', () => ({
   useRouter: () => mockRouter(),
 }));
 
+// Mock only the hooks, keep Link implementation from next-intl
+jest.mock('@/i18n/navigation', () => {
+  const actual = jest.requireActual('@/i18n/navigation');
+  return {
+    ...actual,
+    usePathname: () => mockI18nPathname(),
+    useRouter: () => mockI18nRouter(),
+    redirect: () => mockRedirect(),
+    getPathname: () => mockGetPathname(),
+  };
+});
+
 beforeEach(() => {
   mockNotFound.mockClear();
   mockSearchParams.mockClear();
   mockPathname.mockClear();
   mockRouter.mockClear();
+  mockI18nPathname.mockClear();
+  mockI18nRouter.mockClear();
+  mockRedirect.mockClear();
+  mockGetPathname.mockClear();
+  // 默認返回不帶 locale 的路徑
+  mockI18nPathname.mockReturnValue('/');
 });
 
 const mockNavigation = {
@@ -22,6 +44,7 @@ const mockNavigation = {
   searchParams: mockSearchParams,
   pathname: mockPathname,
   router: mockRouter,
+  i18nPathname: mockI18nPathname,
 };
 
 export default mockNavigation;

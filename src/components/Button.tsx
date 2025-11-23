@@ -30,7 +30,10 @@ function Button({
   }
 
   return (
-    <button className={buttonOrLinkClassName} {...props}>
+    <button
+      className={buttonOrLinkClassName}
+      {...(props as ButtonHTMLAttributes<HTMLButtonElement>)}
+    >
       {children}
     </button>
   );

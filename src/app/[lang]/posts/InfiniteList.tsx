@@ -1,24 +1,25 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
-import { memo } from 'react';
+import { useTranslations } from 'next-intl';
+import { memo, Suspense } from 'react';
 import Button from '@/components/Button';
 import List from '@/components/List';
 import { clamp } from '@/utils/math';
 import Article from '../(home)/Article';
 
-type InfiniteListProps = {
+type PostListProps = {
   items: DataFrontmatter[];
-  morePostsText: string;
 };
 
 const MemoArticle = memo(Article);
 
-function InfiniteList({ items, morePostsText }: InfiniteListProps) {
+function PostList({ items }: PostListProps) {
   const searchParams = useSearchParams();
+  const limit = parseInt(searchParams.get('limit') || '10', 10);
   const total = items.length;
   const clampLimit = clamp(1, total);
-  const limit = clampLimit(parseInt(searchParams.get('limit') || '10', 10));
+  const t = useTranslations('common');
 
   return (
     <>
@@ -30,11 +31,19 @@ function InfiniteList({ items, morePostsText }: InfiniteListProps) {
             scroll={false}
             replace
           >
-            {morePostsText}
+            {t('morePosts')}
           </Button>
         </div>
       )}
     </>
+  );
+}
+
+function InfiniteList({ items }: PostListProps) {
+  return (
+    <Suspense fallback={<List Item={MemoArticle} items={items.slice(0, 10)} />}>
+      <PostList items={items} />
+    </Suspense>
   );
 }
 

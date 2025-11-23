@@ -1,23 +1,39 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
+import { notFound } from 'next/navigation';
+import { hasLocale } from 'next-intl';
+import { getMessages, setRequestLocale } from 'next-intl/server';
 import { WEBSITE_CONFIGS } from '#/constants';
-import { getDictionary, locales } from '#/data/i18n';
-import { createMetadata } from '#/data/metadata';
+import { createFeedOptions, createMetadata } from '#/data/metadata';
 import ThemeSwitcher from '@/components/ThemeSwitcher';
+import { routing } from '@/i18n/routing';
+import generateRSS from '@/utils/generateRSS';
+import GlobalProviders from '../global-providers';
 import Footer from './Footer';
 import Header, { Avatar } from './Header';
 import Menu, { MenuProps } from './Menu';
 
 export async function generateStaticParams() {
-  return locales.map((lang) => ({ lang }));
+  const allFeedOptions = await Promise.all(
+    routing.locales.map(createFeedOptions)
+  );
+  allFeedOptions.forEach(generateRSS);
+  return routing.locales.map((lang) => ({ lang }));
+}
+
+export function generateViewport(): Viewport {
+  return {
+    themeColor: '#000000',
+  };
 }
 
 export async function generateMetadata({
   params,
 }: LayoutProps<'/[lang]'>): Promise<Metadata> {
   const { lang } = await params;
+  if (!hasLocale(routing.locales, lang)) notFound();
   const { alternates } = await createMetadata(lang);
-  const { common } = await getDictionary(lang);
-  const { title } = common;
+  const messages = await getMessages({ locale: lang });
+  const { title } = messages.common;
 
   return {
     title: {
@@ -33,34 +49,36 @@ export async function generateMetadata({
   };
 }
 
-async function I18nLayout({ children, params }: LayoutProps<'/[lang]'>) {
+async function RootLayout({ children, params }: LayoutProps<'/[lang]'>) {
   const { lang } = await params;
-  const { common } = await getDictionary(lang);
+  if (!hasLocale(routing.locales, lang)) notFound();
+  setRequestLocale(lang);
+  const messages = await getMessages({ locale: lang });
   const avatar = {
     src: WEBSITE_CONFIGS.avatarUrl,
     alt: WEBSITE_CONFIGS.authorName,
   };
   const menu: MenuProps['menu'] = [
     {
-      text: common.home,
+      text: messages.common.home,
       href: '/',
     },
     {
-      text: common.posts,
+      text: messages.common.posts,
       href: '/posts',
     },
   ];
 
   return (
-    <>
+    <GlobalProviders locale={lang} messages={messages}>
       <Header avatar={<Avatar src={avatar.src} alt={avatar.alt} />}>
         <Menu menu={menu} />
         <ThemeSwitcher />
       </Header>
       {children}
       <Footer copyright={WEBSITE_CONFIGS.copyright} />
-    </>
+    </GlobalProviders>
   );
 }
 
-export default I18nLayout;
+export default RootLayout;

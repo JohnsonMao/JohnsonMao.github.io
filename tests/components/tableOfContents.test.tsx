@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen } from '#/tests/__helpers__/test-utils';
 import { H2, H3 } from '@/components/Heading';
 import TableOfContents from '@/components/TableOfContents';
 

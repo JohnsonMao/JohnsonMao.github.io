@@ -1,10 +1,22 @@
-import { render, screen } from '@testing-library/react';
-import { locales } from '#/data/i18n';
+import enMessages from '#/content/i18n/messages/en.json';
+import { render, screen } from '#/tests/__helpers__/test-utils';
 import mockNavigation from '#/tests/navigation';
 import Layout, {
   generateMetadata,
   generateStaticParams,
+  generateViewport,
 } from '@/app/[lang]/layout';
+import { routing } from '@/i18n/routing';
+
+jest.mock('next-intl/server', () => ({
+  getMessages: jest.fn(() => Promise.resolve(enMessages)),
+  setRequestLocale: jest.fn(),
+}));
+
+jest.mock('#/data/metadata', () => ({
+  createMetadata: jest.fn(() => Promise.resolve({})),
+  createFeedOptions: jest.fn(() => Promise.resolve({})),
+}));
 
 describe('I18n layout', () => {
   it('should render correct element', async () => {
@@ -27,16 +39,38 @@ describe('I18n layout', () => {
     expect(footer).toBeInTheDocument();
   });
 
+  it('should call notFound when locale is not supported in generateMetadata', async () => {
+    await generateMetadata({
+      params: Promise.resolve({ lang: 'not-supported' }),
+      children: null,
+    });
+    expect(mockNavigation.notFound).toHaveBeenCalled();
+  });
+
+  it('should call notFound when locale is not supported in layout', async () => {
+    await Layout({
+      params: Promise.resolve({ lang: 'not-supported' }),
+      children: null,
+    });
+    expect(mockNavigation.notFound).toHaveBeenCalled();
+  });
+
   it('should generate correct metadata', async () => {
     const metadata = await generateMetadata({
       params: Promise.resolve({ lang: 'en' }),
+      children: null,
     });
     expect(metadata).toBeTruthy();
   });
 
   it('should generate correct static params', async () => {
     const staticParams = await generateStaticParams();
-    const expected = locales.map((lang) => ({ lang }));
+    const expected = routing.locales.map((lang) => ({ lang }));
     expect(staticParams).toStrictEqual(expected);
+  });
+
+  it('should generate correct viewport', async () => {
+    const viewport = generateViewport();
+    expect(viewport).toBeTruthy();
   });
 });

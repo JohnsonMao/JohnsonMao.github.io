@@ -1,4 +1,4 @@
-import { act, renderHook } from '@testing-library/react';
+import { act, renderHook } from '#/tests/__helpers__/test-utils';
 import useAutoReset from '@/hooks/useAutoReset';
 
 describe('useAutoReset hook', () => {

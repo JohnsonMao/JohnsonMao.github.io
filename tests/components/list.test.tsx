@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen } from '#/tests/__helpers__/test-utils';
 import List from '@/components/List';
 
 describe('List component', () => {

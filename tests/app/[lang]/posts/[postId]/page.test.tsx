@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen } from '#/tests/__helpers__/test-utils';
 import Page, {
   generateMetadata,
   generateStaticParams,
@@ -31,7 +31,8 @@ describe('[postId] page', () => {
       },
     });
     const page = await Page({
-      params: Promise.resolve({ postId: 'test-id' }),
+      params: Promise.resolve({ lang: 'en', postId: 'test-id' }),
+      searchParams: Promise.resolve({}),
     });
     render(page);
     const heading = await screen.findByRole('heading', { level: 1 });
@@ -41,7 +42,10 @@ describe('[postId] page', () => {
   it('should call notFound when post data is null', async () => {
     mockData.mockReturnValue(null);
     await expect(
-      Page({ params: Promise.resolve({ postId: 'test-id' }) })
+      Page({
+        params: Promise.resolve({ lang: 'en', postId: 'test-id' }),
+        searchParams: Promise.resolve({}),
+      })
     ).rejects.toThrow();
   });
 });
@@ -64,7 +68,8 @@ describe('generate metadata', () => {
     };
     mockData.mockReturnValueOnce({ frontmatter: expected });
     const metadata = await generateMetadata({
-      params: Promise.resolve({ postId: 'test-id' }),
+      params: Promise.resolve({ lang: 'en', postId: 'test-id' }),
+      searchParams: Promise.resolve({}),
     });
     expect(metadata).toStrictEqual(expected);
   });
@@ -72,7 +77,10 @@ describe('generate metadata', () => {
   it('should call notFound when post data is null', async () => {
     mockData.mockReturnValue(null);
     await expect(
-      generateMetadata({ params: Promise.resolve({ postId: 'test-id' }) })
+      generateMetadata({
+        params: Promise.resolve({ lang: 'en', postId: 'test-id' }),
+        searchParams: Promise.resolve({}),
+      })
     ).rejects.toThrow();
   });
 });

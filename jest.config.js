@@ -12,6 +12,7 @@ const jestConfig = {
     '<rootDir>/src/**/*.{ts,tsx}',
     '!<rootDir>/src/proxy.ts',
     '!<rootDir>/src/app/*.tsx',
+    '!<rootDir>/src/i18n/*.ts',
   ],
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
@@ -20,4 +21,7 @@ const jestConfig = {
 };
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async
-module.exports = createJestConfig(jestConfig);
+module.exports = async () => ({
+  ...(await createJestConfig(jestConfig)()),
+  transformIgnorePatterns: ['node_modules/(?!next-intl)/']
+});

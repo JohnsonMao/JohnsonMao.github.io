@@ -1,70 +1,29 @@
 'use client';
 
-import type { Route } from 'next';
-import NextLink, { LinkProps as NextLinkProps } from 'next/link';
-import { usePathname } from 'next/navigation';
-import type { ReactNode } from 'react';
 import { HiExternalLink } from 'react-icons/hi';
-
+import { Link as NextLink } from '@/i18n/navigation';
 import cn from '@/utils/cn';
-import getLocale from '@/utils/getLocale';
 
-export type LinkProps<T extends string = string> = (
-  | NextLinkProps<T>
-  | LinkWithoutLocalePathProps
-  | ExternalLinkProps
-) & {
-  children: ReactNode;
-  className?: string;
-};
+export type LinkProps = React.ComponentProps<typeof NextLink>;
 
-function Link<T extends string = string>({
-  href,
-  className,
-  children,
-  ...otherProps
-}: LinkProps<T>) {
-  const pathname = usePathname();
-
-  const isObjectHref = typeof href === 'object' || href.startsWith('#');
-  const isQueryLink = !isObjectHref && href.startsWith('?');
-  const isAnchorLink = !isObjectHref && href.startsWith('#');
-  const isInternalLink = !isObjectHref && href.startsWith('/');
-
-  if (isObjectHref || isAnchorLink || isQueryLink) {
-    return (
-      <NextLink href={href as Route} className={className} {...otherProps}>
-        {children}
-      </NextLink>
-    );
-  }
-
-  if (isInternalLink) {
-    const rootPath = getLocale(pathname);
-    const adjustedHref = rootPath ? `/${rootPath}${href}` : href;
-
-    return (
-      <NextLink
-        href={adjustedHref as Route}
-        className={className}
-        {...otherProps}
-      >
-        {children}
-      </NextLink>
-    );
-  }
+function Link({ href, className, children, ...otherProps }: LinkProps) {
+  const isExternalLink =
+    typeof href === 'string' &&
+    !href.startsWith('/') &&
+    !href.startsWith('#') &&
+    !href.startsWith('?');
 
   return (
-    <a
+    <NextLink
       href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      className={cn('inline-flex', className)}
+      className={cn(isExternalLink && 'inline-flex', className)}
       {...otherProps}
+      target={isExternalLink ? '_blank' : undefined}
+      rel={isExternalLink ? 'noopener noreferrer' : undefined}
     >
       {children}
-      <HiExternalLink />
-    </a>
+      {isExternalLink && <HiExternalLink />}
+    </NextLink>
   );
 }
 

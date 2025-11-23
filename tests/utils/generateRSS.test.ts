@@ -1,6 +1,6 @@
 import type { FeedOptions } from 'feed';
 import path from 'path';
-import { defaultLocale } from '#/data/i18n';
+import { routing } from '@/i18n/routing';
 import generateRSS, { PUBLIC_FEED_PATH } from '@/utils/generateRSS';
 
 const mockWriteFile = jest.fn();
@@ -50,7 +50,7 @@ describe('Generate RSS function', () => {
       title: 'test generate RSS',
       copyright: `Copyright © ${new Date().getFullYear()}`,
     };
-    const expectedFileName = `atom.${defaultLocale}.xml`;
+    const expectedFileName = `atom.${routing.defaultLocale}.xml`;
     const expectedFileContent = mockAtom1(testFeedOptions);
     generateRSS(testFeedOptions);
     expect(mockWriteFile).toHaveBeenCalledTimes(1);
