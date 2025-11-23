@@ -1,11 +1,10 @@
 'use client';
 
-import { usePathname } from 'next/navigation';
 import { CSSProperties, useLayoutEffect, useRef, useState } from 'react';
 
 import Link from '@/components/Link';
+import { usePathname } from '@/i18n/navigation';
 import cn from '@/utils/cn';
-import getLocale from '@/utils/getLocale';
 
 type MenuItem = {
   text: string;
@@ -20,12 +19,7 @@ function Menu({ menu }: MenuProps) {
   const [offset, setOffset] = useState({ left: 0, width: 16 });
   const menuRef = useRef<HTMLUListElement>(null);
   const pathname = usePathname();
-  const locale = getLocale(pathname) || '';
-  const localePrefix = new RegExp(`^/${locale}/?([^/]*)/?`);
-  const rootPathname = localePrefix.exec(pathname)?.[1];
-  const activeLinkIndex = menu.findIndex(
-    (item) => item.href === `/${rootPathname}`
-  );
+  const activeLinkIndex = menu.findIndex((item) => item.href === pathname);
 
   const menuStyle = {
     '--active-offset-w': (offset.width - 16) / 40,

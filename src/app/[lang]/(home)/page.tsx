@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { getDictionary } from '#/data/i18n';
+import { getTranslations } from 'next-intl/server';
 import Button from '@/components/Button';
 import Container from '@/components/Container';
 import { H1, H2 } from '@/components/Heading';
@@ -8,38 +8,35 @@ import { getAllDataFrontmatter } from '@/utils/mdx';
 
 import Article from './Article';
 
-export async function generateMetadata({
-  params,
-}: PageProps<'/[lang]'>): Promise<Metadata> {
-  const { lang } = await params;
-  const { common } = await getDictionary(lang);
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations('common');
 
   return {
     title: {
-      template: `%s - ${common.home}`,
-      default: common.home,
+      template: `%s - ${t('home')}`,
+      default: t('home'),
     },
   };
 }
 
-async function RootPage({ params }: PageProps<'/[lang]'>) {
-  const { lang } = await params;
+async function RootPage() {
   const posts = await getAllDataFrontmatter('posts');
-  const { homePage, common } = await getDictionary(lang);
+  const tHomePage = await getTranslations('homePage');
+  const tCommon = await getTranslations('common');
   const nextPostId = posts.at(4)?.id || '';
 
   return (
     <>
       <Container className="pb-8">
-        <H1 className="mb-4 font-bold text-3xl">{homePage.title}</H1>
-        <p className="text-xl">{homePage.description}</p>
+        <H1 className="mb-4 font-bold text-3xl">{tHomePage('title')}</H1>
+        <p className="text-xl">{tHomePage('description')}</p>
       </Container>
       <Container as="main" className="py-8">
-        <H2 className="mb-6 text-center text-2xl">{common.latestPosts}</H2>
+        <H2 className="mb-6 text-center text-2xl">{tCommon('latestPosts')}</H2>
         <List Item={Article} items={posts.slice(0, 4)} />
         <div className="my-4 flex justify-center">
           <Button href={`/posts#${nextPostId}`} className="text-lg">
-            {common.morePosts}
+            {tCommon('morePosts')}
           </Button>
         </div>
       </Container>

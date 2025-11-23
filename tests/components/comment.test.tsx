@@ -1,6 +1,6 @@
 import { GiscusProps } from '@giscus/react';
-import { render, screen } from '@testing-library/react';
 import { GISCUS_CONFIGS } from '#/constants';
+import { render, screen } from '#/tests/__helpers__/test-utils';
 import Comment from '@/components/Comment';
 
 const getGiscusProps = jest.fn();

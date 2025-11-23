@@ -1,4 +1,4 @@
-import { act, renderHook, waitFor } from '@testing-library/react';
+import { act, renderHook, waitFor } from '#/tests/__helpers__/test-utils';
 import useScroll from '@/hooks/useScroll';
 
 describe('useScroll hook', () => {

@@ -1,4 +1,4 @@
-import { act, render, screen, waitFor } from '@testing-library/react';
+import { act, render, screen, waitFor } from '#/tests/__helpers__/test-utils';
 import Header, { Avatar } from '@/app/[lang]/Header';
 
 const scrollDownTo = (to: number) => {
@@ -27,7 +27,7 @@ describe('Header component', () => {
     render(<Header avatar={avatar} />);
     const brandLink = screen.getByRole('img');
     expect(brandLink).toBeInTheDocument();
-    expect(brandLink.parentElement).toHaveAttribute('href', '/');
+    expect(brandLink.parentElement).toHaveAttribute('href', '/en');
   });
 
   it('should hide header on scroll down and show on scroll up', async () => {

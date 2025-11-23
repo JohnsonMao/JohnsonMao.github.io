@@ -1,15 +1,15 @@
 import type { FeedOptions } from 'feed';
 import type { Metadata } from 'next';
+import type { Locale } from 'next-intl';
+import { getMessages } from 'next-intl/server';
 import { WEBSITE_CONFIGS } from '#/constants';
-import { defaultLocale, getDictionary, Locale, locales } from '#/data/i18n';
+import { routing } from '@/i18n/routing';
 
-export async function createMetadata(
-  locale: string = defaultLocale
-): Promise<Metadata> {
+export async function createMetadata(locale: Locale): Promise<Metadata> {
   const {
     common: { title },
     homePage: { description },
-  } = await getDictionary(locale);
+  } = await getMessages({ locale });
 
   return {
     title: {
@@ -31,7 +31,7 @@ export async function createMetadata(
     alternates: {
       canonical: '/',
       languages: Object.fromEntries(
-        locales.map((locale) => [locale, `/${locale}`])
+        routing.locales.map((locale) => [locale, `/${locale}`])
       ),
     },
     // icons: [],
@@ -45,7 +45,7 @@ export async function createMetadata(
 export async function createFeedOptions(locale: Locale): Promise<FeedOptions> {
   const {
     homePage: { title, description },
-  } = await getDictionary(locale);
+  } = await getMessages({ locale });
 
   return {
     id: WEBSITE_CONFIGS.domainUrl,

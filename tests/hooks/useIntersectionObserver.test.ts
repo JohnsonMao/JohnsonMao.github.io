@@ -1,4 +1,4 @@
-import { act, renderHook } from '@testing-library/react';
+import { act, renderHook } from '#/tests/__helpers__/test-utils';
 import useIntersectionObserver from '@/hooks/useIntersectionObserver';
 
 describe('useIntersectionObserver hook', () => {

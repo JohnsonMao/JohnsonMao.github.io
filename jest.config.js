@@ -20,4 +20,7 @@ const jestConfig = {
 };
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async
-module.exports = createJestConfig(jestConfig);
+module.exports = async () => ({
+  ...(await createJestConfig(jestConfig)()),
+  transformIgnorePatterns: ['node_modules/(?!next-intl)/']
+});
