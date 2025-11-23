@@ -12,6 +12,7 @@ const jestConfig = {
     '<rootDir>/src/**/*.{ts,tsx}',
     '!<rootDir>/src/proxy.ts',
     '!<rootDir>/src/app/*.tsx',
+    '!<rootDir>/src/i18n/*.ts',
   ],
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',

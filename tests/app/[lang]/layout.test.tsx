@@ -4,6 +4,7 @@ import mockNavigation from '#/tests/navigation';
 import Layout, {
   generateMetadata,
   generateStaticParams,
+  generateViewport,
 } from '@/app/[lang]/layout';
 import { routing } from '@/i18n/routing';
 
@@ -50,5 +51,10 @@ describe('I18n layout', () => {
     const staticParams = await generateStaticParams();
     const expected = routing.locales.map((lang) => ({ lang }));
     expect(staticParams).toStrictEqual(expected);
+  });
+
+  it('should generate correct viewport', async () => {
+    const viewport = generateViewport();
+    expect(viewport).toBeTruthy();
   });
 });
