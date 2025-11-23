@@ -39,6 +39,22 @@ describe('I18n layout', () => {
     expect(footer).toBeInTheDocument();
   });
 
+  it('should call notFound when locale is not supported in generateMetadata', async () => {
+    await generateMetadata({
+      params: Promise.resolve({ lang: 'not-supported' }),
+      children: null,
+    });
+    expect(mockNavigation.notFound).toHaveBeenCalled();
+  });
+
+  it('should call notFound when locale is not supported in layout', async () => {
+    await Layout({
+      params: Promise.resolve({ lang: 'not-supported' }),
+      children: null,
+    });
+    expect(mockNavigation.notFound).toHaveBeenCalled();
+  });
+
   it('should generate correct metadata', async () => {
     const metadata = await generateMetadata({
       params: Promise.resolve({ lang: 'en' }),

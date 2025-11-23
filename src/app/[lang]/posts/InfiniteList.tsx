@@ -14,10 +14,6 @@ type PostListProps = {
 
 const MemoArticle = memo(Article);
 
-function Top10PostList({ items }: PostListProps) {
-  return <List Item={MemoArticle} items={items.slice(0, 10)} />;
-}
-
 function PostList({ items }: PostListProps) {
   const searchParams = useSearchParams();
   const limit = parseInt(searchParams.get('limit') || '10', 10);
@@ -45,7 +41,7 @@ function PostList({ items }: PostListProps) {
 
 function InfiniteList({ items }: PostListProps) {
   return (
-    <Suspense fallback={<Top10PostList items={items} />}>
+    <Suspense fallback={<List Item={MemoArticle} items={items.slice(0, 10)} />}>
       <PostList items={items} />
     </Suspense>
   );
