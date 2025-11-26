@@ -61,5 +61,7 @@ const customRender = (
 // 重新導出所有 @testing-library/react 的內容
 export * from '@testing-library/react';
 
+export const mocked = (fn: unknown) => fn as jest.Mock;
+
 // 覆蓋 render 函數
 export { customRender as render };
