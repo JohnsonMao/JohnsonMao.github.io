@@ -24,22 +24,23 @@ Welcome to My Blog, a simple blog built with Next.js 13 and Markdown for content
 
 ## Project Structure
 
-- `data/`: Contains data-related files.
-  - `i18n/`: Internationalization and localization files.
+- `constants/`: Configuration files for the blog.
+  - `index.ts`: Giscus comment system config, website metadata, and other constants.
+- `content/`: Content data files.
+  - `i18n/messages/`: Internationalization and localization files (JSON).
   - `posts/`: Markdown files for blog posts.
-  - `giscus.ts`: Configuration for the Giscus comment system.
-  - `metadata.ts`: Metadata and configuration for the blog.
 - `public/static/`: Public static images and other assets.
-- `src/`:  The main source code directory.
+- `src/`: The main source code directory.
   - `app/`: Next.js pages and routing.
-  - `assets/`: Global and component-specific CSS.
-  - `components/`: Reusable React component.
+  - `css/`: Global and component-specific CSS.
+  - `components/`: Reusable React components.
   - `hooks/`: Custom React hooks.
+  - `i18n/`: Internationalization configuration and routing.
   - `plugins/`: Additional plugins or extensions.
   - `utils/`: Utility functions and helper modules.
   - `middleware.ts`: Next.js middleware.
-- `tests/`:  Test folder contains the application's test files.
-- `types/`:  TypeScript type definitions.
+- `tests/`: Test folder contains the application's test files.
+- `types/`: TypeScript type definitions (global types used by both src and tests).
 
 <!-- ## License -->
 
