@@ -3,10 +3,9 @@ import { notFound } from 'next/navigation';
 import { hasLocale } from 'next-intl';
 import { getMessages, setRequestLocale } from 'next-intl/server';
 import { WEBSITE_CONFIGS } from '#/constants';
-import { createFeedOptions, createMetadata } from '#/data/metadata';
 import ThemeSwitcher from '@/components/ThemeSwitcher';
 import { routing } from '@/i18n/routing';
-import generateRSS from '@/utils/generateRSS';
+import generateRSS, { createFeedOptions } from '@/utils/generateRSS';
 import GlobalProviders from '../global-providers';
 import Footer from './Footer';
 import Header, { Avatar } from './Header';
@@ -31,20 +30,80 @@ export async function generateMetadata({
 }: LayoutProps<'/[lang]'>): Promise<Metadata> {
   const { lang } = await params;
   if (!hasLocale(routing.locales, lang)) notFound();
-  const { alternates } = await createMetadata(lang);
   const messages = await getMessages({ locale: lang });
-  const { title } = messages.common;
+  const {
+    metadata: { title, description, keywords, applicationName, siteName },
+  } = messages;
+  const baseUrl = WEBSITE_CONFIGS.domainUrl;
+  const ogImage = `${baseUrl}${WEBSITE_CONFIGS.avatarUrl}`;
+  const currentUrl = `${baseUrl}/${lang === routing.defaultLocale ? '' : lang}`;
 
   return {
     title: {
       template: `%s - ${title}`,
       default: title,
     },
+    description,
+    metadataBase: new URL(baseUrl),
+    applicationName,
+    keywords,
+    authors: [
+      {
+        name: WEBSITE_CONFIGS.authorName,
+        url: WEBSITE_CONFIGS.authorUrl,
+      },
+    ],
+    creator: WEBSITE_CONFIGS.authorName,
+    publisher: WEBSITE_CONFIGS.authorName,
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-video-preview': -1,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+      },
+    },
     alternates: {
-      ...alternates,
+      canonical: currentUrl,
+      languages: Object.fromEntries(
+        routing.locales.map((locale) => [
+          locale,
+          `${baseUrl}/${locale === routing.defaultLocale ? '' : locale}`,
+        ])
+      ),
       types: {
         'application/atom+xml': [{ url: `atom.${lang}.xml`, title }],
       },
+    },
+    openGraph: {
+      type: 'website',
+      locale: lang,
+      url: currentUrl,
+      siteName,
+      title,
+      description,
+      images: [
+        {
+          url: ogImage,
+          width: 1200,
+          height: 630,
+          alt: title,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [ogImage],
+    },
+    icons: {
+      icon: '/favicon.ico',
+      shortcut: '/favicon.ico',
+      apple: '/favicon.ico',
     },
   };
 }

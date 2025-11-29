@@ -19,5 +19,12 @@
   },
   "notFound": {
     "message": "抱歉！找不到此頁面。"
+  },
+  "metadata": {
+    "title": "Mao's Corner",
+    "description": "歡迎來到阿毛的角落，這裡記錄著我學習的筆記。",
+    "keywords": ["前端", "筆記", "部落格", "網頁開發", "程式設計"],
+    "applicationName": "Mao's Corner",
+    "siteName": "Mao's Corner"
   }
 }

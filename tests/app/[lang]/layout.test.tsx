@@ -13,11 +13,6 @@ jest.mock('next-intl/server', () => ({
   setRequestLocale: jest.fn(),
 }));
 
-jest.mock('#/data/metadata', () => ({
-  createMetadata: jest.fn(() => Promise.resolve({})),
-  createFeedOptions: jest.fn(() => Promise.resolve({})),
-}));
-
 describe('I18n layout', () => {
   it('should render correct element', async () => {
     const testText = 'Test layout component';
@@ -61,6 +56,16 @@ describe('I18n layout', () => {
       children: null,
     });
     expect(metadata).toBeTruthy();
+  });
+
+  it('should generate correct metadata for default locale', async () => {
+    const metadata = await generateMetadata({
+      params: Promise.resolve({ lang: routing.defaultLocale }),
+      children: null,
+    });
+    expect(metadata).toBeTruthy();
+    // 驗證預設語言的 URL 不包含語言前綴
+    expect(metadata.alternates?.canonical).toBe('https://amao.vercel.app/');
   });
 
   it('should generate correct static params', async () => {

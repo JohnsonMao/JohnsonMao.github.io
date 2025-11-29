@@ -44,3 +44,7 @@ next-env.d.ts
 .cursor
 .specstory
 .cursorindexingignore
+
+# cloudflare
+.open-next/
+bundled/

@@ -19,5 +19,12 @@
   },
   "notFound": {
     "message": "Sorry we couldn't find this page."
+  },
+  "metadata": {
+    "title": "Mao's Corner",
+    "description": "Welcome to Mao's Corner, where I document my learning notes.",
+    "keywords": ["frontend", "notes", "blog", "web development", "programming"],
+    "applicationName": "Mao's Corner",
+    "siteName": "Mao's Corner"
   }
 }

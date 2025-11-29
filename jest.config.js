@@ -10,7 +10,7 @@ const jestConfig = {
   testEnvironment: 'jest-environment-jsdom',
   collectCoverageFrom: [
     '<rootDir>/src/**/*.{ts,tsx}',
-    '!<rootDir>/src/proxy.ts',
+    '!<rootDir>/src/middleware.ts',
     '!<rootDir>/src/app/*.tsx',
     '!<rootDir>/src/i18n/*.ts',
   ],
