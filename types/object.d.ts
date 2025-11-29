@@ -20,17 +20,18 @@ type IsEmptyObject<T extends Record<PropertyKey, unknown>> = [keyof T] extends [
   ? true
   : false;
 
-type ObjectKeys<T> = IsAny<T> extends true
-  ? string[]
-  : T extends object
-    ? IsEmptyObject<KnownKeys<T>> extends true
-      ? string[]
-      : (keyof KnownKeys<T>)[]
-    : T extends number
-      ? []
-      : T extends Array<unknown> | string
+type ObjectKeys<T> =
+  IsAny<T> extends true
+    ? string[]
+    : T extends object
+      ? IsEmptyObject<KnownKeys<T>> extends true
         ? string[]
-        : never;
+        : (keyof KnownKeys<T>)[]
+      : T extends number
+        ? []
+        : T extends Array<unknown> | string
+          ? string[]
+          : never;
 
 interface ObjectConstructor {
   keys<T>(o: T): ObjectKeys<T>;

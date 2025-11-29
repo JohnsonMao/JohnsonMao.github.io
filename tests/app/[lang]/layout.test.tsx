@@ -15,6 +15,10 @@ jest.mock('next-intl/server', () => ({
 
 describe('I18n layout', () => {
   it('should render correct element', async () => {
+    const consoleSpy = jest
+      .spyOn(console, 'error')
+      .mockImplementation(() => {});
+
     const testText = 'Test layout component';
     mockNavigation.pathname.mockReturnValueOnce('/');
     const layout = await Layout({
@@ -32,6 +36,7 @@ describe('I18n layout', () => {
     expect(header).toBeInTheDocument();
     expect(nav).toBeInTheDocument();
     expect(footer).toBeInTheDocument();
+    consoleSpy.mockRestore();
   });
 
   it('should call notFound when locale is not supported in generateMetadata', async () => {
@@ -43,11 +48,15 @@ describe('I18n layout', () => {
   });
 
   it('should call notFound when locale is not supported in layout', async () => {
+    const consoleSpy = jest
+      .spyOn(console, 'error')
+      .mockImplementation(() => {});
     await Layout({
       params: Promise.resolve({ lang: 'not-supported' }),
       children: null,
     });
     expect(mockNavigation.notFound).toHaveBeenCalled();
+    consoleSpy.mockRestore();
   });
 
   it('should generate correct metadata', async () => {
