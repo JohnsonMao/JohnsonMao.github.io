@@ -1,6 +1,5 @@
 const colors = require('tailwindcss/colors');
 const plugin = require('tailwindcss/plugin');
-const { HEADER_HEIGHT } = require('./constants');
 
 /** @type {import('tailwindcss').Config} */
 const tailwindcssConfig = {
@@ -8,9 +7,6 @@ const tailwindcssConfig = {
   darkMode: 'class',
   theme: {
     extend: {
-      spacing: {
-        header: `${HEADER_HEIGHT}px`,
-      },
       colors: {
         primary: { ...colors.violet, DEFAULT: colors.violet[500] },
       },
@@ -58,9 +54,6 @@ const tailwindcssConfig = {
       addBase({
         'a, button': {
           cursor: theme('cursor.pointer'),
-        },
-        '.top-header-height': {
-          top: theme('spacing.header'),
         },
       });
       addComponents({

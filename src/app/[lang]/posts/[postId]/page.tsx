@@ -43,15 +43,7 @@ async function PostPage({ params }: PageProps<'/[lang]/posts/[postId]'>) {
       </Container>
       <Container as="main" className="block py-8 lg:flex lg:px-2">
         <aside className="hidden w-40 shrink-0 lg:block xl:w-60">
-          <nav className="sticky top-header-height px-4">
-            <h4 className="my-3 font-semibold text-gray-900 text-lg dark:text-gray-100">
-              目錄
-            </h4>
-            <TableOfContents
-              className="max-h-96 overflow-auto"
-              targetId={`#${id}`}
-            />
-          </nav>
+          <TableOfContents targetId={`#${id}`} />
         </aside>
         <div>
           <article

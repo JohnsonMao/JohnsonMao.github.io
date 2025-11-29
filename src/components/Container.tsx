@@ -1,22 +1,25 @@
-import type { HTMLAttributes } from 'react';
+import { forwardRef, type HTMLAttributes, Ref } from 'react';
 import cn from '@/utils/cn';
 
 type ContainerProps = {
   as?: 'main' | 'header' | 'footer' | 'div';
-} & HTMLAttributes<HTMLElement>;
+} & HTMLAttributes<HTMLDivElement>;
 
-function Container({ as = 'div', className, ...props }: ContainerProps) {
-  const Component = as;
+const Container = forwardRef<HTMLElement, ContainerProps>(
+  ({ as = 'div', className, ...props }, ref) => {
+    const Component = as;
 
-  return (
-    <Component
-      className={cn(
-        'mx-4 max-w-6xl px-7 sm:mx-8 md:mx-12 lg:mx-14 lg:px-14 xl:mx-auto',
-        className
-      )}
-      {...props}
-    />
-  );
-}
+    return (
+      <Component
+        ref={ref as Ref<HTMLDivElement>}
+        className={cn(
+          'mx-4 max-w-6xl px-7 sm:mx-8 md:mx-12 lg:mx-14 lg:px-14 xl:mx-auto',
+          className
+        )}
+        {...props}
+      />
+    );
+  }
+);
 
 export default Container;

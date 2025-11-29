@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { HEADER_HEIGHT } from '#/constants';
+import { useHeaderHeight } from '@/contexts/HeaderHeightContext';
 import useScroll, { ScrollHandler } from '@/hooks/useScroll';
 import cn from '@/utils/cn';
 import Collapse from './Collapse';
@@ -21,15 +21,10 @@ type HeadingOffsetType = {
 
 type TableOfContentsProps = {
   targetId: `#${string}`;
-  className?: string;
-  scrollThreshold?: number;
 };
 
-function TableOfContents({
-  className,
-  targetId,
-  scrollThreshold = HEADER_HEIGHT,
-}: TableOfContentsProps) {
+function TableOfContents({ targetId }: TableOfContentsProps) {
+  const { headerHeight } = useHeaderHeight();
   const [activeId, setActiveId] = useState('');
   const [headings, setHeadings] = useState<HeadingType[]>([]);
   const headingOffsets = useMemo<HeadingOffsetType[]>(
@@ -49,11 +44,11 @@ function TableOfContents({
   const handleScroll = useCallback<ScrollHandler>(
     ({ y }) => {
       const visibleHeading = headingOffsets.find(
-        ({ offsetTop }) => Math.ceil(y + scrollThreshold) >= offsetTop
+        ({ offsetTop }) => Math.ceil(y + headerHeight) >= offsetTop
       );
       setActiveId(visibleHeading?.id || '');
     },
-    [headingOffsets, scrollThreshold]
+    [headingOffsets, headerHeight]
   );
 
   useScroll({ handler: handleScroll, initial: true });
@@ -94,8 +89,15 @@ function TableOfContents({
     );
 
   return (
-    <nav aria-label="Table of contents" className={className}>
-      <ul className="group text-sm">
+    <nav
+      className="sticky px-4"
+      aria-label="Table of contents"
+      style={{ top: `${headerHeight}px` }}
+    >
+      <h4 className="my-3 font-semibold text-gray-900 text-lg dark:text-gray-100">
+        目錄
+      </h4>
+      <ul className="group max-h-96 overflow-auto text-sm">
         {headings.map(({ id, text, children }) => (
           <li key={id}>
             <Link href={`#${id}`} className={getLinkClassName(id, children)}>

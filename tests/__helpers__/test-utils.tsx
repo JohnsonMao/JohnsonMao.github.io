@@ -1,9 +1,10 @@
 import { type RenderOptions, render } from '@testing-library/react';
 import type { Locale, Messages } from 'next-intl';
 import { NextIntlClientProvider } from 'next-intl';
-import React, { type ReactElement } from 'react';
-import enMessages from '../../content/i18n/messages/en.json';
-import zhMessages from '../../content/i18n/messages/zh.json';
+import React, { act, type ReactElement } from 'react';
+import enMessages from '#/content/i18n/messages/en.json';
+import zhMessages from '#/content/i18n/messages/zh.json';
+import { HeaderHeightProvider } from '@/contexts/HeaderHeightContext';
 
 // Messages 映射
 const messagesMap: Record<Locale, Messages> = {
@@ -50,7 +51,7 @@ const customRender = (
   const Wrapper = ({ children }: React.PropsWithChildren) => {
     return (
       <NextIntlClientProvider locale={locale} messages={messages}>
-        {children}
+        <HeaderHeightProvider>{children}</HeaderHeightProvider>
       </NextIntlClientProvider>
     );
   };
@@ -58,10 +59,8 @@ const customRender = (
   return render(ui, { wrapper: Wrapper, ...renderOptions });
 };
 
-// 重新導出所有 @testing-library/react 的內容
 export * from '@testing-library/react';
 
 export const mocked = (fn: unknown) => fn as jest.Mock;
 
-// 覆蓋 render 函數
-export { customRender as render };
+export { customRender as render, act };

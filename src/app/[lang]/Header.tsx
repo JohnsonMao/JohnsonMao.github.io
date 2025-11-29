@@ -1,10 +1,10 @@
 'use client';
 
 import { CSSProperties, useCallback, useRef, useState } from 'react';
-import { HEADER_HEIGHT } from '#/constants';
 import Container from '@/components/Container';
 import Image from '@/components/Image';
 import Link from '@/components/Link';
+import { useHeaderHeight } from '@/contexts/HeaderHeightContext';
 import useIsMounted from '@/hooks/useIsMounted';
 import useScroll, { ScrollHandler } from '@/hooks/useScroll';
 import cn from '@/utils/cn';
@@ -15,55 +15,55 @@ type HeaderProps = {
   scrollThreshold?: number;
 } & React.PropsWithChildren;
 
-function Header({
-  avatar,
-  children,
-  scrollThreshold = HEADER_HEIGHT,
-}: HeaderProps) {
+function Header({ avatar, children, scrollThreshold }: HeaderProps) {
   const isMounted = useIsMounted();
+  const { headerHeight, registerHeader } = useHeaderHeight();
   const [avatarScale, setAvatarScale] = useState(0);
   const [headerFixed, setHeaderFixed] = useState(true);
   const [headerTranslateY, setHeaderTranslateY] = useState(0);
   const [willChange, setWillChange] = useState(true);
   const previousScrollY = useRef(0);
+  const actualScrollThreshold = scrollThreshold ?? headerHeight;
 
   const handleScrollDown = useCallback(
     (scrollY: number) => {
-      if (scrollY < scrollThreshold) {
+      if (scrollY < actualScrollThreshold) {
         setHeaderFixed(true);
       } else if (headerFixed) {
-        setHeaderTranslateY(scrollY - scrollThreshold);
+        setHeaderTranslateY(scrollY - actualScrollThreshold);
         setHeaderFixed(false);
       }
     },
-    [scrollThreshold, headerFixed]
+    [actualScrollThreshold, headerFixed]
   );
 
   const handleScrollUp = useCallback(
     (scrollY: number, deltaScrollY: number) => {
-      const newHeaderTranslateY = scrollY - scrollThreshold * 2;
+      const newHeaderTranslateY = scrollY - actualScrollThreshold * 2;
 
-      if (deltaScrollY < scrollThreshold / -4) {
+      if (deltaScrollY < actualScrollThreshold / -4) {
         setHeaderFixed(true);
       } else if (newHeaderTranslateY > headerTranslateY) {
         setHeaderTranslateY(newHeaderTranslateY);
-      } else if (scrollY - scrollThreshold < headerTranslateY) {
+      } else if (scrollY - actualScrollThreshold < headerTranslateY) {
         setHeaderFixed(true);
       }
     },
-    [scrollThreshold, headerTranslateY]
+    [actualScrollThreshold, headerTranslateY]
   );
 
   const handleAvatarScale = useCallback(
     (scrollY: number) => {
-      setWillChange(scrollY < scrollThreshold + HEADER_HEIGHT);
-      if (scrollY > scrollThreshold) {
+      setWillChange(scrollY < actualScrollThreshold + headerHeight);
+      if (scrollY > actualScrollThreshold) {
         setAvatarScale(1);
       } else {
-        setAvatarScale(toFixedNumber(2)(1.5 - scrollY / (scrollThreshold * 2)));
+        setAvatarScale(
+          toFixedNumber(2)(1.5 - scrollY / (actualScrollThreshold * 2))
+        );
       }
     },
-    [scrollThreshold]
+    [actualScrollThreshold, headerHeight]
   );
 
   const scrollHandler = useCallback<ScrollHandler>(
@@ -88,7 +88,7 @@ function Header({
   useScroll({ handler: scrollHandler, initial: true });
 
   const headerStyles = {
-    '--scroll-threshold': `-${scrollThreshold}px`,
+    '--scroll-threshold': `-${actualScrollThreshold}px`,
     '--header-translate-y': `${headerTranslateY}px`,
     '--avatar-scale': avatarScale,
   } as CSSProperties;
@@ -103,7 +103,10 @@ function Header({
       )}
       style={headerStyles}
     >
-      <div className="sticky top-0 z-10 flex items-center justify-between py-7 before:w-11 before:content-['']">
+      <div
+        ref={registerHeader}
+        className="sticky top-0 z-10 flex items-center justify-between py-7 before:w-11 before:content-['']"
+      >
         {children}
       </div>
       <div className="py-7">

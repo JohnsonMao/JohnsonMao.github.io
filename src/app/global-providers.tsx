@@ -4,6 +4,7 @@ import { Inter } from 'next/font/google';
 import { Locale, Messages, NextIntlClientProvider } from 'next-intl';
 import { AppProgressBar } from 'next-nprogress-bar';
 import { ThemeProvider } from 'next-themes';
+import { HeaderHeightProvider } from '@/contexts/HeaderHeightContext';
 import './css/globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -28,12 +29,14 @@ function GlobalProviders({ children, locale, messages }: GlobalProvidersProps) {
           timeZone="Asia/Taipei"
         >
           <ThemeProvider attribute="class">
-            {children}
-            <AppProgressBar
-              height="4px"
-              options={{ showSpinner: false }}
-              shallowRouting
-            />
+            <HeaderHeightProvider>
+              {children}
+              <AppProgressBar
+                height="4px"
+                options={{ showSpinner: false }}
+                shallowRouting
+              />
+            </HeaderHeightProvider>
           </ThemeProvider>
         </NextIntlClientProvider>
       </body>

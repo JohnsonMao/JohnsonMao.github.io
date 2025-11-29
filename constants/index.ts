@@ -12,8 +12,6 @@ export const GISCUS_CONFIGS: GiscusProps = {
   loading: 'lazy',
 };
 
-export const HEADER_HEIGHT = 100;
-
 export const WEBSITE_CONFIGS = {
   title: "Mao's Corner",
   avatarUrl: '/static/mao.jpg',
