@@ -12,10 +12,9 @@ import { toFixedNumber } from '@/utils/math';
 
 type HeaderProps = {
   avatar: React.ReactNode;
-  scrollThreshold?: number;
 } & React.PropsWithChildren;
 
-function Header({ avatar, children, scrollThreshold }: HeaderProps) {
+function Header({ avatar, children }: HeaderProps) {
   const isMounted = useIsMounted();
   const { headerHeight, registerHeader } = useHeaderHeight();
   const [avatarScale, setAvatarScale] = useState(0);
@@ -23,47 +22,44 @@ function Header({ avatar, children, scrollThreshold }: HeaderProps) {
   const [headerTranslateY, setHeaderTranslateY] = useState(0);
   const [willChange, setWillChange] = useState(true);
   const previousScrollY = useRef(0);
-  const actualScrollThreshold = scrollThreshold ?? headerHeight;
 
   const handleScrollDown = useCallback(
     (scrollY: number) => {
-      if (scrollY < actualScrollThreshold) {
+      if (scrollY < headerHeight) {
         setHeaderFixed(true);
       } else if (headerFixed) {
-        setHeaderTranslateY(scrollY - actualScrollThreshold);
+        setHeaderTranslateY(scrollY - headerHeight);
         setHeaderFixed(false);
       }
     },
-    [actualScrollThreshold, headerFixed]
+    [headerHeight, headerFixed]
   );
 
   const handleScrollUp = useCallback(
     (scrollY: number, deltaScrollY: number) => {
-      const newHeaderTranslateY = scrollY - actualScrollThreshold * 2;
+      const newHeaderTranslateY = scrollY - headerHeight * 2;
 
-      if (deltaScrollY < actualScrollThreshold / -4) {
+      if (deltaScrollY < headerHeight / -4) {
         setHeaderFixed(true);
       } else if (newHeaderTranslateY > headerTranslateY) {
         setHeaderTranslateY(newHeaderTranslateY);
-      } else if (scrollY - actualScrollThreshold < headerTranslateY) {
+      } else if (scrollY - headerHeight < headerTranslateY) {
         setHeaderFixed(true);
       }
     },
-    [actualScrollThreshold, headerTranslateY]
+    [headerHeight, headerTranslateY]
   );
 
   const handleAvatarScale = useCallback(
     (scrollY: number) => {
-      setWillChange(scrollY < actualScrollThreshold + headerHeight);
-      if (scrollY > actualScrollThreshold) {
+      setWillChange(scrollY < headerHeight + headerHeight);
+      if (scrollY > headerHeight) {
         setAvatarScale(1);
       } else {
-        setAvatarScale(
-          toFixedNumber(2)(1.5 - scrollY / (actualScrollThreshold * 2))
-        );
+        setAvatarScale(toFixedNumber(2)(1.5 - scrollY / (headerHeight * 2)));
       }
     },
-    [actualScrollThreshold, headerHeight]
+    [headerHeight]
   );
 
   const scrollHandler = useCallback<ScrollHandler>(
@@ -88,7 +84,7 @@ function Header({ avatar, children, scrollThreshold }: HeaderProps) {
   useScroll({ handler: scrollHandler, initial: true });
 
   const headerStyles = {
-    '--scroll-threshold': `-${actualScrollThreshold}px`,
+    '--scroll-threshold': `-${headerHeight}px`,
     '--header-translate-y': `${headerTranslateY}px`,
     '--avatar-scale': avatarScale,
   } as CSSProperties;
@@ -137,7 +133,6 @@ export const Avatar = ({ src, alt }: AvatarProps) => {
         height={44}
         src={src}
         alt={alt}
-        priority
       />
     </Link>
   );

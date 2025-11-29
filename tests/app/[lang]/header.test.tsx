@@ -1,6 +1,16 @@
 import { act, render, screen, waitFor } from '#/tests/__helpers__/test-utils';
 import Header, { Avatar } from '@/app/[lang]/Header';
 
+jest.mock('@/contexts/HeaderHeightContext', () => ({
+  useHeaderHeight: jest.fn(() => ({
+    headerHeight: 100,
+    registerHeader: jest.fn(),
+  })),
+  HeaderHeightProvider: ({ children }: React.PropsWithChildren) => (
+    <>{children}</>
+  ),
+}));
+
 const scrollDownTo = (to: number) => {
   act(() => {
     window.scrollY = to - 1;
@@ -31,7 +41,7 @@ describe('Header component', () => {
   });
 
   it('should hide header on scroll down and show on scroll up', async () => {
-    render(<Header avatar={avatar} scrollThreshold={100} />);
+    render(<Header avatar={avatar} />);
     const header = screen.getByRole('banner');
     expect(header.tagName).toBe('HEADER');
 

@@ -35,16 +35,14 @@ beforeEach(() => {
   mockI18nRouter.mockClear();
   mockRedirect.mockClear();
   mockGetPathname.mockClear();
-  // 默認返回不帶 locale 的路徑
   mockI18nPathname.mockReturnValue('/');
 });
 
 const mockNavigation = {
   notFound: mockNotFound,
   searchParams: mockSearchParams,
-  pathname: mockPathname,
-  router: mockRouter,
-  i18nPathname: mockI18nPathname,
+  pathname: mockI18nPathname,
+  router: mockI18nRouter,
 };
 
 export default mockNavigation;

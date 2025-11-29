@@ -22,19 +22,17 @@ describe('Menu component', () => {
   });
 
   it.each([
-    ['Home', 'Post', '/', '/'],
-    ['Post', 'Home', '/posts', '/posts'],
-    ['Home', 'Post', '/en', '/'],
-    ['Post', 'Home', '/en/posts', '/posts'],
-    ['Post', 'Home', '/en/posts/test', '/posts'],
-  ])('should render correct active link based on the pathname "%s"', (activeLinkText, otherLinkText, _pathname, expectedPathname) => {
+    ['Home', 'Post', '/'],
+    ['Post', 'Home', '/posts'],
+    ['Home', 'Post', '/'],
+    ['Post', 'Home', '/posts'],
+    ['Post', 'Home', '/posts/test'],
+  ])('should render correct active link based on the pathname "%s"', (activeLinkText, otherLinkText, expectedPathname) => {
     const menu: MenuProps['menu'] = [
       { text: 'Home', href: '/' },
       { text: 'Post', href: '/posts' },
     ];
-    // usePathname from @/i18n/navigation returns pathname without locale
-    // Set the mock before rendering
-    mockNavigation.i18nPathname.mockReturnValue(expectedPathname);
+    mockNavigation.pathname.mockReturnValue(expectedPathname);
     render(<Menu menu={menu} />);
     const activeLink = screen.getByRole('link', { name: activeLinkText });
     const otherLink = screen.getByRole('link', { name: otherLinkText });

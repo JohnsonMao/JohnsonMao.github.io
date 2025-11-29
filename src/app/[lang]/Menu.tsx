@@ -3,6 +3,7 @@
 import { CSSProperties, useLayoutEffect, useRef, useState } from 'react';
 
 import Link from '@/components/Link';
+import useIsMounted from '@/hooks/useIsMounted';
 import { usePathname } from '@/i18n/navigation';
 import cn from '@/utils/cn';
 
@@ -19,7 +20,11 @@ function Menu({ menu }: MenuProps) {
   const [offset, setOffset] = useState({ left: 0, width: 16 });
   const menuRef = useRef<HTMLUListElement>(null);
   const pathname = usePathname();
-  const activeLinkIndex = menu.findIndex((item) => item.href === pathname);
+  const isMounted = useIsMounted();
+  const activeLinkIndex = menu.findIndex((item) => {
+    if (item.href === pathname) return true;
+    return item.href !== '/' && pathname.startsWith(`${item.href}/`);
+  });
 
   const menuStyle = {
     '--active-offset-w': (offset.width - 16) / 40,
@@ -53,7 +58,7 @@ function Menu({ menu }: MenuProps) {
               className={cn(
                 'block p-3 text-xl leading-none no-underline',
                 'text-zinc-800 dark:text-zinc-200',
-                activeLinkIndex === index
+                isMounted && activeLinkIndex === index
                   ? 'neon-text text-primary-600 dark:text-primary-400'
                   : 'hover:text-primary-800 dark:hover:text-primary-200'
               )}
