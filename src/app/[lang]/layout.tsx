@@ -3,13 +3,13 @@ import { notFound } from 'next/navigation';
 import { hasLocale } from 'next-intl';
 import { getMessages, setRequestLocale } from 'next-intl/server';
 import { WEBSITE_CONFIGS } from '#/constants';
-import ThemeSwitcher from '@/components/ThemeSwitcher';
+import Footer from '@/components/layout/footer';
+import Header, { Avatar } from '@/components/layout/header';
+import Menu, { MenuProps } from '@/components/navigation/menu';
+import ThemeSwitcher from '@/components/theme-switcher';
 import { routing } from '@/i18n/routing';
-import generateRSS, { createFeedOptions } from '@/utils/generateRSS';
+import generateRSS, { createFeedOptions } from '@/utils/generate-rss';
 import GlobalProviders from '../global-providers';
-import Footer from './Footer';
-import Header, { Avatar } from './Header';
-import Menu, { MenuProps } from './Menu';
 
 export async function generateStaticParams() {
   const allFeedOptions = await Promise.all(

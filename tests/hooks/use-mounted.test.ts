@@ -1,0 +1,9 @@
+import { renderHook } from '#/tests/__helpers__/test-utils';
+import useIsMounted from '@/hooks/use-is-mounted';
+
+describe('useIsMounted hook', () => {
+  it('should return true if component is mounted', () => {
+    const { result } = renderHook(() => useIsMounted());
+    expect(result.current).toBeTruthy();
+  });
+});

@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
-import Container from '@/components/Container';
-import { H1 } from '@/components/Heading';
+import Container from '@/components/container1';
+import { H1 } from '@/components/heading1';
+import InfiniteList from '@/components/posts/infinite-list';
 import { getAllDataFrontmatter } from '@/utils/mdx';
-import InfiniteList from './InfiniteList';
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations('common');

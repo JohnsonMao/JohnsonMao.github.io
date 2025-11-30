@@ -1,10 +1,10 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import Comment from '@/components/Comment';
-import Container from '@/components/Container';
-import { H1 } from '@/components/Heading';
-import Link from '@/components/Link';
-import TableOfContents from '@/components/TableOfContents';
+import Comment from '@/components/comment1';
+import Container from '@/components/container1';
+import { H1 } from '@/components/heading1';
+import Link from '@/components/link1';
+import TableOfContents from '@/components/table-of-contents';
 import { formatDate } from '@/utils/date';
 import { getAllDataFrontmatter, getDataById } from '@/utils/mdx';
 

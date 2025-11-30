@@ -1,12 +1,11 @@
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
-import Button from '@/components/Button';
-import Container from '@/components/Container';
-import { H1, H2 } from '@/components/Heading';
-import List from '@/components/List';
+import Button from '@/components/button1';
+import Container from '@/components/container1';
+import { H1, H2 } from '@/components/heading1';
+import List from '@/components/list1';
+import Article from '@/components/posts/article';
 import { getAllDataFrontmatter } from '@/utils/mdx';
-
-import Article from './Article';
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations('common');

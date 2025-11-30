@@ -7,7 +7,7 @@ import Page, {
 const mockDataList = jest.fn();
 const mockData = jest.fn();
 
-jest.mock('@/components/TableOfContents', () => () => null);
+jest.mock('@/components/table-of-contents', () => () => null);
 
 jest.mock('@/utils/mdx', () => ({
   getAllDataFrontmatter: () => mockDataList(),

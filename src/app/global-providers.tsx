@@ -4,7 +4,7 @@ import { Inter } from 'next/font/google';
 import { Locale, Messages, NextIntlClientProvider } from 'next-intl';
 import { AppProgressBar } from 'next-nprogress-bar';
 import { ThemeProvider } from 'next-themes';
-import { HeaderHeightProvider } from '@/contexts/HeaderHeightContext';
+import { HeaderHeightProvider } from '@/contexts/header-height-context';
 import './css/globals.css';
 
 const inter = Inter({ subsets: ['latin'] });

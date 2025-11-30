@@ -4,7 +4,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import React, { act, type ReactElement } from 'react';
 import enMessages from '#/content/i18n/messages/en.json';
 import zhMessages from '#/content/i18n/messages/zh.json';
-import { HeaderHeightProvider } from '@/contexts/HeaderHeightContext';
+import { HeaderHeightProvider } from '@/contexts/header-height-context';
 
 // Messages 映射
 const messagesMap: Record<Locale, Messages> = {

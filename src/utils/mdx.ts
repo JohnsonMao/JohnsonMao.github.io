@@ -7,11 +7,11 @@ import rehypePrismPlus from 'rehype-prism-plus';
 import rehypeSlug from 'rehype-slug';
 import remarkGfm from 'remark-gfm';
 
-import CodeBox from '@/components/CodeBox';
-import { H2, H3, H4, H5, H6 } from '@/components/Heading';
-import Image from '@/components/Image';
-import Link from '@/components/Link';
-import rehypeImageMetadata from '@/plugins/rehypeImageMetadata';
+import CodeBox from '@/components/code-box';
+import { H2, H3, H4, H5, H6 } from '@/components/heading1';
+import Image from '@/components/image1';
+import Link from '@/components/link1';
+import rehypeImageMetadata from '@/plugins/rehype-image-metadata';
 import { compareDates } from './date';
 
 const ROOT_PATH = process.cwd();

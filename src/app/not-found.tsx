@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { H2 } from '@/components/Heading';
+import { H2 } from '@/components/heading1';
 
 export const metadata: Metadata = {
   title: 'Page not found',
