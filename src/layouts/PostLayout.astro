@@ -1,0 +1,21 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+	title: string;
+	description?: string;
+	pubDate: Date;
+}
+const { title, description, pubDate } = Astro.props;
+const formattedDate = new Intl.DateTimeFormat('zh-TW', { dateStyle: 'long' }).format(pubDate);
+---
+
+<BaseLayout title={title} description={description}>
+	<article class="prose dark:prose-invert max-w-none">
+		<header class="mb-6">
+			<h1 class="text-3xl font-bold tracking-tight">{title}</h1>
+			<time class="text-sm text-gray-500 dark:text-gray-400" datetime={pubDate.toISOString()}>{formattedDate}</time>
+		</header>
+		<slot />
+	</article>
+</BaseLayout>

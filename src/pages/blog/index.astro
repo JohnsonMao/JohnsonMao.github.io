@@ -1,0 +1,25 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+
+const posts = await getCollection('blog');
+const sorted = posts.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
+const published = sorted.filter((p) => !p.data.draft);
+---
+
+<BaseLayout title="文章列表" description="部落格文章列表">
+	<h1 class="text-2xl font-bold mb-6">文章</h1>
+	<ul class="space-y-4 list-none p-0 m-0">
+		{published.map((entry) => (
+			<li>
+				<PostCard
+					title={entry.data.title}
+					description={entry.data.description}
+					pubDate={entry.data.pubDate}
+					slug={entry.id}
+				/>
+			</li>
+		))}
+	</ul>
+</BaseLayout>
