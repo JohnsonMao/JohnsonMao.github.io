@@ -1,5 +1,6 @@
 *.log
 *.tgz
+.astro
 .cache
 .DS_Store
 .eslintcache
