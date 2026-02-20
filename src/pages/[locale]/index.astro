@@ -2,7 +2,10 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { t } from '@/i18n';
 import { getRelativeLocaleUrl } from 'astro:i18n';
-const locale = 'zh-TW';
+export function getStaticPaths() {
+	return [{ params: { locale: 'en' } }];
+}
+const locale = Astro.params.locale as 'en' | 'zh-TW';
 const blogUrl = getRelativeLocaleUrl(locale, 'blog');
 ---
 
@@ -14,20 +17,4 @@ const blogUrl = getRelativeLocaleUrl(locale, 'blog');
 			<a href={blogUrl} class="text-blue-600 dark:text-blue-400 hover:underline">{t(locale, 'home.toBlog')}</a>
 		</p>
 	</div>
-	<script is:inline define:vars={{}}>
-		(function () {
-			const STORAGE_KEY = 'astro-locale';
-			const preferred = typeof localStorage !== 'undefined' ? localStorage.getItem(STORAGE_KEY) : null;
-			if (preferred === 'en') {
-				window.location.replace('/en/');
-				return;
-			}
-			const lang = typeof navigator !== 'undefined' && (navigator.language || navigator.languages?.[0] || '');
-			const wantsEn = /^en(\b|-)/i.test(lang);
-			if (wantsEn) {
-				try { localStorage.setItem(STORAGE_KEY, 'en'); } catch (_) {}
-				window.location.replace('/en/');
-			}
-		})();
-	</script>
 </BaseLayout>

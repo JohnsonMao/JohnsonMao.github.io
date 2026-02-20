@@ -1,17 +1,28 @@
 ---
-import BaseLayout from './BaseLayout.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
 
 interface Props {
 	title: string;
 	description?: string;
 	pubDate: Date;
+	locale?: string;
+	pageLocale?: 'en' | 'zh-TW';
+	isFallback?: boolean;
+	fallbackNotice?: string;
 }
-const { title, description, pubDate } = Astro.props;
-const formattedDate = new Intl.DateTimeFormat('zh-TW', { dateStyle: 'long' }).format(pubDate);
+const { title, description, pubDate, locale = 'zh-TW', pageLocale, isFallback, fallbackNotice } = Astro.props;
+const localeVal = locale as 'en' | 'zh-TW';
+const displayLocale = pageLocale ?? localeVal;
+const formattedDate = new Intl.DateTimeFormat(localeVal === 'en' ? 'en-US' : 'zh-TW', { dateStyle: 'long' }).format(pubDate);
 ---
 
-<BaseLayout title={title} description={description}>
+<BaseLayout title={title} description={description} locale={displayLocale}>
 	<article class="prose dark:prose-invert max-w-none">
+		{isFallback && fallbackNotice && (
+			<div class="mb-4 rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800 dark:border-amber-800 dark:bg-amber-950/40 dark:text-amber-200" role="status" aria-live="polite">
+				{fallbackNotice}
+			</div>
+		)}
 		<header class="mb-6">
 			<h1 class="text-3xl font-bold tracking-tight">{title}</h1>
 			<time class="text-sm text-gray-500 dark:text-gray-400" datetime={pubDate.toISOString()}>{formattedDate}</time>

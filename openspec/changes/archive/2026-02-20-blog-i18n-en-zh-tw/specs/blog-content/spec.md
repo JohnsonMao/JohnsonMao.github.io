@@ -1,10 +1,10 @@
-# Blog Content
+# Blog Content (Delta)
 
 ## Purpose
 
 內容模型支援語系；建置時能依語系過濾文章。
 
-## Requirements
+## MODIFIED Requirements
 
 ### Requirement: Blog content collection with schema
 

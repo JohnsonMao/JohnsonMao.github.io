@@ -4,14 +4,24 @@ interface Props {
 	description: string;
 	pubDate: Date;
 	slug: string;
+	locale?: string;
+	langBadge?: string;
 }
-const { title, description, pubDate, slug } = Astro.props;
-const formattedDate = new Intl.DateTimeFormat('zh-TW', { dateStyle: 'long' }).format(pubDate);
+const { title, description, pubDate, slug, locale = 'zh-TW', langBadge } = Astro.props;
+const formattedDate = new Intl.DateTimeFormat(locale === 'en' ? 'en-US' : 'zh-TW', { dateStyle: 'long' }).format(pubDate);
+const href = locale === 'en' ? `/en/blog/${slug}` : `/blog/${slug}`;
 ---
 
 <article class="rounded-lg border border-gray-200 dark:border-gray-800 p-4 hover:border-gray-300 dark:hover:border-gray-700 transition-colors">
-	<a href={`/blog/${slug}`} class="block">
-		<h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100">{title}</h2>
+	<a href={href} class="block">
+		<div class="flex items-center gap-2 flex-wrap">
+			<h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100">{title}</h2>
+			{langBadge && (
+				<span class="rounded px-1.5 py-0.5 text-xs font-medium bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300" aria-label={`Language: ${langBadge}`}>
+					{langBadge}
+				</span>
+			)}
+		</div>
 		<p class="mt-1 text-sm text-gray-600 dark:text-gray-400 line-clamp-2">{description}</p>
 		<time class="mt-2 block text-xs text-gray-500 dark:text-gray-500" datetime={pubDate.toISOString()}>{formattedDate}</time>
 	</a>

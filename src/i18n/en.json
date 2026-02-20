@@ -1,0 +1,29 @@
+{
+	"nav": {
+		"home": "JohnsonMao",
+		"blog": "Blog"
+	},
+	"home": {
+		"title": "JohnsonMao's Blog",
+		"description": "Personal blog.",
+		"welcome": "Welcome",
+		"intro": "This is JohnsonMao's personal blog, built with Astro and Content Collections.",
+		"toBlog": "Go to blog list"
+	},
+	"blog": {
+		"listTitle": "Posts",
+		"listDescription": "Blog posts",
+		"contentNotTranslated": "This page has not been translated yet."
+	},
+	"footer": {
+		"copyright": "© {year} JohnsonMao"
+	},
+	"locale": {
+		"en": "EN",
+		"zhTW": "繁體中文"
+	},
+	"localeLabel": {
+		"en": "English",
+		"zhTW": "繁體中文"
+	}
+}

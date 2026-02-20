@@ -3,16 +3,15 @@ import { getCollection, render } from 'astro:content';
 import PostLayout from '@/layouts/PostLayout.astro';
 import { t } from '@/i18n';
 
-const pageLocale: 'en' | 'zh-TW' = 'zh-TW';
-const priorityOrder: ('en' | 'zh-TW')[] = ['zh-TW', 'en'];
-
 export async function getStaticPaths() {
 	const all = await getCollection('blog', ({ data }) => data.draft !== true);
 	const slugs = new Set(all.map((e) => (e.id.includes('/') ? e.id.split('/').slice(1).join('/') : e.id)));
-	return Array.from(slugs).map((slug) => ({ params: { slug }, props: {} }));
+	return Array.from(slugs).map((slug) => ({ params: { locale: 'en', slug }, props: {} }));
 }
 
+const pageLocale = Astro.params.locale as 'en' | 'zh-TW';
 const slug = Astro.params.slug as string;
+const priorityOrder: ('en' | 'zh-TW')[] = ['en', 'zh-TW'];
 const all = await getCollection('blog', ({ data }) => data.draft !== true);
 const bySlug = all.filter((e) => (e.id.includes('/') ? e.id.split('/').slice(1).join('/') : e.id) === slug);
 const entry = priorityOrder.map((lang) => bySlug.find((e) => e.data.lang === lang)).find(Boolean);

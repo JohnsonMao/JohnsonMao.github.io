@@ -1,10 +1,10 @@
-# Site Structure
+# Site Structure (Delta)
 
 ## Purpose
 
 站點結構與路由改為依語系產出；URL 具語系前綴（或預設語系對應根路徑），各頁面皆有 per-locale 版本。
 
-## Requirements
+## MODIFIED Requirements
 
 ### Requirement: Home page
 
