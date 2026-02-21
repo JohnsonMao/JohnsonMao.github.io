@@ -3,9 +3,9 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import { t } from '@/i18n';
 import { getRelativeLocaleUrl } from 'astro:i18n';
 export function getStaticPaths() {
-	return [{ params: { locale: 'en' } }];
+	return [{ params: { locale: 'en' as const } }];
 }
-const locale = Astro.params.locale as 'en' | 'zh-TW';
+const locale = Astro.params.locale;
 const blogUrl = getRelativeLocaleUrl(locale, 'blog');
 ---
 

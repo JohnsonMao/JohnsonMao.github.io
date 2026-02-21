@@ -3,8 +3,8 @@ import { getCollection, render } from 'astro:content';
 import PostLayout from '@/layouts/PostLayout.astro';
 import { t } from '@/i18n';
 
-const pageLocale: 'en' | 'zh-TW' = 'zh-TW';
-const priorityOrder: ('en' | 'zh-TW')[] = ['zh-TW', 'en'];
+const pageLocale = 'zh-TW';
+const priorityOrder = ['zh-TW', 'en'] as const;
 
 export async function getStaticPaths() {
 	const all = await getCollection('blog', ({ data }) => data.draft !== true);

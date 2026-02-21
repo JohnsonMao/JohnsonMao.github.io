@@ -4,8 +4,8 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import PostCard from '@/components/PostCard.astro';
 import { t } from '@/i18n';
 
-const locale: 'en' | 'zh-TW' = 'zh-TW';
-const priorityOrder: ('en' | 'zh-TW')[] = locale === 'zh-TW' ? ['zh-TW', 'en'] : ['en', 'zh-TW'];
+const locale = 'zh-TW';
+const priorityOrder = ['zh-TW', 'en'] as const;
 const all = await getCollection('blog', ({ data }) => data.draft !== true);
 const bySlug = new Map<string, typeof all>();
 for (const entry of all) {

@@ -20,8 +20,12 @@ The system SHALL filter blog collection entries by the current page's locale so 
 
 ### Requirement: Optional hreflang in layout
 
-When the layout implements hreflang support, it SHALL output `<link rel="alternate" hreflang="..." href="..." />` (and `hreflang="x-default"` where appropriate) in the document head for each page, using the configured locales and the current page's canonical URL, so that search engines can discover alternate language versions.
+The base layout (or equivalent) SHALL output `<link rel="alternate" hreflang="..." href="..." />` in the document head for each page, for each supported locale, using the configured locales and the current page's equivalent URL per locale. The layout SHALL also output a link with `hreflang="x-default"` pointing to the default locale URL for that page.
 
-#### Scenario: Hreflang links when implemented
-- **WHEN** the feature is implemented and a page is rendered
-- **THEN** the head SHALL include alternate links for each supported locale and optionally x-default pointing to the default locale URL
+#### Scenario: Hreflang links present for each locale
+- **WHEN** any content page (home, blog list, or single post) is rendered
+- **THEN** the head SHALL include an alternate link for each configured locale (e.g. `en`, `zh-TW` or `zh-Hant`) with the correct absolute URL for that page in that locale
+
+#### Scenario: x-default points to default locale
+- **WHEN** the layout outputs hreflang links
+- **THEN** one link SHALL have `hreflang="x-default"` and its href SHALL be the default locale's URL for the current page

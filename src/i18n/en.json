@@ -15,6 +15,9 @@
 		"listDescription": "Blog posts",
 		"contentNotTranslated": "This page has not been translated yet."
 	},
+	"feed": {
+		"description": "Blog — English"
+	},
 	"footer": {
 		"copyright": "© {year} JohnsonMao"
 	},

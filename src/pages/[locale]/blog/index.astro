@@ -5,10 +5,10 @@ import PostCard from '@/components/PostCard.astro';
 import { t } from '@/i18n';
 
 export function getStaticPaths() {
-	return [{ params: { locale: 'en' } }];
+	return [{ params: { locale: 'en' as const } }];
 }
-const locale = Astro.params.locale as 'en' | 'zh-TW';
-const priorityOrder: ('en' | 'zh-TW')[] = locale === 'zh-TW' ? ['zh-TW', 'en'] : ['en', 'zh-TW'];
+const locale = Astro.params.locale;
+const priorityOrder = ['en', 'zh-TW'] as const;
 const all = await getCollection('blog', ({ data }) => data.draft !== true);
 const bySlug = new Map<string, typeof all>();
 for (const entry of all) {
@@ -31,7 +31,7 @@ const sorted = picked.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.g
 		{sorted.map((entry) => {
 			const slug = entry.id.includes('/') ? entry.id.split('/').slice(1).join('/') : entry.id;
 			const articleLang = entry.data.lang;
-			const langBadge = articleLang !== locale ? t(locale, articleLang === 'en' ? 'localeLabel.en' : 'localeLabel.zhTW') : undefined;
+			const langBadge = articleLang !== locale ? t(locale, 'localeLabel.zhTW') : undefined;
 			return (
 				<li>
 					<PostCard

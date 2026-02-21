@@ -15,6 +15,9 @@
 		"listDescription": "部落格文章列表",
 		"contentNotTranslated": "本頁內容尚未翻譯。"
 	},
+	"feed": {
+		"description": "Blog — 繁體中文"
+	},
 	"footer": {
 		"copyright": "© {year} JohnsonMao"
 	},
