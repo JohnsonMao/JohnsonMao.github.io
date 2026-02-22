@@ -30,12 +30,13 @@ const entry = priority.map((lang) => bySlug.find((e) => e.data.lang === lang)).f
 
 if (!entry) return Astro.redirect('/404');
 
-const { Content } = await render(entry);
+const { Content, headings } = await render(entry);
 const isFallback = entry.data.lang !== locale;
 const readingTime = getReadingTime(entry.body ?? '', entry.data.lang);
 ---
 
 <PostLayout
+	id={entry.id}
 	title={entry.data.title}
 	description={entry.data.description}
 	pubDate={entry.data.pubDate}
@@ -46,6 +47,7 @@ const readingTime = getReadingTime(entry.body ?? '', entry.data.lang);
 	readingTimeLabel={readingTime.label}
 	updated={entry.data.updated}
 	tags={entry.data.tags}
+	headings={headings}
 >
 	<Content />
 </PostLayout>

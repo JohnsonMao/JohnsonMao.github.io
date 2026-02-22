@@ -1,10 +1,18 @@
 ---
+import CopyLink from '@/components/blog/CopyLink.astro';
+import JsonLd from '@/components/seo/JsonLd.astro';
+import RelatedPosts from '@/components/blog/RelatedPosts.astro';
+import { getRelatedPosts } from '@/utils/related-posts';
+import { getCollection } from 'astro:content';
+import TableOfContents from '@/components/blog/TableOfContents.astro';
+import type { MarkdownHeading } from 'astro';
 import { getRelativeLocaleUrl } from 'astro:i18n';
 import { Icon } from 'astro-icon/components';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { t } from '@/i18n';
 
 interface Props {
+	id?: string;
 	title: string;
 	description?: string;
 	pubDate: Date;
@@ -17,9 +25,11 @@ interface Props {
 	readingTimeLabel?: string;
 	updated?: Date;
 	tags?: string[];
+	headings?: MarkdownHeading[];
 }
 
 const { 
+	id,
 	title, 
 	description, 
 	pubDate, 
@@ -31,66 +41,91 @@ const {
 	canonical, 
 	readingTimeLabel, 
 	updated, 
-	tags
+	tags,
+	headings = []
 } = Astro.props;
 
 const localeVal = locale as 'en' | 'zh-TW';
 const displayLocale = pageLocale ?? localeVal;
 
-// Standard Intl formatters handle any locale string automatically
 const formattedDate = new Intl.DateTimeFormat(localeVal, { dateStyle: 'long' }).format(pubDate);
 const formattedUpdated = updated ? new Intl.DateTimeFormat(localeVal, { dateStyle: 'long' }).format(updated) : null;
 const showUpdated = updated && updated.getTime() !== pubDate.getTime();
 
-// Use Astro helper instead of ternary check
 const tagBase = getRelativeLocaleUrl(displayLocale, 'tag/');
+
+const allPosts = await getCollection('blog', ({ data }) => data.draft !== true);
+const currentPost = allPosts.find((p) => p.id === id || (p.data.title === title && p.data.pubDate.getTime() === pubDate.getTime()));
+const relatedPosts = currentPost ? getRelatedPosts(currentPost, allPosts) : [];
+
+const postData = {
+	title,
+	description,
+	pubDate,
+	updated,
+	image,
+};
 ---
 
-<BaseLayout title={title} description={description} image={image} canonical={canonical} locale={displayLocale}>
-	<article class="prose dark:prose-invert max-w-none">
-		{isFallback && fallbackNotice && (
-			<div id="fallback-banner" class="mb-8 rounded-xl border border-amber-200 bg-amber-50/50 p-4 text-sm text-amber-900 dark:border-amber-800/50 dark:bg-amber-950/20 dark:text-amber-200 backdrop-blur-sm" role="status" aria-live="polite">
-				<div class="flex items-center gap-3">
-					<span class="flex h-6 w-6 items-center justify-center rounded-full bg-amber-100 dark:bg-amber-900/40 text-amber-600 dark:text-amber-400">
-						<Icon name="lucide:info" class="w-4 h-4" />
-					</span>
-					<p class="font-medium">{fallbackNotice}</p>
+<BaseLayout title={title} description={description} image={image} canonical={canonical} locale={displayLocale} maxWidth="max-w-6xl">
+	<JsonLd slot="head" post={postData} url={Astro.url.href} locale={displayLocale} />
+	<div class="grid grid-cols-1 lg:grid-cols-[1fr_250px] gap-12 items-start">
+		<article class="prose dark:prose-invert max-w-none min-w-0">
+			{isFallback && fallbackNotice && (
+				<div id="fallback-banner" class="mb-8 rounded-xl border border-amber-200 bg-amber-50/50 p-4 text-sm text-amber-900 dark:border-amber-800/50 dark:bg-amber-950/20 dark:text-amber-200 backdrop-blur-sm" role="status" aria-live="polite">
+					<div class="flex items-center gap-3">
+						<span class="flex h-6 w-6 items-center justify-center rounded-full bg-amber-100 dark:bg-amber-900/40 text-amber-600 dark:text-amber-400">
+							<Icon name="lucide:info" class="w-4 h-4" />
+						</span>
+						<p class="font-medium">{fallbackNotice}</p>
+					</div>
 				</div>
-			</div>
-		)}
-		
-		<header class="mb-10 not-prose">
-			<h1 class="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-gray-100 mb-4">{title}</h1>
-			<div class="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
-				<div class="flex items-center gap-1.5">
-					<Icon name="lucide:calendar" class="w-3.5 h-3.5" />
-					<time datetime={pubDate.toISOString()}>{formattedDate}</time>
-				</div>
-				{readingTimeLabel && (
+			)}
+			
+			<header class="mb-10 not-prose">
+				<h1 class="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-gray-100 mb-4 leading-tight">{title}</h1>
+				<div class="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
 					<div class="flex items-center gap-1.5">
-						<Icon name="lucide:clock" class="w-3.5 h-3.5" />
-						<span aria-label="Reading time">{readingTimeLabel}</span>
+						<Icon name="lucide:calendar" class="w-3.5 h-3.5" />
+						<time datetime={pubDate.toISOString()}>{formattedDate}</time>
+					</div>
+					{readingTimeLabel && (
+						<div class="flex items-center gap-1.5">
+							<Icon name="lucide:clock" class="w-3.5 h-3.5" />
+							<span aria-label="Reading time">{readingTimeLabel}</span>
+						</div>
+					)}
+					<CopyLink label={t(displayLocale, 'blog.copyLink')} copiedLabel={t(displayLocale, 'blog.copied')} />
+				</div>
+				{showUpdated && formattedUpdated && (
+					<p class="mt-2 text-xs text-muted-foreground/80 italic">
+						{t(displayLocale, 'blog.updatedOn')} <time datetime={updated.toISOString()}>{formattedUpdated}</time>
+					</p>
+				)}
+				{tags && tags.length > 0 && (
+					<div class="mt-4 flex flex-wrap gap-2">
+						{tags.map((tag) => (
+							<a href={`${tagBase}${encodeURIComponent(tag)}`} class="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-medium bg-secondary text-secondary-foreground hover:bg-secondary/80 transition-colors border border-transparent">
+								#{tag}
+							</a>
+						))}
 					</div>
 				)}
+			</header>
+			
+			<div class="prose-headings:font-bold prose-a:text-primary hover:prose-a:underline">
+				<slot />
 			</div>
-			{showUpdated && formattedUpdated && (
-				<p class="mt-2 text-xs text-muted-foreground/80 italic">
-					{t(displayLocale, 'blog.updatedOn')} <time datetime={updated.toISOString()}>{formattedUpdated}</time>
-				</p>
-			)}
-			{tags && tags.length > 0 && (
-				<div class="mt-4 flex flex-wrap gap-2">
-					{tags.map((tag) => (
-						<a href={`${tagBase}${encodeURIComponent(tag)}`} class="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-medium bg-secondary text-secondary-foreground hover:bg-secondary/80 transition-colors">
-							#{tag}
-						</a>
-					))}
-				</div>
-			)}
-		</header>
-		
-		<div class="prose-headings:font-bold prose-a:text-primary hover:prose-a:underline">
-			<slot />
-		</div>
-	</article>
+
+			<RelatedPosts 
+				posts={relatedPosts} 
+				title={t(displayLocale, 'blog.relatedPosts')} 
+				pageLocale={displayLocale} 
+			/>
+		</article>
+
+		<aside class="hidden lg:block sticky top-24 self-start">
+			<TableOfContents headings={headings} title={t(displayLocale, 'blog.tableOfContents')} />
+		</aside>
+	</div>
 </BaseLayout>

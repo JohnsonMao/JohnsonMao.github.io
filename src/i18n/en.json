@@ -15,7 +15,11 @@
 		"listDescription": "Blog posts",
 		"contentNotTranslated": "This page has not been translated yet.",
 		"readingTime": "{minutes} min read",
-		"updatedOn": "Updated on"
+		"updatedOn": "Updated on",
+		"tableOfContents": "Table of Contents",
+		"relatedPosts": "Related Posts",
+		"copyLink": "Copy Link",
+		"copied": "Copied!"
 	},
 	"feed": {
 		"description": "Blog — English"

@@ -15,7 +15,11 @@
 		"listDescription": "部落格文章列表",
 		"contentNotTranslated": "本頁內容尚未翻譯。",
 		"readingTime": "約 {minutes} 分鐘",
-		"updatedOn": "更新於"
+		"updatedOn": "更新於",
+		"tableOfContents": "文章目錄",
+		"relatedPosts": "相關文章",
+		"copyLink": "複製連結",
+		"copied": "已複製！"
 	},
 	"feed": {
 		"description": "Blog — 繁體中文"

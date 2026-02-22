@@ -1,0 +1,55 @@
+---
+import { Icon } from 'astro-icon/components';
+
+interface Props {
+	label: string;
+	copiedLabel: string;
+}
+
+const { label, copiedLabel } = Astro.props;
+---
+
+<div class="copy-link-container inline-flex items-center">
+	<button
+		id="copy-link-button"
+		class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-full bg-secondary text-secondary-foreground hover:bg-secondary/80 transition-all duration-200 border border-transparent shadow-sm"
+		data-label={label}
+		data-copied={copiedLabel}
+	>
+		<Icon name="lucide:link" class="w-3.5 h-3.5" />
+		<span id="copy-link-text">{label}</span>
+	</button>
+</div>
+
+<script>
+	function setupCopyLink() {
+		const button = document.getElementById('copy-link-button');
+		const text = document.getElementById('copy-link-text');
+		
+		if (!button || !text) return;
+
+		const originalLabel = button.getAttribute('data-label') || '';
+		const copiedLabel = button.getAttribute('data-copied') || '';
+
+		button.addEventListener('click', async () => {
+			try {
+				await navigator.clipboard.writeText(window.location.href);
+				
+				// Feedback
+				text.textContent = copiedLabel;
+				button.classList.add('bg-green-100', 'text-green-700', 'dark:bg-green-900/30', 'dark:text-green-400');
+				
+				setTimeout(() => {
+					text.textContent = originalLabel;
+					button.classList.remove('bg-green-100', 'text-green-700', 'dark:bg-green-900/30', 'dark:text-green-400');
+				}, 2000);
+			} catch (err) {
+				console.error('Failed to copy link: ', err);
+			}
+		});
+	}
+
+	// Initialize on page load and after swaps (Astro Transitions)
+	setupCopyLink();
+	document.addEventListener('astro:after-swap', setupCopyLink);
+</script>

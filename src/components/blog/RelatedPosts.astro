@@ -1,0 +1,37 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import PostCard from '@/components/PostCard.astro';
+import { getReadingTime } from '@/utils/reading-time';
+import { getBaseId } from '@/utils/content';
+
+interface Props {
+	posts: CollectionEntry<'blog'>[];
+	title: string;
+	pageLocale: 'en' | 'zh-TW';
+}
+
+const { posts, title, pageLocale } = Astro.props;
+
+if (posts.length === 0) return null;
+---
+
+<section class="mt-16 border-t border-gray-100 dark:border-gray-800 pt-12 not-prose">
+	<h2 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-8">{title}</h2>
+	<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+		{posts.map((post) => {
+			const readingTime = getReadingTime(post.body ?? '', post.data.lang);
+			return (
+				<PostCard
+					title={post.data.title}
+					description={post.data.description}
+					pubDate={post.data.pubDate}
+					slug={getBaseId(post.id)}
+					locale={post.data.lang}
+					pageLocale={pageLocale}
+					readingTimeLabel={readingTime.label}
+					tags={post.data.tags}
+				/>
+			);
+		})}
+	</div>
+</section>

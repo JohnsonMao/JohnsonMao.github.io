@@ -12,9 +12,10 @@ interface Props {
 	image?: string;
 	canonical?: string;
 	locale?: 'en' | 'zh-TW';
+	maxWidth?: string;
 }
 const locale = (Astro.props.locale ?? 'zh-TW') as 'en' | 'zh-TW';
-const { title, description = t(locale, 'home.description'), image, canonical } = Astro.props;
+const { title, description = t(locale, 'home.description'), image, canonical, maxWidth = 'max-w-3xl' } = Astro.props;
 const pathWithoutLocale = Astro.url.pathname.replace(/^\//, '').replace(/^en\//, '');
 const locales = ['zh-TW', 'en'] as const;
 const site = Astro.site?.href ?? `${Astro.url.origin}/`;
@@ -62,10 +63,11 @@ const imageUrl = image?.startsWith('http') ? image : image ? new URL(image, site
 				} catch {}
 			})();
 		</script>
+		<slot name="head" />
 	</head>
 	<body class="min-h-screen flex flex-col bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100">
 		<Header locale={locale} />
-		<main class="flex-1 mx-auto w-full max-w-3xl px-4 py-8">
+		<main class={`flex-1 mx-auto w-full ${maxWidth} px-4 py-8`}>
 			<slot />
 		</main>
 		<Footer locale={locale} />

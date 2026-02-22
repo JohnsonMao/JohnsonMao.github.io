@@ -1,7 +1,7 @@
 # blog-seo-social Specification
 
 ## Purpose
-TBD - created by archiving change blog-content-ux-batch. Update Purpose after archive.
+Support social sharing (Open Graph, Twitter Cards) and search engine visibility (JSON-LD BlogPosting).
 ## Requirements
 ### Requirement: Open Graph and Twitter Card meta in head
 
@@ -27,3 +27,9 @@ The system SHALL produce these meta tags from a shared layout or head component 
 - **WHEN** the site is built
 - **THEN** the home page, blog list page(s), and each single post page SHALL include the required OG and Twitter Card meta in the rendered HTML head
 
+### Requirement: JSON-LD BlogPosting structured data
+The system SHALL inject a `<script type="application/ld+json">` block into the `<head>` of single blog post pages. This block SHALL contain structured data following the `BlogPosting` schema (Schema.org), including at least: `headline`, `description`, `datePublished`, `dateModified` (if available), `author`, `publisher`, and `image`.
+
+#### Scenario: JSON-LD present in post head
+- **WHEN** a blog post page is rendered
+- **THEN** the HTML `<head>` SHALL contain a valid `BlogPosting` JSON-LD object with data derived from the post's frontmatter
