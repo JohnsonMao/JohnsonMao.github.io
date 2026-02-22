@@ -1,46 +1,49 @@
 ---
-import { getCollection } from 'astro:content';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import PostCard from '@/components/PostCard.astro';
-import { t } from '@/i18n';
+import { t, defaultLocale, getLocalePriority } from '@/i18n';
+import { getReadingTime } from '@/utils/reading-time';
+import { getGroupedEntries, getBestEntry } from '@/utils/content';
 
-const locale = 'zh-TW';
-const priorityOrder = ['zh-TW', 'en'] as const;
-const all = await getCollection('blog', ({ data }) => data.draft !== true);
-const bySlug = new Map<string, typeof all>();
-for (const entry of all) {
-	const slug = entry.id.includes('/') ? entry.id.split('/').slice(1).join('/') : entry.id;
-	const existing = bySlug.get(slug);
-	if (!existing) bySlug.set(slug, [entry]);
-	else existing.push(entry);
-}
-const picked: (typeof all)[number][] = [];
-for (const entries of bySlug.values()) {
-	const chosen = priorityOrder.map((lang) => entries.find((e) => e.data.lang === lang)).find(Boolean);
-	if (chosen) picked.push(chosen);
-}
+const locale = defaultLocale;
+const grouped = await getGroupedEntries('blog');
+const priority = getLocalePriority(locale);
+
+const picked = Object.entries(grouped).map(([baseId, versions]) => {
+	const entry = getBestEntry(versions, priority);
+	return entry ? { ...entry, baseId } : null;
+}).filter(Boolean) as any[];
+
 const sorted = picked.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
 ---
 
 <BaseLayout title={t(locale, 'blog.listTitle')} description={t(locale, 'blog.listDescription')} locale={locale}>
-	<h1 class="text-2xl font-bold mb-6">{t(locale, 'blog.listTitle')}</h1>
-	<ul class="space-y-4 list-none p-0 m-0">
-		{sorted.map((entry) => {
-			const slug = entry.id.includes('/') ? entry.id.split('/').slice(1).join('/') : entry.id;
-			const articleLang = entry.data.lang;
-			const langBadge = articleLang !== locale ? t(locale, articleLang === 'en' ? 'localeLabel.en' : 'localeLabel.zhTW') : undefined;
-			return (
-				<li>
-					<PostCard
-						title={entry.data.title}
-						description={entry.data.description}
-						pubDate={entry.data.pubDate}
-						slug={slug}
-						locale={articleLang}
-						langBadge={langBadge}
-					/>
-				</li>
-			);
-		})}
-	</ul>
+	<div class="max-w-4xl mx-auto px-4 py-12">
+		<h1 class="text-4xl font-bold tracking-tight mb-8 self-start">{t(locale, 'blog.listTitle')}</h1>
+		<ul class="grid gap-8 list-none p-0 m-0">
+			{sorted.map((entry) => {
+				const articleLang = entry.data.lang;
+				const isFallback = articleLang !== locale;
+				const localeLabelKey = (articleLang === 'en' ? 'localeLabel.en' : 'localeLabel.zhTW') as any;
+				const langBadge = isFallback ? t(locale, localeLabelKey) : undefined;
+				const readingTime = getReadingTime(entry.body ?? '', articleLang);
+				
+				return (
+					<li>
+						<PostCard
+							title={entry.data.title}
+							description={entry.data.description}
+							pubDate={entry.data.pubDate}
+							slug={entry.baseId}
+							locale={articleLang}
+							langBadge={langBadge}
+							readingTimeLabel={readingTime.label}
+							tags={entry.data.tags}
+							pageLocale={locale}
+						/>
+					</li>
+				);
+			})}
+		</ul>
+	</div>
 </BaseLayout>

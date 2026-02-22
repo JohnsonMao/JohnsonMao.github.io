@@ -2,6 +2,16 @@ import en from './en.json';
 import zhTW from './zh-TW.json';
 
 export type Locale = 'en' | 'zh-TW';
+export const defaultLocale: Locale = 'zh-TW';
+export const locales: Locale[] = ['zh-TW', 'en'];
+
+/**
+ * Get the locale priority order based on the current locale
+ */
+export function getLocalePriority(current: Locale): Locale[] {
+	if (current === 'en') return ['en', 'zh-TW'];
+	return ['zh-TW', 'en'];
+}
 
 const messages: Record<Locale, Record<string, unknown>> = {
 	'en': en as Record<string, unknown>,

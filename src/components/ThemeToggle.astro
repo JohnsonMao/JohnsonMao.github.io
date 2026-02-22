@@ -1,0 +1,44 @@
+---
+import { Icon } from 'astro-icon/components';
+---
+
+<button
+	type="button"
+	class="rounded p-1.5 text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+	aria-label="Toggle theme"
+	data-theme-toggle
+>
+	<Icon name="lucide:sun" class="w-5 h-5 hidden dark:block" aria-hidden="true" />
+	<Icon name="lucide:moon" class="w-5 h-5 block dark:hidden" aria-hidden="true" />
+</button>
+
+<script>
+	const THEME_KEY = 'theme';
+	const root = document.documentElement;
+
+	function toggleTheme(e: PointerEvent) {
+		const target = e.target;
+		if (!(target instanceof Element)) return;
+
+		const btn = target.closest('[data-theme-toggle]');
+		if (!btn) return;
+
+		const current = root.classList.contains('dark') ? 'dark' : 'light';
+		const theme = current === 'dark' ? 'light' : 'dark';
+		root.classList.toggle('dark', theme === 'dark');
+		try {
+			localStorage.setItem(THEME_KEY, theme);
+		} catch {}
+	}
+
+	function syncTheme() {
+		try {
+			const stored = localStorage.getItem(THEME_KEY);
+			if (!stored) return;
+			document.documentElement.classList.toggle('dark', stored === 'dark');
+		} catch {}
+	}
+
+	document.addEventListener('click', toggleTheme);
+	document.addEventListener('astro:page-load', syncTheme);
+</script>

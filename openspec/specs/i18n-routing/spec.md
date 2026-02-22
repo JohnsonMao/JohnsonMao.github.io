@@ -2,7 +2,7 @@
 
 ## Purpose
 
-定義語系與路由行為：Astro i18n 設定、依語系產出頁面、locale-aware 連結、根路徑設備語系導向、語系切換器。
+Define i18n and routing behavior: Astro i18n configuration, per-locale page generation, locale-aware links, root path redirection based on device locale, and locale switcher.
 
 ## Requirements
 
@@ -30,21 +30,21 @@ The system SHALL use Astro's locale-aware APIs (e.g. `getRelativeLocaleUrl`) or 
 - **WHEN** a user is on a locale-prefixed page (e.g. `/en/blog/`) and clicks a site navigation link
 - **THEN** the link SHALL point to the same locale (e.g. `/en/` or `/en/blog/...`)
 
-### Requirement: Root path and device locale detection
+### Requirement: Root path and locale detection
 
-The system SHALL serve at the site root (`/`) a page or redirect logic that SHALL, via client-side script, detect the user's preferred language (e.g. from `navigator.language` or `navigator.languages`) when no stored preference exists, and SHALL redirect to the matching locale path (e.g. `/en/`) when the preferred language is English; otherwise the root SHALL display the default locale (e.g. zh-TW). The system MAY store the user's locale preference in localStorage for subsequent visits.
+The system SHALL serve at the site root (`/`) a page or redirect logic that SHALL, via client-side script, detect the user's preferred language (e.g. from `navigator.languages`). If the user's preferred language is English, the system SHALL redirect to `/en/`.
 
-#### Scenario: First visit with English browser preference
-- **WHEN** a user with no stored preference visits `/` and their browser reports an English preference
-- **THEN** the client script SHALL redirect them to `/en/` (or the configured English path)
+#### Scenario: Redirect based on browser preference
+- **WHEN** a user visits the root path (`/`) with English browser preference
+- **THEN** the system SHALL redirect to `/en/`.
 
-#### Scenario: First visit with non-English or zh-TW preference
-- **WHEN** a user with no stored preference visits `/` and their browser does not report English as preferred
-- **THEN** the user SHALL remain on `/` and see the default locale content
+### Requirement: Independent Tag Module
 
-#### Scenario: Stored preference takes precedence
-- **WHEN** a user has a locale preference stored (e.g. in localStorage) and visits `/`
-- **THEN** the client script SHALL redirect to the stored locale path if it differs from the default locale
+The system SHALL provide an independent tag module accessible at `/[locale]/tag/[tag]` which aggregates content across all supported collections (e.g. Blog, Projects).
+
+#### Scenario: Tag page aggregates content
+- **WHEN** a user visits `/[locale]/tag/[tag]`
+- **THEN** the page SHALL list all items from any collection that contain the specified tag, following the same locale fallback logic as the blog.
 
 ### Requirement: Locale switcher
 

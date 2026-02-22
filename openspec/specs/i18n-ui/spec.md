@@ -2,7 +2,7 @@
 
 ## Purpose
 
-定義介面多語系：UI 字串依語系載入，layout 與頁面使用翻譯 key 而非硬編碼文案。
+Define interface multi-language: UI strings loaded by locale, layouts and pages using translation keys instead of hardcoded text.
 
 ## Requirements
 

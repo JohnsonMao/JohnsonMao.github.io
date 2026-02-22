@@ -3,6 +3,7 @@ import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
+import icon from 'astro-icon';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -11,7 +12,7 @@ export default defineConfig({
   site: 'https://johnsonmao.github.io',
   output: 'static',
 
-  integrations: [sitemap()],
+  integrations: [sitemap(), icon()],
 
   i18n: {
     locales: ['en', 'zh-TW'],

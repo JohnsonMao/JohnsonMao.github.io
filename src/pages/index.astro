@@ -1,17 +1,17 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { t } from '@/i18n';
+import { t, defaultLocale } from '@/i18n';
 import { getRelativeLocaleUrl } from 'astro:i18n';
-const locale = 'zh-TW';
-const blogUrl = getRelativeLocaleUrl(locale, 'blog');
+
+const blogUrl = getRelativeLocaleUrl(defaultLocale, 'blog');
 ---
 
-<BaseLayout title={t(locale, 'home.title')} description={t(locale, 'home.description')} locale={locale}>
+<BaseLayout title={t(defaultLocale, 'home.title')} description={t(defaultLocale, 'home.description')} locale={defaultLocale}>
 	<div class="space-y-6">
-		<h1 class="text-2xl font-bold">{t(locale, 'home.welcome')}</h1>
-		<p class="text-gray-600 dark:text-gray-400">{t(locale, 'home.intro')}</p>
+		<h1 class="text-2xl font-bold">{t(defaultLocale, 'home.welcome')}</h1>
+		<p class="text-gray-600 dark:text-gray-400">{t(defaultLocale, 'home.intro')}</p>
 		<p>
-			<a href={blogUrl} class="text-blue-600 dark:text-blue-400 hover:underline">{t(locale, 'home.toBlog')}</a>
+			<a href={blogUrl} class="text-blue-600 dark:text-blue-400 hover:underline">{t(defaultLocale, 'home.toBlog')}</a>
 		</p>
 	</div>
 	<script is:inline define:vars={{}}>

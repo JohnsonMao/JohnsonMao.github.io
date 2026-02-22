@@ -2,7 +2,7 @@
 
 ## Purpose
 
-站點結構與路由改為依語系產出；URL 具語系前綴（或預設語系對應根路徑），各頁面皆有 per-locale 版本。
+Site structure and routing updated for per-locale generation; URLs feature locale prefixes (or root path for default locale), with per-locale versions of every page.
 
 ## Requirements
 

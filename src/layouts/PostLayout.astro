@@ -1,5 +1,8 @@
 ---
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import { Icon } from 'astro-icon/components';
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import { t } from '@/i18n';
 
 interface Props {
 	title: string;
@@ -9,24 +12,85 @@ interface Props {
 	pageLocale?: 'en' | 'zh-TW';
 	isFallback?: boolean;
 	fallbackNotice?: string;
+	image?: string;
+	canonical?: string;
+	readingTimeLabel?: string;
+	updated?: Date;
+	tags?: string[];
 }
-const { title, description, pubDate, locale = 'zh-TW', pageLocale, isFallback, fallbackNotice } = Astro.props;
+
+const { 
+	title, 
+	description, 
+	pubDate, 
+	locale = 'zh-TW', 
+	pageLocale, 
+	isFallback, 
+	fallbackNotice, 
+	image, 
+	canonical, 
+	readingTimeLabel, 
+	updated, 
+	tags
+} = Astro.props;
+
 const localeVal = locale as 'en' | 'zh-TW';
 const displayLocale = pageLocale ?? localeVal;
-const formattedDate = new Intl.DateTimeFormat(localeVal === 'en' ? 'en-US' : 'zh-TW', { dateStyle: 'long' }).format(pubDate);
+
+// Standard Intl formatters handle any locale string automatically
+const formattedDate = new Intl.DateTimeFormat(localeVal, { dateStyle: 'long' }).format(pubDate);
+const formattedUpdated = updated ? new Intl.DateTimeFormat(localeVal, { dateStyle: 'long' }).format(updated) : null;
+const showUpdated = updated && updated.getTime() !== pubDate.getTime();
+
+// Use Astro helper instead of ternary check
+const tagBase = getRelativeLocaleUrl(displayLocale, 'tag/');
 ---
 
-<BaseLayout title={title} description={description} locale={displayLocale}>
+<BaseLayout title={title} description={description} image={image} canonical={canonical} locale={displayLocale}>
 	<article class="prose dark:prose-invert max-w-none">
 		{isFallback && fallbackNotice && (
-			<div class="mb-4 rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800 dark:border-amber-800 dark:bg-amber-950/40 dark:text-amber-200" role="status" aria-live="polite">
-				{fallbackNotice}
+			<div id="fallback-banner" class="mb-8 rounded-xl border border-amber-200 bg-amber-50/50 p-4 text-sm text-amber-900 dark:border-amber-800/50 dark:bg-amber-950/20 dark:text-amber-200 backdrop-blur-sm" role="status" aria-live="polite">
+				<div class="flex items-center gap-3">
+					<span class="flex h-6 w-6 items-center justify-center rounded-full bg-amber-100 dark:bg-amber-900/40 text-amber-600 dark:text-amber-400">
+						<Icon name="lucide:info" class="w-4 h-4" />
+					</span>
+					<p class="font-medium">{fallbackNotice}</p>
+				</div>
 			</div>
 		)}
-		<header class="mb-6">
-			<h1 class="text-3xl font-bold tracking-tight">{title}</h1>
-			<time class="text-sm text-gray-500 dark:text-gray-400" datetime={pubDate.toISOString()}>{formattedDate}</time>
+		
+		<header class="mb-10 not-prose">
+			<h1 class="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-gray-100 mb-4">{title}</h1>
+			<div class="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
+				<div class="flex items-center gap-1.5">
+					<Icon name="lucide:calendar" class="w-3.5 h-3.5" />
+					<time datetime={pubDate.toISOString()}>{formattedDate}</time>
+				</div>
+				{readingTimeLabel && (
+					<div class="flex items-center gap-1.5">
+						<Icon name="lucide:clock" class="w-3.5 h-3.5" />
+						<span aria-label="Reading time">{readingTimeLabel}</span>
+					</div>
+				)}
+			</div>
+			{showUpdated && formattedUpdated && (
+				<p class="mt-2 text-xs text-muted-foreground/80 italic">
+					{t(displayLocale, 'blog.updatedOn')} <time datetime={updated.toISOString()}>{formattedUpdated}</time>
+				</p>
+			)}
+			{tags && tags.length > 0 && (
+				<div class="mt-4 flex flex-wrap gap-2">
+					{tags.map((tag) => (
+						<a href={`${tagBase}${encodeURIComponent(tag)}`} class="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-medium bg-secondary text-secondary-foreground hover:bg-secondary/80 transition-colors">
+							#{tag}
+						</a>
+					))}
+				</div>
+			)}
 		</header>
-		<slot />
+		
+		<div class="prose-headings:font-bold prose-a:text-primary hover:prose-a:underline">
+			<slot />
+		</div>
 	</article>
 </BaseLayout>

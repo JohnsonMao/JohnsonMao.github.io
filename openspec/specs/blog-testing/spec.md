@@ -2,7 +2,7 @@
 
 ## Purpose
 
-定義部落格專案的測試策略、工具、與必須被驗證的行為（build、內容、可選 E2E），以在變更時降低 regression 風險。
+Define testing strategies, tools, and mandatory behaviors for the blog project (build, content, optional E2E) to reduce the risk of regression upon changes.
 
 ## Requirements
 

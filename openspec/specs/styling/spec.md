@@ -2,7 +2,7 @@
 
 ## Purpose
 
-定義站點樣式策略：Tailwind 整合、設計 token/theme 與文章內文 typography。
+Define site styling strategy: Tailwind integration, design tokens/theme, and article body typography.
 
 ## Requirements
 

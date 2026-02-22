@@ -13,7 +13,9 @@
 	"blog": {
 		"listTitle": "文章",
 		"listDescription": "部落格文章列表",
-		"contentNotTranslated": "本頁內容尚未翻譯。"
+		"contentNotTranslated": "本頁內容尚未翻譯。",
+		"readingTime": "約 {minutes} 分鐘",
+		"updatedOn": "更新於"
 	},
 	"feed": {
 		"description": "Blog — 繁體中文"

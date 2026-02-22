@@ -9,13 +9,17 @@ import Footer from '@/components/Footer.astro';
 interface Props {
 	title: string;
 	description?: string;
+	image?: string;
+	canonical?: string;
 	locale?: 'en' | 'zh-TW';
 }
 const locale = (Astro.props.locale ?? 'zh-TW') as 'en' | 'zh-TW';
-const { title, description = t(locale, 'home.description') } = Astro.props;
+const { title, description = t(locale, 'home.description'), image, canonical } = Astro.props;
 const pathWithoutLocale = Astro.url.pathname.replace(/^\//, '').replace(/^en\//, '');
 const locales = ['zh-TW', 'en'] as const;
 const site = Astro.site?.href ?? `${Astro.url.origin}/`;
+const canonicalUrl = canonical ?? Astro.url.href;
+const imageUrl = image?.startsWith('http') ? image : image ? new URL(image, site).href : new URL('og-default.svg', site).href;
 ---
 
 <html lang={locale}>
@@ -28,12 +32,36 @@ const site = Astro.site?.href ?? `${Astro.url.origin}/`;
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 		{description && <meta name="description" content={description} />}
+		<meta property="og:title" content={title} />
+		{description && <meta property="og:description" content={description} />}
+		<meta property="og:image" content={imageUrl} />
+		<meta property="og:url" content={canonicalUrl} />
+		<meta property="og:type" content="website" />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={title} />
+		{description && <meta name="twitter:description" content={description} />}
+		<meta name="twitter:image" content={imageUrl} />
 		{locales.map((loc) => {
 			const path = getRelativeLocaleUrl(loc, pathWithoutLocale || undefined);
 			const href = new URL(path, site).href;
 			return <link rel="alternate" hreflang={loc === 'zh-TW' ? 'zh-Hant' : loc} href={href} />;
 		})}
 		<link rel="alternate" hreflang="x-default" href={new URL(getRelativeLocaleUrl('zh-TW', pathWithoutLocale || undefined), site).href} />
+		<script is:inline>
+			(() => {
+				try {
+					const stored = localStorage.getItem('theme');
+					const theme =
+						stored === 'dark' || stored === 'light'
+						? stored
+						: window.matchMedia('(prefers-color-scheme: dark)').matches
+						? 'dark'
+						: 'light';
+
+					document.documentElement.classList.toggle('dark', theme === 'dark');
+				} catch {}
+			})();
+		</script>
 	</head>
 	<body class="min-h-screen flex flex-col bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100">
 		<Header locale={locale} />

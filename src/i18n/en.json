@@ -13,7 +13,9 @@
 	"blog": {
 		"listTitle": "Posts",
 		"listDescription": "Blog posts",
-		"contentNotTranslated": "This page has not been translated yet."
+		"contentNotTranslated": "This page has not been translated yet.",
+		"readingTime": "{minutes} min read",
+		"updatedOn": "Updated on"
 	},
 	"feed": {
 		"description": "Blog — English"

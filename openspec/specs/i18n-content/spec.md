@@ -2,21 +2,21 @@
 
 ## Purpose
 
-定義多語系內容行為：部落格內容依語系區分、列表與單篇僅顯示當前語系、可選 hreflang 輸出。
+Define multi-language content behavior: Blog content separated by locale, list and single post pages with fallback support, and optional hreflang output.
 
 ## Requirements
 
-### Requirement: Blog content filtered by locale
+### Requirement: Blog content resolution with fallback
 
-The system SHALL filter blog collection entries by the current page's locale so that the blog list page and single post pages for a given locale SHALL only display or resolve posts whose language matches that locale.
+The system SHALL prioritize blog collection entries that match the current page's locale. If a post does not exist in the requested locale, the system SHALL resolve the best available version based on a fallback logic (e.g. prioritized by user preferences or a default order) instead of strictly returning a 404.
 
-#### Scenario: Blog list shows only current locale posts
+#### Scenario: Blog list shows posts with fallback
 - **WHEN** a user visits the blog list page for a locale (e.g. `/en/blog/`)
-- **THEN** the page SHALL display only entries from the blog collection that belong to that locale
+- **THEN** THE page SHALL display all unique articles, showing the version in the current locale if available, otherwise falling back to another available language version with a notice.
 
-#### Scenario: Single post page only resolves same-locale posts
-- **WHEN** a user requests a single post URL for a locale (e.g. `/en/blog/my-post`)
-- **THEN** the system SHALL resolve the post from the blog collection for that locale; if no such post exists, the system SHALL respond with 404 or equivalent
+#### Scenario: Single post page resolves with fallback
+- **WHEN** a user requests a single post URL for a locale (e.g. `/en/blog/my-post`) and that specific translation is missing
+- **THEN** the system SHALL render the post using the best available language version (e.g. the default locale or a user-preferred locale if detectable) and SHOULD include an indication that the content is a fallback.
 
 ### Requirement: Optional hreflang in layout
 

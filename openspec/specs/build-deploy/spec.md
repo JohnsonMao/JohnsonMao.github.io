@@ -2,7 +2,7 @@
 
 ## Purpose
 
-定義靜態建置產出、Astro 設定與 GitHub Pages 部署方式。
+Define static build output, Astro configuration, and GitHub Pages deployment method.
 
 ## Requirements
 
