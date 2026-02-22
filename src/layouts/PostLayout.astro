@@ -1,5 +1,7 @@
 ---
 import CopyLink from '@/components/blog/CopyLink.astro';
+import AuthorBio from '@/components/blog/AuthorBio.astro';
+import ShareButtons from '@/components/blog/ShareButtons.astro';
 import JsonLd from '@/components/seo/JsonLd.astro';
 import RelatedPosts from '@/components/blog/RelatedPosts.astro';
 import { getRelatedPosts } from '@/utils/related-posts';
@@ -122,6 +124,14 @@ const postData = {
 				title={t(displayLocale, 'blog.relatedPosts')} 
 				pageLocale={displayLocale} 
 			/>
+
+			<ShareButtons 
+				locale={displayLocale} 
+				title={title} 
+				url={Astro.url.href} 
+			/>
+
+			<AuthorBio locale={displayLocale} />
 		</article>
 
 		<aside class="hidden lg:block sticky top-24 self-start">

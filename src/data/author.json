@@ -1,0 +1,11 @@
+{
+  "name": "Johnson Mao",
+  "avatar": "/avatar.png",
+  "bio": {
+    "en": "A passionate software engineer and blogger sharing thoughts on technology, AI, and development.",
+    "zh-TW": "熱衷於分享技術、AI 與開發心得的軟體工程師。"
+  },
+  "social": {
+    "github": "https://github.com/JohnsonMao"
+  }
+}

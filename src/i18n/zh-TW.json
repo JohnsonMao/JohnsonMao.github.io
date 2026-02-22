@@ -1,7 +1,8 @@
 {
 	"nav": {
 		"home": "JohnsonMao",
-		"blog": "文章"
+		"blog": "文章",
+		"about": "關於"
 	},
 	"home": {
 		"title": "JohnsonMao 的部落格",
@@ -19,7 +20,11 @@
 		"tableOfContents": "文章目錄",
 		"relatedPosts": "相關文章",
 		"copyLink": "複製連結",
-		"copied": "已複製！"
+		"copied": "已複製！",
+		"share": "分享此文章"
+	},
+	"about": {
+		"title": "關於我"
 	},
 	"feed": {
 		"description": "Blog — 繁體中文"

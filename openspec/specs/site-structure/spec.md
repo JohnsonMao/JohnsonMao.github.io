@@ -3,9 +3,7 @@
 ## Purpose
 
 Site structure and routing updated for per-locale generation; URLs feature locale prefixes (or root path for default locale), with per-locale versions of every page.
-
 ## Requirements
-
 ### Requirement: Home page
 
 The system SHALL provide a home page for each locale. The default locale home page SHALL be served at the site root (`/`) and SHALL be implemented with a root entry (e.g. `src/pages/index.astro`) that either renders the default locale content or runs client-side locale detection and redirect. Non-default locale home pages SHALL be served under the locale path (e.g. `/en/`) and SHALL be rendered from locale-aware page modules (e.g. `src/pages/[locale]/index.astro`). All home pages SHALL use a shared base layout (Header/Footer).
@@ -48,11 +46,15 @@ The system SHALL provide a BaseLayout (or equivalent) that SHALL include a commo
 
 ### Requirement: Core components
 
-The system SHALL include at least: a Header component, a Footer component, and a PostCard (or equivalent) component for rendering a single post summary in a list. These SHALL be implemented as Astro components unless interactivity requires an island. The Header SHALL include or support locale-aware links and a locale switcher as specified by the i18n-routing capability.
+The system SHALL include at least: a Header component, a Footer component, and a PostCard (or equivalent) component for rendering a single post summary in a list. These SHALL be implemented as Astro components unless interactivity requires an island. The Header SHALL include or support locale-aware links to the Home page, Blog list, and **About page**. The Header SHALL also include a locale switcher as specified by the i18n-routing capability.
 
 #### Scenario: Header and Footer appear on layout pages
 - **WHEN** a page using the base layout is rendered for any locale
 - **THEN** the Header and Footer components are present in the output
+
+#### Scenario: About page link in navigation
+- **WHEN** the Header or Footer is rendered
+- **THEN** a link to the "About" page SHALL be present and point to the correct localized URL
 
 ### Requirement: RSS feed per locale
 
@@ -69,3 +71,4 @@ The system SHALL provide an RSS (or Atom) feed for each supported locale. The de
 #### Scenario: Feed response has correct content type
 - **WHEN** a client requests a feed URL
 - **THEN** the response SHALL include a Content-Type header indicating XML feed (e.g. `application/rss+xml` or `application/atom+xml`)
+

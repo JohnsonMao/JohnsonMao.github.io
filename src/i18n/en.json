@@ -1,7 +1,8 @@
 {
 	"nav": {
 		"home": "JohnsonMao",
-		"blog": "Blog"
+		"blog": "Blog",
+		"about": "About"
 	},
 	"home": {
 		"title": "JohnsonMao's Blog",
@@ -19,7 +20,11 @@
 		"tableOfContents": "Table of Contents",
 		"relatedPosts": "Related Posts",
 		"copyLink": "Copy Link",
-		"copied": "Copied!"
+		"copied": "Copied!",
+		"share": "Share this post"
+	},
+	"about": {
+		"title": "About Me"
 	},
 	"feed": {
 		"description": "Blog — English"
