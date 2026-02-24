@@ -21,7 +21,11 @@
 		"relatedPosts": "Related Posts",
 		"copyLink": "Copy Link",
 		"copied": "Copied!",
-		"share": "Share this post"
+		"share": "Share this post",
+		"series": {
+			"partOf": "Part of the series:",
+			"current": "(Current)"
+		}
 	},
 	"about": {
 		"title": "About Me"

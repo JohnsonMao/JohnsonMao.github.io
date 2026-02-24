@@ -20,7 +20,7 @@ export function getEntryLocale(id: string): Locale {
  * Get grouped entries by base ID, mapping each base ID to its available locale versions
  */
 export async function getGroupedEntries<K extends CollectionKey>(collection: K) {
-	const all = await getCollection(collection, ({ data }: any) => data.draft !== true);
+	const all = await getCollection(collection, ({ data }: any) => import.meta.env.DEV || data.draft !== true);
 	const grouped: Record<string, Record<string, CollectionEntry<K>>> = {};
 
 	all.forEach((entry) => {

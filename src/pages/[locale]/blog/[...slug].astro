@@ -6,7 +6,7 @@ import { getReadingTime } from '@/utils/reading-time';
 import { getBaseId } from '@/utils/content';
 
 export async function getStaticPaths() {
-	const all = await getCollection('blog', ({ data }) => data.draft !== true);
+	const all = await getCollection('blog', ({ data }) => import.meta.env.DEV || data.draft !== true);
 	const slugs = Array.from(new Set(all.map((e) => getBaseId(e.id))));
 	const otherLocales = locales.filter(l => l !== defaultLocale);
 	
@@ -22,7 +22,7 @@ export async function getStaticPaths() {
 const { locale } = Astro.params;
 const { slug } = Astro.params;
 
-const all = await getCollection('blog', ({ data }) => data.draft !== true);
+const all = await getCollection('blog', ({ data }) => import.meta.env.DEV || data.draft !== true);
 const bySlug = all.filter((e) => getBaseId(e.id) === slug);
 
 const priority = getLocalePriority(locale);

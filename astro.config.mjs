@@ -1,6 +1,7 @@
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'astro/config';
+import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 import icon from 'astro-icon';
@@ -12,7 +13,7 @@ export default defineConfig({
   site: 'https://johnsonmao.github.io',
   output: 'static',
 
-  integrations: [sitemap(), icon()],
+  integrations: [sitemap(), icon(), mdx()],
 
   i18n: {
     locales: ['en', 'zh-TW'],

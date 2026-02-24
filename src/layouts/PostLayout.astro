@@ -3,6 +3,7 @@ import CopyLink from '@/components/blog/CopyLink.astro';
 import AuthorBio from '@/components/blog/AuthorBio.astro';
 import ShareButtons from '@/components/blog/ShareButtons.astro';
 import JsonLd from '@/components/seo/JsonLd.astro';
+import SeriesNav from '@/components/blog/SeriesNav.astro';
 import RelatedPosts from '@/components/blog/RelatedPosts.astro';
 import { getRelatedPosts } from '@/utils/related-posts';
 import { getCollection } from 'astro:content';
@@ -118,6 +119,8 @@ const postData = {
 			<div class="prose-headings:font-bold prose-a:text-primary hover:prose-a:underline">
 				<slot />
 			</div>
+
+			{currentPost && <SeriesNav currentPost={currentPost} pageLocale={displayLocale} />}
 
 			<RelatedPosts 
 				posts={relatedPosts} 

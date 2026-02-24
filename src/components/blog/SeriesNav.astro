@@ -1,0 +1,49 @@
+---
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import { t } from '@/i18n';
+import { getBaseId } from '@/utils/content';
+
+interface Props {
+  currentPost: CollectionEntry<'blog'>;
+  pageLocale: 'en' | 'zh-TW';
+}
+
+const { currentPost, pageLocale } = Astro.props;
+const { series, lang } = currentPost.data;
+
+if (!series) {
+  return null;
+}
+
+const seriesPosts = (await getCollection('blog')).filter(
+  post => post.data.series === series && post.data.lang === lang
+).sort(
+  (a, b) => new Date(a.data.pubDate).valueOf() - new Date(b.data.pubDate).valueOf()
+);
+
+const currentIndex = seriesPosts.findIndex(post => post.id === currentPost.id);
+const blogBase = getRelativeLocaleUrl(pageLocale, `blog/`);
+---
+
+<nav aria-label="Series navigation" class="not-prose mt-12 mb-8 p-6 rounded-2xl border-2 border-dashed border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/20">
+  <h2 class="text-lg font-bold text-gray-800 dark:text-gray-200 mb-4">{t(lang, 'blog.series.partOf')} <span class="font-extrabold">{series}</span></h2>
+  <ol class="list-decimal list-inside space-y-2">
+    {seriesPosts.map((post, index) => {
+      const isCurrent = index === currentIndex;
+      return (
+        <li class:list={[
+          "text-base",
+          { 'font-bold text-primary dark:text-primary-400': isCurrent },
+          { 'text-muted-foreground': !isCurrent }
+        ]}>
+          <a href={`${blogBase}${getBaseId(post.id)}/`} class:list={["hover:underline", { 'pointer-events-none': isCurrent }]}>
+            {post.data.title}
+          </a>
+          {isCurrent && <span class="ml-2 text-xs font-normal text-muted-foreground">{t(lang, 'blog.series.current')}</span>}
+        </li>
+      )
+    })}
+  </ol>
+</nav>
