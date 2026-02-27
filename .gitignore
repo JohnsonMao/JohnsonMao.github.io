@@ -17,3 +17,5 @@ lib-cov
 logs
 node_modules
 temp
+.pagefind_cache
+

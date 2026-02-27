@@ -73,7 +73,7 @@ const postData = {
 <BaseLayout title={title} description={description} image={image} canonical={canonical} locale={displayLocale} maxWidth="max-w-6xl">
 	<JsonLd slot="head" post={postData} url={Astro.url.href} locale={displayLocale} />
 	<div class="grid grid-cols-1 lg:grid-cols-[1fr_250px] gap-12 items-start">
-		<article class="prose dark:prose-invert max-w-none min-w-0">
+		<article class="prose dark:prose-invert max-w-none min-w-0" data-pagefind-body>
 			{isFallback && fallbackNotice && (
 				<div id="fallback-banner" class="mb-8 rounded-xl border border-amber-200 bg-amber-50/50 p-4 text-sm text-amber-900 dark:border-amber-800/50 dark:bg-amber-950/20 dark:text-amber-200 backdrop-blur-sm" role="status" aria-live="polite">
 					<div class="flex items-center gap-3">
@@ -86,7 +86,7 @@ const postData = {
 			)}
 			
 			<header class="mb-10 not-prose">
-				<h1 class="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-gray-100 mb-4 leading-tight">{title}</h1>
+				<h1 class="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-gray-100 mb-4 leading-tight" data-pagefind-weight="10">{title}</h1>
 				<div class="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
 					<div class="flex items-center gap-1.5">
 						<Icon name="lucide:calendar" class="w-3.5 h-3.5" />

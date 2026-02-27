@@ -8,6 +8,7 @@
     "preview": "astro preview",
     "check": "astro check",
     "astro": "astro",
+    "postbuild": "pagefind --site dist",
     "test": "vitest run"
   },
   "dependencies": {
@@ -19,11 +20,13 @@
     "@tailwindcss/vite": "^4.2.0",
     "astro": "^5.17.1",
     "astro-icon": "^1.1.5",
+    "gsap": "^3.14.2",
     "tailwindcss": "^4.2.0"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.6",
     "@types/node": "^25.3.0",
+    "pagefind": "^1.4.0",
     "typescript": "^5.9.3",
     "vitest": "^4.0.18"
   }

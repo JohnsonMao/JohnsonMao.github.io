@@ -43,5 +43,15 @@
 	"localeLabel": {
 		"en": "English",
 		"zhTW": "繁體中文"
+	},
+	"search": {
+		"placeholder": "搜尋文章...",
+		"noResults": "找不到相關結果",
+		"noResultsFor": "找不到關於 \"{query}\" 的結果",
+		"indexNotFound": "找不到搜尋索引，請執行建置以啟用搜尋。",
+		"shortcut": "K",
+		"toClose": "關閉",
+		"toSelect": "選擇"
 	}
 }
+

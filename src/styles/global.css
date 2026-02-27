@@ -13,4 +13,18 @@
 	html {
 		scroll-behavior: smooth;
 	}
+
+	/* Pagefind Search Highlights */
+	mark {
+		background-color: rgba(245, 158, 11, 0.2);
+		color: rgb(245, 158, 11);
+		font-weight: 600;
+		border-radius: 2px;
+		padding: 0 2px;
+	}
+
+	.dark mark {
+		background-color: rgba(251, 191, 36, 0.25);
+		color: rgb(251, 191, 36);
+	}
 }
