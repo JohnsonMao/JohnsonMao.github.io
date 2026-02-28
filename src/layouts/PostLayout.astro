@@ -13,6 +13,7 @@ import { getRelativeLocaleUrl } from 'astro:i18n';
 import { Icon } from 'astro-icon/components';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { t } from '@/i18n';
+import Giscus from '@/components/blog/Giscus.astro';
 
 interface Props {
 	id?: string;
@@ -135,6 +136,11 @@ const postData = {
 			/>
 
 			<AuthorBio locale={displayLocale} />
+
+            <div class="mt-12 pt-12 border-t border-dashed border-gray-200 dark:border-gray-800">
+                <h2 class="text-2xl font-bold mb-4">{t(displayLocale, 'blog.comments')}</h2>
+                <Giscus locale={displayLocale} />
+            </div>
 		</article>
 
 		<aside class="hidden lg:block sticky top-24 self-start">

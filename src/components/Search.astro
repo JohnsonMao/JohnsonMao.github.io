@@ -56,8 +56,7 @@ const { locale } = Astro.props;
 </dialog>
 
 <script>
-  import { componentIsHTMLElement } from 'astro/runtime/server/render/dom.js';
-import { gsap } from 'gsap';
+  import { gsap } from 'gsap';
 
   let pagefind: any;
 
@@ -77,13 +76,20 @@ import { gsap } from 'gsap';
 
   function setupSearch() {
     const searchButton = document.getElementById('search-button');
-    const searchDialog = document.getElementById('search-dialog') as HTMLDialogElement;
-    const searchInput = document.getElementById('search-input') as HTMLInputElement;
+    const searchDialog = document.getElementById('search-dialog');
+    const searchInput = document.getElementById('search-input');
     const searchResults = document.getElementById('search-results');
     const searchEmpty = document.getElementById('search-empty');
     const closeButton = document.getElementById('close-search');
 
-    if (!searchButton || !searchDialog || !searchInput || !closeButton || !searchResults) return;
+    if (
+      !(searchButton instanceof HTMLButtonElement) ||
+      !(searchDialog instanceof HTMLDialogElement) ||
+      !(searchInput instanceof HTMLInputElement) ||
+      !(closeButton instanceof HTMLButtonElement) ||
+      !(searchResults instanceof HTMLElement)
+    )
+      return;
 
     let isClosing = false;
 
@@ -149,7 +155,7 @@ import { gsap } from 'gsap';
       const pf = await initPagefind();
       if (!pf) {
           if (searchResults) {
-            const msg = searchDialog.dataset.indexNotFound || 'Search index not found. Please run a build to enable search.';
+            const msg = searchDialog.dataset.indexNotFound;
             searchResults.innerHTML = `<div class="text-center py-12 text-neutral-500 italic">${msg}</div>`;
           }
           return;

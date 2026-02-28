@@ -24,8 +24,9 @@
 		"share": "Share this post",
 		"series": {
 			"partOf": "Part of the series:",
-			"current": "(Current)"
-		}
+            "current": "(Current)"
+        },
+        "comments": "Comments"
 	},
 	"about": {
 		"title": "About Me"

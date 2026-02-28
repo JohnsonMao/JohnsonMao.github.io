@@ -25,7 +25,8 @@
 		"series": {
 			"partOf": "本篇為系列文章：",
 			"current": "（本篇）"
-		}
+		},
+		"comments": "留言"
 	},
 	"about": {
 		"title": "關於我"
