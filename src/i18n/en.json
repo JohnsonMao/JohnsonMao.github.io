@@ -53,6 +53,17 @@
 		"shortcut": "K",
 		"toClose": "to close",
 		"toSelect": "to select"
+	},
+	"pwa": {
+		"enableNotifications": "Enable Notifications",
+		"notificationsEnabled": "Notifications Enabled",
+		"alreadySubscribedAlert": "You are already subscribed. To unsubscribe, please use browser settings.",
+		"vapidMissingAlert": "Push Notifications are not fully configured (missing VAPID key).",
+		"failedSubscribeAlert": "Failed to enable notifications. See console for details.",
+		"newContentAvailable": "New content available, click on reload button to update.",
+		"reload": "Reload",
+		"close": "Close",
+		"subscribedSuccessfullyAlert": "Subscribed successfully! Check console for subscription object."
 	}
 }
 

@@ -53,6 +53,17 @@
 		"shortcut": "K",
 		"toClose": "關閉",
 		"toSelect": "選擇"
+	},
+	"pwa": {
+		"enableNotifications": "啟用通知",
+		"notificationsEnabled": "通知已啟用",
+		"alreadySubscribedAlert": "您已訂閱通知。如需取消訂閱，請透過瀏覽器設定進行。",
+		"vapidMissingAlert": "推播通知配置不完整（缺少 VAPID 金鑰）。",
+		"failedSubscribeAlert": "啟用通知失敗。詳情請查看控制台。",
+		"newContentAvailable": "有新內容可用，點擊重新載入按鈕更新。",
+		"reload": "重新載入",
+		"close": "關閉",
+		"subscribedSuccessfullyAlert": "訂閱成功！請查看控制台中的訂閱物件。"
 	}
 }
 

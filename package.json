@@ -21,13 +21,20 @@
     "astro": "^5.17.1",
     "astro-icon": "^1.1.5",
     "gsap": "^3.14.2",
-    "tailwindcss": "^4.2.0"
+    "tailwindcss": "^4.2.0",
+    "workbox-core": "^7.4.0",
+    "workbox-precaching": "^7.4.0",
+    "workbox-routing": "^7.4.0",
+    "workbox-window": "^7.4.0"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.6",
     "@types/node": "^25.3.0",
+    "@vite-pwa/astro": "^1.2.0",
     "pagefind": "^1.4.0",
     "typescript": "^5.9.3",
-    "vitest": "^4.0.18"
+    "vite-plugin-pwa": "^1.2.0",
+    "vitest": "^4.0.18",
+    "web-push": "^3.6.7"
   }
 }

@@ -1,10 +1,13 @@
 ---
+import { pwaInfo } from 'virtual:pwa-info';
+import { pwaAssetsHead } from 'virtual:pwa-assets/head';
 import { ClientRouter } from 'astro:transitions';
 import { getRelativeLocaleUrl } from 'astro:i18n';
 import { t } from '@/i18n';
 import '@/styles/global.css';
 import Header from '@/components/Header.astro';
 import Footer from '@/components/Footer.astro';
+import ReloadPrompt from '@/components/pwa/ReloadPrompt.astro';
 
 interface Props {
 	title: string;
@@ -27,8 +30,6 @@ const imageUrl = image?.startsWith('http') ? image : image ? new URL(image, site
 	<head>
 		<ClientRouter />
 		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
@@ -86,6 +87,11 @@ const imageUrl = image?.startsWith('http') ? image : image ? new URL(image, site
 		{import.meta.env.PROD && import.meta.env.PUBLIC_CLOUDFLARE_BEACON_TOKEN && (
 			<script is:inline defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon={JSON.stringify({ token: import.meta.env.PUBLIC_CLOUDFLARE_BEACON_TOKEN })}></script>
 		)}
+		{pwaInfo && <Fragment set:html={pwaInfo.webManifest.linkTag} />}
+		{pwaAssetsHead.themeColor && <meta name="theme-color" content={pwaAssetsHead.themeColor.content} /> }
+		{pwaAssetsHead.links.map(link => (
+			<link {...link} />
+		))}
 		<slot name="head" />
 	</head>
 	<body class="min-h-screen flex flex-col bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100">
@@ -94,5 +100,6 @@ const imageUrl = image?.startsWith('http') ? image : image ? new URL(image, site
 			<slot />
 		</main>
 		<Footer locale={locale} />
+		<ReloadPrompt locale={locale} />
 	</body>
 </html>

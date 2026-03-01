@@ -3,9 +3,7 @@
 ## Purpose
 
 Define static build output, Astro configuration, and GitHub Pages deployment method.
-
 ## Requirements
-
 ### Requirement: Static build output
 
 The system SHALL be buildable with Astro's build command (e.g. `astro build` or `pnpm build`) and SHALL produce a static output (default `dist/` or as configured) suitable for deployment to a static host. The build SHALL NOT require a server runtime unless an adapter is explicitly added later. **The build process SHALL support environment variables for configuring analytics (e.g., `GA_MEASUREMENT_ID`).**
@@ -38,6 +36,17 @@ The system SHALL generate a sitemap (e.g. sitemap-index.xml or sitemap-0.xml) at
 - **WHEN** the sitemap is generated
 - **THEN** each URL in the sitemap SHALL use the full base URL from the Astro `site` config (e.g. `https://johnsonmao.github.io/...`)
 
+### Requirement: Generate Web App Manifest and Service Worker
+The system SHALL generate a standard Web App Manifest (`manifest.webmanifest`) and a Service Worker file (`sw.js`) during the build process, enabling PWA functionality.
+
+#### Scenario: Manifest exists in dist
+- **WHEN** the `pnpm build` command completes
+- **THEN** a `manifest.webmanifest` file SHALL exist in the output directory (`dist/`)
+
+#### Scenario: Service Worker exists in dist
+- **WHEN** the `pnpm build` command completes
+- **THEN** a `sw.js` file SHALL exist in the output directory (`dist/`)
+
 ### Requirement: Deployability to GitHub Pages
 
 The project SHALL be deployable to GitHub Pages (or equivalent static hosting). Deployment MAY be done via GitHub Actions (e.g. build then push `dist/` to `gh-pages` or a docs folder) or by any workflow that serves the built static output. The design SHALL NOT require a custom server for production.
@@ -45,3 +54,4 @@ The project SHALL be deployable to GitHub Pages (or equivalent static hosting). 
 #### Scenario: Deployed site serves content
 - **WHEN** the built output is deployed to the configured hosting target
 - **THEN** the home page, blog list, and post pages SHALL be accessible at the expected URLs
+

@@ -1,0 +1,131 @@
+---
+import { Icon } from 'astro-icon/components';
+import { t } from '@/i18n';
+
+interface Props {
+  locale: 'en' | 'zh-TW';
+}
+
+const { locale } = Astro.props;
+
+const enableNotificationsText = t(locale, 'pwa.enableNotifications');
+const notificationsEnabledText = t(locale, 'pwa.notificationsEnabled');
+const alreadySubscribedAlertText = t(locale, 'pwa.alreadySubscribedAlert');
+const vapidMissingAlertText = t(locale, 'pwa.vapidMissingAlert');
+const failedSubscribeAlertText = t(locale, 'pwa.failedSubscribeAlert');
+const subscribedSuccessfullyAlertText = t(locale, 'pwa.subscribedSuccessfullyAlert');
+---
+
+<button
+  id="push-subscription-btn"
+  type="button"
+  class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-600 dark:hover:bg-gray-700 transition-colors"
+  data-enable-text={enableNotificationsText}
+  data-enabled-text={notificationsEnabledText}
+  data-already-subscribed-alert={alreadySubscribedAlertText}
+  data-vapid-missing-alert={vapidMissingAlertText}
+  data-failed-subscribe-alert={failedSubscribeAlertText}
+  data-subscribed-successfully-alert={subscribedSuccessfullyAlertText}
+  data-locale={locale}
+>
+  <Icon name="lucide:bell" class="w-4 h-4" />
+  <span class="btn-text">{enableNotificationsText}</span>
+</button>
+
+<script>
+  // This script runs on the client-side
+  const VAPID_PUBLIC_KEY = import.meta.env.PUBLIC_VAPID_KEY;
+
+  function urlB64ToUint8Array(base64String: string) {
+    const padding = '='.repeat((4 - base64String.length % 4) % 4);
+    const base64 = (base64String + padding)
+      .replace(/\-/g, '+')
+      .replace(/_/g, '/');
+
+    const rawData = window.atob(base64);
+    const outputArray = new Uint8Array(rawData.length);
+
+    for (let i = 0; i < rawData.length; ++i) {
+      outputArray[i] = rawData.charCodeAt(i);
+    }
+    return outputArray;
+  }
+
+  // Function to update the UI state of the button
+  async function updatePushNotificationButtonUI() {
+    const btn = document.getElementById('push-subscription-btn');
+    if (!btn) return;
+
+    if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
+      btn.classList.add('hidden'); // Hide button if not supported
+      return;
+    }
+    
+    const registration = await navigator.serviceWorker.ready;
+    const subscription = await registration.pushManager.getSubscription();
+
+    const span = btn.querySelector('.btn-text');
+    if (subscription) {
+      if (span) span.textContent = btn.dataset.enabledText || 'Notifications Enabled';
+      btn.classList.add('text-green-600', 'dark:text-green-400', 'border-green-600', 'dark:border-green-400');
+      btn.setAttribute('aria-pressed', 'true');
+    } else {
+      if (span) span.textContent = btn.dataset.enableText || 'Enable Notifications';
+      btn.classList.remove('text-green-600', 'dark:text-green-400', 'border-green-600', 'dark:border-green-400');
+      btn.setAttribute('aria-pressed', 'false');
+    }
+    btn.classList.remove('hidden');
+  }
+
+  // Event delegation handler for button click
+  async function handlePushNotificationButtonClick(event: PointerEvent) {
+    const target = event.target;
+    if (!(target instanceof HTMLElement)) return;
+    
+    const btn = target?.closest('#push-subscription-btn');
+    if (!(btn instanceof HTMLElement)) return;
+    event.preventDefault();
+
+    if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
+      // This should ideally be hidden by updatePushNotificationButtonUI
+      return;
+    }
+
+    const registration = await navigator.serviceWorker.ready;
+    let subscription = await registration.pushManager.getSubscription();
+
+    if (subscription) {
+      alert(btn.dataset.alreadySubscribedAlert || 'You are already subscribed. To unsubscribe, please use browser settings.');
+    } else {
+      // Subscribe
+      try {
+        if (!VAPID_PUBLIC_KEY) {
+          console.warn('PUBLIC_VAPID_KEY is not defined. Subscription might fail in some browsers.');
+          alert(btn.dataset.vapidMissingAlert || 'Push Notifications are not fully configured (missing VAPID key).');
+          return;
+        }
+
+        const newSubscription = await registration.pushManager.subscribe({
+          userVisibleOnly: true,
+          applicationServerKey: urlB64ToUint8Array(VAPID_PUBLIC_KEY)
+        });
+        
+        subscription = newSubscription;
+        updatePushNotificationButtonUI(); // Update UI after successful subscription
+        
+        console.log('Web Push Subscription:', JSON.stringify(subscription));
+        alert(btn.dataset.subscribedSuccessfullyAlert || 'Subscribed successfully! Check console for subscription object.');
+      } catch (error) {
+        console.error('Failed to subscribe:', error);
+        alert(btn.dataset.failedSubscribeAlert || 'Failed to enable notifications. See console for details.');
+      }
+    }
+  }
+
+  // Attach event delegation listener once to the document
+  // This listener will persist across View Transitions
+  document.addEventListener('click', handlePushNotificationButtonClick);
+
+  // Update UI on initial load and after View Transitions
+  document.addEventListener('astro:page-load', updatePushNotificationButtonUI);
+</script>
