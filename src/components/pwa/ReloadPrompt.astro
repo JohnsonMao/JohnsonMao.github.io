@@ -1,11 +1,7 @@
 ---
-import { t } from '@/i18n';
+import { t, getLocale } from '@/i18n';
 
-interface Props {
-  locale: 'en' | 'zh-TW';
-}
-
-const { locale } = Astro.props;
+const locale = getLocale(Astro.currentLocale);
 
 const newContentAvailableText = t(locale, 'pwa.newContentAvailable');
 const reloadText = t(locale, 'pwa.reload');

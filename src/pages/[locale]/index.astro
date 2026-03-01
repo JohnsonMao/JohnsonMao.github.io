@@ -9,7 +9,7 @@ const locale = Astro.params.locale;
 const blogUrl = getRelativeLocaleUrl(locale, 'blog');
 ---
 
-<BaseLayout title={t(locale, 'home.title')} description={t(locale, 'home.description')} locale={locale}>
+<BaseLayout title={t(locale, 'home.title')} description={t(locale, 'home.description')}>
 	<div class="space-y-6">
 		<h1 class="text-2xl font-bold">{t(locale, 'home.welcome')}</h1>
 		<p class="text-gray-600 dark:text-gray-400">{t(locale, 'home.intro')}</p>

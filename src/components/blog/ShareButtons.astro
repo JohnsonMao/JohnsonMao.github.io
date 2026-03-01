@@ -1,13 +1,13 @@
 ---
-import { type Locale, t } from '@/i18n';
+import { t, getLocale } from '@/i18n';
 
 interface Props {
-	locale: Locale;
 	title: string;
 	url: string;
 }
 
-const { locale, title, url } = Astro.props;
+const { title, url } = Astro.props;
+const locale = getLocale(Astro.currentLocale);
 
 const shareLinks = [
 	{

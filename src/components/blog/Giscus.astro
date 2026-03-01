@@ -1,16 +1,12 @@
 ---
-interface Props {
-    locale: 'en' | 'zh-TW';
-}
+import { getLocale } from '@/i18n';
 
-const { locale } = Astro.props;
+const locale = getLocale(Astro.currentLocale);
 
 const repo = import.meta.env.PUBLIC_GISCUS_REPO;
 const repoId = import.meta.env.PUBLIC_GISCUS_REPO_ID;
 const category = import.meta.env.PUBLIC_GISCUS_CATEGORY;
 const categoryId = import.meta.env.PUBLIC_GISCUS_CATEGORY_ID;
-
-const giscusLang = locale === 'zh-TW' ? 'zh-TW' : 'en';
 ---
 
 <div
@@ -20,7 +16,7 @@ const giscusLang = locale === 'zh-TW' ? 'zh-TW' : 'en';
     data-repo-id={repoId}
     data-category={category}
     data-category-id={categoryId}
-    data-giscus-lang={giscusLang}
+    data-locale={locale}
 ></div>
 
 <script>
@@ -49,7 +45,7 @@ const giscusLang = locale === 'zh-TW' ? 'zh-TW' : 'en';
         script.setAttribute('data-emit-metadata', '0');
         script.setAttribute('data-input-position', 'bottom');
         script.setAttribute('data-theme', currentTheme);
-        script.setAttribute('data-lang', container.dataset.giscusLang || 'en');
+        script.setAttribute('data-lang', container.dataset.locale || 'en');
 
         container.appendChild(script);
 

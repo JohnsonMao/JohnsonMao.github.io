@@ -7,10 +7,9 @@ import { getBaseId } from '@/utils/content';
 interface Props {
 	posts: CollectionEntry<'blog'>[];
 	title: string;
-	pageLocale: 'en' | 'zh-TW';
 }
 
-const { posts, title, pageLocale } = Astro.props;
+const { posts, title } = Astro.props;
 
 if (posts.length === 0) return null;
 ---
@@ -26,8 +25,7 @@ if (posts.length === 0) return null;
 					description={post.data.description}
 					pubDate={post.data.pubDate}
 					slug={getBaseId(post.id)}
-					locale={post.data.lang}
-					pageLocale={pageLocale}
+					postLang={post.data.lang}
 					readingTimeLabel={readingTime.label}
 					tags={post.data.tags}
 				/>

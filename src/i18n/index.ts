@@ -6,6 +6,16 @@ export const defaultLocale: Locale = 'zh-TW';
 export const locales: Locale[] = ['zh-TW', 'en'];
 
 /**
+ * Validates and returns the current locale with a fallback to defaultLocale.
+ */
+export function getLocale(currentLocale: string | undefined): Locale {
+	if (currentLocale && locales.includes(currentLocale as Locale)) {
+		return currentLocale as Locale;
+	}
+	return defaultLocale;
+}
+
+/**
  * Get the locale priority order based on the current locale
  */
 export function getLocalePriority(current: Locale): Locale[] {

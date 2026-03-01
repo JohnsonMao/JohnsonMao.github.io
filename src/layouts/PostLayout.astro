@@ -12,7 +12,7 @@ import type { MarkdownHeading } from 'astro';
 import { getRelativeLocaleUrl } from 'astro:i18n';
 import { Icon } from 'astro-icon/components';
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { t } from '@/i18n';
+import { t, getLocale, defaultLocale } from '@/i18n';
 import Giscus from '@/components/blog/Giscus.astro';
 
 interface Props {
@@ -20,8 +20,7 @@ interface Props {
 	title: string;
 	description?: string;
 	pubDate: Date;
-	locale?: string;
-	pageLocale?: 'en' | 'zh-TW';
+	postLang?: string;
 	isFallback?: boolean;
 	fallbackNotice?: string;
 	image?: string;
@@ -37,8 +36,7 @@ const {
 	title, 
 	description, 
 	pubDate, 
-	locale = 'zh-TW', 
-	pageLocale, 
+	postLang = defaultLocale, 
 	isFallback, 
 	fallbackNotice, 
 	image, 
@@ -49,14 +47,13 @@ const {
 	headings = []
 } = Astro.props;
 
-const localeVal = locale as 'en' | 'zh-TW';
-const displayLocale = pageLocale ?? localeVal;
+const locale = getLocale(Astro.currentLocale);
 
-const formattedDate = new Intl.DateTimeFormat(localeVal, { dateStyle: 'long' }).format(pubDate);
-const formattedUpdated = updated ? new Intl.DateTimeFormat(localeVal, { dateStyle: 'long' }).format(updated) : null;
+const formattedDate = new Intl.DateTimeFormat(postLang, { dateStyle: 'long' }).format(pubDate);
+const formattedUpdated = updated ? new Intl.DateTimeFormat(postLang, { dateStyle: 'long' }).format(updated) : null;
 const showUpdated = updated && updated.getTime() !== pubDate.getTime();
 
-const tagBase = getRelativeLocaleUrl(displayLocale, 'tag/');
+const tagBase = getRelativeLocaleUrl(locale, 'tag/');
 
 const allPosts = await getCollection('blog', ({ data }) => data.draft !== true);
 const currentPost = allPosts.find((p) => p.id === id || (p.data.title === title && p.data.pubDate.getTime() === pubDate.getTime()));
@@ -71,8 +68,8 @@ const postData = {
 };
 ---
 
-<BaseLayout title={title} description={description} image={image} canonical={canonical} locale={displayLocale} maxWidth="max-w-6xl">
-	<JsonLd slot="head" post={postData} url={Astro.url.href} locale={displayLocale} />
+<BaseLayout title={title} description={description} image={image} canonical={canonical} maxWidth="max-w-6xl">
+	<JsonLd slot="head" post={postData} url={Astro.url.href} />
 	<div class="grid grid-cols-1 lg:grid-cols-[1fr_250px] gap-12 items-start">
 		<article class="prose dark:prose-invert max-w-none min-w-0" data-pagefind-body>
 			{isFallback && fallbackNotice && (
@@ -99,11 +96,11 @@ const postData = {
 							<span aria-label="Reading time">{readingTimeLabel}</span>
 						</div>
 					)}
-					<CopyLink label={t(displayLocale, 'blog.copyLink')} copiedLabel={t(displayLocale, 'blog.copied')} />
+					<CopyLink label={t(locale, 'blog.copyLink')} copiedLabel={t(locale, 'blog.copied')} />
 				</div>
 				{showUpdated && formattedUpdated && (
 					<p class="mt-2 text-xs text-muted-foreground/80 italic">
-						{t(displayLocale, 'blog.updatedOn')} <time datetime={updated.toISOString()}>{formattedUpdated}</time>
+						{t(locale, 'blog.updatedOn')} <time datetime={updated.toISOString()}>{formattedUpdated}</time>
 					</p>
 				)}
 				{tags && tags.length > 0 && (
@@ -121,30 +118,28 @@ const postData = {
 				<slot />
 			</div>
 
-			{currentPost && <SeriesNav currentPost={currentPost} pageLocale={displayLocale} />}
+			{currentPost && <SeriesNav currentPost={currentPost} />}
 
 			<RelatedPosts 
 				posts={relatedPosts} 
-				title={t(displayLocale, 'blog.relatedPosts')} 
-				pageLocale={displayLocale} 
+				title={t(locale, 'blog.relatedPosts')} 
 			/>
 
 			<ShareButtons 
-				locale={displayLocale} 
 				title={title} 
 				url={Astro.url.href} 
 			/>
 
-			<AuthorBio locale={displayLocale} />
+			<AuthorBio />
 
             <div class="mt-12 pt-12 border-t border-dashed border-gray-200 dark:border-gray-800">
-                <h2 class="text-2xl font-bold mb-4">{t(displayLocale, 'blog.comments')}</h2>
-                <Giscus locale={displayLocale} />
+                <h2 class="text-2xl font-bold mb-4">{t(locale, 'blog.comments')}</h2>
+                <Giscus />
             </div>
 		</article>
 
 		<aside class="hidden lg:block sticky top-24 self-start">
-			<TableOfContents headings={headings} title={t(displayLocale, 'blog.tableOfContents')} />
+			<TableOfContents headings={headings} title={t(locale, 'blog.tableOfContents')} />
 		</aside>
 	</div>
 </BaseLayout>

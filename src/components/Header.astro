@@ -1,13 +1,10 @@
 ---
 import { getRelativeLocaleUrl } from 'astro:i18n';
-import { t, locales } from '@/i18n';
+import { t, locales, getLocale } from '@/i18n';
 import ThemeToggle from '@/components/ThemeToggle.astro';
 import Search from '@/components/Search.astro';
 
-interface Props {
-	locale?: 'en' | 'zh-TW';
-}
-const locale = (Astro.currentLocale ?? Astro.props.locale ?? 'zh-TW') as 'en' | 'zh-TW';
+const locale = getLocale(Astro.currentLocale);
 
 // Common links
 const homeUrl = getRelativeLocaleUrl(locale, '');
@@ -35,7 +32,7 @@ const baseRoute = getPathWithoutLocale(currentPath);
 const currentIndex = locales.indexOf(locale);
 const nextLocale = locales[(currentIndex + 1) % locales.length];
 const nextLocaleUrl = getRelativeLocaleUrl(nextLocale, baseRoute === '/' ? undefined : baseRoute.slice(1));
-const nextLocaleLabel = t(locale, `locale.${nextLocale === 'zh-TW' ? 'zhTW' : 'en'}`);
+const nextLocaleLabel = t(locale, `locale.${nextLocale}`);
 ---
 
 <header class="border-b border-gray-200 dark:border-gray-800">
@@ -44,7 +41,7 @@ const nextLocaleLabel = t(locale, `locale.${nextLocale === 'zh-TW' ? 'zhTW' : 'e
 		<a href={blogUrl} class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100">{t(locale, 'nav.blog')}</a>
 		<a href={aboutUrl} class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100">{t(locale, 'nav.about')}</a>
 		<div class="flex items-center gap-2">
-			<Search locale={locale} />
+			<Search />
 			<ThemeToggle />
 
 			<a href={nextLocaleUrl} class="text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200" aria-label="Switch language">

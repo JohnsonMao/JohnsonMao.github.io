@@ -1,17 +1,16 @@
 ---
 import { getRelativeLocaleUrl } from 'astro:i18n';
-import { defaultLocale, type Locale } from '@/i18n';
+import { defaultLocale, getLocale } from '@/i18n';
 
 interface Props {
 	title: string;
 	description: string;
 	pubDate: Date;
 	slug: string;
-	locale?: string;
+	postLang?: string;
 	langBadge?: string;
 	readingTimeLabel?: string;
 	tags?: string[];
-	pageLocale?: Locale;
 }
 
 const { 
@@ -19,20 +18,21 @@ const {
 	description, 
 	pubDate, 
 	slug, 
-	locale = defaultLocale, 
+	postLang = defaultLocale, 
 	langBadge, 
 	readingTimeLabel, 
-	tags, 
-	pageLocale = defaultLocale 
+	tags 
 } = Astro.props;
 
+const locale = getLocale(Astro.currentLocale);
+
 // Use built-in Intl to format dates based on the entry's locale
-const formattedDate = new Intl.DateTimeFormat(locale, { dateStyle: 'long' }).format(pubDate);
+const formattedDate = new Intl.DateTimeFormat(postLang, { dateStyle: 'long' }).format(pubDate);
 
 // Use Astro's built-in i18n helper to generate URLs.
 // It automatically handles the default locale prefix based on your config.
-const href = getRelativeLocaleUrl(pageLocale, `blog/${slug}`);
-const tagBase = getRelativeLocaleUrl(pageLocale, 'tag/');
+const href = getRelativeLocaleUrl(locale, `blog/${slug}`);
+const tagBase = getRelativeLocaleUrl(locale, 'tag/');
 ---
 
 <article class="rounded-lg border border-gray-200 dark:border-gray-800 p-4 hover:border-gray-300 dark:hover:border-gray-700 transition-colors">
@@ -51,7 +51,7 @@ const tagBase = getRelativeLocaleUrl(pageLocale, 'tag/');
 			{readingTimeLabel && <span aria-label="Reading time">{readingTimeLabel}</span>}
 		</div>
 	</a>
-	{tags && tags.length > 0 && pageLocale != null && (
+	{tags && tags.length > 0 && locale != null && (
 		<div class="mt-2 flex flex-wrap gap-1">
 			{tags.map((tag) => (
 				<a href={`${tagBase}${encodeURIComponent(tag)}`} class="rounded px-1.5 py-0.5 text-xs bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700">{tag}</a>

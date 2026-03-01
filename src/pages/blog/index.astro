@@ -17,7 +17,7 @@ const picked = Object.entries(grouped).map(([baseId, versions]) => {
 const sorted = picked.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
 ---
 
-<BaseLayout title={t(locale, 'blog.listTitle')} description={t(locale, 'blog.listDescription')} locale={locale}>
+<BaseLayout title={t(locale, 'blog.listTitle')} description={t(locale, 'blog.listDescription')}>
 	<div class="max-w-4xl mx-auto px-4 py-12">
 		<h1 class="text-4xl font-bold tracking-tight mb-8 self-start">{t(locale, 'blog.listTitle')}</h1>
 		<ul class="grid gap-8 list-none p-0 m-0">
@@ -35,11 +35,10 @@ const sorted = picked.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.g
 							description={entry.data.description}
 							pubDate={entry.data.pubDate}
 							slug={entry.baseId}
-							locale={articleLang}
+							postLang={articleLang}
 							langBadge={langBadge}
 							readingTimeLabel={readingTime.label}
 							tags={entry.data.tags}
-							pageLocale={locale}
 						/>
 					</li>
 				);

@@ -1,4 +1,6 @@
 ---
+import { getLocale } from '@/i18n';
+
 interface Props {
 	post: {
 		title: string;
@@ -9,10 +11,10 @@ interface Props {
 		image?: string;
 	};
 	url: string;
-	locale: string;
 }
 
-const { post, url, locale } = Astro.props;
+const { post, url } = Astro.props;
+const locale = getLocale(Astro.currentLocale);
 
 const jsonLd = {
 	"@context": "https://schema.org",

@@ -13,7 +13,7 @@ if (!entry) {
 const { Content } = await render(entry);
 ---
 
-<BaseLayout title={entry.data.title} locale={defaultLocale}>
+<BaseLayout title={entry.data.title}>
 	<article class="prose dark:prose-invert max-w-none">
 		<h1>{entry.data.title}</h1>
 		<Content />

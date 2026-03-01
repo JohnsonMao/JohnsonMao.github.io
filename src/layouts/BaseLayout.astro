@@ -3,7 +3,7 @@ import { pwaInfo } from 'virtual:pwa-info';
 import { pwaAssetsHead } from 'virtual:pwa-assets/head';
 import { ClientRouter } from 'astro:transitions';
 import { getRelativeLocaleUrl } from 'astro:i18n';
-import { t } from '@/i18n';
+import { t, getLocale } from '@/i18n';
 import '@/styles/global.css';
 import Header from '@/components/Header.astro';
 import Footer from '@/components/Footer.astro';
@@ -14,10 +14,9 @@ interface Props {
 	description?: string;
 	image?: string;
 	canonical?: string;
-	locale?: 'en' | 'zh-TW';
 	maxWidth?: string;
 }
-const locale = (Astro.props.locale ?? 'zh-TW') as 'en' | 'zh-TW';
+const locale = getLocale(Astro.currentLocale);
 const { title, description = t(locale, 'home.description'), image, canonical, maxWidth = 'max-w-3xl' } = Astro.props;
 const pathWithoutLocale = Astro.url.pathname.replace(/^\//, '').replace(/^en\//, '');
 const locales = ['zh-TW', 'en'] as const;
@@ -95,11 +94,11 @@ const imageUrl = image?.startsWith('http') ? image : image ? new URL(image, site
 		<slot name="head" />
 	</head>
 	<body class="min-h-screen flex flex-col bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100">
-		<Header locale={locale} />
+		<Header />
 		<main class={`flex-1 mx-auto w-full ${maxWidth} px-4 py-8`}>
 			<slot />
 		</main>
-		<Footer locale={locale} />
-		<ReloadPrompt locale={locale} />
+		<Footer />
+		<ReloadPrompt />
 	</body>
 </html>

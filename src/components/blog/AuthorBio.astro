@@ -1,13 +1,9 @@
 ---
 import author from '@/data/author.json';
-import { type Locale } from '@/i18n';
+import { getLocale } from '@/i18n';
 
-interface Props {
-	locale: Locale;
-}
-
-const { locale } = Astro.props;
-const bio = author.bio[locale === 'zh-TW' ? 'zh-TW' : 'en'];
+const locale = getLocale(Astro.currentLocale);
+const bio = author.bio[locale];
 ---
 
 <section class="mt-12 py-8 border-t border-gray-200 dark:border-gray-800">
