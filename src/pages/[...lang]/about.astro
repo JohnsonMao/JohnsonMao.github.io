@@ -1,15 +1,17 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { t, locales } from '@/i18n';
+import { locales, defaultLocale, getLocale } from '@/i18n';
 import { getCollection, render } from 'astro:content';
 
 export async function getStaticPaths() {
-	return locales.filter(l => l !== 'zh-TW').map((locale) => ({
-		params: { locale },
-	}));
+	return [
+		{ params: { lang: undefined } },
+		...locales.filter(l => l !== defaultLocale).map(l => ({ params: { lang: l } }))
+	];
 }
 
-const { locale } = Astro.params;
+const { lang } = Astro.params;
+const locale = getLocale(lang);
 const aboutEntries = await getCollection('about');
 const entry = aboutEntries.find((e) => e.data.lang === locale);
 

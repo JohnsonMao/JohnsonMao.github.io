@@ -39,11 +39,11 @@
 	},
 	"locale": {
 		"en": "EN",
-		"zhTW": "繁體中文"
+		"zh-TW": "繁體中文"
 	},
 	"localeLabel": {
 		"en": "English",
-		"zhTW": "繁體中文"
+		"zh-TW": "繁體中文"
 	},
 	"search": {
 		"placeholder": "搜尋文章...",

@@ -1,20 +1,33 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import PostCard from '@/components/PostCard.astro';
-import { t, defaultLocale, type Locale } from '@/i18n';
+import { t, locales, defaultLocale, getLocale } from '@/i18n';
 import { getReadingTime } from '@/utils/reading-time';
 import { getEntriesByTag } from '@/utils/content';
 
 export async function getStaticPaths() {
-	const tagMap = await getEntriesByTag(defaultLocale);
-	return Object.keys(tagMap).map((tag) => ({
-		params: { tag: encodeURIComponent(tag) },
-		props: { tag }
-	}));
+	const langs = [
+		undefined,
+		...locales.filter(l => l !== defaultLocale)
+	];
+	
+	const paths = [];
+	for (const lang of langs) {
+		const locale = getLocale(lang);
+		const tagMap = await getEntriesByTag(locale);
+		for (const tag of Object.keys(tagMap)) {
+			paths.push({
+				params: { lang, tag: encodeURIComponent(tag) },
+				props: { tag }
+			});
+		}
+	}
+	return paths;
 }
 
+const { lang } = Astro.params;
 const { tag } = Astro.props;
-const locale = defaultLocale;
+const locale = getLocale(lang);
 
 const tagMap = await getEntriesByTag(locale);
 const picked = tagMap[tag] || [];

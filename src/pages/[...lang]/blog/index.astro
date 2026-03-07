@@ -1,11 +1,19 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import PostCard from '@/components/PostCard.astro';
-import { t, defaultLocale, getLocalePriority } from '@/i18n';
+import { t, locales, defaultLocale, getLocale, getLocalePriority } from '@/i18n';
 import { getReadingTime } from '@/utils/reading-time';
 import { getGroupedEntries, getBestEntry } from '@/utils/content';
 
-const locale = defaultLocale;
+export function getStaticPaths() {
+	return [
+		{ params: { lang: undefined } },
+		...locales.filter(l => l !== defaultLocale).map(l => ({ params: { lang: l } }))
+	];
+}
+
+const { lang } = Astro.params;
+const locale = getLocale(lang);
 const grouped = await getGroupedEntries('blog');
 const priority = getLocalePriority(locale);
 

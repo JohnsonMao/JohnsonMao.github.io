@@ -1,11 +1,17 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { t } from '@/i18n';
+import { t, locales, defaultLocale, getLocale } from '@/i18n';
 import { getRelativeLocaleUrl } from 'astro:i18n';
+
 export function getStaticPaths() {
-	return [{ params: { locale: 'en' as const } }];
+	return [
+		{ params: { lang: undefined } },
+		...locales.filter(l => l !== defaultLocale).map(l => ({ params: { lang: l } }))
+	];
 }
-const locale = Astro.params.locale;
+
+const { lang } = Astro.params;
+const locale = getLocale(lang);
 const blogUrl = getRelativeLocaleUrl(locale, 'blog');
 ---
 

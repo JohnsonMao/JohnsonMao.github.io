@@ -1,32 +1,35 @@
 ---
 import { getCollection, render } from 'astro:content';
 import PostLayout from '@/layouts/PostLayout.astro';
-import { t, locales, defaultLocale, getLocalePriority } from '@/i18n';
+import { t, locales, defaultLocale, getLocale, getLocalePriority } from '@/i18n';
 import { getReadingTime } from '@/utils/reading-time';
 import { getBaseId } from '@/utils/content';
 
 export async function getStaticPaths() {
 	const all = await getCollection('blog', ({ data }) => import.meta.env.DEV || data.draft !== true);
 	const slugs = Array.from(new Set(all.map((e) => getBaseId(e.id))));
-	const otherLocales = locales.filter(l => l !== defaultLocale);
+	const langs = [
+		undefined,
+		...locales.filter(l => l !== defaultLocale)
+	];
 	
 	const paths = [];
-	for (const locale of otherLocales) {
+	for (const lang of langs) {
 		for (const slug of slugs) {
-			paths.push({ params: { locale, slug }, props: {} });
+			paths.push({ params: { lang, slug }, props: {} });
 		}
 	}
 	return paths;
 }
 
-const { locale } = Astro.params;
-const { slug } = Astro.params;
+const { lang, slug } = Astro.params;
+const locale = getLocale(lang);
 
 const all = await getCollection('blog', ({ data }) => import.meta.env.DEV || data.draft !== true);
 const bySlug = all.filter((e) => getBaseId(e.id) === slug);
 
 const priority = getLocalePriority(locale);
-const entry = priority.map((lang) => bySlug.find((e) => e.data.lang === lang)).find(Boolean);
+const entry = priority.map((l) => bySlug.find((e) => e.data.lang === l)).find(Boolean);
 
 if (!entry) return Astro.redirect('/404');
 
