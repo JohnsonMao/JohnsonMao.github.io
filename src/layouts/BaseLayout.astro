@@ -8,6 +8,7 @@ import '@/styles/global.css';
 import Header from '@/components/Header.astro';
 import Footer from '@/components/Footer.astro';
 import ReloadPrompt from '@/components/pwa/ReloadPrompt.astro';
+import ThemeScript from '@/components/theme/ThemeScript.astro';
 
 interface Props {
 	title: string;
@@ -48,21 +49,7 @@ const imageUrl = image?.startsWith('http') ? image : image ? new URL(image, site
 			return <link rel="alternate" hreflang={loc === 'zh-TW' ? 'zh-Hant' : loc} href={href} />;
 		})}
 		<link rel="alternate" hreflang="x-default" href={new URL(getRelativeLocaleUrl('zh-TW', pathWithoutLocale || undefined), site).href} />
-		<script is:inline>
-			(() => {
-				try {
-					const stored = localStorage.getItem('theme');
-					const theme =
-						stored === 'dark' || stored === 'light'
-						? stored
-						: window.matchMedia('(prefers-color-scheme: dark)').matches
-						? 'dark'
-						: 'light';
-
-					document.documentElement.classList.toggle('dark', theme === 'dark');
-				} catch {}
-			})();
-		</script>
+		<ThemeScript />
 		{import.meta.env.PROD && import.meta.env.PUBLIC_GA_MEASUREMENT_ID && (
 			<>
 				<script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${import.meta.env.PUBLIC_GA_MEASUREMENT_ID}`}></script>
