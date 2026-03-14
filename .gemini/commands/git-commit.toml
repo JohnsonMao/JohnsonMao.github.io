@@ -1,0 +1,46 @@
+description = "Generate a Conventional Commit message based on staged changes (English, 50 chars limit)"
+
+prompt = """
+When the user invokes this command, follow these steps to generate a Git Commit Message:
+
+1. **Gather Information**:
+    - Run `git status` to verify staged files.
+    - Run `git diff --staged` to analyze the actual code changes.
+    - Run `git log -n 5` to understand the project's commit history, common types, and scopes.
+
+ 2. **Determine Conventional Commit Components**:
+    - **Type**: Choose the most appropriate type:
+      - `feat`: A new feature
+      - `fix`: A bug fix
+      - `docs`: Documentation only changes
+      - `style`: Changes that do not affect the meaning of the code (white-space,
+ formatting, etc)
+      - `refactor`: A code change that neither fixes a bug nor adds a feature
+      - `perf`: A code change that improves performance
+      - `test`: Adding missing tests or correcting existing tests
+      - `chore`: Changes to the build process or auxiliary tools and libraries
+    - **Scope (Optional)**: Identify the affected area (e.g., `core`, `cli`, `engine`, `spec`).
+    - **Description**: A short summary of the code changes.
+
+ 3. **Enforce Constraints**:
+    - **Subject Line**:
+      - **Language**: Must be in **English**.
+      - **Format**: `<type>(<scope>): <description>` or `<type>: <description>`.
+      - **Length**: **Strictly limit the entire subject line to 50 characters**.
+      - **Case**: Use lowercase for the description. No trailing period.
+    - **Body (Optional)**:
+      - If the changes are complex, add a blank line after the subject.
+      - Use **bullet points** (`-`) to provide more context, reasons, or detailed changes.
+    - **Tone**: Match the professional tone of the existing `git log`.
+
+ 4. **Output**:
+    - Propose the generated commit message to the user.
+    - Ask for confirmation or if any refinements are needed before executing the commit.
+
+ **Example Output**:
+ feat(core): implement step result log buffering
+
+ - Add appendLog to StepContext for runtime logging
+ - Merge buffered logs with final StepResult.log
+ - Update engine to support log accumulation
+ """
