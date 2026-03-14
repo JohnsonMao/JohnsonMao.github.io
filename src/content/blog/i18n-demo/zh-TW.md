@@ -2,7 +2,6 @@
 title: 多語系示範
 description: 說明本站中英雙語與 fallback 行為。
 pubDate: 2025-02-18
-lang: zh-TW
 tags:
   - i18n
   - astro

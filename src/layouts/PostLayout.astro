@@ -5,18 +5,17 @@ import ShareButtons from '@/components/blog/ShareButtons.astro';
 import JsonLd from '@/components/seo/JsonLd.astro';
 import SeriesNav from '@/components/blog/SeriesNav.astro';
 import RelatedPosts from '@/components/blog/RelatedPosts.astro';
-import { getRelatedPosts } from '@/utils/related-posts';
-import { getCollection } from 'astro:content';
 import TableOfContents from '@/components/blog/TableOfContents.astro';
 import type { MarkdownHeading } from 'astro';
 import { getRelativeLocaleUrl } from 'astro:i18n';
 import { Icon } from 'astro-icon/components';
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { t, getLocale, defaultLocale } from '@/i18n';
+import { t, getLocale, defaultLocale, getLocalePriority } from '@/i18n';
 import Giscus from '@/components/blog/Giscus.astro';
+import { getRelatedEntries, getCollectionEntry, getSortedCollectionList } from '@/utils/content';
 
 interface Props {
-	id?: string;
+	id: string;
 	title: string;
 	description?: string;
 	pubDate: Date;
@@ -55,9 +54,8 @@ const showUpdated = updated && updated.getTime() !== pubDate.getTime();
 
 const tagBase = getRelativeLocaleUrl(locale, 'tag/');
 
-const allPosts = await getCollection('blog', ({ data }) => data.draft !== true);
-const currentPost = allPosts.find((p) => p.id === id || (p.data.title === title && p.data.pubDate.getTime() === pubDate.getTime()));
-const relatedPosts = currentPost ? getRelatedPosts(currentPost, allPosts) : [];
+const entry = await getCollectionEntry('blog', locale, id);
+const relatedPosts = await getRelatedEntries('blog', entry);
 
 const postData = {
 	title,
@@ -118,7 +116,7 @@ const postData = {
 				<slot />
 			</div>
 
-			{currentPost && <SeriesNav currentPost={currentPost} />}
+			{entry && <SeriesNav post={entry} />}
 
 			<RelatedPosts 
 				posts={relatedPosts} 

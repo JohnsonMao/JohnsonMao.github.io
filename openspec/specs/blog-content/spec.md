@@ -5,25 +5,25 @@
 Content model supports multi-language; filtering articles by locale during build.
 ## Requirements
 ### Requirement: Blog content collection with schema
-The system SHALL provide a Content Collection named `blog` whose source files MAY be organized under locale-specific subdirectories (e.g. `src/content/blog/zh-TW/`, `src/content/blog/en/`) and SHALL define its schema in `src/content/config.ts` using Astro's `defineCollection` with a Zod schema for frontmatter validation. The schema SHALL include a required `lang` field (e.g. `z.enum(['en', 'zh-TW'])`) so that each entry is associated with a single locale.
+The system SHALL provide a Content Collection named `blog` whose source files SHALL be organized under slug-specific subdirectories with locale-specific filenames (e.g. `src/content/blog/[slug]/zh-TW.md`, `src/content/blog/[slug]/en.md`) and SHALL define its schema in `src/content/config.ts` using Astro's `defineCollection` with a Zod schema for frontmatter validation. The locale of each entry SHALL be derived from its filename or directory structure.
 
-#### Scenario: Valid frontmatter with lang passes validation
-- **WHEN** a markdown or MDX file in the blog content directory has frontmatter that matches the defined schema (e.g. title, description, pubDate, lang, series)
+#### Scenario: Valid frontmatter passes validation
+- **WHEN** a markdown or MDX file in the blog content directory has frontmatter that matches the defined schema (e.g. title, description, pubDate, series)
 - **THEN** the file is included in the collection and is available at build time for filtering by locale
 
 #### Scenario: Invalid frontmatter fails build
-- **WHEN** a markdown or MDX file has missing required fields (including `lang`) or invalid types in frontmatter
+- **WHEN** a markdown or MDX file has missing required fields or invalid types in frontmatter
 - **THEN** the build SHALL fail with a clear validation error
 
 ### Requirement: Frontmatter fields for blog posts
-The blog collection schema SHALL require at least: `title` (string), `description` (string), `pubDate` (date or ISO string), and `lang` (enum of supported locales, e.g. `'en' | 'zh-TW'`). It SHALL support an optional `series` field (string) for grouping related posts. It MAY support optional fields such as `draft`, `tags`, or `updated`. Tags defined here SHALL be processed by the Independent Tag Module.
+The blog collection schema SHALL require at least: `title` (string), `description` (string), and `pubDate` (date or ISO string). It SHALL support an optional `series` field (string) for grouping related posts. It MAY support optional fields such as `draft`, `tags`, or `updated`. Tags defined here SHALL be processed by the Independent Tag Module.
 
-#### Scenario: Required fields including lang present
-- **WHEN** a post includes title, description, pubDate, and lang in frontmatter
+#### Scenario: Required fields present
+- **WHEN** a post includes title, description, and pubDate in frontmatter
 - **THEN** the post is valid and can be rendered for that locale
 
 #### Scenario: Missing required field
-- **WHEN** a post omits a required field (e.g. pubDate or lang)
+- **WHEN** a post omits a required field (e.g. title or pubDate)
 - **THEN** validation SHALL fail and the build SHALL report the error
 
 #### Scenario: Series field included

@@ -3,6 +3,8 @@
  * Strips markdown syntax and counts characters; divides by locale-specific WPM.
  */
 
+import type { Locale } from "@/i18n";
+
 const CHARS_PER_MINUTE_ZH = 220;
 const CHARS_PER_MINUTE_EN = 280;
 
@@ -47,7 +49,7 @@ export function getReadingTimeMinutes(
 /**
  * Get reading time with a display label (e.g. "約 5 分鐘" / "5 min read").
  */
-export function getReadingTime(content: string, locale?: 'en' | 'zh-TW'): ReadingTimeResult {
+export function getReadingTime(content: string, locale?: Locale): ReadingTimeResult {
 	const minutes = getReadingTimeMinutes(content, locale ?? 'zh-TW');
 	const label = (locale ?? 'zh-TW') === 'en' ? `${minutes} min read` : `約 ${minutes} 分鐘`;
 	return { minutes, label };

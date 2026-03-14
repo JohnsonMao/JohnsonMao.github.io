@@ -37,14 +37,6 @@
 	"footer": {
 		"copyright": "© {year} JohnsonMao"
 	},
-	"locale": {
-		"en": "EN",
-		"zh-TW": "繁體中文"
-	},
-	"localeLabel": {
-		"en": "English",
-		"zh-TW": "繁體中文"
-	},
 	"search": {
 		"placeholder": "搜尋文章...",
 		"noResults": "找不到相關結果",

@@ -40,11 +40,11 @@ The system SHALL serve at the site root (`/`) a page or redirect logic that SHAL
 
 ### Requirement: Independent Tag Module
 
-The system SHALL provide an independent tag module accessible at `/[locale]/tag/[tag]` which aggregates content across all supported collections (e.g. Blog, Projects).
+The system SHALL provide an independent tag module accessible at `/[locale]/tag/[tagId]` which aggregates content across all supported collections (e.g. Blog).
 
 #### Scenario: Tag page aggregates content
-- **WHEN** a user visits `/[locale]/tag/[tag]`
-- **THEN** the page SHALL list all items from any collection that contain the specified tag, following the same locale fallback logic as the blog.
+- **WHEN** a user visits `/[locale]/tag/[tagId]`
+- **THEN** the page SHALL list all items from supported collections that match the specified tag ID within the current locale context.
 
 ### Requirement: Locale switcher
 

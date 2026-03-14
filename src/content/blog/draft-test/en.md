@@ -2,7 +2,6 @@
 title: "Draft Test Post"
 description: "This is a test post that should only be visible in dev mode."
 pubDate: 2026-02-22
-lang: "en"
 draft: true
 tags: ["test"]
 ---

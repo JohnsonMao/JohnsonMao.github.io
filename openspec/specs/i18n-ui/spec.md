@@ -6,7 +6,7 @@ Define interface multi-language: UI strings loaded by locale, layouts and pages 
 ## Requirements
 ### Requirement: UI strings from locale-specific source
 
-The system SHALL load UI strings (e.g. navigation labels, home page copy, blog list title, About page title, author bio labels, and **blog post comment section heading**) from a locale-specific source (e.g. JSON files such as `src/i18n/en.json` and `src/i18n/zh-TW.json`) keyed by locale, and SHALL use these strings in layouts and pages instead of hard-coded text.
+The system SHALL load UI strings (e.g. navigation labels, home page copy, blog list title, About page title, author bio labels, and **blog post comment section heading**) from a locale-specific source (e.g. JSON files such as `src/i18n/en.json` and `src/i18n/zh-TW.json`) keyed by locale. Metadata such as locale names and labels MAY be provided programmatically in the i18n module. The system SHALL use these strings in layouts and pages instead of hard-coded text.
 
 #### Scenario: Rendered page shows correct locale strings
 - **WHEN** a page is rendered for a given locale

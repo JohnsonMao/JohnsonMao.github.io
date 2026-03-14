@@ -5,14 +5,26 @@ export type Locale = 'en' | 'zh-TW';
 export const defaultLocale: Locale = 'zh-TW';
 export const locales: Locale[] = ['zh-TW', 'en'];
 
+export function normalizeLocale(locale: string) {
+  return new Intl.Locale(locale).toString();
+}
+
+export function isLocale(locale: unknown): locale is Locale {
+	return typeof locale === 'string' && locales.includes(locale as Locale);
+}
+
 /**
  * Validates and returns the current locale with a fallback to defaultLocale.
  */
-export function getLocale(currentLocale: string | undefined): Locale {
-	if (currentLocale && locales.includes(currentLocale as Locale)) {
-		return currentLocale as Locale;
-	}
-	return defaultLocale;
+export function getLocale(currentLocale: unknown): Locale {
+	return isLocale(currentLocale) ? currentLocale : defaultLocale;
+}
+
+export function generateStaticLocalePaths() {
+	return locales.map(locale => {
+		const lang = locale === defaultLocale ? undefined : locale;
+		return { params: { lang } };
+	});
 }
 
 /**
@@ -21,6 +33,10 @@ export function getLocale(currentLocale: string | undefined): Locale {
 export function getLocalePriority(current: Locale): Locale[] {
 	if (current === 'en') return ['en', 'zh-TW'];
 	return ['zh-TW', 'en'];
+}
+
+export function getLocaleLabel(locale: Locale): string {
+	return locale === 'en' ? 'EN' : '繁中';
 }
 
 const messages: Record<Locale, Record<string, unknown>> = {

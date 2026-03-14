@@ -1,9 +1,9 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import PostCard from '@/components/PostCard.astro';
-import { t, locales, defaultLocale, getLocale, getLocalePriority } from '@/i18n';
+import { t, locales, defaultLocale, getLocale, getLocaleLabel } from '@/i18n';
 import { getReadingTime } from '@/utils/reading-time';
-import { getGroupedEntries, getBestEntry } from '@/utils/content';
+import { getSortedCollectionList } from '@/utils/content';
 
 export function getStaticPaths() {
 	return [
@@ -14,26 +14,17 @@ export function getStaticPaths() {
 
 const { lang } = Astro.params;
 const locale = getLocale(lang);
-const grouped = await getGroupedEntries('blog');
-const priority = getLocalePriority(locale);
-
-const picked = Object.entries(grouped).map(([baseId, versions]) => {
-	const entry = getBestEntry(versions, priority);
-	return entry ? { ...entry, baseId } : null;
-}).filter(Boolean) as any[];
-
-const sorted = picked.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
+const entries = await getSortedCollectionList('blog', locale);
 ---
 
 <BaseLayout title={t(locale, 'blog.listTitle')} description={t(locale, 'blog.listDescription')}>
 	<div class="max-w-4xl mx-auto px-4 py-12">
 		<h1 class="text-4xl font-bold tracking-tight mb-8 self-start">{t(locale, 'blog.listTitle')}</h1>
 		<ul class="grid gap-8 list-none p-0 m-0">
-			{sorted.map((entry) => {
-				const articleLang = entry.data.lang;
+			{entries.map((entry) => {
+				const articleLang = entry.locale;
 				const isFallback = articleLang !== locale;
-				const localeLabelKey = (articleLang === 'en' ? 'localeLabel.en' : 'localeLabel.zhTW') as any;
-				const langBadge = isFallback ? t(locale, localeLabelKey) : undefined;
+				const langBadge = isFallback ? getLocaleLabel(articleLang) : undefined;
 				const readingTime = getReadingTime(entry.body ?? '', articleLang);
 				
 				return (
@@ -42,7 +33,7 @@ const sorted = picked.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.g
 							title={entry.data.title}
 							description={entry.data.description}
 							pubDate={entry.data.pubDate}
-							slug={entry.baseId}
+							slug={entry.id}
 							postLang={articleLang}
 							langBadge={langBadge}
 							readingTimeLabel={readingTime.label}

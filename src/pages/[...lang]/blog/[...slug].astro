@@ -1,41 +1,29 @@
 ---
-import { getCollection, render } from 'astro:content';
+import { render } from 'astro:content';
 import PostLayout from '@/layouts/PostLayout.astro';
-import { t, locales, defaultLocale, getLocale, getLocalePriority } from '@/i18n';
+import { t, generateStaticLocalePaths, getLocale } from '@/i18n';
 import { getReadingTime } from '@/utils/reading-time';
-import { getBaseId } from '@/utils/content';
+import { getSortedCollectionList } from '@/utils/content';
 
 export async function getStaticPaths() {
-	const all = await getCollection('blog', ({ data }) => import.meta.env.DEV || data.draft !== true);
-	const slugs = Array.from(new Set(all.map((e) => getBaseId(e.id))));
-	const langs = [
-		undefined,
-		...locales.filter(l => l !== defaultLocale)
-	];
-	
-	const paths = [];
-	for (const lang of langs) {
-		for (const slug of slugs) {
-			paths.push({ params: { lang, slug }, props: {} });
-		}
-	}
-	return paths;
+	const all = await Promise.all(
+		generateStaticLocalePaths().map(async (path) => {
+			const locale = getLocale(path.params.lang);
+			const entries = await getSortedCollectionList('blog', locale);
+			return entries.map(entry => ({
+				params: { ...path.params, slug: entry.id },
+				props: { entry }
+			}));
+		})
+	);
+	return all.flat();
 }
 
-const { lang, slug } = Astro.params;
+const { lang } = Astro.params;
+const { entry } = Astro.props;
 const locale = getLocale(lang);
-
-const all = await getCollection('blog', ({ data }) => import.meta.env.DEV || data.draft !== true);
-const bySlug = all.filter((e) => getBaseId(e.id) === slug);
-
-const priority = getLocalePriority(locale);
-const entry = priority.map((l) => bySlug.find((e) => e.data.lang === l)).find(Boolean);
-
-if (!entry) return Astro.redirect('/404');
-
 const { Content, headings } = await render(entry);
-const isFallback = entry.data.lang !== locale;
-const readingTime = getReadingTime(entry.body ?? '', entry.data.lang);
+const readingTime = getReadingTime(entry.body ?? '', entry.locale);
 ---
 
 <PostLayout
@@ -43,9 +31,9 @@ const readingTime = getReadingTime(entry.body ?? '', entry.data.lang);
 	title={entry.data.title}
 	description={entry.data.description}
 	pubDate={entry.data.pubDate}
-	postLang={entry.data.lang}
-	isFallback={isFallback}
-	fallbackNotice={isFallback ? t(locale, 'blog.contentNotTranslated') : undefined}
+	postLang={entry.locale}
+	isFallback={entry.isFallback}
+	fallbackNotice={entry.isFallback ? t(locale, 'blog.contentNotTranslated') : undefined}
 	readingTimeLabel={readingTime.label}
 	updated={entry.data.updated}
 	tags={entry.data.tags}

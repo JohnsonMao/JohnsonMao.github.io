@@ -2,7 +2,6 @@
 title: 第二篇範例
 description: 用於示範部落格列表與多語系顯示。
 pubDate: 2025-02-19
-lang: zh-TW
 ---
 
 這是第二則繁體中文範例文章。
