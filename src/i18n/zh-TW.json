@@ -63,7 +63,12 @@
 		"newContentAvailable": "有新內容可用，點擊重新載入按鈕更新。",
 		"reload": "重新載入",
 		"close": "關閉",
-		"subscribedSuccessfullyAlert": "訂閱成功！請查看控制台中的訂閱物件。"
+		"subscribedSuccessfullyAlert": "訂閱成功！請查看控制台中的訂閱物件。",
+		"offline": {
+			"title": "您目前處於離線狀態",
+			"description": "很抱歉，此頁面尚未快取。請在連線後再試一次。",
+			"backHome": "返回首頁"
+		}
 	}
 }
 

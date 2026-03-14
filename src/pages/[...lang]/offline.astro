@@ -1,0 +1,33 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { Icon } from 'astro-icon/components';
+import { t, locales, defaultLocale, getLocale } from '@/i18n';
+
+export function getStaticPaths() {
+	return [
+		{ params: { lang: undefined } },
+		...locales.filter(l => l !== defaultLocale).map(l => ({ params: { lang: l } }))
+	];
+}
+
+const { lang } = Astro.params;
+const locale = getLocale(lang);
+---
+
+<BaseLayout title={t(locale, 'pwa.offline.title')}>
+  <div class="flex flex-col items-center justify-center py-20 text-center">
+    <div class="mb-8">
+      <Icon name="lucide:wifi-off" class="w-24 h-24 text-gray-400 mx-auto" />
+    </div>
+    <h1 class="text-4xl font-bold mb-4">{t(locale, 'pwa.offline.title')}</h1>
+    <p class="text-lg text-gray-600 dark:text-gray-400 mb-8 max-w-md mx-auto">
+      {t(locale, 'pwa.offline.description')}
+    </p>
+    <a
+      href={lang === 'en' ? '/en/' : '/'}
+      class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+    >
+      {t(locale, 'pwa.offline.backHome')}
+    </a>
+  </div>
+</BaseLayout>

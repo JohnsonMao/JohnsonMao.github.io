@@ -24,7 +24,7 @@ export default defineConfig({
       filename: 'sw.ts',
       registerType: 'autoUpdate',
       injectManifest: {
-        globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
+        globPatterns: ['**/*.{js,css,html,ico,png,svg}', 'offline/index.html', 'en/offline/index.html'],
       },
       manifest: {
         name: "JohnsonMao's Blog",
