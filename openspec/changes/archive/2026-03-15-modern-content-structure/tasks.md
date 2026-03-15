@@ -6,7 +6,7 @@
 
 ## 2. 核心邏輯實作
 
-- [x] 2.1 實作 Series path parsing 邏輯，從路徑中解析 `serieId` 與 `slug`
+- [x] 2.1 實作 Series path parsing 邏輯，從路徑中解析 `seriesId` 與 `slug`
 - [x] 2.2 實作 Shared metadata via _meta.ts 的載入與合併機制，將標籤同步至各語系
 - [x] 2.3 更新 `src/utils/content.ts` 中的 `getSortedCollectionList` 與 `getCollectionEntry` 以支援新路徑
 

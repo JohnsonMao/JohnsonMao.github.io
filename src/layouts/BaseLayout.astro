@@ -1,91 +1,120 @@
 ---
-import { pwaInfo } from 'virtual:pwa-info';
-import { pwaAssetsHead } from 'virtual:pwa-assets/head';
-import { ClientRouter } from 'astro:transitions';
-import { getRelativeLocaleUrl } from 'astro:i18n';
-import { t, getLocale } from '@/i18n';
-import '@/styles/global.css';
-import Header from '@/components/Header.astro';
-import Footer from '@/components/Footer.astro';
-import ReloadPrompt from '@/components/pwa/ReloadPrompt.astro';
-import ThemeScript from '@/components/theme/ThemeScript.astro';
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import { ClientRouter } from 'astro:transitions'
+import { pwaAssetsHead } from 'virtual:pwa-assets/head'
+import { pwaInfo } from 'virtual:pwa-info'
+import Footer from '@/components/Footer.astro'
+import Header from '@/components/Header.astro'
+import ReloadPrompt from '@/components/pwa/ReloadPrompt.astro'
+import ThemeScript from '@/components/theme/ThemeScript.astro'
+import { getLocale, t } from '@/i18n'
+import '@/styles/global.css'
 
 interface Props {
-	title: string;
-	description?: string;
-	image?: string;
-	canonical?: string;
-	maxWidth?: string;
+  title: string
+  description?: string
+  image?: string
+  canonical?: string
+  maxWidth?: string
 }
-const locale = getLocale(Astro.currentLocale);
-const { title, description = t(locale, 'home.description'), image, canonical, maxWidth = 'max-w-3xl' } = Astro.props;
-const pathWithoutLocale = Astro.url.pathname.replace(/^\//, '').replace(/^en\//, '');
-const locales = ['zh-TW', 'en'] as const;
-const site = Astro.site?.href ?? `${Astro.url.origin}/`;
-const canonicalUrl = canonical ?? Astro.url.href;
-const imageUrl = image?.startsWith('http') ? image : image ? new URL(image, site).href : new URL('og-default.svg', site).href;
+const locale = getLocale(Astro.currentLocale)
+const { title, description = t(locale, 'home.description'), image, canonical, maxWidth = 'max-w-3xl' } = Astro.props
+const pathWithoutLocale = Astro.url.pathname.replace(/^\//, '').replace(/^en\//, '')
+const locales = ['zh-TW', 'en'] as const
+const site = Astro.site?.href ?? `${Astro.url.origin}/`
+const canonicalUrl = canonical ?? Astro.url.href
+const imageUrl = image?.startsWith('http')
+  ? image
+  : image
+    ? new URL(image, site).href
+    : new URL('og-default.svg', site).href
 ---
 
 <html lang={locale}>
-	<head>
-		<ClientRouter />
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
-		{description && <meta name="description" content={description} />}
-		<meta property="og:title" content={title} />
-		{description && <meta property="og:description" content={description} />}
-		<meta property="og:image" content={imageUrl} />
-		<meta property="og:url" content={canonicalUrl} />
-		<meta property="og:type" content="website" />
-		<meta name="twitter:card" content="summary_large_image" />
-		<meta name="twitter:title" content={title} />
-		{description && <meta name="twitter:description" content={description} />}
-		<meta name="twitter:image" content={imageUrl} />
-		{locales.map((loc) => {
-			const path = getRelativeLocaleUrl(loc, pathWithoutLocale || undefined);
-			const href = new URL(path, site).href;
-			return <link rel="alternate" hreflang={loc === 'zh-TW' ? 'zh-Hant' : loc} href={href} />;
-		})}
-		<link rel="alternate" hreflang="x-default" href={new URL(getRelativeLocaleUrl('zh-TW', pathWithoutLocale || undefined), site).href} />
-		<ThemeScript />
-		{import.meta.env.PROD && import.meta.env.PUBLIC_GA_MEASUREMENT_ID && (
-			<>
-				<script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${import.meta.env.PUBLIC_GA_MEASUREMENT_ID}`}></script>
-				<script is:inline set:html={`
-					window.dataLayer = window.dataLayer || [];
-					function gtag(){dataLayer.push(arguments);}
-					gtag('js', new Date());
-					gtag('config', '${import.meta.env.PUBLIC_GA_MEASUREMENT_ID}');
-				`} />
-			</>
-		)}
-		{import.meta.env.PROD && import.meta.env.PUBLIC_CLARITY_ID && (
-			<script is:inline set:html={`
-				(function(c,l,a,r,i,t,y){
-					c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-					t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-					y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-				})(window,document,"clarity","script","${import.meta.env.PUBLIC_CLARITY_ID}");
-			`} />
-		)}
-		{import.meta.env.PROD && import.meta.env.PUBLIC_CLOUDFLARE_BEACON_TOKEN && (
-			<script is:inline defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon={JSON.stringify({ token: import.meta.env.PUBLIC_CLOUDFLARE_BEACON_TOKEN })}></script>
-		)}
-		{pwaInfo && <Fragment set:html={pwaInfo.webManifest.linkTag} />}
-		{pwaAssetsHead.themeColor && <meta name="theme-color" content={pwaAssetsHead.themeColor.content} /> }
-		{pwaAssetsHead.links.map(link => (
-			<link {...link} />
-		))}
-		<slot name="head" />
-	</head>
-	<body class="min-h-screen flex flex-col bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100">
-		<Header />
-		<main class={`flex-1 mx-auto w-full ${maxWidth} px-4 py-8`}>
-			<slot />
-		</main>
-		<Footer />
-		<ReloadPrompt />
-	</body>
+  <head>
+    <ClientRouter />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    {description && <meta name="description" content={description} />}
+    <meta property="og:title" content={title} />
+    {description && <meta property="og:description" content={description} />}
+    <meta property="og:image" content={imageUrl} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    {description && <meta name="twitter:description" content={description} />}
+    <meta name="twitter:image" content={imageUrl} />
+    {
+      locales.map((loc) => {
+        const path = getRelativeLocaleUrl(loc, pathWithoutLocale || undefined)
+        const href = new URL(path, site).href
+        return <link rel="alternate" hreflang={loc === 'zh-TW' ? 'zh-Hant' : loc} href={href} />
+      })
+    }
+    <link
+      rel="alternate"
+      hreflang="x-default"
+      href={new URL(getRelativeLocaleUrl('zh-TW', pathWithoutLocale || undefined), site).href}
+    />
+    <ThemeScript />
+    {
+      import.meta.env.PROD && import.meta.env.PUBLIC_GA_MEASUREMENT_ID && (
+        <>
+          <script
+            is:inline
+            async
+            src={`https://www.googletagmanager.com/gtag/js?id=${import.meta.env.PUBLIC_GA_MEASUREMENT_ID}`}
+          />
+          <script
+            is:inline
+            set:html={`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', '${import.meta.env.PUBLIC_GA_MEASUREMENT_ID}');
+        `}
+          />
+        </>
+      )
+    }
+    {
+      import.meta.env.PROD && import.meta.env.PUBLIC_CLARITY_ID && (
+        <script
+          is:inline
+          set:html={`
+        (function(c,l,a,r,i,t,y){
+          c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+          t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+          y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window,document,"clarity","script","${import.meta.env.PUBLIC_CLARITY_ID}");
+      `}
+        />
+      )
+    }
+    {
+      import.meta.env.PROD && import.meta.env.PUBLIC_CLOUDFLARE_BEACON_TOKEN && (
+        <script
+          is:inline
+          defer
+          src="https://static.cloudflareinsights.com/beacon.min.js"
+          data-cf-beacon={JSON.stringify({ token: import.meta.env.PUBLIC_CLOUDFLARE_BEACON_TOKEN })}
+        />
+      )
+    }
+    {pwaInfo && <Fragment set:html={pwaInfo.webManifest.linkTag} />}
+    {pwaAssetsHead.themeColor && <meta name="theme-color" content={pwaAssetsHead.themeColor.content} />}
+    {pwaAssetsHead.links.map(link => <link {...link} />)}
+    <slot name="head" />
+  </head>
+  <body class="min-h-screen flex flex-col bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100">
+    <Header />
+    <main class={`flex-1 mx-auto w-full ${maxWidth} px-4 py-8`}>
+      <slot />
+    </main>
+    <Footer />
+    <ReloadPrompt />
+  </body>
 </html>

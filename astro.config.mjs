@@ -1,13 +1,13 @@
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
-import { defineConfig } from 'astro/config';
-import mdx from '@astrojs/mdx';
-import sitemap from '@astrojs/sitemap';
-import tailwindcss from '@tailwindcss/vite';
-import icon from 'astro-icon';
-import AstroPWA from '@vite-pwa/astro';
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
+import mdx from '@astrojs/mdx'
+import sitemap from '@astrojs/sitemap'
+import tailwindcss from '@tailwindcss/vite'
+import AstroPWA from '@vite-pwa/astro'
+import icon from 'astro-icon'
+import { defineConfig } from 'astro/config'
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 // https://astro.build/config
 export default defineConfig({
@@ -27,7 +27,7 @@ export default defineConfig({
         globPatterns: ['**/*.{js,css,html,ico,png,svg}', 'offline/index.html', 'en/offline/index.html'],
       },
       manifest: {
-        name: "JohnsonMao's Blog",
+        name: 'JohnsonMao\'s Blog',
         short_name: 'JohnsonMao',
         description: 'Personal blog of JohnsonMao',
         theme_color: '#ffffff',
@@ -63,4 +63,4 @@ export default defineConfig({
       alias: { '@': path.resolve(__dirname, 'src') },
     },
   },
-});
+})

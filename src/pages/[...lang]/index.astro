@@ -1,26 +1,26 @@
 ---
-import BaseLayout from '@/layouts/BaseLayout.astro';
-import { t, locales, defaultLocale, getLocale } from '@/i18n';
-import { getRelativeLocaleUrl } from 'astro:i18n';
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import { defaultLocale, getLocale, locales, t } from '@/i18n'
+import BaseLayout from '@/layouts/BaseLayout.astro'
 
 export function getStaticPaths() {
-	return [
-		{ params: { lang: undefined } },
-		...locales.filter(l => l !== defaultLocale).map(l => ({ params: { lang: l } }))
-	];
+  return [
+    { params: { lang: undefined } },
+    ...locales.filter(l => l !== defaultLocale).map(l => ({ params: { lang: l } })),
+  ]
 }
 
-const { lang } = Astro.params;
-const locale = getLocale(lang);
-const blogUrl = getRelativeLocaleUrl(locale, 'blog');
+const { lang } = Astro.params
+const locale = getLocale(lang)
+const blogUrl = getRelativeLocaleUrl(locale, 'blog')
 ---
 
 <BaseLayout title={t(locale, 'home.title')} description={t(locale, 'home.description')}>
-	<div class="space-y-6">
-		<h1 class="text-2xl font-bold">{t(locale, 'home.welcome')}</h1>
-		<p class="text-gray-600 dark:text-gray-400">{t(locale, 'home.intro')}</p>
-		<p>
-			<a href={blogUrl} class="text-blue-600 dark:text-blue-400 hover:underline">{t(locale, 'home.toBlog')}</a>
-		</p>
-	</div>
+  <div class="space-y-6">
+    <h1 class="text-2xl font-bold">{t(locale, 'home.welcome')}</h1>
+    <p class="text-gray-600 dark:text-gray-400">{t(locale, 'home.intro')}</p>
+    <p>
+      <a href={blogUrl} class="text-blue-600 dark:text-blue-400 hover:underline">{t(locale, 'home.toBlog')}</a>
+    </p>
+  </div>
 </BaseLayout>

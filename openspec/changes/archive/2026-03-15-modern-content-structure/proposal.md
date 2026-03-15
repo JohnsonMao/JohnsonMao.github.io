@@ -8,7 +8,7 @@
 
 ## Proposed Solution
 
-- **目錄結構重構**：將內容路徑調整為 `src/content/blog/[serieId]/[slug]/[lang].md`（獨立文章則為 `[slug]/[lang].md`）。
+- **目錄結構重構**：將內容路徑調整為 `src/content/blog/[seriesId]/[slug]/[lang].md`（獨立文章則為 `[slug]/[lang].md`）。
 - **標籤同步機制**：在文章目錄下建立 `_meta.ts` 存放共享標籤。標籤不再存在於 Markdown 檔案中。
 - **日期獨立管理**：`pubDate` 保留在各語系的 Markdown 檔案中，以支援獨立的發布排程。
 - **路由與解析邏輯更新**：修改 `src/utils/content.ts` 的 ID 解析與標籤合併邏輯，自動抓取系列 ID 與目錄下的共享元數據。

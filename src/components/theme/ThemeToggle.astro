@@ -1,88 +1,82 @@
 ---
-import type { HTMLAttributes } from "astro/types";
-import { Icon } from "astro-icon/components";
+import type { HTMLAttributes } from 'astro/types'
+import { Icon } from 'astro-icon/components'
 
-type Props = HTMLAttributes<"div">;
+type Props = HTMLAttributes<'div'>
 
-const props: Props = Astro.props;
+const props: Props = Astro.props
 ---
 
 <theme-toggle
   aria-label="Toggle theme"
   {...props}
   class:list={[
-    "rounded p-1.5 text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors",
+    'rounded p-1.5 text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors',
     props.class,
   ]}
 >
-	<Icon
-		name="lucide:sun"
-		class="w-5 h-5 hidden dark:block"
-		aria-hidden="true"
-	/>
-	<Icon
-		name="lucide:moon"
-		class="w-5 h-5 block dark:hidden"
-		aria-hidden="true"
-	/>
+  <Icon name="lucide:sun" class="w-5 h-5 hidden dark:block" aria-hidden="true" />
+  <Icon name="lucide:moon" class="w-5 h-5 block dark:hidden" aria-hidden="true" />
 </theme-toggle>
 
 <script>
-  class ThemeToggle extends HTMLElement {
-		readonly THEME_STORAGE_KEY = "theme";
+class ThemeToggle extends HTMLElement {
+  readonly THEME_STORAGE_KEY = 'theme'
 
-		readonly THEMES = {
-			LIGHT: "light",
-			DARK: "dark"
-		} as const;
+  readonly THEMES = {
+    LIGHT: 'light',
+    DARK: 'dark',
+  } as const
 
-		stats = {
-			theme: null as string | null,
-		}
-
-    connectedCallback() {
-			if (this.getAttribute("tabindex") === null)
-				this.setAttribute("tabindex", "0");
-
-			if (this.getAttribute("role") === null)
-				this.setAttribute("role", "button");
-
-      this.handleToggle = this.handleToggle.bind(this);
-      this.handleKeydown = this.handleKeydown.bind(this);
-      this.addEventListener("click", this.handleToggle);
-      this.addEventListener("keydown", this.handleKeydown);
-
-      // Apply theme from localStorage on initial load or fallback to system preference
-      const root = document.documentElement;
-      this.stats.theme = localStorage.getItem(this.THEME_STORAGE_KEY);
-      if (this.stats.theme) {
-        root.classList.toggle(this.THEMES.DARK, this.stats.theme === this.THEMES.DARK);
-      } else {
-        // Fallback to system preference if no theme is stored
-        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-        if (prefersDark) {
-          root.classList.add(this.THEMES.DARK);
-        }
-      }
-    }
-
-    handleToggle() {
-      const root = document.documentElement;
-      const current = root.classList.contains(this.THEMES.DARK) ? this.THEMES.DARK : this.THEMES.LIGHT;
-      this.stats.theme = current === this.THEMES.DARK ? this.THEMES.LIGHT : this.THEMES.DARK;
-      root.classList.toggle(this.THEMES.DARK, this.stats.theme === this.THEMES.DARK);
-      try {
-        localStorage.setItem(this.THEME_STORAGE_KEY, this.stats.theme);
-      } catch {}
-    }
-
-		handleKeydown(event: KeyboardEvent) {
-			if (event.key === "Enter" || event.key === " ") {
-				event.preventDefault();
-				this.handleToggle();
-			}
-		}
+  stats = {
+    theme: null as string | null,
   }
 
-	customElements.define("theme-toggle", ThemeToggle);
+  connectedCallback() {
+    if (this.getAttribute('tabindex') === null)
+      this.setAttribute('tabindex', '0')
+
+    if (this.getAttribute('role') === null)
+      this.setAttribute('role', 'button')
+
+    this.handleToggle = this.handleToggle.bind(this)
+    this.handleKeydown = this.handleKeydown.bind(this)
+    this.addEventListener('click', this.handleToggle)
+    this.addEventListener('keydown', this.handleKeydown)
+
+    // Apply theme from localStorage on initial load or fallback to system preference
+    const root = document.documentElement
+    this.stats.theme = localStorage.getItem(this.THEME_STORAGE_KEY)
+    if (this.stats.theme) {
+      root.classList.toggle(this.THEMES.DARK, this.stats.theme === this.THEMES.DARK)
+    }
+    else {
+      // Fallback to system preference if no theme is stored
+      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+      if (prefersDark) {
+        root.classList.add(this.THEMES.DARK)
+      }
+    }
+  }
+
+  handleToggle() {
+    const root = document.documentElement
+    const current = root.classList.contains(this.THEMES.DARK) ? this.THEMES.DARK : this.THEMES.LIGHT
+    this.stats.theme = current === this.THEMES.DARK ? this.THEMES.LIGHT : this.THEMES.DARK
+    root.classList.toggle(this.THEMES.DARK, this.stats.theme === this.THEMES.DARK)
+    try {
+      localStorage.setItem(this.THEME_STORAGE_KEY, this.stats.theme)
+    }
+    catch {}
+  }
+
+  handleKeydown(event: KeyboardEvent) {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault()
+      this.handleToggle()
+    }
+  }
+}
+
+customElements.define('theme-toggle', ThemeToggle)
 </script>

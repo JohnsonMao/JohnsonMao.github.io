@@ -19,7 +19,7 @@
 ## Decisions
 
 ### 1. 多層級目錄結構解析 (Nested Directory Parsing)
-- **決策**：採用 `[serieId]/[slug]/[lang].md` 作為系列文路徑，`[slug]/[lang].md` 作為獨立文章路徑。
+- **決策**：採用 `[seriesId]/[slug]/[lang].md` 作為系列文路徑，`[slug]/[lang].md` 作為獨立文章路徑。
 - **理由**：直接利用檔案系統建立層級關係，無需額外的 JSON 設定。
 - **替代方案**：在 frontmatter 中手動填寫 `seriesId`。這在撰寫時容易遺漏或拼錯。
 
@@ -29,7 +29,7 @@
 - **替代方案**：使用 `_meta.yaml`。選用 `.ts` 是為了與專案整體技術棧保持一致，且未來可加入簡單的型別邏輯。
 
 ### 3. ID 與 Slug 的分離 (Slug Separation)
-- **決策**：從路徑中解析 `serieId`，並將文章目錄名（去掉數字前綴）作為 `slug`。
+- **決策**：從路徑中解析 `seriesId`，並將文章目錄名（去掉數字前綴）作為 `slug`。
 - **理由**：允許在目錄名中使用 `01-`, `02-` 控制撰寫順序，但不影響產出的 URL 美觀。
 
 ## Risks / Trade-offs

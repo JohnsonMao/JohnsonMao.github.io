@@ -1,8 +1,8 @@
 ---
-import { Icon } from 'astro-icon/components';
-import { t, getLocale } from '@/i18n';
+import { Icon } from 'astro-icon/components'
+import { getLocale, t } from '@/i18n'
 
-const locale = getLocale(Astro.currentLocale);
+const locale = getLocale(Astro.currentLocale)
 ---
 
 <button
@@ -12,7 +12,9 @@ const locale = getLocale(Astro.currentLocale);
 >
   <Icon name="lucide:search" class="w-4 h-4" />
   <span class="hidden sm:inline">{t(locale, 'search.placeholder')}</span>
-  <kbd class="hidden sm:flex items-center gap-1 px-1.5 py-0.5 text-[10px] font-medium bg-white dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-600 rounded">
+  <kbd
+    class="hidden sm:flex items-center gap-1 px-1.5 py-0.5 text-[10px] font-medium bg-white dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-600 rounded"
+  >
     <span class="text-xs">⌘</span>{t(locale, 'search.shortcut')}
   </kbd>
 </button>
@@ -32,193 +34,226 @@ const locale = getLocale(Astro.currentLocale);
       class="flex-1 bg-transparent border-none text-neutral-900 dark:text-white focus:ring-0 text-lg outline-none"
       autocomplete="off"
     />
-    <button id="close-search" class="text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-200 p-1 cursor-pointer">
+    <button
+      id="close-search"
+      class="text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-200 p-1 cursor-pointer"
+    >
       <Icon name="lucide:x" class="w-5 h-5" />
     </button>
   </div>
-  
+
   <div class="flex-1 overflow-y-auto px-2 py-4">
     <div id="search-empty" class="flex flex-col items-center justify-center h-full text-neutral-400 py-12">
       <Icon name="lucide:search" class="w-12 h-12 mb-4 opacity-20" />
       <p>{t(locale, 'search.placeholder')}</p>
     </div>
-    <div id="search-results" />
+    <div id="search-results"></div>
   </div>
-  
-  <div class="p-3 border-t border-neutral-100 dark:border-neutral-800 text-[10px] text-neutral-400 flex justify-end gap-4 bg-neutral-50/50 dark:bg-neutral-950/50">
-    <span class="flex items-center gap-1"><kbd class="px-1 bg-neutral-100 dark:bg-neutral-800 rounded border border-neutral-200 dark:border-neutral-700 text-neutral-500">ESC</kbd> {t(locale, 'search.toClose')}</span>
-    <span class="flex items-center gap-1"><kbd class="px-1 bg-neutral-100 dark:bg-neutral-800 rounded border border-neutral-200 dark:border-neutral-700 text-neutral-500">↵</kbd> {t(locale, 'search.toSelect')}</span>
+
+  <div
+    class="p-3 border-t border-neutral-100 dark:border-neutral-800 text-[10px] text-neutral-400 flex justify-end gap-4 bg-neutral-50/50 dark:bg-neutral-950/50"
+  >
+    <span class="flex items-center gap-1"><kbd
+      class="px-1 bg-neutral-100 dark:bg-neutral-800 rounded border border-neutral-200 dark:border-neutral-700 text-neutral-500"
+                                          >ESC</kbd
+      >
+      {t(locale, 'search.toClose')}</span
+    >
+    <span class="flex items-center gap-1"><kbd
+      class="px-1 bg-neutral-100 dark:bg-neutral-800 rounded border border-neutral-200 dark:border-neutral-700 text-neutral-500"
+                                          >↵</kbd
+      >
+      {t(locale, 'search.toSelect')}</span
+    >
   </div>
 </dialog>
 
 <script>
-  import { gsap } from 'gsap';
+import { gsap } from 'gsap'
 
-  let pagefind: any;
+let pagefind: any
 
-  async function initPagefind() {
-    if (pagefind) return pagefind;
-    try {
-      const p = "/pagefind/pagefind.js";
-      pagefind = await import(p);
-      await pagefind.options({
-        highlightParam: "highlight",
-      });
-      return pagefind;
-    } catch (e) {
-      console.warn('Pagefind not found. It will be available after a production build.', e);
-    }
+async function initPagefind() {
+  if (pagefind)
+    return pagefind
+  try {
+    const p = '/pagefind/pagefind.js'
+    pagefind = await import(p)
+    await pagefind.options({
+      highlightParam: 'highlight',
+    })
+    return pagefind
+  }
+  catch (e) {
+    console.warn('Pagefind not found. It will be available after a production build.', e)
+  }
+}
+
+function setupSearch() {
+  const searchButton = document.getElementById('search-button')
+  const searchDialog = document.getElementById('search-dialog')
+  const searchInput = document.getElementById('search-input')
+  const searchResults = document.getElementById('search-results')
+  const searchEmpty = document.getElementById('search-empty')
+  const closeButton = document.getElementById('close-search')
+
+  const exists
+    = searchButton instanceof HTMLButtonElement
+      && searchDialog instanceof HTMLDialogElement
+      && searchInput instanceof HTMLInputElement
+      && closeButton instanceof HTMLButtonElement
+      && searchResults instanceof HTMLElement
+
+  if (!exists) {
+    return
   }
 
-  function setupSearch() {
-    const searchButton = document.getElementById('search-button');
-    const searchDialog = document.getElementById('search-dialog');
-    const searchInput = document.getElementById('search-input');
-    const searchResults = document.getElementById('search-results');
-    const searchEmpty = document.getElementById('search-empty');
-    const closeButton = document.getElementById('close-search');
+  let isClosing = false
 
-    if (
-      !(searchButton instanceof HTMLButtonElement) ||
-      !(searchDialog instanceof HTMLDialogElement) ||
-      !(searchInput instanceof HTMLInputElement) ||
-      !(closeButton instanceof HTMLButtonElement) ||
-      !(searchResults instanceof HTMLElement)
-    )
-      return;
+  const openSearch = () => {
+    searchDialog.style.opacity = '0'
+    searchDialog.style.transform = 'scale(0.95)'
+    searchDialog.showModal()
+    document.body.style.overflow = 'hidden'
 
-    let isClosing = false;
+    gsap.to(searchDialog, {
+      opacity: 1,
+      scale: 1,
+      duration: 0.2,
+      ease: 'power2.out',
+    })
 
-    const openSearch = () => {
-      searchDialog.style.opacity = '0';
-      searchDialog.style.transform = 'scale(0.95)';
-      searchDialog.showModal();
-      document.body.style.overflow = 'hidden';
+    initPagefind()
+    setTimeout(() => searchInput.focus(), 100)
+  }
 
-      gsap.to(searchDialog, {
-        opacity: 1,
-        scale: 1,
-        duration: 0.2,
-        ease: 'power2.out',
-      });
+  const closeSearch = () => {
+    if (isClosing)
+      return
+    isClosing = true
 
-      initPagefind();
-      setTimeout(() => searchInput.focus(), 100);
-    };
+    gsap.to(searchDialog, {
+      opacity: 0,
+      scale: 0.95,
+      duration: 0.2,
+      ease: 'power2.in',
+      onComplete: () => {
+        searchDialog.close()
+        document.body.style.overflow = ''
+        searchInput.value = ''
+        searchResults.innerHTML = ''
+        isClosing = false
+      },
+    })
+  }
 
-    const closeSearch = () => {
-      if(isClosing) return;
-      isClosing = true;
+  const newSearchButton = searchButton.cloneNode(true)
+  searchButton.parentNode?.replaceChild(newSearchButton, searchButton)
+  searchButton.addEventListener('click', openSearch)
 
-      gsap.to(searchDialog, {
-        opacity: 0,
-        scale: 0.95,
-        duration: 0.2,
-        ease: 'power2.in',
-        onComplete: () => {
-          searchDialog.close();
-          document.body.style.overflow = '';
-          searchInput.value = '';
-          searchResults.innerHTML = '';
-          isClosing = false;
-        }
-      });
-    };
+  const newCloseButton = closeButton?.cloneNode(true)
+  closeButton.parentNode?.replaceChild(newCloseButton, closeButton)
+  newCloseButton.addEventListener('click', closeSearch)
 
-    const newSearchButton = searchButton.cloneNode(true);
-    searchButton.parentNode?.replaceChild(newSearchButton, searchButton);
-    searchButton.addEventListener('click', openSearch);
+  const handleBackdropClick = (e: MouseEvent) => {
+    if (e.target === searchDialog)
+      closeSearch()
+  }
+  searchDialog.addEventListener('click', handleBackdropClick)
 
-    const newCloseButton = closeButton?.cloneNode(true);
-    closeButton.parentNode?.replaceChild(newCloseButton, closeButton);
-    newCloseButton.addEventListener('click', closeSearch);
+  searchInput.addEventListener('input', async (e) => {
+    const query = (e.target as HTMLInputElement).value.trim()
+    if (!query) {
+      searchResults.innerHTML = ''
+      searchEmpty?.classList.remove('hidden')
+      return
+    }
 
-    const handleBackdropClick = (e: MouseEvent) => {
-      if (e.target === searchDialog) closeSearch();
-    };
-    searchDialog.addEventListener('click', handleBackdropClick);
+    searchEmpty?.classList.add('hidden')
 
-    searchInput.addEventListener('input', async (e) => {
-      const query = (e.target as HTMLInputElement).value.trim();
-      if (!query) {
-        searchResults.innerHTML = '';
-        searchEmpty?.classList.remove('hidden');
-        return;
-      }
-
-      searchEmpty?.classList.add('hidden');
-
-      const pf = await initPagefind();
-      if (!pf) {
-          if (searchResults) {
-            const msg = searchDialog.dataset.indexNotFound;
-            searchResults.innerHTML = `<div class="text-center py-12 text-neutral-500 italic">${msg}</div>`;
-          }
-          return;
-      }
-
+    const pf = await initPagefind()
+    if (!pf) {
       if (searchResults) {
-        searchResults.innerHTML = `
+        const msg = searchDialog.dataset.indexNotFound
+        searchResults.innerHTML = `<div class="text-center py-12 text-neutral-500 italic">${msg}</div>`
+      }
+      return
+    }
+
+    if (searchResults) {
+      searchResults.innerHTML = `
           <div class="animate-pulse flex flex-col gap-6 px-4">
-            ${Array(3).fill(0).map(() => `
+            ${Array.from({ length: 3 })
+              .fill(0)
+              .map(
+                () => `
               <div class="space-y-3">
                 <div class="h-4 bg-neutral-200 dark:bg-neutral-800 rounded w-3/4"></div>
                 <div class="h-3 bg-neutral-100 dark:bg-neutral-800/50 rounded w-full"></div>
                 <div class="h-3 bg-neutral-100 dark:bg-neutral-800/50 rounded w-5/6"></div>
               </div>
-            `).join('')}
-          </div>
-        `;
-      }
+            `,
+              )
+              .join('')}
+        </div>
+      `
+    }
 
-      const search = await pf.debouncedSearch(query);
-      if (!search) return;
+    const search = await pf.debouncedSearch(query)
+    if (!search)
+      return
 
-      const results = await Promise.all(search.results.slice(0, 10).map((r: any) => r.data()));
-      
-      if (results.length === 0) {
-        if (searchResults) {
-          let msg = searchDialog.dataset.noResultsFor || 'No results found for "{query}"';
-          msg = msg.replace('{query}', query);
-          searchResults.innerHTML = `<div class="text-center py-12 text-neutral-500">${msg}</div>`;
-        }
-        return;
-      }
+    const results = await Promise.all(search.results.slice(0, 10).map((r: any) => r.data()))
 
+    if (results.length === 0) {
       if (searchResults) {
-        searchResults.innerHTML = results.map(r => `
+        let msg = searchDialog.dataset.noResultsFor || 'No results found for "{query}"'
+        msg = msg.replace('{query}', query)
+        searchResults.innerHTML = `<div class="text-center py-12 text-neutral-500">${msg}</div>`
+      }
+      return
+    }
+
+    if (searchResults) {
+      searchResults.innerHTML = results
+        .map(
+          r => `
           <a href="${r.url}" class="block p-4 rounded-xl hover:bg-neutral-100 dark:hover:bg-neutral-800/50 transition-all group mb-2 border border-transparent hover:border-neutral-200 dark:hover:border-neutral-700">
             <h3 class="font-bold text-neutral-900 dark:text-white mb-2 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors flex items-center justify-between">
               ${r.meta.title}
             </h3>
             <p class="text-sm text-neutral-500 dark:text-neutral-400 line-clamp-2 leading-relaxed">${r.excerpt}</p>
           </a>
-        `).join('');
-      }
-    });
+        `,
+        )
+        .join('')
+    }
+  })
 
-    const handleKeydown = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-        e.preventDefault();
-        if (searchDialog.open) closeSearch();
-        else openSearch();
-      }
-      if (e.key === 'Escape' && searchDialog.open) {
-        e.preventDefault();
-        closeSearch();
-      }
-    };
-
-    document.addEventListener('keydown', handleKeydown);
-
-    return () => {
-      document.removeEventListener('keydown', handleKeydown);
-    };
+  const handleKeydown = (e: KeyboardEvent) => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+      e.preventDefault()
+      if (searchDialog.open)
+        closeSearch()
+      else openSearch()
+    }
+    if (e.key === 'Escape' && searchDialog.open) {
+      e.preventDefault()
+      closeSearch()
+    }
   }
 
-  let cleanup: (() => void) | undefined;
-  document.addEventListener('astro:page-load', () => {
-    if (cleanup) cleanup();
-    cleanup = setupSearch();
-  });
+  document.addEventListener('keydown', handleKeydown)
+
+  return () => {
+    document.removeEventListener('keydown', handleKeydown)
+  }
+}
+
+let cleanup: (() => void) | undefined
+document.addEventListener('astro:page-load', () => {
+  if (cleanup)
+    cleanup()
+  cleanup = setupSearch()
+})
 </script>

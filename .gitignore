@@ -19,3 +19,5 @@ node_modules
 temp
 .pagefind_cache
 
+.spectra/
+openspec/.vector-search.db*

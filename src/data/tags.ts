@@ -1,39 +1,40 @@
-import type { Locale } from "@/i18n";
+import type { Locale } from '@/i18n'
 
 export const tags = {
-  'astro': {
+  astro: {
     'zh-TW': 'Astro',
-    'en': 'Astro'
+    'en': 'Astro',
   },
-  'i18n': {
+  i18n: {
     'zh-TW': '多語系',
-    'en': 'i18n'
+    'en': 'i18n',
   },
-  'test': {
+  test: {
     'zh-TW': '測試',
-    'en': 'Test'
+    'en': 'Test',
   },
-  'demo': {
+  demo: {
     'zh-TW': '示範',
-    'en': 'Demo'
+    'en': 'Demo',
   },
-  'intro': {
+  intro: {
     'zh-TW': '介紹',
-    'en': 'Introduction'
+    'en': 'Introduction',
   },
-  'fallback': {
+  fallback: {
     'zh-TW': '回退機制',
-    'en': 'Fallback'
-  }
-} as const;
+    'en': 'Fallback',
+  },
+} as const
 
-export type TagId = keyof typeof tags;
+export type TagId = keyof typeof tags
 
 /**
  * 取得翻譯後的標籤名稱
  */
 export function getTagDisplay(tagId: TagId, locale: Locale): string {
-  const tag = tags[tagId];
-  if (!tag) return tagId;
-  return tag[locale] || Object.values(tag)[0] || tagId;
+  const tag = tags[tagId]
+  if (!tag)
+    return tagId
+  return tag[locale] || Object.values(tag)[0] || tagId
 }

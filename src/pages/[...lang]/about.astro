@@ -1,30 +1,30 @@
 ---
-import BaseLayout from '@/layouts/BaseLayout.astro';
-import { locales, defaultLocale, getLocale } from '@/i18n';
-import { getCollection, render } from 'astro:content';
+import { getCollection, render } from 'astro:content'
+import { defaultLocale, getLocale, locales } from '@/i18n'
+import BaseLayout from '@/layouts/BaseLayout.astro'
 
 export async function getStaticPaths() {
-	return [
-		{ params: { lang: undefined } },
-		...locales.filter(l => l !== defaultLocale).map(l => ({ params: { lang: l } }))
-	];
+  return [
+    { params: { lang: undefined } },
+    ...locales.filter(l => l !== defaultLocale).map(l => ({ params: { lang: l } })),
+  ]
 }
 
-const { lang } = Astro.params;
-const locale = getLocale(lang);
-const aboutEntries = await getCollection('about');
-const entry = aboutEntries.find((e) => e.data.lang === locale);
+const { lang } = Astro.params
+const locale = getLocale(lang)
+const aboutEntries = await getCollection('about')
+const entry = aboutEntries.find(e => e.data.lang === locale)
 
 if (!entry) {
-	return Astro.redirect('/404');
+  return Astro.redirect('/404')
 }
 
-const { Content } = await render(entry);
+const { Content } = await render(entry)
 ---
 
 <BaseLayout title={entry.data.title}>
-	<article class="prose dark:prose-invert max-w-none">
-		<h1>{entry.data.title}</h1>
-		<Content />
-	</article>
+  <article class="prose dark:prose-invert max-w-none">
+    <h1>{entry.data.title}</h1>
+    <Content />
+  </article>
 </BaseLayout>

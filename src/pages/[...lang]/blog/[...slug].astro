@@ -1,43 +1,43 @@
 ---
-import { render } from 'astro:content';
-import PostLayout from '@/layouts/PostLayout.astro';
-import { t, generateStaticLocalePaths, getLocale } from '@/i18n';
-import { getReadingTime } from '@/utils/reading-time';
-import { getSortedCollectionList } from '@/utils/content';
+import { render } from 'astro:content'
+import { generateStaticLocalePaths, getLocale, t } from '@/i18n'
+import PostLayout from '@/layouts/PostLayout.astro'
+import { getSortedCollectionList } from '@/utils/content'
+import { getReadingTime } from '@/utils/reading-time'
 
 export async function getStaticPaths() {
-	const all = await Promise.all(
-		generateStaticLocalePaths().map(async (path) => {
-			const locale = getLocale(path.params.lang);
-			const entries = await getSortedCollectionList('blog', locale);
-			return entries.map(entry => ({
-				params: { ...path.params, slug: entry.id },
-				props: { entry }
-			}));
-		})
-	);
-	return all.flat();
+  const all = await Promise.all(
+    generateStaticLocalePaths().map(async (path) => {
+      const locale = getLocale(path.params.lang)
+      const entries = await getSortedCollectionList('blog', locale)
+      return entries.map(entry => ({
+        params: { ...path.params, slug: entry.id },
+        props: { entry },
+      }))
+    }),
+  )
+  return all.flat()
 }
 
-const { lang } = Astro.params;
-const { entry } = Astro.props;
-const locale = getLocale(lang);
-const { Content, headings } = await render(entry);
-const readingTime = getReadingTime(entry.body ?? '', entry.locale);
+const { lang } = Astro.params
+const { entry } = Astro.props
+const locale = getLocale(lang)
+const { Content, headings } = await render(entry)
+const readingTime = getReadingTime(entry.body ?? '', entry.locale)
 ---
 
 <PostLayout
-	id={entry.id}
-	title={entry.data.title}
-	description={entry.data.description}
-	pubDate={entry.data.pubDate}
-	postLang={entry.locale}
-	isFallback={entry.isFallback}
-	fallbackNotice={entry.isFallback ? t(locale, 'blog.contentNotTranslated') : undefined}
-	readingTimeLabel={readingTime.label}
-	updated={entry.data.updated}
-	tags={entry.tags}
-	headings={headings}
+  id={entry.id}
+  title={entry.data.title}
+  description={entry.data.description}
+  pubDate={entry.data.pubDate}
+  postLang={entry.locale}
+  isFallback={entry.isFallback}
+  fallbackNotice={entry.isFallback ? t(locale, 'blog.contentNotTranslated') : undefined}
+  readingTimeLabel={readingTime.label}
+  updated={entry.data.updated}
+  tags={entry.tags}
+  headings={headings}
 >
-	<Content />
+  <Content />
 </PostLayout>

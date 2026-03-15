@@ -10,7 +10,9 @@
     "astro": "astro",
     "postbuild": "pagefind --site dist",
     "test": "vitest run",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "lint": "eslint",
+    "lint:fix": "eslint --fix"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.13",
@@ -32,11 +34,16 @@
     "workbox-window": "^7.4.0"
   },
   "devDependencies": {
+    "@antfu/eslint-config": "^7.7.2",
     "@astrojs/check": "^0.9.6",
     "@types/node": "^25.3.0",
     "@vite-pwa/astro": "^1.2.0",
     "@vitest/coverage-v8": "^4.1.0",
+    "eslint": "^10.0.3",
+    "eslint-plugin-astro": "^1.6.0",
+    "eslint-plugin-format": "^2.0.1",
     "pagefind": "^1.4.0",
+    "prettier-plugin-astro": "^0.14.1",
     "typescript": "^5.9.3",
     "vite-plugin-pwa": "^1.2.0",
     "vitest": "^4.1.0",

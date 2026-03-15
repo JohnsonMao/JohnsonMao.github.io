@@ -1,5 +1,5 @@
-import type { TagId } from '@/data/tags';
+import type { TagId } from '@/data/tags'
 
 export default {
-  tags: ['test', 'astro'] as TagId[]
-};
+  tags: ['test', 'astro'] as TagId[],
+}

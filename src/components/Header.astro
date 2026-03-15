@@ -1,52 +1,63 @@
 ---
-import { getRelativeLocaleUrl } from 'astro:i18n';
-import { t, locales, getLocale, type Locale, getLocaleLabel } from '@/i18n';
-import ThemeToggle from '@/components/theme/ThemeToggle.astro';
-import Search from '@/components/Search.astro';
+import type { Locale } from '@/i18n'
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import Search from '@/components/Search.astro'
+import ThemeToggle from '@/components/theme/ThemeToggle.astro'
+import { getLocale, getLocaleLabel, locales, t } from '@/i18n'
 
-const locale = getLocale(Astro.currentLocale);
+const locale = getLocale(Astro.currentLocale)
 
 // Common links
-const homeUrl = getRelativeLocaleUrl(locale, '');
-const blogUrl = getRelativeLocaleUrl(locale, 'blog');
-const aboutUrl = getRelativeLocaleUrl(locale, 'about');
+const homeUrl = getRelativeLocaleUrl(locale, '')
+const blogUrl = getRelativeLocaleUrl(locale, 'blog')
+const aboutUrl = getRelativeLocaleUrl(locale, 'about')
 
 // Dynamic path logic for language switcher
-const currentPath = Astro.url.pathname;
+const currentPath = Astro.url.pathname
 
 /**
  * Remove any existing locale prefix from the current path
  * to get the pure route part.
  */
 function getPathWithoutLocale(path: string) {
-	const parts = path.split('/').filter(Boolean);
-	if (parts.length > 0 && locales.includes(parts[0] as Locale)) {
-		return '/' + parts.slice(1).join('/');
-	}
-	return path;
+  const parts = path.split('/').filter(Boolean)
+  if (parts.length > 0 && locales.includes(parts[0] as Locale)) {
+    return `/${parts.slice(1).join('/')}`
+  }
+  return path
 }
 
-const baseRoute = getPathWithoutLocale(currentPath);
+const baseRoute = getPathWithoutLocale(currentPath)
 
 // Find the next locale to switch to (cycling through all defined locales)
-const currentIndex = locales.indexOf(locale);
-const nextLocale = locales[(currentIndex + 1) % locales.length];
-const nextLocaleUrl = getRelativeLocaleUrl(nextLocale, baseRoute === '/' ? undefined : baseRoute.slice(1));
-const nextLocaleLabel = getLocaleLabel(nextLocale);
+const currentIndex = locales.indexOf(locale)
+const nextLocale = locales[(currentIndex + 1) % locales.length]
+const nextLocaleUrl = getRelativeLocaleUrl(nextLocale, baseRoute === '/' ? undefined : baseRoute.slice(1))
+const nextLocaleLabel = getLocaleLabel(nextLocale)
 ---
 
 <header class="border-b border-gray-200 dark:border-gray-800">
-	<nav class="mx-auto flex max-w-3xl items-center justify-between px-4 py-4" aria-label="Main">
-		<a href={homeUrl} class="text-lg font-medium">{t(locale, 'nav.home')}</a>
-		<a href={blogUrl} class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100">{t(locale, 'nav.blog')}</a>
-		<a href={aboutUrl} class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100">{t(locale, 'nav.about')}</a>
-		<div class="flex items-center gap-2">
-			<Search />
-			<ThemeToggle />
+  <nav class="mx-auto flex max-w-3xl items-center justify-between px-4 py-4" aria-label="Main">
+    <a href={homeUrl} class="text-lg font-medium">
+      {t(locale, 'nav.home')}
+    </a>
+    <a href={blogUrl} class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100">
+      {t(locale, 'nav.blog')}
+    </a>
+    <a href={aboutUrl} class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100">
+      {t(locale, 'nav.about')}
+    </a>
+    <div class="flex items-center gap-2">
+      <Search />
+      <ThemeToggle />
 
-			<a href={nextLocaleUrl} class="text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200" aria-label="Switch language">
-				{nextLocaleLabel}
-			</a>
-		</div>
-	</nav>
+      <a
+        href={nextLocaleUrl}
+        class="text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+        aria-label="Switch language"
+      >
+        {nextLocaleLabel}
+      </a>
+    </div>
+  </nav>
 </header>

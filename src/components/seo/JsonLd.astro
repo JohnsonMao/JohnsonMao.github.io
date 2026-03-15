@@ -1,48 +1,48 @@
 ---
-import { getLocale } from '@/i18n';
+import { getLocale } from '@/i18n'
 
 interface Props {
-	post: {
-		title: string;
-		description?: string;
-		pubDate: Date;
-		updated?: Date;
-		author?: string;
-		image?: string;
-	};
-	url: string;
+  post: {
+    title: string
+    description?: string
+    pubDate: Date
+    updated?: Date
+    author?: string
+    image?: string
+  }
+  url: string
 }
 
-const { post, url } = Astro.props;
-const locale = getLocale(Astro.currentLocale);
+const { post, url } = Astro.props
+const locale = getLocale(Astro.currentLocale)
 
 const jsonLd = {
-	"@context": "https://schema.org",
-	"@type": "BlogPosting",
-	"headline": post.title,
-	"description": post.description,
-	"datePublished": post.pubDate.toISOString(),
-	"dateModified": post.updated?.toISOString() || post.pubDate.toISOString(),
-	"author": {
-		"@type": "Person",
-		"name": post.author || "JohnsonMao",
-		"url": new URL('/', Astro.site).href
-	},
-	"publisher": {
-		"@type": "Organization",
-		"name": "JohnsonMao",
-		"logo": {
-			"@type": "ImageObject",
-			"url": new URL('/favicon.svg', Astro.site).href
-		}
-	},
-	"image": post.image ? new URL(post.image, Astro.site).href : new URL('/og-default.svg', Astro.site).href,
-	"mainEntityOfPage": {
-		"@type": "WebPage",
-		"@id": url
-	},
-	"inLanguage": locale
-};
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  'headline': post.title,
+  'description': post.description,
+  'datePublished': post.pubDate.toISOString(),
+  'dateModified': post.updated?.toISOString() || post.pubDate.toISOString(),
+  'author': {
+    '@type': 'Person',
+    'name': post.author || 'JohnsonMao',
+    'url': new URL('/', Astro.site).href,
+  },
+  'publisher': {
+    '@type': 'Organization',
+    'name': 'JohnsonMao',
+    'logo': {
+      '@type': 'ImageObject',
+      'url': new URL('/favicon.svg', Astro.site).href,
+    },
+  },
+  'image': post.image ? new URL(post.image, Astro.site).href : new URL('/og-default.svg', Astro.site).href,
+  'mainEntityOfPage': {
+    '@type': 'WebPage',
+    '@id': url,
+  },
+  'inLanguage': locale,
+}
 ---
 
 <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />

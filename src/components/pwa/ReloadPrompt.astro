@@ -1,11 +1,11 @@
 ---
-import { t, getLocale } from '@/i18n';
+import { getLocale, t } from '@/i18n'
 
-const locale = getLocale(Astro.currentLocale);
+const locale = getLocale(Astro.currentLocale)
 
-const newContentAvailableText = t(locale, 'pwa.newContentAvailable');
-const reloadText = t(locale, 'pwa.reload');
-const closeText = t(locale, 'pwa.close');
+const newContentAvailableText = t(locale, 'pwa.newContentAvailable')
+const reloadText = t(locale, 'pwa.reload')
+const closeText = t(locale, 'pwa.close')
 ---
 
 <div
@@ -18,7 +18,12 @@ const closeText = t(locale, 'pwa.close');
   <div class="flex items-start">
     <div class="shrink-0">
       <svg class="h-6 w-6 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+        ></path>
       </svg>
     </div>
     <div class="ml-3 w-0 flex-1 pt-0.5">
@@ -46,40 +51,35 @@ const closeText = t(locale, 'pwa.close');
 </div>
 
 <script>
-  import { registerSW } from 'virtual:pwa-register'
+import { registerSW } from 'virtual:pwa-register'
 
-  window.addEventListener('load', () => {
-    console.log('Page loaded, registering service worker');
-    const toast = document.querySelector<HTMLDivElement>('#pwa-toast');
-    if (!(toast instanceof HTMLElement)) return;
+window.addEventListener('load', () => {
+  const toast = document.querySelector<HTMLDivElement>('#pwa-toast')
+  if (!(toast instanceof HTMLElement))
+    return
 
-    const refreshButton = toast.querySelector('#pwa-refresh');
-    const closeButton = toast.querySelector('#pwa-close');
+  const refreshButton = toast.querySelector('#pwa-refresh')
+  const closeButton = toast.querySelector('#pwa-close')
 
-    const refreshSW = registerSW({
-      immediate: true,
-      onOfflineReady() {
-        console.log('App ready to work offline');
-      },
-      onNeedRefresh() {
-        console.log('New content available');
-        if (toast) toast.classList.add('show');
-      },
-      onRegisteredSW(swScriptUrl) {
-        console.log('SW registered: ', swScriptUrl);
-      }
-    })
-
-    refreshButton?.addEventListener('click', () => {
-      console.log('Refreshing to get new content');
-      refreshSW(true);
-    });
-
-    closeButton?.addEventListener('click', () => {
-      console.log('Closing update notification');
-      if (toast) toast.classList.remove('show');
-    });
+  const refreshSW = registerSW({
+    immediate: true,
+    onOfflineReady() {},
+    onNeedRefresh() {
+      if (toast)
+        toast.classList.add('show')
+    },
+    onRegisteredSW(_swScriptUrl) {},
   })
+
+  refreshButton?.addEventListener('click', () => {
+    refreshSW(true)
+  })
+
+  closeButton?.addEventListener('click', () => {
+    if (toast)
+      toast.classList.remove('show')
+  })
+})
 </script>
 
 <style>

@@ -1,23 +1,21 @@
 /// <reference lib="webworker" />
-import { cleanupOutdatedCaches, precacheAndRoute } from 'workbox-precaching';
-import { registerRoute, setCatchHandler } from 'workbox-routing';
-import { StaleWhileRevalidate, CacheFirst } from 'workbox-strategies';
-import { ExpirationPlugin } from 'workbox-expiration';
-import { CacheableResponsePlugin } from 'workbox-cacheable-response';
+import { CacheableResponsePlugin } from 'workbox-cacheable-response'
+import { ExpirationPlugin } from 'workbox-expiration'
+import { cleanupOutdatedCaches, precacheAndRoute } from 'workbox-precaching'
+import { registerRoute, setCatchHandler } from 'workbox-routing'
+import { CacheFirst, StaleWhileRevalidate } from 'workbox-strategies'
 
-declare let self: ServiceWorkerGlobalScope;
-
-console.log('Service worker is running');
+declare let self: ServiceWorkerGlobalScope
 
 // self.__WB_MANIFEST is default injection point
-precacheAndRoute(self.__WB_MANIFEST);
+precacheAndRoute(self.__WB_MANIFEST)
 
 // clean old assets
-cleanupOutdatedCaches();
+cleanupOutdatedCaches()
 
 // Skip waiting for new service worker and claim clients
-self.skipWaiting();
-self.clients.claim();
+self.skipWaiting()
+self.clients.claim()
 
 // 1. Runtime Caching Strategy for Pages (MPA)
 registerRoute(
@@ -33,15 +31,15 @@ registerRoute(
         maxAgeSeconds: 30 * 24 * 60 * 60, // 30 Days
       }),
     ],
-  })
-);
+  }),
+)
 
 // 2. Cache-First Strategy for Static Assets (Images & Fonts)
 registerRoute(
   ({ request }) =>
-    request.destination === 'image' ||
-    request.destination === 'font' ||
-    request.url.includes('/_astro/'),
+    request.destination === 'image'
+    || request.destination === 'font'
+    || request.url.includes('/_astro/'),
   new CacheFirst({
     cacheName: 'assets-cache',
     plugins: [
@@ -53,65 +51,68 @@ registerRoute(
         maxAgeSeconds: 60 * 24 * 60 * 60, // 60 Days
       }),
     ],
-  })
-);
+  }),
+)
 
 // 3. Offline Fallback Integration
 setCatchHandler(async ({ event }) => {
-  const fetchEvent = event as FetchEvent;
+  const fetchEvent = event as FetchEvent
   if (fetchEvent.request.mode === 'navigate') {
     // Detect language from path and return corresponding offline page
-    const url = new URL(fetchEvent.request.url);
-    const isEn = url.pathname.startsWith('/en/');
-    const offlinePath = isEn ? '/en/offline/index.html' : '/offline/index.html';
+    const url = new URL(fetchEvent.request.url)
+    const isEn = url.pathname.startsWith('/en/')
+    const offlinePath = isEn ? '/en/offline/index.html' : '/offline/index.html'
 
-    const cachedResponse = await caches.match(offlinePath);
-    if (cachedResponse) return cachedResponse;
+    const cachedResponse = await caches.match(offlinePath)
+    if (cachedResponse)
+      return cachedResponse
   }
-  return Response.error();
-});
+  return Response.error()
+})
 
 // Push event listener
 self.addEventListener('push', (event) => {
-  if (!event.data) return;
+  if (!event.data)
+    return
 
   try {
-    const data = event.data.json();
-    const title = data.title || 'New Notification';
+    const data = event.data.json()
+    const title = data.title || 'New Notification'
     const options: NotificationOptions = {
       body: data.body || 'You have a new update.',
       icon: '/favicon.svg',
       badge: '/favicon.svg',
       data: {
-        url: data.url || '/'
-      }
-    };
+        url: data.url || '/',
+      },
+    }
     event.waitUntil(
-      self.registration.showNotification(title, options)
-    );
-  } catch (e) {
-    console.error('Error handling push event:', e);
+      self.registration.showNotification(title, options),
+    )
   }
-});
+  catch (e) {
+    console.error('Error handling push event:', e)
+  }
+})
 
 // Notification click listener
 self.addEventListener('notificationclick', (event) => {
-  event.notification.close();
+  event.notification.close()
 
-  const url = event.notification.data.url;
+  const url = event.notification.data.url
 
   event.waitUntil(
     self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then((clientList) => {
       // Check if there's already a tab open with this URL
       for (const client of clientList) {
         if (client.url === url && 'focus' in client) {
-          return client.focus();
+          return client.focus()
         }
       }
       // If not, open a new window
       if (self.clients.openWindow) {
-        return self.clients.openWindow(url);
+        return self.clients.openWindow(url)
       }
-    })
-  );
-});
+    }),
+  )
+})

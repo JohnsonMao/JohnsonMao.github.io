@@ -1,5 +1,5 @@
 /// <reference types="vitest/config" />
-import { getViteConfig } from 'astro/config';
+import { getViteConfig } from 'astro/config'
 
 /**
  * Test file convention: place tests next to source as `*.test.ts` under `src/`.
@@ -7,8 +7,8 @@ import { getViteConfig } from 'astro/config';
  * @see https://docs.astro.build/en/guides/testing/
  */
 export default getViteConfig({
-	test: {
-		include: ['src/**/*.test.ts'],
-		globals: false,
-	},
-});
+  test: {
+    include: ['src/**/*.test.ts'],
+    globals: false,
+  },
+})

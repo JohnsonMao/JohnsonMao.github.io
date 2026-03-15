@@ -1,17 +1,17 @@
 ---
-import BaseLayout from '@/layouts/BaseLayout.astro';
-import { Icon } from 'astro-icon/components';
-import { t, locales, defaultLocale, getLocale } from '@/i18n';
+import { Icon } from 'astro-icon/components'
+import { defaultLocale, getLocale, locales, t } from '@/i18n'
+import BaseLayout from '@/layouts/BaseLayout.astro'
 
 export function getStaticPaths() {
-	return [
-		{ params: { lang: undefined } },
-		...locales.filter(l => l !== defaultLocale).map(l => ({ params: { lang: l } }))
-	];
+  return [
+    { params: { lang: undefined } },
+    ...locales.filter(l => l !== defaultLocale).map(l => ({ params: { lang: l } })),
+  ]
 }
 
-const { lang } = Astro.params;
-const locale = getLocale(lang);
+const { lang } = Astro.params
+const locale = getLocale(lang)
 ---
 
 <BaseLayout title={t(locale, 'pwa.offline.title')}>
