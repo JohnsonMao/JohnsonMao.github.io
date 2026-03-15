@@ -1,13 +1,24 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
-import { defaultLocale, type Locale, getLocalePriority, isLocale, normalizeLocale } from '@/i18n';
+import { type Locale, getLocalePriority, isLocale, normalizeLocale } from '@/i18n';
+import { tags as tagRegistry, type TagId } from '@/data/tags';
 
 const selectedCollections = ['blog'] as const;
 
 export type SelectedCollection = typeof selectedCollections[number];
 
+/**
+ * Shared metadata structure defined in _meta.ts files.
+ */
+export interface SharedMeta {
+	tags?: TagId[];
+	[key: string]: unknown;
+}
+
 export type LocalizedCollection<K extends SelectedCollection> = CollectionEntry<K> & {
 	locale: Locale,
 	isFallback?: boolean;
+	seriesId?: string;
+	tags?: TagId[];
 };
 
 type LocalizedCollectionGroup<K extends SelectedCollection> = {
@@ -15,22 +26,52 @@ type LocalizedCollectionGroup<K extends SelectedCollection> = {
 	entries: Map<Locale, LocalizedCollection<K>>;
 }
 
+// Automatically load _meta.ts files to share tags/metadata across locales
+const metaFiles = import.meta.glob<SharedMeta>('../content/blog/**/_meta.ts', { eager: true, import: 'default' });
+
 /**
- * Get the base ID of a content entry (removes locale suffix)
+ * Retrieves shared metadata for a given path, safely typed.
  */
+function getSharedMetadata(path: string): SharedMeta {
+	const dir = path.includes('/') ? path.split('/').slice(0, -1).join('/') : '';
+	const metaKey = `../content/blog/${dir}/_meta.ts`;
+	return metaFiles[metaKey] || {};
+}
+
+/**
+ * Validates tags against the master registry at build-time to prevent typos.
+ */
+export function validateTags(id: string, tags?: TagId[]) {
+
+	if (!tags) return;
+	tags.forEach((tag) => {
+		if (!(tag in tagRegistry)) {
+			throw new Error(`[Content Error] Unregistered tag ID: "${tag}" found in ${id}. Please register it in src/data/tags.ts.`);
+		}
+	});
+}
+
+/**
+ * Parses raw ID into seriesId and canonical slug.
+ * Strips numerical prefixes (e.g. '01-') for clean URLs.
+ */
+export function parseEntryId(id: string) {
+	const parts = id.split('/');
+	if (parts.length === 2) {
+		return { seriesId: undefined, slug: parts[0] };
+	} else if (parts.length === 3) {
+		const slug = parts[1].replace(/^\d+-/, '');
+		return { seriesId: parts[0], slug };
+	}
+	return { seriesId: undefined, slug: id };
+}
+
 export function getBaseId(id: string): string {
-	return id.includes('/') ? id.split('/')[0] : id;
+	return parseEntryId(id).slug;
 }
 
 /**
- * Get the locale of a content entry
- */
-export function getLocale(id: string): Locale {
-	return id.includes('/') ? id.split('/')[1] as Locale : defaultLocale;
-}
-
-/**
- * Get the best available entry version based on a priority list of locales
+ * Picks the best language version based on the locale priority list.
  */
 export function getBestEntry<K extends SelectedCollection>(
 	entries: Map<Locale, LocalizedCollection<K>>,
@@ -40,13 +81,12 @@ export function getBestEntry<K extends SelectedCollection>(
 		const entry = entries.get(locale);
 		if (entry) return entry;
 	}
-	const entry = Array.from(entries.values())[0];
-	if (entry) return entry;
-	throw new Error('No entry found');
+	return Array.from(entries.values())[0]!;
 }
 
 /**
- * Get grouped entries by base ID, mapping each base ID to its available locale versions
+ * Loads, groups, and merges shared metadata for a collection.
+ * This is the central processing pipeline for localized content.
  */
 async function getGroupedCollection<K extends SelectedCollection>(
 	collection: K,
@@ -55,66 +95,80 @@ async function getGroupedCollection<K extends SelectedCollection>(
 	const collectionMap = new Map<string, LocalizedCollectionGroup<K>>();
 
 	all.forEach((entry) => {
-		const [id, lowercaseLocale] = entry.id.split('/');
-		const group = collectionMap.get(id);
-		const locale = normalizeLocale(lowercaseLocale);
+		const parts = entry.id.split('/');
+		const locale = normalizeLocale(parts[parts.length - 1]);
 
 		if (!isLocale(locale)) {
 			throw new Error(`Invalid locale: ${locale} in entry ${entry.id}`);
 		}
 
-		if (!group) {
-			collectionMap.set(id, { id, entries: new Map([[locale, { ...entry, id, locale }]]) });
-		} else {
-			group.entries.set(locale, { ...entry, id, locale });
-		}
+		const { seriesId, slug } = parseEntryId(entry.id);
+		const sharedMeta = getSharedMetadata(entry.id);
+		validateTags(entry.id, sharedMeta.tags);
+
+		const localizedEntry: LocalizedCollection<K> = {
+			...entry,
+			id: slug,
+			locale,
+			seriesId,
+			tags: sharedMeta.tags,
+		};
+
+		const group = collectionMap.get(slug) || { id: slug, entries: new Map() };
+		group.entries.set(locale, localizedEntry);
+		collectionMap.set(slug, group);
 	});
 
 	return collectionMap;
 }
 
+/**
+ * Resolves a single entry with i18n fallback support.
+ */
 export async function getCollectionEntry<K extends SelectedCollection>(
 	collection: K,
 	locale: Locale,
 	id: string,
 ): Promise<LocalizedCollection<K>> {
 	const collectionMap = await getGroupedCollection(collection);
-	const priority = getLocalePriority(locale);
 	const group = collectionMap.get(id);
-	if (!group) {
-		throw new Error(`Entry ${id} not found in collection ${collection}`);
-	}
-	const entry = getBestEntry<K>(group.entries, priority);
+	if (!group) throw new Error(`Entry ${id} not found in collection ${collection}`);
+	
+	const entry = getBestEntry<K>(group.entries, getLocalePriority(locale));
 	return { ...entry, isFallback: entry.locale !== locale };
 }
 
+/**
+ * Returns unique articles for a locale, applying fallbacks where translations are missing.
+ */
 export async function getSortedCollectionList<K extends SelectedCollection>(
 	collection: K,
 	locale: Locale
 ): Promise<LocalizedCollection<K>[]> {
 	const collectionMap = await getGroupedCollection(collection);
 	const priority = getLocalePriority(locale);
-	const entries = Array.from(collectionMap.values()).map((group) => getBestEntry<K>(group.entries, priority));
-	const sorted = entries.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
-	return sorted.map((entry) => ({ ...entry, isFallback: locale !== entry.locale }));	
+	
+	return Array.from(collectionMap.values())
+		.map((group) => {
+			const entry = getBestEntry<K>(group.entries, priority);
+			return { ...entry, isFallback: locale !== entry.locale };
+		})
+		.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
 }
 
 /**
- * Get all tags and their associated entries across modern content collections
+ * Aggregates tags while accounting for fallback versions visible in the current locale.
  */
 export async function getEntriesByTag(locale: Locale) {
-	const tagMap: Map<string, LocalizedCollection<SelectedCollection>[]> = new Map();
+	const tagMap: Map<TagId, LocalizedCollection<SelectedCollection>[]> = new Map();
 
 	for (const col of selectedCollections) {
-		const collectionMap = await getGroupedCollection(col);
-		Array.from(collectionMap.values()).forEach((group) => {
-			Array.from(group.entries.values()).forEach((entry) => {
-				if (entry.locale === locale && Array.isArray(entry.data.tags) && entry.data.tags.length > 0) {
-					entry.data.tags.forEach((tag: string) => {
-						if (!tagMap.has(tag)) tagMap.set(tag, []);
-						tagMap.get(tag)!.push(entry);
-					});
-				}
+		const entries = await getSortedCollectionList(col, locale);
+		entries.forEach((entry) => {
+			entry.tags?.forEach((tag) => {
+				const list = tagMap.get(tag) || [];
+				list.push(entry);
+				tagMap.set(tag, list);
 			});
 		});
 	}
@@ -123,13 +177,7 @@ export async function getEntriesByTag(locale: Locale) {
 }
 
 /**
- * Get related entries based on tag overlap.
- * 
- * Logic:
- * 1. Filter posts in the same locale (excluding the current post).
- * 2. Calculate common tags count.
- * 3. Sort by common tags count (desc) then by publication date (desc).
- * 4. Return top N.
+ * Calculates related articles based on tag overlap score.
  */
 export async function getRelatedEntries<K extends SelectedCollection>(
 	collection: K,
@@ -137,35 +185,20 @@ export async function getRelatedEntries<K extends SelectedCollection>(
 	maxCount: number = 3
 ): Promise<LocalizedCollection<K>[]> {
 	const allEntries = await getSortedCollectionList(collection, entry.locale);
-	const currentTags = entry.data.tags ?? [];
+	const currentTags = entry.tags ?? [];
 
 	if (currentTags.length === 0) {
-		// If no tags, just return latest posts from the same locale
-		return allEntries
-			.filter((entry) => entry.id !== entry.id && entry.locale === entry.locale)
-			.sort((entryA, entryB) => entryB.data.pubDate.getTime() - entryA.data.pubDate.getTime())
-			.slice(0, maxCount);
+		return allEntries.filter((e) => e.id !== entry.id).slice(0, maxCount);
 	}
 
-	const related = allEntries
-		.filter((entry) => entry.id !== entry.id && entry.locale === entry.locale)
-		.map((entry) => {
-			const commonTags = (entry.data.tags ?? []).filter((tag) => currentTags.includes(tag));
-			return { data: entry, score: commonTags.length };
+	return allEntries
+		.filter((e) => e.id !== entry.id)
+		.map((e) => {
+			const commonTags = (e.tags ?? []).filter((tag) => currentTags.includes(tag));
+			return { entry: e, score: commonTags.length };
 		})
-		.filter((entry) => entry.score > 0)
-		.sort((entryA, entryB) => {
-			if (entryB.score !== entryA.score) return entryB.score - entryA.score;
-			return entryB.data.data.pubDate.getTime() - entryA.data.data.pubDate.getTime();
-		});
-
-	if (related.length === 0) {
-		// Fallback to latest posts if no overlap
-		return allEntries
-			.filter((entry) => entry.id !== entry.id && entry.locale === entry.locale)
-			.sort((entryA, entryB) => entryB.data.pubDate.getTime() - entryA.data.pubDate.getTime())
-			.slice(0, maxCount);
-	}
-
-	return related.slice(0, maxCount).map((entry) => entry.data);
+		.filter((item) => item.score > 0)
+		.sort((a, b) => b.score - a.score || b.entry.data.pubDate.getTime() - a.entry.data.pubDate.getTime())
+		.slice(0, maxCount)
+		.map((item) => item.entry);
 }

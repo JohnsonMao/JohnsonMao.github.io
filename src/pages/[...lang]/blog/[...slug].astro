@@ -36,7 +36,7 @@ const readingTime = getReadingTime(entry.body ?? '', entry.locale);
 	fallbackNotice={entry.isFallback ? t(locale, 'blog.contentNotTranslated') : undefined}
 	readingTimeLabel={readingTime.label}
 	updated={entry.data.updated}
-	tags={entry.data.tags}
+	tags={entry.tags}
 	headings={headings}
 >
 	<Content />

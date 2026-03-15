@@ -1,8 +1,7 @@
 ---
 import { getRelativeLocaleUrl } from "astro:i18n";
-import { t, getLocale, getLocalePriority } from "@/i18n";
+import { t, getLocale } from "@/i18n";
 import {
-  getBaseId,
   getSortedCollectionList,
   type LocalizedCollection,
 } from "@/utils/content";
@@ -13,21 +12,25 @@ interface Props {
 
 const { post } = Astro.props;
 const locale = getLocale(Astro.currentLocale);
-const { series } = post.data;
+const { seriesId } = post;
 
-if (!series) {
+if (!seriesId) {
   return null;
 }
 
+// Get all posts in the same series, sorted by publication date
 const entries = await getSortedCollectionList("blog", post.locale);
 const seriesPosts = entries
-  .filter((entry) => entry.data.series === series)
+  .filter((entry) => entry.seriesId === seriesId)
   .sort((entryA, entryB) => entryA.data.pubDate.getTime() - entryB.data.pubDate.getTime());
 
 const currentIndex = seriesPosts.findIndex(
   (entry) => entry.id === post.id,
 );
 const blogBase = getRelativeLocaleUrl(locale, `blog/`);
+
+// Get series name from i18n or use seriesId as fallback
+const seriesName = t(locale, `blog.series.${seriesId}`) || seriesId;
 ---
 
 <nav
@@ -36,11 +39,11 @@ const blogBase = getRelativeLocaleUrl(locale, `blog/`);
 >
   <h2 class="text-lg font-bold text-gray-800 dark:text-gray-200 mb-4">
     {t(locale, "blog.series.partOf")}
-    <span class="font-extrabold">{series}</span>
+    <span class="font-extrabold">{seriesName}</span>
   </h2>
   <ol class="list-decimal list-inside space-y-2">
     {
-      seriesPosts.map((post, index) => {
+      seriesPosts.map((entry, index) => {
         const isCurrent = index === currentIndex;
         return (
           <li
@@ -51,13 +54,13 @@ const blogBase = getRelativeLocaleUrl(locale, `blog/`);
             ]}
           >
             <a
-              href={`${blogBase}${getBaseId(post.id)}/`}
+              href={`${blogBase}${entry.id}/`}
               class:list={[
                 "hover:underline",
                 { "pointer-events-none": isCurrent },
               ]}
             >
-              {post.data.title}
+              {entry.data.title}
             </a>
             {isCurrent && (
               <span class="ml-2 text-xs font-normal text-muted-foreground">

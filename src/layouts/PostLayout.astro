@@ -10,9 +10,10 @@ import type { MarkdownHeading } from 'astro';
 import { getRelativeLocaleUrl } from 'astro:i18n';
 import { Icon } from 'astro-icon/components';
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { t, getLocale, defaultLocale, getLocalePriority } from '@/i18n';
+import { t, getLocale, defaultLocale } from '@/i18n';
 import Giscus from '@/components/blog/Giscus.astro';
-import { getRelatedEntries, getCollectionEntry, getSortedCollectionList } from '@/utils/content';
+import { getRelatedEntries, getCollectionEntry } from '@/utils/content';
+import { getTagDisplay, type TagId } from '@/data/tags';
 
 interface Props {
 	id: string;
@@ -26,7 +27,7 @@ interface Props {
 	canonical?: string;
 	readingTimeLabel?: string;
 	updated?: Date;
-	tags?: string[];
+	tags?: TagId[];
 	headings?: MarkdownHeading[];
 }
 
@@ -104,8 +105,8 @@ const postData = {
 				{tags && tags.length > 0 && (
 					<div class="mt-4 flex flex-wrap gap-2">
 						{tags.map((tag) => (
-							<a href={`${tagBase}${encodeURIComponent(tag)}`} class="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-medium bg-secondary text-secondary-foreground hover:bg-secondary/80 transition-colors border border-transparent">
-								#{tag}
+							<a href={`${tagBase}${tag}`} class="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-medium bg-secondary text-secondary-foreground hover:bg-secondary/80 transition-colors border border-transparent">
+								#{getTagDisplay(tag, locale)}
 							</a>
 						))}
 					</div>

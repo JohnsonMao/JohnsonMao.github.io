@@ -3,18 +3,53 @@
 ## Purpose
 
 Content model supports multi-language; filtering articles by locale during build.
+
 ## Requirements
+
 ### Requirement: Blog content collection with schema
-The system SHALL provide a Content Collection named `blog` whose source files SHALL be organized under slug-specific subdirectories with locale-specific filenames (e.g. `src/content/blog/[slug]/zh-TW.md`, `src/content/blog/[slug]/en.md`) and SHALL define its schema in `src/content/config.ts` using Astro's `defineCollection` with a Zod schema for frontmatter validation. The locale of each entry SHALL be derived from its filename or directory structure.
+The system SHALL provide a Content Collection named `blog` whose source files SHALL be organized under slug-specific subdirectories with locale-specific filenames (e.g. `src/content/blog/[slug]/zh-TW.md`) or series-grouped directories (e.g. `src/content/blog/[seriesId]/[slug]/zh-TW.md`). The system SHALL define its schema in `src/content/config.ts` using Astro's `defineCollection` with a Zod schema for frontmatter validation. Tags SHALL be managed externally via a `_meta.ts` file in the same directory as the content.
 
 #### Scenario: Valid frontmatter passes validation
-- **WHEN** a markdown or MDX file in the blog content directory has frontmatter that matches the defined schema (e.g. title, description, pubDate, series)
+- **WHEN** a markdown or MDX file in the blog content directory has frontmatter that matches the defined schema (e.g. title, description, pubDate)
 - **THEN** the file is included in the collection and is available at build time for filtering by locale
 
-#### Scenario: Invalid frontmatter fails build
-- **WHEN** a markdown or MDX file has missing required fields or invalid types in frontmatter
-- **THEN** the build SHALL fail with a clear validation error
+#### Scenario: Missing required field
+- **WHEN** a post omits a required field (e.g. title or pubDate)
+- **THEN** validation SHALL fail and the build SHALL report the error
 
+
+<!-- @trace
+source: modern-content-structure
+updated: 2026-03-15
+code:
+  - src/content/blog/only-english/_meta.ts
+  - package.json
+  - src/utils/content.ts
+  - src/content/blog/test-series/01-first/en.md
+  - src/content/blog/test-series-2/en.mdx
+  - src/content/blog/test-series/02-second/_meta.ts
+  - src/layouts/PostLayout.astro
+  - src/pages/[...lang]/blog/[...slug].astro
+  - src/pages/[...lang]/tag/[tagId].astro
+  - src/content/blog/i18n-demo/_meta.ts
+  - src/components/PostCard.astro
+  - src/components/blog/RelatedPosts.astro
+  - src/content/blog/test-series/02-second/en.mdx
+  - src/components/blog/SeriesNav.astro
+  - src/content/blog/second-post/_meta.ts
+  - src/content/blog/test-series-1/en.md
+  - src/pages/[...lang]/blog/index.astro
+  - src/content.config.ts
+  - src/content/blog/test-series/01-first/_meta.ts
+  - src/data/tags.ts
+  - src/content/blog/hello-world/_meta.ts
+tests:
+  - src/utils/content.test.ts
+  - src/utils/reading-time.test.ts
+  - src/data/tags.test.ts
+-->
+
+---
 ### Requirement: Frontmatter fields for blog posts
 The blog collection schema SHALL require at least: `title` (string), `description` (string), and `pubDate` (date or ISO string). It SHALL support an optional `series` field (string) for grouping related posts. It MAY support optional fields such as `draft`, `tags`, or `updated`. Tags defined here SHALL be processed by the Independent Tag Module.
 
@@ -30,6 +65,7 @@ The blog collection schema SHALL require at least: `title` (string), `descriptio
 - **WHEN** a post includes a `series` field in frontmatter
 - **THEN** the post is associated with that series and can display series navigation
 
+---
 ### Requirement: Markdown and optional MDX source
 The system SHALL support `.md` and `.mdx` files in the blog collection. The system SHALL enable the MDX integration to support rich interactive features within content. Source files MAY be organized in locale subdirectories under the blog content root.
 
@@ -41,6 +77,7 @@ The system SHALL support `.md` and `.mdx` files in the blog collection. The syst
 - **WHEN** a `.mdx` file exists in the blog content directory with valid frontmatter
 - **THEN** it is included in the collection and can use Astro components within its body
 
+---
 ### Requirement: Reading time display
 
 The system SHALL compute an estimated reading time for each blog post (e.g. from the post body character or word count and a constant words-per-minute or characters-per-minute) and SHALL display this reading time (e.g. "約 N 分鐘" / "N min read") on the single post layout (PostLayout) and on each post summary in the blog list (PostCard). The estimate MAY be rounded up to the nearest minute; very short content MAY be shown as "少於 1 分鐘" or omitted. The computation SHALL be deterministic at build time and SHALL NOT require changes to the blog content schema (body is already available).
@@ -53,6 +90,7 @@ The system SHALL compute an estimated reading time for each blog post (e.g. from
 - **WHEN** the blog list page is rendered
 - **THEN** each post card (or summary) SHALL display the estimated reading time for that post
 
+---
 ### Requirement: Updated date display
 
 When a blog post has an optional `updated` field in its frontmatter, the system SHALL display an "updated on" (or equivalent) date on the single post page (e.g. "更新於 YYYY-MM-DD" or "Updated on YYYY-MM-DD"). The system SHALL display this only when `updated` is present; when it is absent, no updated date SHALL be shown. The format MAY be locale-aware. If `updated` equals the publication date, the system MAY omit the updated line to avoid redundancy.
@@ -65,6 +103,7 @@ When a blog post has an optional `updated` field in its frontmatter, the system 
 - **WHEN** a post does not have `updated` in frontmatter
 - **THEN** the single post page SHALL NOT display an "updated on" line (no requirement to show publication date only as "updated")
 
+---
 ### Requirement: Draft post visibility in development
 The system SHALL include blog posts marked with `draft: true` in the content collections when the application is running in the development environment (e.g., `import.meta.env.DEV` is true). These posts SHALL be available for previewing but SHALL NOT be included in production builds.
 
@@ -76,3 +115,41 @@ The system SHALL include blog posts marked with `draft: true` in the content col
 - **WHEN** a post has `draft: true` in frontmatter and the system is running a production build
 - **THEN** the post SHALL NOT be included in the build output and its URL SHALL NOT be reachable
 
+---
+### Requirement: Directory-based series grouping
+The system SHALL identify blog series based on directory hierarchy. Files located in a subdirectory of the blog collection (e.g., `src/content/blog/[seriesId]/[slug]/`) SHALL be automatically associated with the series `seriesId`.
+
+#### Scenario: Post belongs to a series
+- **WHEN** a post is located in a nested directory under a series folder
+- **THEN** the system SHALL extract the series ID from the path and make it available for series navigation
+
+<!-- @trace
+source: modern-content-structure
+updated: 2026-03-15
+code:
+  - src/content/blog/only-english/_meta.ts
+  - package.json
+  - src/utils/content.ts
+  - src/content/blog/test-series/01-first/en.md
+  - src/content/blog/test-series-2/en.mdx
+  - src/content/blog/test-series/02-second/_meta.ts
+  - src/layouts/PostLayout.astro
+  - src/pages/[...lang]/blog/[...slug].astro
+  - src/pages/[...lang]/tag/[tagId].astro
+  - src/content/blog/i18n-demo/_meta.ts
+  - src/components/PostCard.astro
+  - src/components/blog/RelatedPosts.astro
+  - src/content/blog/test-series/02-second/en.mdx
+  - src/components/blog/SeriesNav.astro
+  - src/content/blog/second-post/_meta.ts
+  - src/content/blog/test-series-1/en.md
+  - src/pages/[...lang]/blog/index.astro
+  - src/content.config.ts
+  - src/content/blog/test-series/01-first/_meta.ts
+  - src/data/tags.ts
+  - src/content/blog/hello-world/_meta.ts
+tests:
+  - src/utils/content.test.ts
+  - src/utils/reading-time.test.ts
+  - src/data/tags.test.ts
+-->

@@ -2,7 +2,9 @@
 
 ## Purpose
 TBD - created by archiving change blog-content-ux-batch. Update Purpose after archive.
+
 ## Requirements
+
 ### Requirement: Tag page per locale
 
 The system SHALL provide a tag page for each supported locale at a stable path pattern (e.g. `/blog/tag/[tag]` for the default locale and `/en/blog/tag/[tag]` for English). Each tag page SHALL list only blog posts that belong to that locale (matching the post's `lang` field) and whose `tags` array includes the requested tag. Posts SHALL be ordered consistently with the main blog list (e.g. by publication date, newest first). Draft posts SHALL be excluded.
@@ -15,18 +17,47 @@ The system SHALL provide a tag page for each supported locale at a stable path p
 - **WHEN** the requested tag does not match any post in that locale (or tag is missing)
 - **THEN** the system MAY show an empty list or a 404; behaviour SHALL be defined and consistent
 
+---
 ### Requirement: Tag links from list and post
+The system SHALL provide links to the corresponding tag page from the blog list and from the single post page. Each tag SHALL display its localized name derived from the Master Tag Registry based on the current page's locale.
 
-The system SHALL provide links to the corresponding tag page from the blog list and from the single post page (e.g. each tag displayed as a link to `/blog/tag/[tag]` or the locale-prefixed equivalent), so that users can navigate to all posts with that tag in the current locale.
+#### Scenario: Post page links to localized tag pages
+- **WHEN** a single post has tags defined in its shared metadata
+- **THEN** the post layout SHALL render links displaying the localized tag names (e.g. "教學" instead of "tutorial" when locale is zh-TW)
 
-#### Scenario: Post page links to tag pages
-- **WHEN** a single post has frontmatter `tags: ['a', 'b']`
-- **THEN** the post layout SHALL render links to the tag pages for the current locale for each tag (e.g. `/en/blog/tag/a`, `/en/blog/tag/b`)
 
-#### Scenario: Blog list or tag page links to tag pages
-- **WHEN** the blog list or a tag page displays posts (with tags)
-- **THEN** each tag SHALL be linkable to its tag page for the current locale so users can discover more posts by tag
+<!-- @trace
+source: tag-registry-optimization
+updated: 2026-03-15
+code:
+  - src/pages/[...lang]/blog/[...slug].astro
+  - src/content/blog/i18n-demo/_meta.ts
+  - src/components/PostCard.astro
+  - src/pages/[...lang]/tag/[tagId].astro
+  - src/content/blog/test-series/01-first/en.md
+  - src/content/blog/hello-world/_meta.ts
+  - src/content/blog/test-series/01-first/_meta.ts
+  - src/components/blog/RelatedPosts.astro
+  - src/content/blog/only-english/_meta.ts
+  - src/content/blog/test-series/02-second/_meta.ts
+  - src/utils/content.ts
+  - src/content/blog/test-series/02-second/en.mdx
+  - src/content.config.ts
+  - src/content/blog/second-post/_meta.ts
+  - src/content/blog/test-series-1/en.md
+  - src/components/blog/SeriesNav.astro
+  - src/data/tags.ts
+  - package.json
+  - src/pages/[...lang]/blog/index.astro
+  - src/content/blog/test-series-2/en.mdx
+  - src/layouts/PostLayout.astro
+tests:
+  - src/utils/content.test.ts
+  - src/data/tags.test.ts
+  - src/utils/reading-time.test.ts
+-->
 
+---
 ### Requirement: URL-safe tag handling
 
 Tag segment in the URL SHALL be URL-encoded (e.g. using a consistent encoding/decoding). The system SHALL define how tags containing spaces or special characters are represented in the URL (e.g. slugified or encoded) and SHALL resolve the tag page using the same convention.
@@ -35,3 +66,81 @@ Tag segment in the URL SHALL be URL-encoded (e.g. using a consistent encoding/de
 - **WHEN** a tag contains characters that are not safe for URLs
 - **THEN** the system SHALL use a consistent encoding or slug so that the tag page URL is valid and the correct tag is resolved at build or request time
 
+---
+### Requirement: Master Tag Registry
+The system SHALL maintain a central registry of all valid tag IDs and their corresponding localized display names. Any tag used in content metadata MUST exist in this registry.
+
+#### Scenario: Tag display name is resolved
+- **WHEN** a component requests the display name for tag ID "astro" in locale "zh-TW"
+- **THEN** the system SHALL return "Astro" as defined in the registry.
+
+
+<!-- @trace
+source: tag-registry-optimization
+updated: 2026-03-15
+code:
+  - src/pages/[...lang]/blog/[...slug].astro
+  - src/content/blog/i18n-demo/_meta.ts
+  - src/components/PostCard.astro
+  - src/pages/[...lang]/tag/[tagId].astro
+  - src/content/blog/test-series/01-first/en.md
+  - src/content/blog/hello-world/_meta.ts
+  - src/content/blog/test-series/01-first/_meta.ts
+  - src/components/blog/RelatedPosts.astro
+  - src/content/blog/only-english/_meta.ts
+  - src/content/blog/test-series/02-second/_meta.ts
+  - src/utils/content.ts
+  - src/content/blog/test-series/02-second/en.mdx
+  - src/content.config.ts
+  - src/content/blog/second-post/_meta.ts
+  - src/content/blog/test-series-1/en.md
+  - src/components/blog/SeriesNav.astro
+  - src/data/tags.ts
+  - package.json
+  - src/pages/[...lang]/blog/index.astro
+  - src/content/blog/test-series-2/en.mdx
+  - src/layouts/PostLayout.astro
+tests:
+  - src/utils/content.test.ts
+  - src/data/tags.test.ts
+  - src/utils/reading-time.test.ts
+-->
+
+---
+### Requirement: Build-time Tag Validation
+The content processing pipeline SHALL validate that all tag IDs provided in `_meta.ts` files are registered in the Master Tag Registry. The build SHALL fail if an unregistered tag ID is encountered.
+
+#### Scenario: Unregistered tag fails build
+- **WHEN** a `_meta.ts` file contains a tag ID not present in the Master Tag Registry
+- **THEN** the build system SHALL report a validation error and abort the build.
+
+<!-- @trace
+source: tag-registry-optimization
+updated: 2026-03-15
+code:
+  - src/pages/[...lang]/blog/[...slug].astro
+  - src/content/blog/i18n-demo/_meta.ts
+  - src/components/PostCard.astro
+  - src/pages/[...lang]/tag/[tagId].astro
+  - src/content/blog/test-series/01-first/en.md
+  - src/content/blog/hello-world/_meta.ts
+  - src/content/blog/test-series/01-first/_meta.ts
+  - src/components/blog/RelatedPosts.astro
+  - src/content/blog/only-english/_meta.ts
+  - src/content/blog/test-series/02-second/_meta.ts
+  - src/utils/content.ts
+  - src/content/blog/test-series/02-second/en.mdx
+  - src/content.config.ts
+  - src/content/blog/second-post/_meta.ts
+  - src/content/blog/test-series-1/en.md
+  - src/components/blog/SeriesNav.astro
+  - src/data/tags.ts
+  - package.json
+  - src/pages/[...lang]/blog/index.astro
+  - src/content/blog/test-series-2/en.mdx
+  - src/layouts/PostLayout.astro
+tests:
+  - src/utils/content.test.ts
+  - src/data/tags.test.ts
+  - src/utils/reading-time.test.ts
+-->
