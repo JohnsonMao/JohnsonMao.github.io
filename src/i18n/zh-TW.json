@@ -28,6 +28,11 @@
     },
     "comments": "留言"
   },
+  "tags": {
+    "title": "標籤",
+    "description": "探索所有文章標籤與主題。",
+    "count": "{count} 篇文章"
+  },
   "about": {
     "title": "關於我"
   },

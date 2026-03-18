@@ -28,6 +28,11 @@
     },
     "comments": "Comments"
   },
+  "tags": {
+    "title": "Tags",
+    "description": "Explore all post tags and topics.",
+    "count": "{count} posts"
+  },
   "about": {
     "title": "About Me"
   },

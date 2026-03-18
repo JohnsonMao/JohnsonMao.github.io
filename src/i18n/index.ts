@@ -61,12 +61,12 @@ function getNested(obj: Record<string, unknown>, key: string): string | undefine
   return typeof current === 'string' ? current : undefined
 }
 
-export function t(locale: Locale, key: string, vars?: Record<string, string>): string {
+export function t(locale: Locale, key: string, vars?: Record<string, string | number>): string {
   const data = messages[locale]
   const value = getNested(data as Record<string, unknown>, key)
   if (value == null)
     return key
   if (!vars)
     return value
-  return Object.entries(vars).reduce((s, [k, v]) => s.replace(new RegExp(`\\{${k}\\}`, 'g'), v), value)
+  return Object.entries(vars).reduce((s, [k, v]) => s.replace(new RegExp(`\\{${k}\\}`, 'g'), v.toString()), value)
 }

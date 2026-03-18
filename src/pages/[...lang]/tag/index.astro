@@ -1,0 +1,58 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import { getTagDisplay } from '@/data/tags'
+import { generateStaticLocalePaths, getLocale, t } from '@/i18n'
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import { getEntriesByTag } from '@/utils/content'
+
+export async function getStaticPaths() {
+  return generateStaticLocalePaths()
+}
+
+const { lang } = Astro.params
+const locale = getLocale(lang)
+
+const tagMap = await getEntriesByTag(locale)
+const allTags = [...tagMap.entries()].toSorted((a, b) => b[1].length - a[1].length)
+---
+
+<BaseLayout title={t(locale, 'tags.title')} description={t(locale, 'tags.description')}>
+  <div class="max-w-4xl mx-auto px-4 py-24 sm:py-32">
+    <header class="mb-24 text-center">
+      <h1 class="text-4xl sm:text-5xl font-bold tracking-tight mb-4 text-gray-900 dark:text-white">
+        {t(locale, 'tags.title')}
+      </h1>
+      <div class="h-1 w-8 bg-primary/40 mx-auto rounded-full mb-6"></div>
+      <p class="text-muted-foreground text-lg max-w-md mx-auto italic">
+        {t(locale, 'tags.description')}
+      </p>
+    </header>
+
+    <div class="flex flex-wrap justify-center items-center gap-x-10 gap-y-12 sm:gap-x-16 sm:gap-y-16">
+      {
+        allTags.map(([tagId, posts]) => {
+          const display = getTagDisplay(tagId, locale)
+          const href = getRelativeLocaleUrl(locale, `tag/${tagId}`)
+
+          return (
+            <a
+              href={href}
+              class="group relative flex items-center transition-all duration-300 hover:scale-105"
+            >
+              {display}
+              ({posts.length})
+            </a>
+          )
+        })
+      }
+    </div>
+
+    {
+      allTags.length === 0 && (
+        <div class="text-center py-24 italic text-muted-foreground opacity-50">
+          No tags found.
+        </div>
+      )
+    }
+  </div>
+</BaseLayout>

@@ -10,6 +10,7 @@ const locale = getLocale(Astro.currentLocale)
 // Common links
 const homeUrl = getRelativeLocaleUrl(locale, '')
 const blogUrl = getRelativeLocaleUrl(locale, 'blog')
+const tagsUrl = getRelativeLocaleUrl(locale, 'tag')
 const aboutUrl = getRelativeLocaleUrl(locale, 'about')
 
 // Dynamic path logic for language switcher
@@ -43,6 +44,9 @@ const nextLocaleLabel = getLocaleLabel(nextLocale)
     </a>
     <a href={blogUrl} class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100">
       {t(locale, 'nav.blog')}
+    </a>
+    <a href={tagsUrl} class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100">
+      {t(locale, 'tags.title')}
     </a>
     <a href={aboutUrl} class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100">
       {t(locale, 'nav.about')}

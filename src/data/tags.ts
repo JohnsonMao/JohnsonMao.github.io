@@ -2,28 +2,64 @@ import type { Locale } from '@/i18n'
 
 export const tags = {
   astro: {
-    'zh-TW': 'Astro',
-    'en': 'Astro',
+    name: {
+      'zh-TW': 'Astro',
+      'en': 'Astro',
+    },
+    description: {
+      'zh-TW': '關於 Astro 框架的開發心得、技巧與實戰經驗。',
+      'en': 'Development tips, tricks, and real-world experiences with the Astro framework.',
+    },
   },
   i18n: {
-    'zh-TW': '多語系',
-    'en': 'i18n',
+    name: {
+      'zh-TW': '多語系',
+      'en': 'i18n',
+    },
+    description: {
+      'zh-TW': '探討如何實作網站多語系支援 (i18n)，包括內容翻譯、路由與 SEO 優化。',
+      'en': 'Exploring how to implement internationalization (i18n) for websites, including content translation, routing, and SEO optimization.',
+    },
   },
   test: {
-    'zh-TW': '測試',
-    'en': 'Test',
+    name: {
+      'zh-TW': '測試',
+      'en': 'Test',
+    },
+    description: {
+      'zh-TW': '軟體測試相關技術，包括單元測試、整合測試與自動化測試工具的使用。',
+      'en': 'Software testing techniques, including unit testing, integration testing, and the use of automated testing tools.',
+    },
   },
   demo: {
-    'zh-TW': '示範',
-    'en': 'Demo',
+    name: {
+      'zh-TW': '示範',
+      'en': 'Demo',
+    },
+    description: {
+      'zh-TW': '各種功能或技術的示範專案與程式碼範例。',
+      'en': 'Demonstration projects and code examples for various features or technologies.',
+    },
   },
   intro: {
-    'zh-TW': '介紹',
-    'en': 'Introduction',
+    name: {
+      'zh-TW': '介紹',
+      'en': 'Introduction',
+    },
+    description: {
+      'zh-TW': '針對特定技術、工具或專案的入門介紹。',
+      'en': 'Introductory guides to specific technologies, tools, or projects.',
+    },
   },
   fallback: {
-    'zh-TW': '回退機制',
-    'en': 'Fallback',
+    name: {
+      'zh-TW': '回退機制',
+      'en': 'Fallback',
+    },
+    description: {
+      'zh-TW': '探討在內容缺失或錯誤發生時的自動回退處理機制。',
+      'en': 'Exploring automatic fallback mechanisms when content is missing or errors occur.',
+    },
   },
 } as const
 
@@ -36,5 +72,20 @@ export function getTagDisplay(tagId: TagId, locale: Locale): string {
   const tag = tags[tagId]
   if (!tag)
     return tagId
-  return tag[locale] || Object.values(tag)[0] || tagId
+
+  const nameObj = (tag as any).name
+  if (!nameObj)
+    return tagId
+
+  return nameObj[locale] || nameObj['zh-TW'] || nameObj.en || Object.values(nameObj)[0] || tagId
+}
+
+/**
+ * 取得翻譯後的標籤描述
+ */
+export function getTagDescription(tagId: TagId, locale: Locale): string | undefined {
+  const tag = tags[tagId]
+  if (!tag || !tag.description)
+    return undefined
+  return tag.description[locale] || Object.values(tag.description)[0]
 }
