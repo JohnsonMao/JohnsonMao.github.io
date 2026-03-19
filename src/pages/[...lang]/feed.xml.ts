@@ -1,6 +1,6 @@
 import rss from '@astrojs/rss'
-import { getCollection } from 'astro:content'
 import { defaultLocale, getLocale, locales, t } from '@/i18n'
+import { getSortedCollectionList, parseEntryId } from '@/utils/content'
 
 const FEED_SIZE = 20
 
@@ -19,11 +19,11 @@ interface Context {
 export async function GET({ params, site }: Context) {
   const { lang } = params
   const locale = getLocale(lang)
-  const all = await getCollection('blog', ({ data }) => data.draft !== true && data.lang === locale)
-  const sorted = all.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime()).slice(0, FEED_SIZE)
 
-  const slug = (entry: (typeof sorted)[number]) =>
-    entry.id.includes('/') ? entry.id.split('/').slice(1).join('/') : entry.id
+  const allEntries = await getSortedCollectionList('blog', locale)
+  const sorted = allEntries
+    .filter(entry => entry.data.draft !== true)
+    .slice(0, FEED_SIZE)
 
   const siteUrl = site ?? new URL('https://johnsonmao.github.io')
   const prefix = locale === defaultLocale ? '' : `/${locale}`
@@ -32,11 +32,14 @@ export async function GET({ params, site }: Context) {
     title: 'Johnson Mao',
     description: t(locale, 'feed.description'),
     site: siteUrl,
-    items: sorted.map(entry => ({
-      title: entry.data.title,
-      description: entry.data.description,
-      pubDate: entry.data.pubDate,
-      link: `${prefix}/blog/${slug(entry)}/`,
-    })),
+    items: sorted.map((entry) => {
+      const { slug } = parseEntryId(entry.id)
+      return {
+        title: entry.data.title,
+        description: entry.data.description,
+        pubDate: entry.data.pubDate,
+        link: `${prefix}/blog/${slug}/`,
+      }
+    }),
   })
 }
