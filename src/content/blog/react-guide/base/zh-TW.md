@@ -30,7 +30,7 @@ pubDate: "2021-07-26"
 
 1. 首先建立一個 HTML
 
-    ```HTML
+    ```html
     <!-- 先準備一個容器 -->
     <div id="container"></div>
 
@@ -65,7 +65,7 @@ pubDate: "2021-07-26"
 
 1. 這時候 HTML 添加樣式
 
-    ```HTML
+    ```html
     <style>
     .bg-hexschool {
         background: #69F0AE;

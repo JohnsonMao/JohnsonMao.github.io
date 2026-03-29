@@ -24,7 +24,7 @@ image: "https://i.imgur.com/Xd2g377.png"
 - `.number`：限制只有數值型別的資料才能寫入
     `v-model` 預設是字串型別
 
-  ```HTML
+  ```html
   <div id="app">
       <input type="text" v-model.number="number" >
       {{ number }} <!-- 顯示數字 -->
@@ -37,7 +37,7 @@ image: "https://i.imgur.com/Xd2g377.png"
 
 - `trim()`：去除字串前後多於的空白
 
-    ```HTML
+    ```html
     const text = '   六角學院 Vue 3 夏令營   '
     console.log( text.trim() )
     <!--  顯示'六角學院 Vue 3 夏令營'  -->
@@ -60,7 +60,7 @@ image: "https://i.imgur.com/Xd2g377.png"
     2. 當有加上`key`時，`input`位置會與原本的資料內容位置一起變動
 ![有無添加 key 所影響的效果](https://i.imgur.com/Gbdl20j.gif)
 
-        ```HTML
+        ```html
         <div id="app">
             <h4>缺少 key</h4>
                 <ul>
@@ -84,7 +84,7 @@ image: "https://i.imgur.com/Xd2g377.png"
         </div>
         ```
 
-        ```JS
+        ```js
         Vue.createApp({
             data(){
                 return{
@@ -109,7 +109,7 @@ image: "https://i.imgur.com/Xd2g377.png"
 - 範例一 按鈕樣式 - 按下去自動 active
     ![按下去自動 active](https://i.imgur.com/eo8pNrp.gif)
 
-    ```HTML
+    ```html
     <button
         type="button"
         class="btn btn-outline-primary"
@@ -120,7 +120,7 @@ image: "https://i.imgur.com/Xd2g377.png"
     </button>
     ```
 
-    ```JS
+    ```js
     const app = {
         data() {
             return {
@@ -136,7 +136,7 @@ image: "https://i.imgur.com/Xd2g377.png"
 - 範例二 頁籤切換 - 達到頁籤效果
     ![頁籤切換效果](https://i.imgur.com/O9kfLAx.gif)
 
-    ```HTML
+    ```html
     <div id="app">
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
@@ -181,7 +181,7 @@ image: "https://i.imgur.com/Xd2g377.png"
     </div>
     ```
 
-    ```JS
+    ```js
     const app = {
         data() {
             return {

@@ -226,7 +226,7 @@ A 和 B 答案分別是甚麼 [不知道的話請點我](#這段程式碼整個�
 
 1. 首先取得 state 裡面的`vaccinated`值
 
-    ```jsx=31
+    ```jsx
     changeVaccinated(){
         const vaccinated = this.state.vaccinated
     }
@@ -263,7 +263,7 @@ A 和 B 答案分別是甚麼 [不知道的話請點我](#這段程式碼整個�
 2. 使用 setState() 方法，
     **注意**狀態( state )必須透過 setState 進行修改
 
-    ```jsx=31
+    ```jsx
     changeVaccinated(){
         const vaccinated = this.state.vaccinated
         this.setState({ vaccinated: !vaccinated })

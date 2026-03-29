@@ -201,7 +201,7 @@ pubDate: "2021-07-31"
 
 3. 為組件裡面，`render`上面，新增資料型態檢查
 
-    ```jsx=13
+    ```jsx
     // 需注意這裡 propTypes 的 p 是小寫，React 設定的
     static propTypes = {
         // 這裡 PropTypes 的 P 是大寫，套件設定的

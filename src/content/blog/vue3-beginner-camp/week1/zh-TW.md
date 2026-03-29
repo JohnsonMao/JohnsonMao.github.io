@@ -52,14 +52,14 @@ HTML 要讀取 data 資料有以下幾種方法
 
 1. 直接用雙大括號 `{{}}` 包住要讀取的資料
 
-    ```HTML
+    ```html
     <!-- 這裡是 HTML -->
     <div id="app">
         {{ title }}
     </div>
     ```
 
-    ```JS
+    ```js
     // Vue 起手式
     Vue.createApp({
       // data 資料
@@ -79,7 +79,7 @@ HTML 要讀取 data 資料有以下幾種方法
 
 2. 使用`v-text`or`v-model`直接傳入資料 ( JS 同上)
 
-    ```HTML
+    ```html
     <!-- 這裡是 HTML -->
     <div id="app">
         <h1 v-text="title"></h1>
@@ -93,7 +93,7 @@ HTML 要讀取 data 資料有以下幾種方法
 
 - 和 HTML **雙向**綁定 data 資料（會同步兩邊資料）
 
-  ```HTML
+  ```html
   <input type="number" v-model="num">
   ```
 
@@ -102,7 +102,7 @@ HTML 要讀取 data 資料有以下幾種方法
 - 在 HTML 標籤上進行屬性綁定
   - 省略語法：直接在屬性前加上 `:` 省略 `v-bind`
 
-  ```HTML
+  ```html
   <img :src="person.image" :alt="person.name" width="100">
   ```
 
@@ -116,7 +116,7 @@ HTML 要讀取 data 資料有以下幾種方法
 
   :warning: `v-if` `v-else` 要搭配一起使用才會有效果
 
-  ```HTML
+  ```html
   <i v-if="person.gender === 'male'"></i>
   <i v-else-if="person.gender === 'female'"></i>
   <i v-else></i>
@@ -130,7 +130,7 @@ HTML 要讀取 data 資料有以下幾種方法
   - item 代表 people 中，每一個獨立的物件， item 可自定義名稱
   - v-for 必須帶 key
 
-  ```HTML
+  ```html
   <ul>
     <li v-for="item in people">
       {{ item.name }}
@@ -159,7 +159,7 @@ HTML 要讀取 data 資料有以下幾種方法
 
     })
     ```
-    ```HTML
+    ```html
     <!--  這是 Vue 在 HTML 上綁定事件的做法  -->
     <button type="button" @click="item.cash++">
       增加
@@ -168,7 +168,7 @@ HTML 要讀取 data 資料有以下幾種方法
 
 ### methods 方法
 
-```JS
+```js
 // 這是 Vue 透過 methods 給函式
 methods: {
     clickAlert() { // 建議可以縮寫就縮寫（提升程式碼閱讀性）
@@ -181,7 +181,7 @@ methods: {
 
 - 使用 this 方式取 data 的值
 
-    ```JS
+    ```js
     mounted() {
       // this 本身是個很複雜的知識，但在 Vue 中把它簡單化了。
       console.log(this.title);
@@ -208,7 +208,7 @@ methods: {
 
 擇一使用，不會同時使用兩種載入方法，建議使用 ESModule 的載入方法。
 
-  ```HTML
+  ```html
   <script type="module">
   imoport { createApp } from 'url';
 
