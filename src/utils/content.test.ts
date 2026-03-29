@@ -25,17 +25,17 @@ describe('content Utils', () => {
       expect(locale).toBe('zh-TW')
     })
 
-    it('should parse "series/slug/locale" ID correctly and strip numerical prefix', () => {
+    it('should parse "series/slug/locale" ID correctly and preserve numerical prefix with series path', () => {
       const { seriesId, slug, locale } = parseEntryId('my-series/01-getting-started/en')
       expect(seriesId).toBe('my-series')
-      expect(slug).toBe('getting-started')
+      expect(slug).toBe('my-series/01-getting-started')
       expect(locale).toBe('en')
     })
 
-    it('should parse "series/slug/locale" ID without numerical prefix', () => {
+    it('should parse "series/slug/locale" ID without numerical prefix with series path', () => {
       const { seriesId, slug, locale } = parseEntryId('my-series/intro/en')
       expect(seriesId).toBe('my-series')
-      expect(slug).toBe('intro')
+      expect(slug).toBe('my-series/intro')
       expect(locale).toBe('en')
     })
 

@@ -7,9 +7,6 @@ import { getLocalePriority, isLocale, normalizeLocale } from '@/i18n'
 
 const selectedCollections = ['blog'] as const
 
-/** Regex to strip numerical prefixes from series slugs (e.g. "01-intro" -> "intro") */
-const seriesSlugPrefixRegex = /^\d+-/
-
 export type SelectedCollection = typeof selectedCollections[number]
 
 /**
@@ -73,7 +70,7 @@ export function parseEntryId(id: string) {
     case 2:
       return { locale, seriesId: undefined, slug: parts[0] }
     case 3:
-      return { locale, seriesId: parts[0], slug: parts[1].replace(seriesSlugPrefixRegex, '') }
+      return { locale, seriesId: parts[0], slug: `${parts[0]}/${parts[1]}` }
     default:
       throw new Error(`Invalid entry ID format: ${id}. Expected "slug/locale" or "series/slug/locale".`)
   }
