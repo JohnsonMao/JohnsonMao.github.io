@@ -1,0 +1,255 @@
+---
+import type { Locale } from '@/i18n'
+import type { LocalizedCollection } from '@/utils/content'
+import { Icon } from 'astro-icon/components'
+import PostCard from '@/components/PostCard.astro'
+
+interface Props {
+  initialArticles: LocalizedCollection<'blog'>[]
+  locale: string
+  isFallback: (lang: string, locale: string) => boolean
+  getLocaleLabel: (locale: Locale) => string
+  getReadingTime: (body: string, lang: Locale) => { label: string }
+}
+
+const { initialArticles, locale, isFallback, getLocaleLabel, getReadingTime } = Astro.props
+
+const articleProps = initialArticles.map((entry) => {
+  const articleLang = entry.locale
+  const langBadge = isFallback(articleLang, locale) ? getLocaleLabel(articleLang) : undefined
+  const readingTime = getReadingTime(entry.body ?? '', articleLang)
+
+  return {
+    title: entry.data.title,
+    description: entry.data.description,
+    pubDate: entry.data.pubDate,
+    slug: entry.id,
+    postLang: articleLang,
+    langBadge,
+    readingTimeLabel: readingTime.label,
+    tags: entry.tags,
+  }
+})
+---
+
+<infinite-scroll data-locale={locale}>
+  <div class="space-y-4">
+    <ul id="articles-list" class="grid gap-8 list-none p-0 m-0">
+      {
+        articleProps.map(props => (
+          <li>
+            <PostCard {...props} />
+          </li>
+        ))
+      }
+    </ul>
+
+    <div id="infinite-scroll-sentinel" class="h-10" aria-hidden="true"></div>
+    <div id="loading-indicator" class="hidden py-8 text-center">
+      <div class="inline-block animate-spin">
+        <Icon name="lucide:loader" class="w-6 h-6 text-gray-600 dark:text-gray-400" />
+      </div>
+    </div>
+  </div>
+
+  <template id="article-template">
+    <li>
+      <article class="rounded-lg border border-gray-200 dark:border-gray-800 p-4 hover:border-gray-300 dark:hover:border-gray-700 transition-colors">
+        <a href="" class="block article-link">
+          <div class="flex items-center gap-2 flex-wrap">
+            <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100 article-title"></h2>
+          </div>
+          <p class="mt-1 text-sm text-gray-600 dark:text-gray-400 line-clamp-2 article-description"></p>
+          <div class="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-gray-500 dark:text-gray-500">
+            <time class="article-date"></time>
+            <span class="article-reading-time" aria-label="Reading time"></span>
+          </div>
+        </a>
+        <div class="article-tags"></div>
+      </article>
+    </li>
+  </template>
+
+  <template id="tags-template">
+    <div class="mt-2 flex flex-wrap gap-1">
+    </div>
+  </template>
+
+  <template id="tag-template">
+    <a href="" class="rounded px-1.5 py-0.5 text-xs bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 tag-link"></a>
+  </template>
+</infinite-scroll>
+
+<script>
+import type { PaginatedArticlesPage } from '@/utils/content'
+
+class InfiniteScroll extends HTMLElement {
+  currentPage = 1
+  isLoading = false
+  hasMore = true
+  observer: IntersectionObserver | null = null
+
+  connectedCallback() {
+    this.init()
+  }
+
+  disconnectedCallback() {
+    if (this.observer) {
+      this.observer.disconnect()
+    }
+  }
+
+  init() {
+    const sentinel = this.querySelector('#infinite-scroll-sentinel')
+    const loadingIndicator = this.querySelector('#loading-indicator')
+    const articlesList = this.querySelector('#articles-list')
+
+    if (!sentinel || !loadingIndicator || !articlesList) {
+      console.error('Required elements not found for infinite scroll')
+      return
+    }
+
+    this.setupObserver(sentinel)
+  }
+
+  setupObserver(sentinel: Element) {
+    // Clean up old observer if exists
+    if (this.observer) {
+      this.observer.disconnect()
+    }
+
+    // Create new Intersection Observer
+    this.observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !this.isLoading && this.hasMore) {
+            this.loadNextPage()
+          }
+        })
+      },
+      { threshold: 0.1 },
+    )
+
+    this.observer.observe(sentinel)
+  }
+
+  async loadNextPage() {
+    if (this.isLoading || !this.hasMore)
+      return
+
+    const loadingIndicator = this.querySelector('#loading-indicator')
+    const articlesList = this.querySelector('#articles-list')
+    const locale = this.getAttribute('data-locale')
+
+    if (!loadingIndicator || !articlesList || !locale) {
+      console.error('Required elements or attributes not found for loading next page')
+      return
+    }
+
+    this.isLoading = true
+    loadingIndicator.classList.remove('hidden')
+    this.currentPage += 1
+
+    try {
+      const response = await fetch(`/data/articles/${locale}/page-${this.currentPage}.json`)
+
+      if (!response.ok) {
+        if (response.status === 404) {
+          this.hasMore = false
+          const sentinel = this.querySelector('#infinite-scroll-sentinel')
+          if (this.observer && sentinel)
+            this.observer.unobserve(sentinel)
+          loadingIndicator.classList.add('hidden')
+          return
+        }
+        throw new Error(`HTTP ${response.status}`)
+      }
+
+      const data = await response.json() as PaginatedArticlesPage
+
+      if (!data.articles || !Array.isArray(data.articles)) {
+        throw new Error('Invalid response format')
+      }
+
+      // Append articles to DOM using template
+      data.articles.forEach((article) => {
+        const template = this.querySelector('#article-template') as HTMLTemplateElement
+        if (!template) {
+          console.error('Article template not found')
+          return
+        }
+
+        const clone = template.content.cloneNode(true) as DocumentFragment
+        const articleLink = clone.querySelector('.article-link') as HTMLAnchorElement
+        const articleTitle = clone.querySelector('.article-title') as HTMLElement
+        const articleDescription = clone.querySelector('.article-description') as HTMLElement
+        const articleDate = clone.querySelector('.article-date') as HTMLTimeElement
+        const articleReadingTime = clone.querySelector('.article-reading-time') as HTMLElement
+        const articleTags = clone.querySelector('.article-tags') as HTMLElement
+
+        const pubDate = new Date(article.pubDate)
+        const formattedDate = new Intl.DateTimeFormat(locale, {
+          dateStyle: 'long',
+        }).format(pubDate)
+
+        // Set article content
+        articleLink.href = `/blog/${article.id}`
+        articleTitle.textContent = article.title
+        articleDescription.textContent = article.description
+        articleDate.textContent = formattedDate
+        articleDate.dateTime = pubDate.toISOString()
+
+        if (article.readingTime) {
+          articleReadingTime.textContent = article.readingTime
+        }
+        else {
+          articleReadingTime.remove()
+        }
+
+        // Render tags using template
+        if (article.tags && article.tags.length > 0) {
+          const tagsTemplate = this.querySelector('#tags-template') as HTMLTemplateElement
+          const tagTemplate = this.querySelector('#tag-template') as HTMLTemplateElement
+
+          if (tagsTemplate && tagTemplate) {
+            const tagsClone = tagsTemplate.content.cloneNode(true) as DocumentFragment
+            const tagsContainer = tagsClone.querySelector('div')
+
+            article.tags.forEach((tag: string) => {
+              const tagClone = tagTemplate.content.cloneNode(true) as DocumentFragment
+              const tagLink = tagClone.querySelector('.tag-link') as HTMLAnchorElement
+              tagLink.href = `/tag/${tag}`
+              tagLink.textContent = tag
+              tagsContainer?.appendChild(tagClone)
+            })
+
+            articleTags.appendChild(tagsClone)
+          }
+        }
+
+        articlesList.appendChild(clone)
+      })
+
+      this.hasMore = data.hasMore
+
+      if (!this.hasMore) {
+        const sentinel = this.querySelector('#infinite-scroll-sentinel')
+        if (this.observer && sentinel)
+          this.observer.unobserve(sentinel)
+      }
+    }
+    catch (error) {
+      console.error('Failed to load articles:', error)
+      this.currentPage -= 1 // Revert page number on error
+    }
+    finally {
+      this.isLoading = false
+      loadingIndicator.classList.add('hidden')
+    }
+  }
+}
+
+if (!customElements.get('infinite-scroll')) {
+  customElements.define('infinite-scroll', InfiniteScroll)
+}
+</script>

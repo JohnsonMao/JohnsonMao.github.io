@@ -206,3 +206,67 @@ export async function getRelatedEntries<K extends SelectedCollection>(
     .slice(0, maxCount)
     .map(item => item.entry)
 }
+
+/**
+ * Paginates a sorted list of articles, splitting into pages of specified size.
+ */
+export function getPaginatedArticles<K extends SelectedCollection>(
+  articles: LocalizedCollection<K>[],
+  pageSize: number = 10,
+): LocalizedCollection<K>[][] {
+  const pages: LocalizedCollection<K>[][] = []
+  for (let i = 0; i < articles.length; i += pageSize) {
+    pages.push(articles.slice(i, i + pageSize))
+  }
+  return pages
+}
+
+/**
+ * Serializes article data to JSON-friendly format for pagination API.
+ */
+export interface SerializedArticle {
+  id: string
+  title: string
+  description: string
+  pubDate: string
+  tags?: string[]
+  readingTime?: string
+}
+
+export function serializeArticle<K extends SelectedCollection>(
+  entry: LocalizedCollection<K>,
+  readingTime?: string,
+): SerializedArticle {
+  return {
+    id: entry.id,
+    title: entry.data.title,
+    description: entry.data.description,
+    pubDate: entry.data.pubDate.toISOString(),
+    tags: entry.tags,
+    readingTime,
+  }
+}
+
+/**
+ * Serializes a page of articles for JSON export.
+ */
+export interface PaginatedArticlesPage {
+  page: number
+  locale: Locale
+  articles: SerializedArticle[]
+  hasMore: boolean
+}
+
+export function createPaginatedPage(
+  page: number,
+  locale: Locale,
+  articles: SerializedArticle[],
+  hasMore: boolean,
+): PaginatedArticlesPage {
+  return {
+    page,
+    locale,
+    articles,
+    hasMore,
+  }
+}
