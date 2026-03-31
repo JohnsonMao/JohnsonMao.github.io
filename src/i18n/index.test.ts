@@ -48,18 +48,8 @@ describe('i18n t()', () => {
       messageModules: {
         './messages/en/nav.json': { default: { blog: 'Blog' } },
         './messages/zh-TW/nav.json': { default: { blog: '文章' } },
-      },
-      tagTranslationModules: {
-        './tags/en.json': {
-          default: {
-            react: { name: 'React', description: 'React en' },
-          },
-        },
-        './tags/zh-TW.json': {
-          default: {
-            react: { name: 'React', description: 'React zh' },
-          },
-        },
+        './messages/en/tags.json': { default: { registry: { react: { name: 'React', description: 'React en' } } } },
+        './messages/zh-TW/tags.json': { default: { registry: { react: { name: 'React', description: 'React zh' } } } },
       },
       isDev: false,
     })
@@ -73,7 +63,6 @@ describe('i18n t()', () => {
   it('throws when injected message source is empty', () => {
     expect(() => createI18nData({
       messageModules: {},
-      tagTranslationModules: {},
       isDev: false,
     })).toThrow('[i18n] No locale files found under src/i18n/messages/*/*.json')
   })

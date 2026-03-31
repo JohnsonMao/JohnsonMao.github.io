@@ -5,6 +5,7 @@ pubDate: "2024-09-19"
 image: "https://ithelp.ithome.com.tw/upload/images/20240919/20140224BMWkTkEKiF.png"
 tags:
   - typescript
+  - it-ironman
 ---
 
 ![cover](https://ithelp.ithome.com.tw/upload/images/20240919/20140224BMWkTkEKiF.png)

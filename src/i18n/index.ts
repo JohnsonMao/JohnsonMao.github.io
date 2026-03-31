@@ -1,8 +1,8 @@
 import type { TagId } from '@/content.config'
-import type { I18nMessageModules, TagTranslationModules, TagTranslations } from '@/glob.loader'
+import type { I18nMessageModules } from '@/glob.loader'
 
 import { TAG_IDS } from '@/content.config'
-import { getMessageModules, getTagTranslationModules } from '@/glob.loader'
+import { getMessageModules } from '@/glob.loader'
 
 // Re-export for backward compatibility
 export type { TagId }
@@ -22,7 +22,6 @@ interface Messages {
 
 const PREFERRED_DEFAULT_LOCALE = 'zh-TW'
 const MESSAGE_MODULE_RE = /\/([^/]+)\/([^/]+)\.json$/
-const TAG_TRANSLATION_RE = /\/([^/]+)\.json$/
 
 function toRecord(value: unknown): Record<string, unknown> {
   if (value && typeof value === 'object' && !Array.isArray(value))
@@ -54,7 +53,6 @@ export type Locale = string
 
 interface CreateI18nDataOptions {
   messageModules?: I18nMessageModules
-  tagTranslationModules?: TagTranslationModules
   preferredDefaultLocale?: string
   tagIds?: readonly TagId[]
   isDev?: boolean
@@ -70,7 +68,6 @@ interface I18nData {
 
 export function createI18nData(options: CreateI18nDataOptions = {}): I18nData {
   const messageModules = options.messageModules ?? getMessageModules()
-  const tagTranslationModules = options.tagTranslationModules ?? getTagTranslationModules()
   const preferredDefaultLocale = options.preferredDefaultLocale ?? PREFERRED_DEFAULT_LOCALE
   const resolvedTagIds = (options.tagIds ?? TAG_IDS) as TagId[]
 
@@ -103,29 +100,28 @@ export function createI18nData(options: CreateI18nDataOptions = {}): I18nData {
     messagesByLocale.set(locale, mergeRecords(current, { [moduleName]: moduleData }))
   })
 
-  const tagTranslationsByLocale = Object.entries(tagTranslationModules)
-    .map(([path, mod]) => {
-      const locale = path.match(TAG_TRANSLATION_RE)?.[1]
-      if (!locale)
-        return null
-      return [locale, mod.default] as const
-    })
-    .filter((entry): entry is readonly [string, TagTranslations] => entry !== null)
-
-  const tagTranslationMap: Record<string, TagTranslations> = Object.fromEntries(tagTranslationsByLocale)
-
   function buildTagRegistry(locale: Locale): Record<string, { name: string, description: string }> {
-    const localeMap = tagTranslationMap[locale] ?? {}
-    const fallbackMap = tagTranslationMap[defaultLocale] ?? {}
+    const getRawRegistry = (loc: Locale): Record<string, unknown> => {
+      const msgs = messagesByLocale.get(loc) ?? {}
+      return toRecord(toRecord(msgs.tags).registry)
+    }
+
+    const localeRegistry = getRawRegistry(locale)
+    const fallbackRegistry = getRawRegistry(defaultLocale)
     const registry: Record<string, { name: string, description: string }> = {}
 
     resolvedTagIds.forEach((tagId) => {
-      const translation = localeMap[tagId] ?? fallbackMap[tagId]
-      if (!translation) {
-        registry[tagId] = { name: tagId, description: tagId }
+      const entry = localeRegistry[tagId] ?? fallbackRegistry[tagId]
+      if (
+        entry
+        && typeof entry === 'object'
+        && 'name' in entry
+        && typeof (entry as Record<string, unknown>).name === 'string'
+      ) {
+        registry[tagId] = entry as { name: string, description: string }
         return
       }
-      registry[tagId] = translation
+      registry[tagId] = { name: tagId, description: tagId }
     })
 
     return registry
@@ -155,7 +151,8 @@ export function createI18nData(options: CreateI18nDataOptions = {}): I18nData {
     const warn = options.warn ?? console.warn
 
     locales.forEach((locale) => {
-      const localeTagIds = Object.keys(tagTranslationMap[locale] ?? {})
+      const msgs = messagesByLocale.get(locale) ?? {}
+      const localeTagIds = Object.keys(toRecord(toRecord(msgs.tags).registry))
       const missingTags = resolvedTagIds.filter(tag => !localeTagIds.includes(tag))
       const extraTags = localeTagIds.filter(tag => !defaultTagSet.has(tag))
 

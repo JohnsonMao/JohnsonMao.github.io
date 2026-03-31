@@ -4,37 +4,60 @@ import { getRelativeLocaleUrl } from 'astro:i18n'
 import { defaultLocale, getLocale, t } from '@/i18n'
 
 interface Props {
-  title: string
-  description: string
-  pubDate: Date
-  slug: string
+  title?: string
+  description?: string
+  pubDate?: Date
+  slug?: string
   postLang?: string
   langBadge?: string
   readingTimeLabel?: string
   tags?: TagId[]
+  /**
+   * When true, renders as a client-side template for InfiniteScrollUI.
+   * Outputs the same HTML structure but with `data-infinite-*` binding
+   * attributes instead of actual content — place inside a `<template>` element.
+   * Note: `langBadge` is not included in template mode (not available in fetched data).
+   */
+  asTemplate?: boolean
 }
 
-const { title, description, pubDate, slug, postLang = defaultLocale, langBadge, readingTimeLabel, tags } = Astro.props
+const {
+  title = '',
+  description = '',
+  pubDate,
+  slug = '',
+  postLang = defaultLocale,
+  langBadge,
+  readingTimeLabel,
+  tags,
+  asTemplate = false,
+} = Astro.props
 
 const locale = getLocale(Astro.currentLocale)
+const formattedDate = !asTemplate && pubDate
+  ? new Intl.DateTimeFormat(postLang, { dateStyle: 'long' }).format(pubDate)
+  : ''
 
-// Use built-in Intl to format dates based on the entry's locale
-const formattedDate = new Intl.DateTimeFormat(postLang, { dateStyle: 'long' }).format(pubDate)
-
-// Use Astro's built-in i18n helper to generate URLs.
-// It automatically handles the default locale prefix based on your config.
-const href = getRelativeLocaleUrl(locale, `blog/${slug}`)
+const href = asTemplate ? '' : getRelativeLocaleUrl(locale, `blog/${slug}`)
 const tagBase = getRelativeLocaleUrl(locale, 'tag/')
+const blogBase = getRelativeLocaleUrl(locale, 'blog/')
 ---
 
 <article
   class="rounded-lg border border-gray-200 dark:border-gray-800 p-4 hover:border-gray-300 dark:hover:border-gray-700 transition-colors"
 >
-  <a href={href} class="block">
+  <a
+    href={href}
+    class="block"
+    data-infinite-href={asTemplate ? `${blogBase}{id}` : undefined}
+  >
     <div class="flex items-center gap-2 flex-wrap">
-      <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100">{title}</h2>
+      <h2
+        class="text-lg font-semibold text-gray-900 dark:text-gray-100"
+        data-infinite-text={asTemplate ? 'title' : undefined}
+      >{asTemplate ? '' : title}</h2>
       {
-        langBadge && (
+        !asTemplate && langBadge && (
           <span
             class="rounded px-1.5 py-0.5 text-xs font-medium bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300"
             aria-label={`Language: ${langBadge}`}
@@ -44,24 +67,40 @@ const tagBase = getRelativeLocaleUrl(locale, 'tag/')
         )
       }
     </div>
-    <p class="mt-1 text-sm text-gray-600 dark:text-gray-400 line-clamp-2">{description}</p>
+    <p
+      class="mt-1 text-sm text-gray-600 dark:text-gray-400 line-clamp-2"
+      data-infinite-text={asTemplate ? 'description' : undefined}
+    >{asTemplate ? '' : description}</p>
     <div class="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-gray-500 dark:text-gray-500">
-      <time datetime={pubDate.toISOString()}>{formattedDate}</time>
-      {readingTimeLabel && <span aria-label="Reading time">{readingTimeLabel}</span>}
+      <time
+        datetime={asTemplate ? undefined : pubDate?.toISOString()}
+        data-infinite-date={asTemplate ? 'pubDate' : undefined}
+      >{asTemplate ? '' : formattedDate}</time>
+      {asTemplate
+        ? <span aria-label="Reading time" data-infinite-text="readingTime" data-infinite-if="readingTime"></span>
+        : readingTimeLabel && <span aria-label="Reading time">{readingTimeLabel}</span>}
     </div>
   </a>
-  {
-    tags && tags.length > 0 && (
-      <div class="mt-2 flex flex-wrap gap-1">
-        {tags.map(tag => (
-          <a
-            href={`${tagBase}${tag}`}
-            class="rounded px-1.5 py-0.5 text-xs bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700"
-          >
-            {t(locale, `tags.registry.${tag}.name`)}
-          </a>
-        ))}
-      </div>
-    )
-  }
+  {asTemplate
+    ? (
+        <div
+          class="mt-2 flex flex-wrap gap-1"
+          data-infinite-list="tags"
+          data-list-template="tag-template"
+          data-list-href={`${tagBase}{value}`}
+        >
+        </div>
+      )
+    : tags && tags.length > 0 && (
+        <div class="mt-2 flex flex-wrap gap-1">
+          {tags.map(tag => (
+            <a
+              href={`${tagBase}${tag}`}
+              class="rounded px-1.5 py-0.5 text-xs bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700"
+            >
+              {t(locale, `tags.registry.${tag}.name`)}
+            </a>
+          ))}
+        </div>
+      )}
 </article>

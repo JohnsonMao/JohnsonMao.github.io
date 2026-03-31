@@ -1,47 +1,82 @@
 ---
+/**
+ * InfiniteScrollUI — generic infinite-scroll container.
+ *
+ * Usage:
+ * ```astro
+ * <InfiniteScrollUI locale={locale} fetchUrl="/data/{type}/{locale}/page-{page}.json" itemsKey="items">
+ *   <!-- Initial items rendered server-side -->
+ *   {items.map(item => <li>...</li>)}
+ *
+ *   <!-- Client-side item template (slot="templates") -->
+ *   <!-- Use `data-infinite-*` attributes for data binding: -->
+ *   <!--   data-infinite-text="field"         → textContent = item[field]           -->
+ *   <!--   data-infinite-href="/path/{field}" → href with {field} replaced           -->
+ *   <!--   data-infinite-date="field"         → formatted date text + datetime attr  -->
+ *   <!--   data-infinite-if="field"           → removes element when falsy           -->
+ *   <!--   data-infinite-list="field"         → renders array with sub-template      -->
+ *   <!--     data-list-template="templateId"  → ID of sub-template element           -->
+ *   <!--     data-list-href="/path/{value}"   → href for each list item              -->
+ *   <!--     display text resolved from listLabels[field][value] (falls back to raw) -->
+ *   <template slot="templates" id="item-template">
+ *     <li>
+ *       <a href="" data-infinite-href="/blog/{id}">
+ *         <h2 data-infinite-text="title"></h2>
+ *       </a>
+ *     </li>
+ *   </template>
+ * </InfiniteScrollUI>
+ * ```
+ *
+ * For the article-specific implementation, see `src/pages/[...lang]/blog/index.astro`.
+ *
+ * i18n tags are located at `src/i18n/messages/{locale}/tags.json` under the
+ * `registry` key, co-located with other locale message files.
+ */
 import type { Locale } from '@/i18n'
-import type { LocalizedCollection } from '@/utils/content'
 import { Icon } from 'astro-icon/components'
-import PostCard from '@/components/PostCard.astro'
-import { t } from '@/i18n'
 
 interface Props {
-  initialArticles: LocalizedCollection<'blog'>[]
   locale: Locale
-  isFallback: (lang: string, locale: string) => boolean
-  getReadingTime: (body: string, lang: Locale) => { label: string }
+  /**
+   * URL pattern for client-side fetching of subsequent pages.
+   * Use `{locale}` and `{page}` as placeholders.
+   * Example: `/data/articles/{locale}/page-{page}.json`
+   */
+  fetchUrl: string
+  /**
+   * Key in the JSON response that contains the items array.
+   * @default 'items'
+   */
+  itemsKey?: string
+  /**
+   * Key in the JSON response that contains the hasMore boolean.
+   * @default 'hasMore'
+   */
+  hasMoreKey?: string
+  /**
+   * Display labels for array fields rendered with `data-infinite-list`.
+   * Maps field name → (value → display text), used to translate raw values
+   * (e.g. tag IDs) into human-readable labels client-side.
+   *
+   * Example: `{ tags: { react: 'React', typescript: 'TypeScript' } }`
+   */
+  listLabels?: Record<string, Record<string, string>>
 }
 
-const { initialArticles, locale, isFallback, getReadingTime } = Astro.props
-
-const articleProps = initialArticles.map((entry) => {
-  const articleLang = entry.locale
-  const langBadge = isFallback(articleLang, locale) ? t(locale, `shortLabel.${articleLang}`) : undefined
-  const readingTime = getReadingTime(entry.body ?? '', articleLang)
-
-  return {
-    title: entry.data.title,
-    description: entry.data.description,
-    pubDate: entry.data.pubDate,
-    slug: entry.id,
-    postLang: articleLang,
-    langBadge,
-    readingTimeLabel: readingTime.label,
-    tags: entry.tags,
-  }
-})
+const { locale, fetchUrl, itemsKey = 'items', hasMoreKey = 'hasMore', listLabels } = Astro.props
 ---
 
-<infinite-scroll data-locale={locale}>
+<infinite-scroll
+  data-locale={locale}
+  data-fetch-url={fetchUrl}
+  data-items-key={itemsKey}
+  data-has-more-key={hasMoreKey}
+  data-list-labels={listLabels ? JSON.stringify(listLabels) : undefined}
+>
   <div class="space-y-4">
-    <ul id="articles-list" class="grid gap-8 list-none p-0 m-0">
-      {
-        articleProps.map(props => (
-          <li>
-            <PostCard {...props} />
-          </li>
-        ))
-      }
+    <ul id="infinite-scroll-list" class="grid gap-8 list-none p-0 m-0">
+      <slot />
     </ul>
 
     <div id="infinite-scroll-sentinel" class="h-10" aria-hidden="true"></div>
@@ -52,36 +87,11 @@ const articleProps = initialArticles.map((entry) => {
     </div>
   </div>
 
-  <template id="article-template">
-    <li>
-      <article class="rounded-lg border border-gray-200 dark:border-gray-800 p-4 hover:border-gray-300 dark:hover:border-gray-700 transition-colors">
-        <a href="" class="block article-link">
-          <div class="flex items-center gap-2 flex-wrap">
-            <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100 article-title"></h2>
-          </div>
-          <p class="mt-1 text-sm text-gray-600 dark:text-gray-400 line-clamp-2 article-description"></p>
-          <div class="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-gray-500 dark:text-gray-500">
-            <time class="article-date"></time>
-            <span class="article-reading-time" aria-label="Reading time"></span>
-          </div>
-        </a>
-        <div class="article-tags"></div>
-      </article>
-    </li>
-  </template>
-
-  <template id="tags-template">
-    <div class="mt-2 flex flex-wrap gap-1">
-    </div>
-  </template>
-
-  <template id="tag-template">
-    <a href="" class="rounded px-1.5 py-0.5 text-xs bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 tag-link"></a>
-  </template>
+  <slot name="templates" />
 </infinite-scroll>
 
 <script>
-import type { PaginatedArticlesPage } from '@/utils/content'
+const FIELD_PATTERN = /\{(\w+)\}/g
 
 class InfiniteScroll extends HTMLElement {
   currentPage = 1
@@ -102,9 +112,9 @@ class InfiniteScroll extends HTMLElement {
   init() {
     const sentinel = this.querySelector('#infinite-scroll-sentinel')
     const loadingIndicator = this.querySelector('#loading-indicator')
-    const articlesList = this.querySelector('#articles-list')
+    const list = this.querySelector('#infinite-scroll-list')
 
-    if (!sentinel || !loadingIndicator || !articlesList) {
+    if (!sentinel || !loadingIndicator || !list) {
       console.error('Required elements not found for infinite scroll')
       return
     }
@@ -113,12 +123,10 @@ class InfiniteScroll extends HTMLElement {
   }
 
   setupObserver(sentinel: Element) {
-    // Clean up old observer if exists
     if (this.observer) {
       this.observer.disconnect()
     }
 
-    // Create new Intersection Observer
     this.observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -133,15 +141,104 @@ class InfiniteScroll extends HTMLElement {
     this.observer.observe(sentinel)
   }
 
+  /**
+   * Renders a single item by cloning the provided template and binding
+   * data using `data-infinite-*` attributes.
+   *
+   * Supported binding attributes:
+   * - `data-infinite-text="field"` → sets textContent from item[field]
+   * - `data-infinite-href="pattern"` → sets href, replacing `{field}` placeholders
+   * - `data-infinite-date="field"` → sets formatted date text + datetime attribute
+   * - `data-infinite-if="field"` → removes element when item[field] is falsy
+   * - `data-infinite-list="field"` → renders array using a sub-template
+   *   - `data-list-template="templateId"` → ID of the sub-template element
+   *   - `data-list-href="pattern"` → href pattern for each list item (use `{value}`)
+   *   - display text is resolved from `listLabels[field][value]`, falling back to raw value
+   */
+  renderItem(item: Record<string, unknown>, template: HTMLTemplateElement): DocumentFragment {
+    const clone = template.content.cloneNode(true) as DocumentFragment
+    const locale = this.getAttribute('data-locale') ?? 'en'
+    const listLabelsAttr = this.getAttribute('data-list-labels')
+    const listLabels: Record<string, Record<string, string>> = listLabelsAttr
+      ? (JSON.parse(listLabelsAttr) as Record<string, Record<string, string>>)
+      : {}
+
+    clone.querySelectorAll<HTMLElement>('[data-infinite-text]').forEach((el) => {
+      const field = el.getAttribute('data-infinite-text')!
+      el.textContent = String(item[field] ?? '')
+    })
+
+    clone.querySelectorAll<HTMLElement>('[data-infinite-href]').forEach((el) => {
+      const pattern = el.getAttribute('data-infinite-href')!
+      const href = pattern.replace(FIELD_PATTERN, (_, key) => String(item[key] ?? ''))
+      el.setAttribute('href', href)
+    })
+
+    clone.querySelectorAll<HTMLElement>('[data-infinite-date]').forEach((el) => {
+      const field = el.getAttribute('data-infinite-date')!
+      const rawDate = item[field]
+      if (rawDate) {
+        const date = new Date(String(rawDate))
+        el.textContent = new Intl.DateTimeFormat(locale, { dateStyle: 'long' }).format(date)
+        el.setAttribute('datetime', date.toISOString())
+      }
+    })
+
+    // Process data-infinite-if before data-infinite-list so removed elements don't block list rendering
+    clone.querySelectorAll<HTMLElement>('[data-infinite-if]').forEach((el) => {
+      const field = el.getAttribute('data-infinite-if')!
+      if (!item[field]) {
+        el.remove()
+      }
+    })
+
+    clone.querySelectorAll<HTMLElement>('[data-infinite-list]').forEach((el) => {
+      const field = el.getAttribute('data-infinite-list')!
+      const subTemplateId = el.getAttribute('data-list-template')
+      const hrefPattern = el.getAttribute('data-list-href')
+      const items = item[field]
+
+      if (!Array.isArray(items) || items.length === 0) {
+        el.remove()
+        return
+      }
+
+      const subTemplate = subTemplateId
+        ? (this.querySelector(`#${subTemplateId}`) as HTMLTemplateElement | null)
+        : null
+
+      if (subTemplate) {
+        const fieldLabels = listLabels[field] ?? {}
+        items.forEach((subItem: unknown) => {
+          const subClone = subTemplate.content.cloneNode(true) as DocumentFragment
+          const anchor = subClone.querySelector('a')
+          if (anchor) {
+            const value = String(subItem)
+            anchor.textContent = fieldLabels[value] ?? value
+            if (hrefPattern) {
+              anchor.href = hrefPattern.replace('{value}', value)
+            }
+          }
+          el.appendChild(subClone)
+        })
+      }
+    })
+
+    return clone
+  }
+
   async loadNextPage() {
     if (this.isLoading || !this.hasMore)
       return
 
     const loadingIndicator = this.querySelector('#loading-indicator')
-    const articlesList = this.querySelector('#articles-list')
+    const list = this.querySelector('#infinite-scroll-list')
     const locale = this.getAttribute('data-locale')
+    const fetchUrl = this.getAttribute('data-fetch-url')
+    const itemsKey = this.getAttribute('data-items-key') ?? 'items'
+    const hasMoreKey = this.getAttribute('data-has-more-key') ?? 'hasMore'
 
-    if (!loadingIndicator || !articlesList || !locale) {
+    if (!loadingIndicator || !list || !locale || !fetchUrl) {
       console.error('Required elements or attributes not found for loading next page')
       return
     }
@@ -150,8 +247,12 @@ class InfiniteScroll extends HTMLElement {
     loadingIndicator.classList.remove('hidden')
     this.currentPage += 1
 
+    const url = fetchUrl
+      .replace('{locale}', locale)
+      .replace('{page}', String(this.currentPage))
+
     try {
-      const response = await fetch(`/data/articles/${locale}/page-${this.currentPage}.json`)
+      const response = await fetch(url)
 
       if (!response.ok) {
         if (response.status === 404) {
@@ -165,72 +266,26 @@ class InfiniteScroll extends HTMLElement {
         throw new Error(`HTTP ${response.status}`)
       }
 
-      const data = await response.json() as PaginatedArticlesPage
+      const data = await response.json() as Record<string, unknown>
+      const items = data[itemsKey]
+      const hasMore = Boolean(data[hasMoreKey])
 
-      if (!data.articles || !Array.isArray(data.articles)) {
-        throw new Error('Invalid response format')
+      if (!items || !Array.isArray(items)) {
+        throw new Error('Invalid response format: missing items array')
       }
 
-      // Append articles to DOM using template
-      data.articles.forEach((article) => {
-        const template = this.querySelector('#article-template') as HTMLTemplateElement
-        if (!template) {
-          console.error('Article template not found')
-          return
-        }
+      const template = this.querySelector('#item-template') as HTMLTemplateElement | null
+      if (!template) {
+        console.error('Item template (#item-template) not found')
+        return
+      }
 
-        const clone = template.content.cloneNode(true) as DocumentFragment
-        const articleLink = clone.querySelector('.article-link') as HTMLAnchorElement
-        const articleTitle = clone.querySelector('.article-title') as HTMLElement
-        const articleDescription = clone.querySelector('.article-description') as HTMLElement
-        const articleDate = clone.querySelector('.article-date') as HTMLTimeElement
-        const articleReadingTime = clone.querySelector('.article-reading-time') as HTMLElement
-        const articleTags = clone.querySelector('.article-tags') as HTMLElement
-
-        const pubDate = new Date(article.pubDate)
-        const formattedDate = new Intl.DateTimeFormat(locale, {
-          dateStyle: 'long',
-        }).format(pubDate)
-
-        // Set article content
-        articleLink.href = `/blog/${article.id}`
-        articleTitle.textContent = article.title
-        articleDescription.textContent = article.description
-        articleDate.textContent = formattedDate
-        articleDate.dateTime = pubDate.toISOString()
-
-        if (article.readingTime) {
-          articleReadingTime.textContent = article.readingTime
-        }
-        else {
-          articleReadingTime.remove()
-        }
-
-        // Render tags using template
-        if (article.tags && article.tags.length > 0) {
-          const tagsTemplate = this.querySelector('#tags-template') as HTMLTemplateElement
-          const tagTemplate = this.querySelector('#tag-template') as HTMLTemplateElement
-
-          if (tagsTemplate && tagTemplate) {
-            const tagsClone = tagsTemplate.content.cloneNode(true) as DocumentFragment
-            const tagsContainer = tagsClone.querySelector('div')
-
-            article.tags.forEach((tag: string) => {
-              const tagClone = tagTemplate.content.cloneNode(true) as DocumentFragment
-              const tagLink = tagClone.querySelector('.tag-link') as HTMLAnchorElement
-              tagLink.href = `/tag/${tag}`
-              tagLink.textContent = tag
-              tagsContainer?.appendChild(tagClone)
-            })
-
-            articleTags.appendChild(tagsClone)
-          }
-        }
-
-        articlesList.appendChild(clone)
+      items.forEach((item: unknown) => {
+        const fragment = this.renderItem(item as Record<string, unknown>, template)
+        list.appendChild(fragment)
       })
 
-      this.hasMore = data.hasMore
+      this.hasMore = hasMore
 
       if (!this.hasMore) {
         const sentinel = this.querySelector('#infinite-scroll-sentinel')
@@ -239,8 +294,8 @@ class InfiniteScroll extends HTMLElement {
       }
     }
     catch (error) {
-      console.error('Failed to load articles:', error)
-      this.currentPage -= 1 // Revert page number on error
+      console.error('Failed to load items:', error)
+      this.currentPage -= 1
     }
     finally {
       this.isLoading = false
