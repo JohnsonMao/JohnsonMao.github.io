@@ -2,6 +2,8 @@
 title: "React - 三大屬性 Props"
 description: "學習如何使用 Refs 獲取 DOM 元素或組件實例，涵蓋字串形式、回調函數與 createRef 的三種用法。"
 pubDate: "2021-10-10"
+tags:
+  - react
 ---
 
 # React - 三大屬性 **Refs**

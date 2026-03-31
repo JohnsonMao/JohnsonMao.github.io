@@ -3,6 +3,9 @@ title: "Day.23 「更加認識 DOM，並初次了解事件綁定」 —— JavaS
 description: "我們之前在 HTML 篇章有介紹 DOM，是 Document Object Model 的縮寫！我們主要操作 DOM 來控制網頁內容～"
 pubDate: "2021-10-02"
 image: "https://i.imgur.com/slZvdj6.png"
+tags:
+  - it-ironman
+  - vscode
 ---
 
 ![「更加認識 DOM，並初次了解事件綁定」 —— JavaScript DOM](https://i.imgur.com/slZvdj6.png)

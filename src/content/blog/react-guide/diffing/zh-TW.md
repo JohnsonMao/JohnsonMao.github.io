@@ -2,6 +2,8 @@
 title: "React - DOM 的 diffing 算法"
 description: "深入理解 React 的虛擬 DOM 與 Diffing 演算法，探討 key 屬性在列表渲染中的重要性與效能影響。"
 pubDate: "2021-10-14"
+tags:
+  - react
 ---
 
 # React - DOM 的 diffing 算法

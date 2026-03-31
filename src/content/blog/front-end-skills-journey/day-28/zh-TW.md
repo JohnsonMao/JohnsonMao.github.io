@@ -3,6 +3,9 @@ title: "Day.28 「Promise 初體驗～」 —— ES6 Promise"
 description: "我們前面已經學習了回調函式（Callback Function）與構造函式（Constrcutor），而 Promise 是 ES6 新增用來解決非同步回調地域的新語法，同時也是一個構造函式！"
 pubDate: "2021-10-07"
 image: "https://i.imgur.com/BnUYCE5.png"
+tags:
+  - it-ironman
+  - vscode
 ---
 
 ![「Promise 初體驗～」 —— ES6 Promise](https://i.imgur.com/BnUYCE5.png)

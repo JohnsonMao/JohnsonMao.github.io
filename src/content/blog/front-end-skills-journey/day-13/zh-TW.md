@@ -3,6 +3,9 @@ title: "Day.13 「初步學習 JavaScript 基礎篇」 —— JavaScript 宣告�
 description: "JavaScript 是個弱型別語言，在宣告變數時，不像其他語言需要先指定型別那麼嚴謹，宣告的變數名會對應記憶體位子，把其值存入記憶體中，之後要取出值，只要藉由變數名，就能找到對應的值。"
 pubDate: "2021-09-22"
 image: "https://i.imgur.com/wh1ZT6h.png"
+tags:
+  - it-ironman
+  - vscode
 ---
 
 ![JavaScript 宣告變數 與 基本型別](https://i.imgur.com/wh1ZT6h.png)

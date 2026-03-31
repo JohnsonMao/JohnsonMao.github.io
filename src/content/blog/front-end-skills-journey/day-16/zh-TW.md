@@ -3,6 +3,9 @@ title: "Day.16 「重複的事情，交給程式去做！」 —— JavaScript �
 description: "前面學習到了條件判斷式，接著我們來學習有點危險的循環迴圈，好啦！也沒那麼誇張～只是寫不好，容易進入無窮迴圈導致當機！不過我們是寫在網頁上～所以如果真的不小心陷入無窮迴圈，就關掉瀏覽器就可以了！"
 pubDate: "2021-09-25"
 image: "https://i.imgur.com/0bAwQpd.png"
+tags:
+  - it-ironman
+  - vscode
 ---
 
 ![「重複的事情，交給程式去做！」 —— JavaScript 循環迴圈](https://i.imgur.com/0bAwQpd.png)

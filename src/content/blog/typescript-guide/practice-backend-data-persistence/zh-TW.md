@@ -3,6 +3,8 @@ title: "TypeScript 實戰：後端資料持久化"
 description: "在這篇文章中，我們將學習如何在 TypeScript 後端應用中實現資料持久化。因為本系列的主要目的是學習 TypeScript，我們會採用最簡單的方式來處理資料持久化。我們將使用原生 Node.js API 來讀寫 JSON 檔案，達到資料持久化的效果，這對於我們學習專案來說是一個簡單又實用的方式。"
 pubDate: "2024-09-24"
 image: "https://ithelp.ithome.com.tw/upload/images/20240924/20140224s4nBksOoQS.png"
+tags:
+  - typescript
 ---
 
 ![cover](https://ithelp.ithome.com.tw/upload/images/20240924/20140224s4nBksOoQS.png)

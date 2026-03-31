@@ -3,6 +3,8 @@ title: "TypeScript 進階：條件型別與靜態分析"
 description: "在前面介紹完基礎泛型後，接下來要介紹的是 TypeScript 中一個強大且靈活的功能——條件型別（Conditional Types）。本篇將深入探討條件型別的應用，包括如何用它來實現型別的深度唯讀，並進一步說明 TypeScript 中的常數（const）怎麼定義與區別。"
 pubDate: "2024-09-11"
 image: "https://ithelp.ithome.com.tw/upload/images/20240929/20140224nPMxMxR6hp.png"
+tags:
+  - typescript
 ---
 
 ![cover](https://ithelp.ithome.com.tw/upload/images/20240929/20140224nPMxMxR6hp.png)

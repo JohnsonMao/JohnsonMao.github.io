@@ -2,6 +2,8 @@
 title: "React - 高階函數柯里化"
 description: "探討如何利用 JavaScript 的柯里化（Currying）與高階函數技巧，優化 React 事件處理邏輯。"
 pubDate: "2021-10-12"
+tags:
+  - react
 ---
 
 # React - 高階函數柯里化

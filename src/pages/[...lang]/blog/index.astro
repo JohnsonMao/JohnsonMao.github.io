@@ -1,6 +1,6 @@
 ---
 import InfiniteScrollUI from '@/components/InfiniteScrollUI.astro'
-import { defaultLocale, getLocale, getLocaleLabel, locales, t } from '@/i18n'
+import { defaultLocale, getLocale, locales, t } from '@/i18n'
 import BaseLayout from '@/layouts/BaseLayout.astro'
 import { getPaginatedArticles, getSortedCollectionList } from '@/utils/content'
 import { getReadingTime } from '@/utils/reading-time'
@@ -26,7 +26,6 @@ const firstPageArticles = pages[0] || []
       initialArticles={firstPageArticles}
       locale={locale}
       isFallback={(articleLang, currentLocale) => articleLang !== currentLocale}
-      getLocaleLabel={getLocaleLabel}
       getReadingTime={getReadingTime}
     />
   </div>

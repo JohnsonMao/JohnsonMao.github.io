@@ -3,6 +3,8 @@ title: "TypeScript 進階：泛型入門與核心概念"
 description: "本篇將介紹 TypeScript 中泛型（Generics）的入門與核心概念，了解如何透過泛型來增加程式碼的靈活性與可重用性，並學習泛型在函式與介面中的基本應用。"
 pubDate: "2024-09-09"
 image: "https://ithelp.ithome.com.tw/upload/images/20240929/20140224fGUlmQdkj4.png"
+tags:
+  - typescript
 ---
 
 ![cover](https://ithelp.ithome.com.tw/upload/images/20240929/20140224fGUlmQdkj4.png)

@@ -3,6 +3,9 @@ title: "Day.22 「讓我們在更深入函式～」 —— JavaScript call & app
 description: "之前我們有說過，再調用函式的時候，瀏覽器會傳遞隱藏的參數給我們函式，一個是「this」，除了 this 還有另一個參數是「arguments」！"
 pubDate: "2021-10-01"
 image: "https://i.imgur.com/ejWtzFz.png"
+tags:
+  - it-ironman
+  - vscode
 ---
 
 ![「讓我們在更深入函式～」 —— JavaScript call & apply & arguments](https://i.imgur.com/ejWtzFz.png)

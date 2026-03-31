@@ -3,6 +3,9 @@ title: "Day.17 「如果基本型別是商品，那物件型別就是購物袋�
 description: "前面有介紹了基本型別，基本型別有 string、number、boolean、null、undefined 這五個型別，剩下的可以都歸類於物件型別。"
 pubDate: "2021-09-26"
 image: "https://i.imgur.com/6P86wxa.png"
+tags:
+  - it-ironman
+  - vscode
 ---
 
 ![「如果基本型別是商品，那物件型別就是購物袋」 —— JavaScript 物件型別](https://i.imgur.com/6P86wxa.png)

@@ -3,6 +3,8 @@ title: "TypeScript 後記"
 description: "終於完成連續三十天的鐵人賽文章撰寫！距離我第一次參加鐵人賽已經三年之久了。這次參加主要是因為朋友邀請一起參賽，同時我自己也想藉此機會深入了解 TypeScript 5 的新功能，強迫自己透過寫作來吸收知識。"
 pubDate: "2024-10-01"
 image: "https://ithelp.ithome.com.tw/upload/images/20240922/20140224KSPhzte1qq.png"
+tags:
+  - typescript
 ---
 
 ![cover](https://ithelp.ithome.com.tw/upload/images/20240922/20140224KSPhzte1qq.png)

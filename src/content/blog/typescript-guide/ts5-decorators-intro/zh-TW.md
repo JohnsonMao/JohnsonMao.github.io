@@ -3,6 +3,8 @@ title: "TypeScript 5 進階：新版裝飾器入門"
 description: "TypeScript 5 裝飾器有重大的更新，這是因為裝飾器在 JavaScript 中首次提出於 ES2016 的草案中，並逐步經過 TC39 的標準化過程，最終在 TC39 Stage 3 中穩定下來，並在 TypeScript 5 中得到了實現。這使得裝飾器不再僅僅是一個實驗性特性，在未來也會是基於 JavaScript 標準的語法。裝飾器的演進不僅讓 TypeScript 開發者能夠更加一致地撰寫裝飾器，還提高了裝飾器的靈活性與可讀性。這一篇將探討新版裝飾器與舊版的差異，並介紹新版裝飾器的使用方法和特性。"
 pubDate: "2024-09-20"
 image: "https://ithelp.ithome.com.tw/upload/images/20240920/20140224HtI3LyiPFm.png"
+tags:
+  - typescript
 ---
 
 ![cover](https://ithelp.ithome.com.tw/upload/images/20240920/20140224HtI3LyiPFm.png)

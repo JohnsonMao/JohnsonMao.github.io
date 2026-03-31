@@ -3,6 +3,8 @@ title: "TypeScript 基礎：抽象類別"
 description: "抽象類別（Abstract Class）是物件導向設計中的一種類別，它是用來作為其他類別的基礎，無法直接實例化。抽象類別通常會有抽象方法（未實作的方法），子類必須覆寫這些抽象方法，並根據具體需求提供實作。"
 pubDate: "2024-09-07"
 image: "https://ithelp.ithome.com.tw/upload/images/20240929/20140224kVeSsdSwK5.png"
+tags:
+  - typescript
 ---
 
 ![cover](https://ithelp.ithome.com.tw/upload/images/20240929/20140224kVeSsdSwK5.png)

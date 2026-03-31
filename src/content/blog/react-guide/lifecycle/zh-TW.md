@@ -2,6 +2,8 @@
 title: "React - 生命週期"
 description: "詳細解析 React 組件的生命週期各階段（掛載、更新、卸載），以及常用的生命週期鉤子函數應用。"
 pubDate: "2021-10-13"
+tags:
+  - react
 ---
 
 # React - 生命週期

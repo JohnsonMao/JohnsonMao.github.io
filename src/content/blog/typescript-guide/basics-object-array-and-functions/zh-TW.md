@@ -3,6 +3,8 @@ title: "TypeScript 基礎：物件、陣列與函式型別"
 description: "物件型別在 TypeScript 中非常重要，因為它們允許我們定義複雜的資料結構，包括陣列、函式、列舉...等。這些型別幫助我們在開發中建立更嚴謹且易於維護的程式碼。"
 pubDate: "2024-09-04"
 image: "https://ithelp.ithome.com.tw/upload/images/20240929/20140224eoZStu6jYX.png"
+tags:
+  - typescript
 ---
 
 ![cover](https://ithelp.ithome.com.tw/upload/images/20240929/20140224eoZStu6jYX.png)

@@ -3,6 +3,8 @@ title: "TypeScript 進階：初識裝飾器"
 description: "本篇將初步介紹 TypeScript 裝飾器（Decorators）的基本概念與應用。裝飾器是一種特殊的宣告，可以用來修改類別、方法、屬性或參數的行為，是實現 AOP（剖面導向程式設計）的重要工具。"
 pubDate: "2024-09-18"
 image: "https://ithelp.ithome.com.tw/upload/images/20240918/20140224vbe9TdorME.png"
+tags:
+  - typescript
 ---
 
 ![cover](https://ithelp.ithome.com.tw/upload/images/20240918/20140224vbe9TdorME.png)

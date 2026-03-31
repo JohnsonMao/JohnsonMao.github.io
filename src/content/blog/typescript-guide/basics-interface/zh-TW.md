@@ -3,6 +3,8 @@ title: "TypeScript 基礎：介面 interface"
 description: "前面的文章已經有稍微介紹了介面（interface）的用法，介面能夠幫助我們定義物件應該有哪些屬性和方法，從而提供一種強型別的約束機制，讓開發者更容易組織代碼並進行程式設計。"
 pubDate: "2024-09-08"
 image: "https://ithelp.ithome.com.tw/upload/images/20240929/20140224wnLythlBEo.png"
+tags:
+  - typescript
 ---
 
 ![cover](https://ithelp.ithome.com.tw/upload/images/20240929/20140224wnLythlBEo.png)

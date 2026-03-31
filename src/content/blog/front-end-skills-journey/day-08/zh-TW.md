@@ -3,6 +3,9 @@ title: "Day.8 「怎麼就這樣脫離文檔流了！」 —— CSS 定位屬性
 description: "我們已經了解到基本的切版概念了，但前面所學的都是固定在網頁上，也就是之前所說正常的文檔流！而這一篇就要來學會更進階一點了佈局方法了，讓元素布局上更加奔放自由，脫離文檔流。"
 pubDate: "2021-09-17"
 image: "https://i.imgur.com/n4My3Xy.png"
+tags:
+  - it-ironman
+  - vscode
 ---
 
 ![「怎麼就這樣脫離文檔流了！」 —— CSS 定位屬性 position & 浮動元素 float](https://i.imgur.com/n4My3Xy.png)

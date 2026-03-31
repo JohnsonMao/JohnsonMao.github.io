@@ -2,6 +2,8 @@
 title: "React - 用 Hello 認識框架組件"
 description: "透過實作最基礎的渲染範例，了解 ReactDOM.render 的運作方式與 JSX 語法基礎。"
 pubDate: "2021-10-16"
+tags:
+  - react
 ---
 
 # React - 用 Hello 認識框架組件

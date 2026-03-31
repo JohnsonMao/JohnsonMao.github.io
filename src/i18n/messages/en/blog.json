@@ -1,0 +1,17 @@
+{
+  "listTitle": "Posts",
+  "listDescription": "Blog posts",
+  "contentNotTranslated": "This page has not been translated yet.",
+  "readingTime": "{minutes} min read",
+  "updatedOn": "Updated on",
+  "tableOfContents": "Table of Contents",
+  "relatedPosts": "Related Posts",
+  "copyLink": "Copy Link",
+  "copied": "Copied!",
+  "share": "Share this post",
+  "series": {
+    "partOf": "Part of the series:",
+    "current": "(Current)"
+  },
+  "comments": "Comments"
+}

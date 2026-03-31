@@ -2,6 +2,9 @@ import { glob } from 'astro/loaders'
 import { z } from 'astro/zod'
 import { defineCollection } from 'astro:content'
 
+export const TAG_IDS = ['react', 'hexschool', 'vue3-camp', 'mongodb', 'it-ironman', 'vscode', 'html', 'css', 'javascript', 'jsdc', 'typescript'] as const
+export type TagId = typeof TAG_IDS[number]
+
 const blog = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/blog' }),
   schema: z.object({
@@ -11,6 +14,7 @@ const blog = defineCollection({
     image: z.string().optional(),
     draft: z.boolean().optional(),
     updated: z.coerce.date().optional(),
+    tags: z.array(z.enum(TAG_IDS)).optional(),
   }),
 })
 

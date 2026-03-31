@@ -1,21 +1,12 @@
 import type { CollectionEntry } from 'astro:content'
-import type { TagId } from '@/data/tags'
-import type { Locale } from '@/i18n'
+import type { Locale, TagId } from '@/i18n'
 import { getCollection } from 'astro:content'
-import { tags as tagRegistry } from '@/data/tags'
-import { getLocalePriority, isLocale, normalizeLocale } from '@/i18n'
+import { TAG_IDS } from '@/content.config'
+import { defaultLocale, getLocalePriority, isLocale, normalizeLocale } from '@/i18n'
 
 const selectedCollections = ['blog'] as const
 
 export type SelectedCollection = typeof selectedCollections[number]
-
-/**
- * Shared metadata structure defined in _meta.ts files.
- */
-export interface SharedMeta {
-  tags?: TagId[]
-  [key: string]: unknown
-}
 
 export type LocalizedCollection<K extends SelectedCollection> = CollectionEntry<K> & {
   locale: Locale
@@ -29,27 +20,15 @@ interface LocalizedCollectionGroup<K extends SelectedCollection> {
   entries: Map<Locale, LocalizedCollection<K>>
 }
 
-// Automatically load _meta.ts files to share tags/metadata across locales
-const metaFiles = import.meta.glob<SharedMeta>('../content/blog/**/_meta.ts', { eager: true, import: 'default' })
-
 /**
- * Retrieves shared metadata for a given path, safely typed.
+ * Validates tags against the master registry (from content.config) at build-time to prevent typos.
  */
-function getSharedMetadata(path: string): SharedMeta {
-  const dir = path.includes('/') ? path.split('/').slice(0, -1).join('/') : ''
-  const metaKey = `../content/blog/${dir}/_meta.ts`
-  return metaFiles[metaKey] || {}
-}
-
-/**
- * Validates tags against the master registry at build-time to prevent typos.
- */
-export function validateTags(id: string, tags?: TagId[]) {
+export function validateTags(id: string, tags?: TagId[]): void {
   if (!tags)
     return
   tags.forEach((tag) => {
-    if (!(tag in tagRegistry)) {
-      throw new Error(`[Content Error] Unregistered tag ID: "${tag}" found in ${id}. Please register it in src/data/tags.ts.`)
+    if (!TAG_IDS.includes(tag)) {
+      throw new Error(`[Content Error] Unregistered tag ID: "${tag}" found in ${id}. Please register it in src/content.config.ts and add translation in src/i18n/messages/${defaultLocale}/tags.json.`)
     }
   })
 }
@@ -74,10 +53,6 @@ export function parseEntryId(id: string) {
     default:
       throw new Error(`Invalid entry ID format: ${id}. Expected "slug/locale" or "series/slug/locale".`)
   }
-}
-
-export function getBaseId(id: string): string {
-  return parseEntryId(id).slug
 }
 
 /**
@@ -105,23 +80,24 @@ async function getGroupedCollection<K extends SelectedCollection>(
   const all = await getCollection(collection, ({ data }) => import.meta.env.DEV || data.draft !== true)
   const collectionMap = new Map<string, LocalizedCollectionGroup<K>>()
 
-  all.forEach((entry) => {
+  for (const entry of all) {
     const { seriesId, slug, locale } = parseEntryId(entry.id)
-    const sharedMeta = getSharedMetadata(entry.id)
-    validateTags(entry.id, sharedMeta.tags)
+    // Tags are now read directly from Frontmatter via Astro's schema
+    const tags = entry.data.tags as TagId[] | undefined
+    validateTags(entry.id, tags)
 
     const localizedEntry: LocalizedCollection<K> = {
       ...entry,
       id: slug,
       locale,
       seriesId,
-      tags: sharedMeta.tags,
+      tags,
     }
 
     const group = collectionMap.get(slug) || { id: slug, entries: new Map() }
     group.entries.set(locale, localizedEntry)
     collectionMap.set(slug, group)
-  })
+  }
 
   return collectionMap
 }

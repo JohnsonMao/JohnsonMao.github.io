@@ -3,6 +3,8 @@ title: "TypeScript 進階：舊版裝飾器"
 description: "在上一篇文章中，我們初步介紹了裝飾器的基本概念與應用方式。本篇將深入探討 TypeScript 5 之前的舊版裝飾器，並介紹其各種類型。在舊版裝飾器中，有些情況下需要在 tsconfig.json 中額外設定 emitDecoratorMetadata、experimentalDecorators 來啟用裝飾器元資料。請先將此設定加入，以便順利使用裝飾器功能。"
 pubDate: "2024-09-19"
 image: "https://ithelp.ithome.com.tw/upload/images/20240919/20140224BMWkTkEKiF.png"
+tags:
+  - typescript
 ---
 
 ![cover](https://ithelp.ithome.com.tw/upload/images/20240919/20140224BMWkTkEKiF.png)

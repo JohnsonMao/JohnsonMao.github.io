@@ -2,6 +2,8 @@
 title: "React - PubSubJS 實現兄弟組件之間傳遞資料"
 description: "介紹如何使用 PubSubJS 實現跨組件間的通訊，解決父子組件傳值過於繁瑣的問題。"
 pubDate: "2021-10-17"
+tags:
+  - react
 ---
 
 # React - PubSubJS 實現兄弟組件之間傳遞資料

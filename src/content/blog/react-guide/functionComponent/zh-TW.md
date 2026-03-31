@@ -2,6 +2,8 @@
 title: "React - 函數式組件"
 description: "認識函數式組件（Function Component）的基礎寫法，並探討其與類式組件的異同之處。"
 pubDate: "2021-07-28"
+tags:
+  - react
 ---
 
 # React - 函數式組件

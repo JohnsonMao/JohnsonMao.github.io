@@ -3,6 +3,9 @@ title: "Day.5 「我的樣式失靈啦！你有頭緒嗎？」 —— CSS 選擇
 description: "使用標籤元素套用就像是畫草圖上底色，雖然有色彩但不細緻，這時為了能夠更精雕細琢我們的網頁，於是我們要更加精準的設定樣式，但有的選擇器必須謹慎使用，不然後面要修改就麻煩了。"
 pubDate: "2021-09-14"
 image: "https://i.imgur.com/DGvbCcT.png"
+tags:
+  - it-ironman
+  - vscode
 ---
 
 ![「我的樣式失靈啦！你有頭緒嗎？」 —— CSS 選擇器 與 權重](https://i.imgur.com/DGvbCcT.png)

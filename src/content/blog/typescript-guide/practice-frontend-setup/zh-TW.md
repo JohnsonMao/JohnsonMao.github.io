@@ -3,6 +3,8 @@ title: "TypeScript 實戰：前端 React Setup"
 description: "介紹前端如何搭配 TypeScript 來開發，這個章節我們會使用 React 來實作簡單的任務管理網站，並串接我們寫好的後端，而會選擇使用 React 的原因也是非常簡單。1. React 函式庫撰寫方式與原生 JavaScript 接近。2. 目前職缺數量是三大框架最多的。3. 最重要的是，是我最熟的框架。本篇會先介紹如何初始化一個 React + TypeScript 專案。"
 pubDate: "2024-09-27"
 image: "https://ithelp.ithome.com.tw/upload/images/20240927/201402241d8G0mpfAq.png"
+tags:
+  - typescript
 ---
 
 ![cover](https://ithelp.ithome.com.tw/upload/images/20240927/201402241d8G0mpfAq.png)

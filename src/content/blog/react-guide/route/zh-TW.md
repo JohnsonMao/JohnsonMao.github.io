@@ -2,6 +2,8 @@
 title: "React - Route 基礎路由"
 description: "開始學習 React Router 路由管理，實現單頁應用（SPA）的導覽功能與基本配置。"
 pubDate: "2021-10-18"
+tags:
+  - react
 ---
 
 # React - Route 基礎路由

@@ -2,6 +2,8 @@
 title: "React - 簡介"
 description: "介紹 React 的背景、優點以及為什麼要學習 React，包括聲明式編碼與虛擬 DOM 的核心概念。"
 pubDate: "2021-07-26"
+tags:
+  - react
 ---
 
 # React - 簡介

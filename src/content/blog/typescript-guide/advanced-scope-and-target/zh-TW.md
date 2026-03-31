@@ -3,6 +3,8 @@ title: "TypeScript 進階：編譯範圍與版本"
 description: "在 TypeScript 中，編譯的靈活性與可控性是其強大的特點之一。通過 tsconfig.json 文件，我們可以對 TypeScript 編譯器進行全面的配置，可以控制哪些檔案應該被編譯或排除，以及目標 JavaScript 版本和編譯兼容用的函式庫選擇，都是我們經常面對的問題。"
 pubDate: "2024-09-16"
 image: "https://ithelp.ithome.com.tw/upload/images/20240916/20140224iThCEbocms.png"
+tags:
+  - typescript
 ---
 
 ![cover](https://ithelp.ithome.com.tw/upload/images/20240916/20140224iThCEbocms.png)

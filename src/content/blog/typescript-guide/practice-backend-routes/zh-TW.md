@@ -3,6 +3,8 @@ title: "TypeScript 實戰：後端路由 Routes"
 description: "在前一篇文章中，我們介紹了如何使用 TypeScript 與 Express 搭建一個基礎的後端應用，並實現了最簡單的 `Hello World` 功能。本篇將進一步介紹如何設計 Express 路由，並透過 MVC 架構來實現簡單的 CRUD 功能。路由是 RESTful API 的核心之一，它負責將 HTTP 請求轉發到對應的控制器。接下來，我們將建立一個簡單的任務管理 (Task) 系統，模擬基本的任務資料操作。"
 pubDate: "2024-09-23"
 image: "https://ithelp.ithome.com.tw/upload/images/20240923/20140224V7yim5t1rD.png"
+tags:
+  - typescript
 ---
 
 ![cover](https://ithelp.ithome.com.tw/upload/images/20240923/20140224V7yim5t1rD.png)

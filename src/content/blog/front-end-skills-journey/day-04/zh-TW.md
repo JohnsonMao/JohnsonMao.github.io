@@ -3,6 +3,9 @@ title: "Day.4 「CSS 基礎中的基礎！」 —— CSS 盒模型 box-model & �
 description: "人是視覺動物，當網頁架構用得差不多了，想自己安排布局，會開始想辦法把網頁變得更漂亮。"
 pubDate: "2021-09-13"
 image: "https://i.imgur.com/v6IIogk.png"
+tags:
+  - it-ironman
+  - vscode
 ---
 
 ![「CSS 基礎中的基礎！」 —— CSS 盒模型 box-model & 距離單位](https://i.imgur.com/v6IIogk.png)

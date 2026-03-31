@@ -3,6 +3,9 @@ title: "Day.12 「來為網頁添加動畫吧！」 —— CSS 動畫（animatio
 description: "現在我們會使用具有互動性的簡單漸變效果了，接著要來試著讓網頁能增添更多活力，不需要我們操作，就會自動播放動畫效果。"
 pubDate: "2021-09-21"
 image: "https://i.imgur.com/Z0lYvKC.gif"
+tags:
+  - it-ironman
+  - vscode
 ---
 
 ![「來為網頁添加動畫吧！」 —— CSS 動畫（animation）](https://i.imgur.com/Z0lYvKC.gif)

@@ -3,6 +3,8 @@ title: "TypeScript 進階：型別推斷與映射"
 description: "上一篇介紹了條件型別後，這次介紹的型別推斷會需要跟條件型別組合一起使用，型別推斷是利用條件型別來幫我們推斷出型別。本篇將深入介紹型別推斷（infer），並搭配字面型別（Literal Types）與映射型別（Mapped Types）來介紹。"
 pubDate: "2024-09-12"
 image: "https://ithelp.ithome.com.tw/upload/images/20240929/20140224Uw8qUsvrxI.png"
+tags:
+  - typescript
 ---
 
 ![cover](https://ithelp.ithome.com.tw/upload/images/20240929/20140224Uw8qUsvrxI.png)

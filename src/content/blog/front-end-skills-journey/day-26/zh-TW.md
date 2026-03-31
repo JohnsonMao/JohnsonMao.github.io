@@ -3,6 +3,9 @@ title: "Day.26 「閉包要謹慎使用！」 —— JavaScript 閉包（Closure
 description: "我們前面已經認識了函式作用域，也瞭解了回調函式，但有時候會產生意想不到的事情，造成內存問題，其中一個是閉包。"
 pubDate: "2021-10-05"
 image: "https://i.imgur.com/2KRYZOP.png"
+tags:
+  - it-ironman
+  - vscode
 ---
 
 ![「閉包要謹慎使用！」 —— JavaScript 閉包（Closure）](https://i.imgur.com/2KRYZOP.png)

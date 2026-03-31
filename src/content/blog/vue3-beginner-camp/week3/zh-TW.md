@@ -3,6 +3,8 @@ title: "Vue 3 Options API"
 description: "這裡將會記錄參加 六角學院 Vue 3 新手夏令營（活動已結束） 課程筆記 與 每日任務紀錄，第三周介紹如何使用語法進行資料的 CRUD 功能。"
 pubDate: "2021-08-09"
 image: "https://i.imgur.com/s0FUJXG.png"
+tags:
+  - vue3-camp
 ---
 
 [![第三週作業展示，運用了 Vue computed 與完整的 CRUD 功能，點擊圖片可察看成果](https://i.imgur.com/s0FUJXG.png)](https://johnsonmao.github.io/summer-camp-vue3/week3/)

@@ -3,7 +3,7 @@ import type { Locale } from '@/i18n'
 import { getRelativeLocaleUrl } from 'astro:i18n'
 import Search from '@/components/Search.astro'
 import ThemeToggle from '@/components/theme/ThemeToggle.astro'
-import { getLocale, getLocaleLabel, locales, t } from '@/i18n'
+import { getLocale, locales, t } from '@/i18n'
 
 const locale = getLocale(Astro.currentLocale)
 
@@ -34,7 +34,7 @@ const baseRoute = getPathWithoutLocale(currentPath)
 const currentIndex = locales.indexOf(locale)
 const nextLocale = locales[(currentIndex + 1) % locales.length]
 const nextLocaleUrl = getRelativeLocaleUrl(nextLocale, baseRoute === '/' ? undefined : baseRoute.slice(1))
-const nextLocaleLabel = getLocaleLabel(nextLocale)
+const nextLocaleLabel = t(locale, `shortLabel.${nextLocale}`)
 ---
 
 <header class="border-b border-gray-200 dark:border-gray-800">

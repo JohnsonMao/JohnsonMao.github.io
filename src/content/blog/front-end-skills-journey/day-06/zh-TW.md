@@ -3,6 +3,9 @@ title: "Day.6 「只要我想，我也能把 div 變 table！」 —— CSS disp
 description: "如同前面章節所說，一開始的標籤元素，很單調只有一行並沒有各式各樣的元素，是瀏覽器內建的樣式表賦予它該展示的樣子。所以我們可以把任何標籤變成任何你愛的樣子，當然不希望如此瞎搞！"
 pubDate: "2021-09-15"
 image: "https://i.imgur.com/ofgbXuv.png"
+tags:
+  - it-ironman
+  - vscode
 ---
 
 ![「只要我想，我也能把 div 變 table！」 —— CSS display 屬性](https://i.imgur.com/ofgbXuv.png)

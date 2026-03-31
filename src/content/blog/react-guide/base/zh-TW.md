@@ -2,6 +2,8 @@
 title: "React - 基礎"
 description: "建立 React 開發環境的起手式，介紹如何引入 React 核心函式庫並撰寫第一個 Hello World。"
 pubDate: "2021-07-26"
+tags:
+  - react
 ---
 
 # React - 基礎

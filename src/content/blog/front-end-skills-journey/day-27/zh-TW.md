@@ -3,6 +3,9 @@ title: "Day.27 「var 成為時代的眼淚！」 —— ES6 區塊作用域 與
 description: "之前已經介紹了 var 與函式作用域，今天來更仔細的介紹 ES6 新增的 let 、 const以及與它們相關的區塊作用域。"
 pubDate: "2021-10-06"
 image: "https://i.imgur.com/hAS4sZ7.png"
+tags:
+  - it-ironman
+  - vscode
 ---
 
 ![「var 成為時代的眼淚！」 —— ES6 區塊作用域 與 提升](https://i.imgur.com/hAS4sZ7.png)

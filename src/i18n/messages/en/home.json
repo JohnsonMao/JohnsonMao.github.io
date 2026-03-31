@@ -1,0 +1,7 @@
+{
+  "title": "JohnsonMao's Blog",
+  "description": "Personal blog.",
+  "welcome": "Welcome",
+  "intro": "This is JohnsonMao's personal blog, built with Astro and Content Collections.",
+  "toBlog": "Go to blog list"
+}

@@ -1,6 +1,5 @@
 ---
 import { getRelativeLocaleUrl } from 'astro:i18n'
-import { getTagDisplay } from '@/data/tags'
 import { generateStaticLocalePaths, getLocale, t } from '@/i18n'
 import BaseLayout from '@/layouts/BaseLayout.astro'
 import { getEntriesByTag } from '@/utils/content'
@@ -31,7 +30,7 @@ const allTags = [...tagMap.entries()].toSorted((a, b) => b[1].length - a[1].leng
     <div class="flex flex-wrap justify-center items-center gap-x-10 gap-y-12 sm:gap-x-16 sm:gap-y-16">
       {
         allTags.map(([tagId, posts]) => {
-          const display = getTagDisplay(tagId, locale)
+          const display = t(locale, `tags.registry.${tagId}.name`)
           const href = getRelativeLocaleUrl(locale, `tag/${tagId}`)
 
           return (

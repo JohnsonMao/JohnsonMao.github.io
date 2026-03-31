@@ -3,6 +3,8 @@ title: "TypeScript 簡介"
 description: "很高興你來到這裡，本次鐵人賽系列文章將會分享如何學習 TypeScript 以及實戰運用。目前從事前端已經有兩年，接觸 TypeScript 也只有一年多的經驗，以往有看過大神分享的 TypeScript 鐵人賽文章，時至今日，站在巨人肩膀上的我也想透過文章的方式輸出，讓我能更有效率地鞏固知識，如果有寫得不好或需要調整的地方也不吝賜教。"
 pubDate: "2024-09-02"
 image: "https://ithelp.ithome.com.tw/upload/images/20240922/20140224KSPhzte1qq.png"
+tags:
+  - typescript
 ---
 
 ![cover](https://ithelp.ithome.com.tw/upload/images/20240922/20140224KSPhzte1qq.png)

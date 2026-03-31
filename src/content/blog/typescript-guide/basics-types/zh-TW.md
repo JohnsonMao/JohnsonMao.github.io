@@ -3,6 +3,8 @@ title: "TypeScript 基礎：基本型別"
 description: "我們都知道 TypeScript 是 JavaScript 的超集，所以在介紹 TypeScript 的型別之前，我們先介紹一下 JavaScript 原本就有的型別。"
 pubDate: "2024-09-03"
 image: "https://ithelp.ithome.com.tw/upload/images/20240929/20140224hcJWLVI7ui.png"
+tags:
+  - typescript
 ---
 
 ![cover](https://ithelp.ithome.com.tw/upload/images/20240929/20140224hcJWLVI7ui.png)

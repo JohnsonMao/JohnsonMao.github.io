@@ -1,6 +1,6 @@
 ---
 import type { MarkdownHeading } from 'astro'
-import type { TagId } from '@/data/tags'
+import type { TagId } from '@/i18n'
 import { Icon } from 'astro-icon/components'
 import { getRelativeLocaleUrl } from 'astro:i18n'
 import AuthorBio from '@/components/blog/AuthorBio.astro'
@@ -11,7 +11,6 @@ import SeriesNav from '@/components/blog/SeriesNav.astro'
 import ShareButtons from '@/components/blog/ShareButtons.astro'
 import TableOfContents from '@/components/blog/TableOfContents.astro'
 import JsonLd from '@/components/seo/JsonLd.astro'
-import { getTagDisplay } from '@/data/tags'
 import { defaultLocale, getLocale, t } from '@/i18n'
 import BaseLayout from '@/layouts/BaseLayout.astro'
 import { getCollectionEntry, getRelatedEntries } from '@/utils/content'
@@ -127,7 +126,7 @@ const postData = {
                   href={`${tagBase}${tag}`}
                   class="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-medium bg-secondary text-secondary-foreground hover:bg-secondary/80 transition-colors border border-transparent"
                 >
-                  #{getTagDisplay(tag, locale)}
+                  #{t(locale, `tags.registry.${tag}.name`)}
                 </a>
               ))}
             </div>

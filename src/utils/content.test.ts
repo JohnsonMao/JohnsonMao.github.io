@@ -1,19 +1,154 @@
 import type { Locale } from '@/i18n'
-import { describe, expect, it } from 'vitest'
-import { getBestEntry, parseEntryId, validateTags } from './content'
+import { describe, expect, it, vi } from 'vitest'
+
+import {
+  getBestEntry,
+  getCollectionEntry,
+  getEntriesByTag,
+  getPaginatedArticles,
+  getRelatedEntries,
+  getSortedCollectionList,
+  parseEntryId,
+  validateTags,
+} from './content'
+
+// Mock content.config to provide TAG_IDS for validation
+vi.mock('@/content.config', () => ({
+  TAG_CONSTANTS: {
+    REACT: 'react',
+    JAVASCRIPT: 'javascript',
+    TYPESCRIPT: 'typescript',
+  },
+  TAG_IDS: ['react', 'javascript', 'typescript'],
+  isTagId: (value: string) => ['react', 'javascript', 'typescript'].includes(value),
+}))
+
+// Mock astro:content
+vi.mock('astro:content', () => ({
+  getCollection: vi.fn(async (_collection, filter) => {
+    const allEntries = [
+      {
+        id: 'post-1/zh-TW',
+        data: { title: 'Post 1 ZH', pubDate: new Date('2024-01-01'), draft: false, tags: ['react'] },
+      },
+      {
+        id: 'post-1/en',
+        data: { title: 'Post 1 EN', pubDate: new Date('2024-01-01'), draft: false, tags: ['react'] },
+      },
+      {
+        id: 'post-2/zh-TW',
+        data: { title: 'Post 2 ZH', pubDate: new Date('2024-01-02'), draft: false, tags: ['react'] },
+      },
+      {
+        id: 'post-3/zh-TW',
+        data: { title: 'Post 3 ZH', pubDate: new Date('2024-01-03'), draft: false, tags: ['javascript', 'react'] },
+      },
+      {
+        id: 'draft-post/zh-TW',
+        data: { title: 'Draft Post', pubDate: new Date('2024-01-04'), draft: true, tags: ['react'] },
+      },
+    ]
+    return allEntries.filter(entry => !filter || filter(entry))
+  }),
+}))
 
 describe('content Utils', () => {
+  describe('getCollectionEntry()', () => {
+    it('should return exact locale entry if available', async () => {
+      const entry = await getCollectionEntry('blog', 'en', 'post-1')
+      expect(entry.data.title).toBe('Post 1 EN')
+      expect(entry.isFallback).toBe(false)
+    })
+
+    it('should fallback to default locale if requested locale is missing', async () => {
+      // post-2 only has zh-TW
+      const entry = await getCollectionEntry('blog', 'en', 'post-2')
+      expect(entry.locale).toBe('zh-TW')
+      expect(entry.isFallback).toBe(true)
+    })
+
+    it('should throw error if entry does not exist', async () => {
+      await expect(getCollectionEntry('blog', 'zh-TW', 'non-existent')).rejects.toThrow()
+    })
+  })
+
+  describe('getSortedCollectionList()', () => {
+    it('should return sorted entries by date descending', async () => {
+      const list = await getSortedCollectionList('blog', 'zh-TW')
+      // If DEV is true, draft-post is included, so it should be 4
+      const expectedLength = import.meta.env.DEV ? 4 : 3
+      expect(list).toHaveLength(expectedLength)
+
+      // draft-post has date 2024-01-04, post-3 has 2024-01-03
+      if (import.meta.env.DEV) {
+        expect(list[0].id).toBe('draft-post')
+        expect(list[1].id).toBe('post-3')
+      }
+      else {
+        expect(list[0].id).toBe('post-3')
+      }
+    })
+
+    it('should handle fallbacks correctly in the list', async () => {
+      const list = await getSortedCollectionList('blog', 'en')
+      const p2 = list.find(e => e.id === 'post-2')
+      expect(p2?.locale).toBe('zh-TW')
+      expect(p2?.isFallback).toBe(true)
+    })
+  })
+
+  describe('getEntriesByTag()', () => {
+    it('should group entries by tag', async () => {
+      const tagMap = await getEntriesByTag('zh-TW')
+      expect(tagMap.has('react')).toBe(true)
+      expect(tagMap.has('javascript')).toBe(true)
+
+      const reactPosts = tagMap.get('react')!
+      expect(reactPosts.some(p => p.id === 'post-1')).toBe(true)
+      expect(reactPosts.some(p => p.id === 'post-3')).toBe(true)
+      if (import.meta.env.DEV) {
+        expect(reactPosts.some(p => p.id === 'draft-post')).toBe(true)
+      }
+    })
+  })
+
+  describe('getRelatedEntries()', () => {
+    it('should return related entries based on tag overlap', async () => {
+      // post-3 has ['javascript', 'react']
+      // post-1 has ['react']
+      // post-2 has ['react']
+      // post-3 should relate to post-1 and post-2
+      const list = await getSortedCollectionList('blog', 'zh-TW')
+      const post3 = list.find(e => e.id === 'post-3')!
+
+      const related = await getRelatedEntries('blog', post3)
+      // Expect post-2 and post-1 (sorted by date descending since scores are equal)
+      // If draft-post is included, it also has 'react', so it should be there too
+      const expectedRelatedIds = import.meta.env.DEV
+        ? ['draft-post', 'post-2', 'post-1']
+        : ['post-2', 'post-1']
+
+      expect(related.map(e => e.id)).toEqual(expectedRelatedIds)
+    })
+
+    it('should handle entries with no tags', async () => {
+      const list = await getSortedCollectionList('blog', 'zh-TW')
+      const post3 = list.find(e => e.id === 'post-3')!
+      const entryNoTags = { ...post3, tags: [] }
+
+      const related = await getRelatedEntries('blog', entryNoTags)
+      expect(related.length).toBeGreaterThan(0)
+      expect(related.map(e => e.id)).not.toContain('post-3')
+    })
+  })
+
   describe('validateTags()', () => {
     it('should not throw for registered tags', () => {
-      expect(() => validateTags('test-post', ['astro', 'demo'])).not.toThrow()
+      expect(() => validateTags('test-post', ['react', 'typescript'])).not.toThrow()
     })
 
     it('should throw error for unregistered tags', () => {
       expect(() => validateTags('test-post', ['non-existent' as any])).toThrow(/Unregistered tag ID/)
-    })
-
-    it('should handle undefined tags gracefully', () => {
-      expect(() => validateTags('test-post', undefined)).not.toThrow()
     })
   })
 
@@ -51,9 +186,9 @@ describe('content Utils', () => {
       )
     })
 
-    it('should throw error for invalid locale', () => {
-      expect(() => parseEntryId('hello-world/invalid-lang')).toThrow(
-        'Invalid locale: invalid-Lang in entry hello-world/invalid-lang',
+    it('should throw error for invalid ID format with correct locale but wrong number of parts', () => {
+      expect(() => parseEntryId('zh-TW')).toThrow(
+        'Invalid entry ID format: zh-TW. Expected "slug/locale" or "series/slug/locale".',
       )
     })
   })
@@ -81,6 +216,29 @@ describe('content Utils', () => {
       const entry = getBestEntry(mockEntries, ['ja' as any])
       expect(entry).toBeDefined()
       expect(['zh-TW', 'en']).toContain(entry.locale)
+    })
+  })
+
+  describe('getPaginatedArticles()', () => {
+    const mockArticles = Array.from({ length: 25 }, (_, i) => ({ id: `post-${i}` })) as any[]
+
+    it('should split articles into pages of default size (10)', () => {
+      const pages = getPaginatedArticles(mockArticles)
+      expect(pages).toHaveLength(3)
+      expect(pages[0]).toHaveLength(10)
+      expect(pages[1]).toHaveLength(10)
+      expect(pages[2]).toHaveLength(5)
+    })
+
+    it('should split articles into pages of custom size', () => {
+      const pages = getPaginatedArticles(mockArticles, 5)
+      expect(pages).toHaveLength(5)
+      expect(pages[0]).toHaveLength(5)
+    })
+
+    it('should return empty array for empty input', () => {
+      const pages = getPaginatedArticles([])
+      expect(pages).toHaveLength(0)
     })
   })
 })

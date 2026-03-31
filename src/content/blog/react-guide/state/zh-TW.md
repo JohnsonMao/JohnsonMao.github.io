@@ -2,6 +2,8 @@
 title: "React - 三大屬性 State"
 description: "介紹類式組件的三大屬性之一：State。學習如何初始化狀態、處理 this 指向問題以及正確使用 setState 更新畫面。"
 pubDate: "2021-07-29"
+tags:
+  - react
 ---
 
 # React - 三大屬性 **State**

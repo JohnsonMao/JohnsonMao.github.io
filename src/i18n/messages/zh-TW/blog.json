@@ -1,0 +1,17 @@
+{
+  "listTitle": "文章",
+  "listDescription": "部落格文章列表",
+  "contentNotTranslated": "本頁內容尚未翻譯。",
+  "readingTime": "約 {minutes} 分鐘",
+  "updatedOn": "更新於",
+  "tableOfContents": "文章目錄",
+  "relatedPosts": "相關文章",
+  "copyLink": "複製連結",
+  "copied": "已複製！",
+  "share": "分享此文章",
+  "series": {
+    "partOf": "本篇為系列文章：",
+    "current": "（本篇）"
+  },
+  "comments": "留言"
+}

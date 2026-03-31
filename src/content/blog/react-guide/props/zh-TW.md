@@ -2,6 +2,8 @@
 title: "React - 三大屬性 Props"
 description: "探討 Props 屬性的傳遞與應用，包括批量傳遞、型別檢查（PropTypes）以及在函數式組件中的使用方法。"
 pubDate: "2021-07-31"
+tags:
+  - react
 ---
 
 # React - 三大屬性 **Props**

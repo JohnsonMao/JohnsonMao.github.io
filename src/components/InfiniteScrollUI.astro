@@ -3,20 +3,20 @@ import type { Locale } from '@/i18n'
 import type { LocalizedCollection } from '@/utils/content'
 import { Icon } from 'astro-icon/components'
 import PostCard from '@/components/PostCard.astro'
+import { t } from '@/i18n'
 
 interface Props {
   initialArticles: LocalizedCollection<'blog'>[]
-  locale: string
+  locale: Locale
   isFallback: (lang: string, locale: string) => boolean
-  getLocaleLabel: (locale: Locale) => string
   getReadingTime: (body: string, lang: Locale) => { label: string }
 }
 
-const { initialArticles, locale, isFallback, getLocaleLabel, getReadingTime } = Astro.props
+const { initialArticles, locale, isFallback, getReadingTime } = Astro.props
 
 const articleProps = initialArticles.map((entry) => {
   const articleLang = entry.locale
-  const langBadge = isFallback(articleLang, locale) ? getLocaleLabel(articleLang) : undefined
+  const langBadge = isFallback(articleLang, locale) ? t(locale, `shortLabel.${articleLang}`) : undefined
   const readingTime = getReadingTime(entry.body ?? '', articleLang)
 
   return {

@@ -3,6 +3,8 @@ title: "TypeScript 進階：tsconfig 細節配置"
 description: "在上一篇文章中，我們介紹了如何設定 TypeScript 的編譯範圍與目標版本。而這一篇文章將進一步介紹 tsconfig.json 的其他細節配置，包括類型檢查、編譯輸出設定，以及常見的 CLI 指令參數，這些設定不僅會影響編譯結果，還會對你的開發體驗產生直接的影響。"
 pubDate: "2024-09-17"
 image: "https://ithelp.ithome.com.tw/upload/images/20240917/20140224CPxg8ZsWp0.png"
+tags:
+  - typescript
 ---
 
 ![cover](https://ithelp.ithome.com.tw/upload/images/20240917/20140224CPxg8ZsWp0.png)

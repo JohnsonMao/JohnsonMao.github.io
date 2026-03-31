@@ -3,6 +3,8 @@ title: "TypeScript 實戰：前端表單與串接 API"
 description: "在現代前端開發中，與後端進行資料交換是常見的需求。透過 HTTP 請求，我們可以將資料送出並取得結果。這篇文章將介紹如何使用 TypeScript 實作前端表單與串接 API，並展示如何將這些功能結合到 React 應用中。同時，文章還會介紹如何解決跨域問題（CORS），以便讓前後端能順利溝通。"
 pubDate: "2024-09-29"
 image: "https://ithelp.ithome.com.tw/upload/images/20240929/20140224JpN4JMd4rj.png"
+tags:
+  - typescript
 ---
 
 ![cover](https://ithelp.ithome.com.tw/upload/images/20240929/20140224JpN4JMd4rj.png)

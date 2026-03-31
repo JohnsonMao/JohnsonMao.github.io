@@ -2,6 +2,8 @@
 title: "React - 框架"
 description: "介紹如何使用 Create React App (CRA) 快速搭建 React 開發環境，包含專案結構說明與常用指令。"
 pubDate: "2021-10-15"
+tags:
+  - react
 ---
 
 # React - 框架

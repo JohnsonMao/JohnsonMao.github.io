@@ -3,6 +3,9 @@ title: "Day.18 「從函式物件認識 作用域 與 提升！」 —— JavaSc
 description: "函數也是個物件型別，可以封裝一些功能（程式碼），在需要使用的時候執行功能（程式碼）。"
 pubDate: "2021-09-27"
 image: "https://i.imgur.com/dUL5Ryk.png"
+tags:
+  - it-ironman
+  - vscode
 ---
 
 ![「從函式物件認識 作用域 與 提升！」 —— JavaScript 函式 & 作用域 & 提升](https://i.imgur.com/dUL5Ryk.png)

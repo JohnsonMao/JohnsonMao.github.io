@@ -1,0 +1,7 @@
+{
+  "title": "JohnsonMao 的部落格",
+  "description": "個人部落格，記錄學習與筆記。",
+  "welcome": "歡迎",
+  "intro": "這裡是 JohnsonMao 的個人部落格，使用 Astro 與 Content Collections 建置。",
+  "toBlog": "前往文章列表"
+}

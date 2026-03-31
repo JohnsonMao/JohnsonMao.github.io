@@ -3,6 +3,8 @@ title: "VS Code 快捷鍵大師，時間就是金錢（圖多）"
 description: "還常常得使用滑鼠來操作 VS Code 嗎？想要更加提升自己的 Coding 效率嗎？沒錯！在這個效率至上的時代，一天 24 小時，人人都努力把任何一點點能省的時間榨出來，只要善用快捷鍵，人人都能成為快捷鍵大師，這裡將會記錄著能提升效率的 VS Code 快捷鍵，從最簡單的開始，慢慢進階上去。"
 pubDate: "2021-10-21"
 image: "https://i.imgur.com/SzMnh4N.png"
+tags:
+  - vscode
 ---
 
 ![快捷鍵大師，時間就是金錢](https://i.imgur.com/SzMnh4N.png)

@@ -3,6 +3,8 @@ title: "TypeScript 實戰：製作 npm Package"
 description: "在開發專案時，經常會遇到跨專案共用邏輯或工具的情況，例如常用的 logger 或驗證工具。如果每次都從一個專案複製貼上到另一個專案，難免會出現版本不同步或維護困難的問題。為了解決這類問題，我們可以將這些共用邏輯獨立成為 npm 套件，以便在多個專案中重複使用。"
 pubDate: "2024-09-30"
 image: "https://ithelp.ithome.com.tw/upload/images/20240930/20140224i5FsBAAWrP.png"
+tags:
+  - typescript
 ---
 
 ![cover](https://ithelp.ithome.com.tw/upload/images/20240930/20140224i5FsBAAWrP.png)

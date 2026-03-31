@@ -10,5 +10,25 @@ export default getViteConfig({
   test: {
     include: ['src/**/*.test.ts'],
     globals: false,
+    coverage: {
+      provider: 'v8',
+      include: ['src/**/*.ts'],
+      exclude: [
+        'src/**/*.test.ts',
+        'src/glob.loader.ts',
+        'src/env.d.ts',
+        'src/content.config.ts',
+        'src/glob.loader.ts',
+        'src/content/**/*',
+        'src/sw.ts',
+        '**/*.json',
+      ],
+      thresholds: {
+        lines: 80,
+        functions: 80,
+        branches: 80,
+        statements: 80,
+      },
+    },
   },
 })

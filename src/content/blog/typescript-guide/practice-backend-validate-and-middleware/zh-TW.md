@@ -3,6 +3,8 @@ title: "TypeScript 實戰：後端驗證與中間件"
 description: "在開發後端應用程式時，資料驗證和中間件的設計是非常重要的。這不僅能確保資料的正確性，也能提升 API 的穩定性。在這篇文章中，我們將使用與 TypeScript 很搭的 Zod 進行資料驗證，並撰寫一個簡單的 Express 中間件來處理錯誤。"
 pubDate: "2024-09-25"
 image: "https://ithelp.ithome.com.tw/upload/images/20240925/20140224RjPA40DFq0.png"
+tags:
+  - typescript
 ---
 
 ![cover](https://ithelp.ithome.com.tw/upload/images/20240925/20140224RjPA40DFq0.png)

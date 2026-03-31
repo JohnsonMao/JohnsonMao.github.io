@@ -2,6 +2,8 @@
 title: "React - Route 路由 與 參數"
 description: "掌握 React Router 中的參數傳遞技巧，包括 params、search 與 state 三種傳參方式。"
 pubDate: "2021-10-19"
+tags:
+  - react
 ---
 
 # React - Route 路由 與 參數

@@ -1,7 +1,6 @@
 ---
 import PostCard from '@/components/PostCard.astro'
-import { getTagDescription, getTagDisplay } from '@/data/tags'
-import { generateStaticLocalePaths, getLocale, getLocaleLabel, t } from '@/i18n'
+import { generateStaticLocalePaths, getLocale, t } from '@/i18n'
 import BaseLayout from '@/layouts/BaseLayout.astro'
 import { getEntriesByTag } from '@/utils/content'
 import { getReadingTime } from '@/utils/reading-time'
@@ -26,8 +25,8 @@ const tagMap = await getEntriesByTag(locale)
 const picked = tagMap.get(tagId) || []
 const sorted = picked.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
 
-const displayTag = getTagDisplay(tagId, locale)
-const tagDescription = getTagDescription(tagId, locale)
+const displayTag = t(locale, `tags.registry.${tagId}.name`)
+const tagDescription = t(locale, `tags.registry.${tagId}.description`)
 const pageDescription = tagDescription || `${t(locale, 'blog.listDescription')} — ${displayTag}`
 ---
 
@@ -55,7 +54,7 @@ const pageDescription = tagDescription || `${t(locale, 'blog.listDescription')} 
         sorted.map((entry) => {
           const articleLang = entry.locale
           const isFallback = articleLang !== locale
-          const langBadge = isFallback ? getLocaleLabel(articleLang) : undefined
+          const langBadge = isFallback ? t(locale, `shortLabel.${articleLang}`) : undefined
           const readingTime = getReadingTime(entry.body ?? '', articleLang)
 
           return (

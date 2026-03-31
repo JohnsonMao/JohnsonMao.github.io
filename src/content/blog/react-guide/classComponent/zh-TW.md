@@ -2,6 +2,8 @@
 title: "React - 類式組件"
 description: "詳細介紹類式組件（Class Component）的定義方式、繼承與 render 方法的實作要點。"
 pubDate: "2021-07-28"
+tags:
+  - react
 ---
 
 # ⚛️ React - 類式組件

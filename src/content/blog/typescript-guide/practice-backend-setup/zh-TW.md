@@ -3,6 +3,8 @@ title: "TypeScript 實戰：後端 Express Setup"
 description: "TypeScript 我們已經學的差不多了～接下來要進入實戰環節！這個章節我們會使用 Express 框架來實作簡單的 CRUD Web 後端應用程式，會選擇使用 Express 的原因也非常簡單。1. Express 足夠簡單、輕便、易於學習。2. 到現在都還在持續更新，是個成熟的後端框架。3. 最重要的是，也是我唯一會的後端框架。本篇會先介紹如何使用 TypeScript 與 Express 建置基礎的後端專案，並讓它運作起來。"
 pubDate: "2024-09-22"
 image: "https://ithelp.ithome.com.tw/upload/images/20240922/20140224rgrw90UmGl.png"
+tags:
+  - typescript
 ---
 
 ![cover](https://ithelp.ithome.com.tw/upload/images/20240922/20140224rgrw90UmGl.png)

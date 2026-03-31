@@ -3,6 +3,8 @@ title: "TypeScript 基礎：物件導向與類別基礎"
 description: "類別是一個基礎的物件導向設計（Object-Oriented Programming, OOP），是一種以物件為中心的編程範式，強調模擬現實世界的實體與行為。類別將資料（屬性）和行為（方法）整合在一起，方便定義和操作不同的物件實例。"
 pubDate: "2024-09-06"
 image: "https://ithelp.ithome.com.tw/upload/images/20240929/20140224zxObp6Odzt.png"
+tags:
+  - typescript
 ---
 
 ![cover](https://ithelp.ithome.com.tw/upload/images/20240929/20140224zxObp6Odzt.png)

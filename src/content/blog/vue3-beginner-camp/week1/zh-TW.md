@@ -3,6 +3,8 @@ title: "Vue 3 起步走"
 description: "這裡將會記錄參加 六角學院 Vue 3 新手夏令營（活動已結束） 課程筆記 與 每日任務紀錄，第一周主要是介紹用最簡單方法帶初學者學習 Vue。"
 pubDate: "2021-07-28"
 image: "https://i.imgur.com/E48VuxQ.jpg"
+tags:
+  - vue3-camp
 ---
 
 [![第一週作業展示，運用了 Vue 指令與 Ajax，點擊圖片可察看成果](https://i.imgur.com/E48VuxQ.jpg)](https://johnsonmao.github.io/summer-camp-vue3/week1/)

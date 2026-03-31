@@ -2,6 +2,8 @@
 title: "React - 受控組件 與 非受控組件"
 description: "比較受控組件與非受控組件的差異，學習如何透過 State 即時管理表單輸入資料。"
 pubDate: "2021-10-11"
+tags:
+  - react
 ---
 
 # React - 受控組件 與 非受控組件

@@ -2,6 +2,8 @@
 title: "React - 組件 與 模組"
 description: "深入了解 React 中的組件（Component）與模組（Module）化開發，以及如何使用開發者工具進行調試。"
 pubDate: "2021-07-27"
+tags:
+  - react
 ---
 
 # React - 組件 與 模組

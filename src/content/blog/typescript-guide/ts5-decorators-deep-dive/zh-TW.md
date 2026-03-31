@@ -3,6 +3,8 @@ title: "TypeScript 5 進階：新版裝飾器詳解"
 description: "在上一篇文章中，我們介紹了新版裝飾器與舊版裝飾器的差異。這一篇將更深入探討新版裝飾器的實際應用。要運行本文範例，請確保 TypeScript 版本為 5 以上，並且 `experimentalDecorators` 與 `emitDecoratorMetadata` 均未啟用或設為 `false`。TypeScript 5 除了不再支援舊版的參數裝飾器（Parameter Decorator）外，還多增加了更多細節的裝飾器。"
 pubDate: "2024-09-21"
 image: "https://ithelp.ithome.com.tw/upload/images/20240921/20140224vCLgWeVmup.png"
+tags:
+  - typescript
 ---
 
 ![cover](https://ithelp.ithome.com.tw/upload/images/20240921/20140224vCLgWeVmup.png)

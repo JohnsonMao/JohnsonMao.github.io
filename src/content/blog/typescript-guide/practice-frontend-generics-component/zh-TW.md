@@ -3,6 +3,8 @@ title: "TypeScript 實戰：前端泛型元件"
 description: "今天我們將實作一個任務清單元件，並一步步重構它，使原本無法複用的元件，利用泛型變成更通用、更彈性的元件。這章節會著重在如何運用 TypeScript，不會過多討論 React 的原理。如果對 React 還不太熟悉，可以先參考官方[快速上手文件](https://react.dev/learn)。"
 pubDate: "2024-09-28"
 image: "https://ithelp.ithome.com.tw/upload/images/20240928/20140224Dk9o03NNtW.png"
+tags:
+  - typescript
 ---
 
 ![cover](https://ithelp.ithome.com.tw/upload/images/20240928/20140224Dk9o03NNtW.png)

@@ -3,6 +3,9 @@ title: "Day.9 「我介於有與沒有之間～」 —— CSS 偽類選擇器（
 description: "偽（Pseudo）這個意思有虛幻虛無的意思，類選擇器是用來處理 DOM 操作不了選擇器，偽元素則是原本並沒有在 HTML DOM 中，是透過 CSS 創造出來的元素。"
 pubDate: "2021-09-18"
 image: "https://i.imgur.com/77yUxJL.png"
+tags:
+  - it-ironman
+  - vscode
 ---
 
 ![「我實際不存在 DOM 裡～」 —— CSS 偽類選擇器（Pseudo classes） 與 偽元素（Pseudo element）](https://i.imgur.com/77yUxJL.png)

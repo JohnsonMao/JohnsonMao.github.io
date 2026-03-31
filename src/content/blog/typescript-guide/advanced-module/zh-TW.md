@@ -3,6 +3,8 @@ title: "TypeScript 必備：模組 Module"
 description: "模組化是現代程式開發中不可或缺的一部分。模組允許我們將程式碼拆分為更小的可重用單位，從而提高了程式碼的可維護性和可讀性。在 TypeScript 中，我們使用 import 和 export 關鍵字來實現模組的匯入與匯出，並透過 npm 來管理第三方套件和依賴。"
 pubDate: "2024-09-15"
 image: "https://ithelp.ithome.com.tw/upload/images/20240917/20140224disBos5a7K.png"
+tags:
+  - typescript
 ---
 
 ![cover](https://ithelp.ithome.com.tw/upload/images/20240917/20140224disBos5a7K.png)

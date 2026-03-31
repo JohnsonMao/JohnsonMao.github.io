@@ -3,6 +3,8 @@ title: "TypeScript 實戰：後端裝飾器生成路由"
 description: "在這篇文章中，我們將介紹如何使用 TypeScript 的裝飾器來生成 Express 路由，從而讓程式碼更加簡潔。過去，由於 TypeScript 的裝飾器功能尚未完善，我們通常需要使用 reflect-metadata 這樣的套件來擴展裝飾器對 metadata 的支援。然而，隨著 TypeScript 5.2 的推出，裝飾器已經原生支援 metadata，因此不需要再依賴外部套件。"
 pubDate: "2024-09-26"
 image: "https://ithelp.ithome.com.tw/upload/images/20240926/20140224XWJRhYkiia.png"
+tags:
+  - typescript
 ---
 
 ![cover](https://ithelp.ithome.com.tw/upload/images/20240926/20140224XWJRhYkiia.png)

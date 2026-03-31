@@ -3,6 +3,9 @@ title: "Day.14 「基礎打穩了，就能走得更長久～」 —— JavaScrip
 description: "學習任何東西，都要把基礎學的扎實，基礎穩了，遇到問題就能迎刃而解。而學習程式語言的基礎就是數學邏輯，不用到很專精，只要有基礎數學邏輯，多寫多做就能鍛鍊出寫程式邏輯的金魚腦，基礎邏輯打穩了，任何程式語言都有相似的地方，會越學越快，然後發現根本是無底洞，沒有盡頭。"
 pubDate: "2021-09-23"
 image: "https://i.imgur.com/0XXiCaD.png"
+tags:
+  - it-ironman
+  - vscode
 ---
 
 ![「基礎打穩了，就能走得更長久～」 —— JavaScript 基礎運算子](https://i.imgur.com/0XXiCaD.png)

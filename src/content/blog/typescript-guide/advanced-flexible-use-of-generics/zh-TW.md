@@ -3,6 +3,8 @@ title: "TypeScript 進階：靈活應用泛型"
 description: "本文將深入探討泛型在進階應用中的強大能力，包括預設泛型型別、泛型約束、工具型別等，展示如何利用泛型來處理更複雜的型別操作。"
 pubDate: "2024-09-10"
 image: "https://ithelp.ithome.com.tw/upload/images/20240929/20140224VmIGct2k3v.png"
+tags:
+  - typescript
 ---
 
 ![cover](https://ithelp.ithome.com.tw/upload/images/20240929/20140224VmIGct2k3v.png)

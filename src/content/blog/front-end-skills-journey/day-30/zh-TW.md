@@ -3,6 +3,9 @@ title: "Day.30 「什麼！？ Promise 的語法糖？」 —— ES8 Async & Awa
 description: "ES8 新增了 async 與 await 兩個語法，這兩個語法也是為了更方便解決非同步的語法，可以說是 Promise then 的語法糖。"
 pubDate: "2021-10-09"
 image: "https://i.imgur.com/YhGvJWy.png"
+tags:
+  - it-ironman
+  - vscode
 ---
 
 ![「什麼！？ Promise 的語法糖？」 —— ES8 Async & Await](https://i.imgur.com/YhGvJWy.png)
