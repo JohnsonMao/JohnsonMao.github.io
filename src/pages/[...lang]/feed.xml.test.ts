@@ -1,3 +1,4 @@
+import type { RSSFeedItem } from '@astrojs/rss'
 import rss from '@astrojs/rss'
 
 import { beforeEach, describe, expect, it, vi } from 'vitest'
@@ -49,16 +50,16 @@ describe('rss feed', () => {
     it('filters out draft posts', async () => {
       await GET(mockContext)
       expect(mockRss).toHaveBeenCalled()
-      const response = mockRss.mock.calls[0][0]
-      expect(response.items).toHaveLength(1)
-      expect(response.items[0].title).toBe('Post 1')
+      const items = mockRss.mock.calls[0][0].items as RSSFeedItem[]
+      expect(items).toHaveLength(1)
+      expect(items[0].title).toBe('Post 1')
     })
 
     it('generates correct links for default locale', async () => {
       await GET(mockContext)
       expect(mockRss).toHaveBeenCalled()
-      const response = mockRss.mock.calls[0][0]
-      expect(response.items[0].link).toBe('/blog/post-1/')
+      const items = mockRss.mock.calls[0][0].items as RSSFeedItem[]
+      expect(items[0].link).toBe('/blog/post-1/')
     })
 
     it('generates correct links for non-default locale', async () => {
@@ -68,8 +69,8 @@ describe('rss feed', () => {
       }
       await GET(enContext)
       expect(mockRss).toHaveBeenCalled()
-      const response = mockRss.mock.calls[0][0]
-      expect(response.items[0].link).toBe('/en/blog/post-1/')
+      const items = mockRss.mock.calls[0][0].items as RSSFeedItem[]
+      expect(items[0].link).toBe('/en/blog/post-1/')
     })
 
     it('uses fallback site URL if site is undefined', async () => {
@@ -79,8 +80,8 @@ describe('rss feed', () => {
       }
       await GET(noSiteContext)
       expect(mockRss).toHaveBeenCalled()
-      const response = mockRss.mock.calls[0][0]
-      expect(response.site.toString()).toBe('https://johnsonmao.github.io/')
+      const site = mockRss.mock.calls[0][0].site
+      expect(site.toString()).toBe('https://johnsonmao.github.io/')
     })
   })
 })

@@ -1,3 +1,4 @@
+import type { RSSFeedItem } from '@astrojs/rss'
 import rss from '@astrojs/rss'
 import { defaultLocale, getLocale, locales, t } from '@/i18n'
 import { getSortedCollectionList, parseEntryId } from '@/utils/content'
@@ -27,19 +28,20 @@ export async function GET({ params, site }: Context) {
 
   const siteUrl = site ?? new URL('https://johnsonmao.github.io')
   const prefix = locale === defaultLocale ? '' : `/${locale}`
+  const items: RSSFeedItem[] = sorted.map((entry) => {
+    const { slug } = parseEntryId(entry.id)
+    return {
+      title: entry.data.title,
+      description: entry.data.description,
+      pubDate: entry.data.pubDate,
+      link: `${prefix}/blog/${slug}/`,
+    }
+  })
 
   return rss({
     title: 'Johnson Mao',
     description: t(locale, 'feed.description'),
     site: siteUrl,
-    items: sorted.map((entry) => {
-      const { slug } = parseEntryId(entry.id)
-      return {
-        title: entry.data.title,
-        description: entry.data.description,
-        pubDate: entry.data.pubDate,
-        link: `${prefix}/blog/${slug}/`,
-      }
-    }),
+    items,
   })
 }
