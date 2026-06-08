@@ -7,7 +7,7 @@ import Footer from '@/components/Footer.astro'
 import Header from '@/components/Header.astro'
 import ReloadPrompt from '@/components/pwa/ReloadPrompt.astro'
 import ThemeScript from '@/components/theme/ThemeScript.astro'
-import { getLocale, t } from '@/i18n'
+import { getLocale, locales, t } from '@/i18n'
 import '@/styles/global.css'
 
 interface Props {
@@ -20,7 +20,6 @@ interface Props {
 const locale = getLocale(Astro.currentLocale)
 const { title, description = t(locale, 'home.description'), image, canonical, maxWidth = 'max-w-3xl' } = Astro.props
 const pathWithoutLocale = Astro.url.pathname.replace(/^\//, '').replace(/^en\//, '')
-const locales = ['zh-TW', 'en'] as const
 const site = Astro.site?.href ?? `${Astro.url.origin}/`
 const canonicalUrl = canonical ?? Astro.url.href
 const imageUrl = image?.startsWith('http')

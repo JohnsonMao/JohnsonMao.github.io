@@ -21,6 +21,9 @@ interface Messages {
 }
 
 const PREFERRED_DEFAULT_LOCALE = 'zh-TW'
+export const SUPPORTED_LOCALES = ['zh-TW', 'en'] as const
+export type Locale = (typeof SUPPORTED_LOCALES)[number]
+const SUPPORTED_LOCALE_SET = new Set<Locale>(SUPPORTED_LOCALES)
 const MESSAGE_MODULE_RE = /\/([^/]+)\/([^/]+)\.json$/
 
 function toRecord(value: unknown): Record<string, unknown> {
@@ -49,11 +52,13 @@ function mergeRecords(base: Record<string, unknown>, source: Record<string, unkn
   return output
 }
 
-export type Locale = string
+function isSupportedLocale(locale: string): locale is Locale {
+  return SUPPORTED_LOCALE_SET.has(locale as Locale)
+}
 
 interface CreateI18nDataOptions {
   messageModules?: I18nMessageModules
-  preferredDefaultLocale?: string
+  preferredDefaultLocale?: Locale
   tagIds?: readonly TagId[]
   isDev?: boolean
   warn?: (message: string) => void
@@ -77,15 +82,18 @@ export function createI18nData(options: CreateI18nDataOptions = {}): I18nData {
       if (!match)
         return null
       const [, locale, moduleName] = match
+      if (!isSupportedLocale(locale)) {
+        throw new Error(`[i18n] Unsupported locale "${locale}" in "${path}". Supported locales: ${SUPPORTED_LOCALES.join(', ')}`)
+      }
       return [locale, moduleName, toRecord(mod.default)] as const
     })
-    .filter((entry): entry is readonly [string, string, Record<string, unknown>] => entry !== null)
+    .filter((entry): entry is readonly [Locale, string, Record<string, unknown>] => entry !== null)
 
   if (messageEntries.length === 0) {
     throw new Error('[i18n] No locale files found under src/i18n/messages/*/*.json')
   }
 
-  const localeSet = new Set(messageEntries.map(([locale]) => locale))
+  const localeSet = new Set<Locale>(messageEntries.map(([locale]) => locale))
   const defaultLocale: Locale = localeSet.has(preferredDefaultLocale)
     ? preferredDefaultLocale
     : messageEntries[0]![0]
@@ -127,23 +135,19 @@ export function createI18nData(options: CreateI18nDataOptions = {}): I18nData {
     return registry
   }
 
-  const messages: Record<Locale, Messages> = Object.fromEntries(
-    locales.map((locale) => {
-      const localeMessages = (messagesByLocale.get(locale) ?? {}) as Messages
-      const tags = toRecord(localeMessages.tags) as Messages['tags']
+  const messages = locales.reduce<Record<Locale, Messages>>((acc, locale) => {
+    const localeMessages = (messagesByLocale.get(locale) ?? {}) as Messages
+    const tags = toRecord(localeMessages.tags) as Messages['tags']
 
-      return [
-        locale,
-        {
-          ...localeMessages,
-          tags: {
-            ...tags,
-            registry: buildTagRegistry(locale),
-          },
-        } satisfies Messages,
-      ]
-    }),
-  )
+    acc[locale] = {
+      ...localeMessages,
+      tags: {
+        ...tags,
+        registry: buildTagRegistry(locale),
+      },
+    }
+    return acc
+  }, {} as Record<Locale, Messages>)
 
   const isDev = options.isDev ?? import.meta.env.DEV
   if (isDev) {

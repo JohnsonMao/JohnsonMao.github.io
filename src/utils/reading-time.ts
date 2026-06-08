@@ -47,7 +47,7 @@ export interface ReadingTimeResult {
  */
 export function getReadingTimeMinutes(
   content: string,
-  locale?: 'en' | 'zh-TW',
+  locale?: Locale,
 ): number {
   const text = stripMarkdown(content)
   const len = text.length
