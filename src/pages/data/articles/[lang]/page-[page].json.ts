@@ -33,17 +33,16 @@ export async function getStaticPaths() {
 
 export const GET: APIRoute = async ({ params }) => {
   const { lang, page: pageStr } = params
-  const locale = lang as any
   const pageNum = Number.parseInt(pageStr!, 10)
 
-  if (!isLocale(locale) || !pageNum || pageNum < 1) {
+  if (!isLocale(lang) || !pageNum || pageNum < 1) {
     return new Response(JSON.stringify({ error: 'Invalid page or locale' }), {
       status: 400,
       headers: { 'Content-Type': 'application/json' },
     })
   }
 
-  const articles = await getSortedCollectionList('blog', locale)
+  const articles = await getSortedCollectionList('blog', lang)
   const pages = getPaginatedArticles(articles, ARTICLES_PER_PAGE)
 
   if (pageNum > pages.length) {
@@ -68,7 +67,7 @@ export const GET: APIRoute = async ({ params }) => {
 
   const paginatedPage: PaginatedArticlesPage = {
     page: pageNum,
-    locale,
+    locale: lang,
     articles: serializedArticles,
     hasMore: pageNum < pages.length,
   }

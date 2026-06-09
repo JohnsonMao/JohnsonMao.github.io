@@ -2,7 +2,7 @@ import type { RSSFeedItem } from '@astrojs/rss'
 import rss from '@astrojs/rss'
 
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { GET, getStaticPaths } from './feed.xml'
+import { GET, getStaticPaths } from '../feed.xml'
 
 // Mock Astro-specific modules first, before imports
 vi.mock('@astrojs/rss', () => {
@@ -15,15 +15,14 @@ vi.mock('@astrojs/rss', () => {
 vi.mock('@/utils/content', () => ({
   getSortedCollectionList: vi.fn(async () => [
     {
-      id: 'post-1/zh-TW',
+      id: 'post-1',
       data: { title: 'Post 1', description: 'Desc 1', pubDate: new Date('2024-01-01'), draft: false },
     },
     {
-      id: 'post-2/en',
+      id: 'post-2',
       data: { title: 'Post 2', description: 'Desc 2', pubDate: new Date('2024-01-02'), draft: true },
     },
   ]),
-  parseEntryId: (id: string) => ({ slug: id.split('/')[0] }),
 }))
 
 const mockRss = vi.mocked(rss)
