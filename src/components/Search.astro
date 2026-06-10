@@ -102,6 +102,7 @@ interface PagefindSearchFragment {
   raw_url?: string
   content: string
   excerpt: string
+  plain_excerpt?: string
   word_count: number
   meta: Record<string, string>
   [key: string]: any
@@ -132,6 +133,12 @@ interface Pagefind {
   search: (query: string) => Promise<PagefindSearchResults | null>
 }
 
+const CJK_CHAR_REGEX = /[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}]/u
+const WHITESPACE_REGEX = /\s/u
+const SPLIT_WHITESPACE_REGEX = /\s+/u
+const HTML_TAG_REGEX = /<[^>]*>/g
+const REGEX_ESCAPE_REGEX = /[.*+?^${}()|[\]\\]/g
+
 class SiteSearch extends HTMLElement {
   private pagefind?: Pagefind
   private searchButton: HTMLButtonElement | null = null
@@ -143,6 +150,7 @@ class SiteSearch extends HTMLElement {
   private resultTemplate: HTMLTemplateElement | null = null
   private skeletonTemplate: HTMLTemplateElement | null = null
   private isClosing = false
+  private searchRequestId = 0
 
   constructor() {
     super()
@@ -240,8 +248,77 @@ class SiteSearch extends HTMLElement {
     this.searchResults.appendChild(this.skeletonTemplate.content.cloneNode(true))
   }
 
+  private isCjkQuery(query: string) {
+    return CJK_CHAR_REGEX.test(query)
+  }
+
+  private buildCjkFallbackQuery(query: string) {
+    if (!this.isCjkQuery(query) || WHITESPACE_REGEX.test(query) || query.length < 2)
+      return null
+    return [...query].join(' ')
+  }
+
+  private mergeSearchResults(primary: PagefindSearchResult[], secondary: PagefindSearchResult[]) {
+    const merged = new Map<string, PagefindSearchResult>()
+    primary.forEach(item => merged.set(item.id, item))
+    secondary.forEach((item) => {
+      if (!merged.has(item.id))
+        merged.set(item.id, item)
+    })
+    return [...merged.values()]
+  }
+
+  private escapeHtml(text: string) {
+    return text
+      .replaceAll('&', '&amp;')
+      .replaceAll('<', '&lt;')
+      .replaceAll('>', '&gt;')
+      .replaceAll('"', '&quot;')
+      .replaceAll('\'', '&#39;')
+  }
+
+  private escapeRegExp(text: string) {
+    return text.replace(REGEX_ESCAPE_REGEX, '\\$&')
+  }
+
+  private buildHighlightTerms(query: string) {
+    const terms = new Set<string>()
+    if (this.isCjkQuery(query) && !WHITESPACE_REGEX.test(query)) {
+      terms.add(query)
+      const chars = [...query]
+      chars
+        .filter(char => CJK_CHAR_REGEX.test(char))
+        .forEach(char => terms.add(char))
+    }
+    else {
+      query
+        .split(SPLIT_WHITESPACE_REGEX)
+        .map(t => t.trim())
+        .filter(Boolean)
+        .forEach(t => terms.add(t))
+    }
+    return [...terms].toSorted((a, b) => b.length - a.length)
+  }
+
+  private highlightExcerpt(text: string, query: string) {
+    const escapedText = this.escapeHtml(text)
+    const terms = this.buildHighlightTerms(query)
+    if (!terms.length)
+      return escapedText
+    const pattern = terms.map(term => this.escapeRegExp(term)).join('|')
+    return escapedText.replace(new RegExp(pattern, 'giu'), '<mark>$&</mark>')
+  }
+
+  private formatExcerpt(fragment: PagefindSearchFragment, query: string) {
+    const raw = fragment.plain_excerpt
+      ?? fragment.excerpt?.replace(HTML_TAG_REGEX, '')
+      ?? ''
+    return this.highlightExcerpt(raw, query)
+  }
+
   private async handleInput(e: Event) {
     const query = (e.target as HTMLInputElement).value.trim()
+    const currentRequestId = ++this.searchRequestId
     if (!query) {
       if (this.searchResults)
         this.searchResults.innerHTML = ''
@@ -252,6 +329,8 @@ class SiteSearch extends HTMLElement {
     this.searchEmpty?.classList.add('hidden')
 
     const pf = await this.initPagefind()
+    if (currentRequestId !== this.searchRequestId)
+      return
     if (!pf) {
       if (this.searchResults) {
         const msg = this.searchDialog?.dataset.indexNotFound || 'Search index not found.'
@@ -263,12 +342,22 @@ class SiteSearch extends HTMLElement {
     this.showLoading()
 
     const searchResponse = await pf.debouncedSearch(query)
-    if (!searchResponse)
+    if (currentRequestId !== this.searchRequestId || !searchResponse)
       return
 
-    const results: PagefindSearchFragment[] = await Promise.all(
-      searchResponse.results.slice(0, 10).map(r => r.data()),
-    )
+    let mergedResults = searchResponse.results
+    const fallbackQuery = this.buildCjkFallbackQuery(query)
+    if (fallbackQuery && searchResponse.unfilteredResultCount <= 1) {
+      const fallbackResponse = await pf.search(fallbackQuery)
+      if (currentRequestId !== this.searchRequestId)
+        return
+      if (fallbackResponse)
+        mergedResults = this.mergeSearchResults(searchResponse.results, fallbackResponse.results)
+    }
+
+    const results: PagefindSearchFragment[] = await Promise.all(mergedResults.slice(0, 10).map(r => r.data()))
+    if (currentRequestId !== this.searchRequestId)
+      return
 
     if (results.length === 0) {
       if (this.searchResults) {
@@ -279,10 +368,10 @@ class SiteSearch extends HTMLElement {
       return
     }
 
-    this.renderResults(results)
+    this.renderResults(results, query)
   }
 
-  private renderResults(results: PagefindSearchFragment[]) {
+  private renderResults(results: PagefindSearchFragment[], query: string) {
     if (!this.searchResults || !this.resultTemplate)
       return
     this.searchResults.innerHTML = ''
@@ -300,7 +389,7 @@ class SiteSearch extends HTMLElement {
       if (title)
         title.textContent = r.meta.title
       if (excerpt)
-        excerpt.innerHTML = r.excerpt
+        excerpt.innerHTML = this.formatExcerpt(r, query)
 
       fragment.appendChild(clone)
     })
