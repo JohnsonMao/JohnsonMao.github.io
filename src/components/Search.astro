@@ -228,8 +228,7 @@ class SiteSearch extends HTMLElement {
         document.body.style.overflow = ''
         if (this.searchInput)
           this.searchInput.value = ''
-        if (this.searchResults)
-          this.searchResults.innerHTML = ''
+        this.searchResults?.replaceChildren()
         this.searchEmpty?.classList.remove('hidden')
         this.isClosing = false
       },
@@ -244,8 +243,7 @@ class SiteSearch extends HTMLElement {
   private showLoading() {
     if (!this.searchResults || !this.skeletonTemplate)
       return
-    this.searchResults.innerHTML = ''
-    this.searchResults.appendChild(this.skeletonTemplate.content.cloneNode(true))
+    this.searchResults.replaceChildren(this.skeletonTemplate.content.cloneNode(true))
   }
 
   private isCjkQuery(query: string) {
@@ -266,15 +264,6 @@ class SiteSearch extends HTMLElement {
         merged.set(item.id, item)
     })
     return [...merged.values()]
-  }
-
-  private escapeHtml(text: string) {
-    return text
-      .replaceAll('&', '&amp;')
-      .replaceAll('<', '&lt;')
-      .replaceAll('>', '&gt;')
-      .replaceAll('"', '&quot;')
-      .replaceAll('\'', '&#39;')
   }
 
   private escapeRegExp(text: string) {
@@ -300,81 +289,116 @@ class SiteSearch extends HTMLElement {
     return [...terms].toSorted((a, b) => b.length - a.length)
   }
 
-  private highlightExcerpt(text: string, query: string) {
-    const escapedText = this.escapeHtml(text)
-    const terms = this.buildHighlightTerms(query)
-    if (!terms.length)
-      return escapedText
-    const pattern = terms.map(term => this.escapeRegExp(term)).join('|')
-    return escapedText.replace(new RegExp(pattern, 'giu'), '<mark>$&</mark>')
+  private getExcerptText(fragment: PagefindSearchFragment) {
+    return fragment.plain_excerpt ?? fragment.excerpt?.replace(HTML_TAG_REGEX, '') ?? ''
   }
 
-  private formatExcerpt(fragment: PagefindSearchFragment, query: string) {
-    const raw = fragment.plain_excerpt
-      ?? fragment.excerpt?.replace(HTML_TAG_REGEX, '')
-      ?? ''
-    return this.highlightExcerpt(raw, query)
+  private renderHighlightedText(container: Element, text: string, query: string) {
+    const terms = this.buildHighlightTerms(query)
+    if (!terms.length) {
+      container.textContent = text
+      return
+    }
+    const pattern = new RegExp(terms.map(t => this.escapeRegExp(t)).join('|'), 'giu')
+    const nodes: (Text | HTMLElement)[] = []
+    let lastIndex = 0
+    let match: RegExpExecArray | null
+    while ((match = pattern.exec(text)) !== null) {
+      if (match.index > lastIndex)
+        nodes.push(document.createTextNode(text.slice(lastIndex, match.index)))
+      const mark = document.createElement('mark')
+      mark.textContent = match[0]
+      nodes.push(mark)
+      lastIndex = pattern.lastIndex
+    }
+    if (lastIndex < text.length)
+      nodes.push(document.createTextNode(text.slice(lastIndex)))
+    container.replaceChildren(...nodes)
+  }
+
+  private createMessageNode(text: string, className: string) {
+    const div = document.createElement('div')
+    div.className = className
+    div.textContent = text
+    return div
+  }
+
+  private async performSearch(query: string, requestId: number): Promise<
+    | { status: 'aborted' }
+    | { status: 'no-pagefind' }
+    | { status: 'no-results' }
+    | { status: 'results'; results: PagefindSearchFragment[] }
+  > {
+    const pf = await this.initPagefind()
+    if (requestId !== this.searchRequestId)
+      return { status: 'aborted' }
+    if (!pf)
+      return { status: 'no-pagefind' }
+
+    this.showLoading()
+
+    const searchResponse = await pf.debouncedSearch(query)
+    if (requestId !== this.searchRequestId || !searchResponse)
+      return { status: 'aborted' }
+
+    let mergedResults = searchResponse.results
+    const fallbackQuery = this.buildCjkFallbackQuery(query)
+    if (fallbackQuery && searchResponse.unfilteredResultCount <= 1) {
+      const fallbackResponse = await pf.search(fallbackQuery)
+      if (requestId !== this.searchRequestId)
+        return { status: 'aborted' }
+      if (fallbackResponse)
+        mergedResults = this.mergeSearchResults(searchResponse.results, fallbackResponse.results)
+    }
+
+    const results: PagefindSearchFragment[] = await Promise.all(mergedResults.slice(0, 10).map(r => r.data()))
+    if (requestId !== this.searchRequestId)
+      return { status: 'aborted' }
+
+    return results.length === 0
+      ? { status: 'no-results' }
+      : { status: 'results', results }
   }
 
   private async handleInput(e: Event) {
     const query = (e.target as HTMLInputElement).value.trim()
     const currentRequestId = ++this.searchRequestId
+
     if (!query) {
-      if (this.searchResults)
-        this.searchResults.innerHTML = ''
+      this.searchResults?.replaceChildren()
       this.searchEmpty?.classList.remove('hidden')
       return
     }
 
     this.searchEmpty?.classList.add('hidden')
 
-    const pf = await this.initPagefind()
-    if (currentRequestId !== this.searchRequestId)
-      return
-    if (!pf) {
-      if (this.searchResults) {
-        const msg = this.searchDialog?.dataset.indexNotFound || 'Search index not found.'
-        this.searchResults.innerHTML = `<div class="text-center py-12 text-neutral-500 italic">${msg}</div>`
-      }
-      return
-    }
-
-    this.showLoading()
-
-    const searchResponse = await pf.debouncedSearch(query)
-    if (currentRequestId !== this.searchRequestId || !searchResponse)
+    const outcome = await this.performSearch(query, currentRequestId)
+    if (outcome.status === 'aborted')
       return
 
-    let mergedResults = searchResponse.results
-    const fallbackQuery = this.buildCjkFallbackQuery(query)
-    if (fallbackQuery && searchResponse.unfilteredResultCount <= 1) {
-      const fallbackResponse = await pf.search(fallbackQuery)
-      if (currentRequestId !== this.searchRequestId)
-        return
-      if (fallbackResponse)
-        mergedResults = this.mergeSearchResults(searchResponse.results, fallbackResponse.results)
-    }
-
-    const results: PagefindSearchFragment[] = await Promise.all(mergedResults.slice(0, 10).map(r => r.data()))
-    if (currentRequestId !== this.searchRequestId)
-      return
-
-    if (results.length === 0) {
-      if (this.searchResults) {
-        let msg = this.searchDialog?.dataset.noResultsFor || 'No results found for "{query}"'
-        msg = msg.replace('{query}', query)
-        this.searchResults.innerHTML = `<div class="text-center py-12 text-neutral-500">${msg}</div>`
-      }
+    if (outcome.status === 'no-pagefind') {
+      const msg = this.searchDialog?.dataset.indexNotFound ?? 'Search index not found.'
+      this.searchResults?.replaceChildren(
+        this.createMessageNode(msg, 'text-center py-12 text-neutral-500 italic'),
+      )
       return
     }
 
-    this.renderResults(results, query)
+    if (outcome.status === 'no-results') {
+      const template = this.searchDialog?.dataset.noResultsFor ?? 'No results found for "{query}"'
+      const msg = template.replace('{query}', query)
+      this.searchResults?.replaceChildren(
+        this.createMessageNode(msg, 'text-center py-12 text-neutral-500'),
+      )
+      return
+    }
+
+    this.renderResults(outcome.results, query)
   }
 
   private renderResults(results: PagefindSearchFragment[], query: string) {
     if (!this.searchResults || !this.resultTemplate)
       return
-    this.searchResults.innerHTML = ''
 
     const fragment = document.createDocumentFragment()
 
@@ -389,12 +413,12 @@ class SiteSearch extends HTMLElement {
       if (title)
         title.textContent = r.meta.title
       if (excerpt)
-        excerpt.innerHTML = this.formatExcerpt(r, query)
+        this.renderHighlightedText(excerpt, this.getExcerptText(r), query)
 
       fragment.appendChild(clone)
     })
 
-    this.searchResults.appendChild(fragment)
+    this.searchResults.replaceChildren(fragment)
   }
 
   private handleGlobalKeydown = (e: KeyboardEvent) => {
