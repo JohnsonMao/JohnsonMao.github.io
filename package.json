@@ -6,7 +6,7 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "check": "astro check",
+    "check": "astro check && pnpm lint",
     "astro": "astro",
     "postbuild": "pagefind --site dist",
     "test": "vitest run",

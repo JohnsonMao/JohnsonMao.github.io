@@ -302,14 +302,14 @@ class SiteSearch extends HTMLElement {
     const pattern = new RegExp(terms.map(t => this.escapeRegExp(t)).join('|'), 'giu')
     const nodes: (Text | HTMLElement)[] = []
     let lastIndex = 0
-    let match: RegExpExecArray | null
-    while ((match = pattern.exec(text)) !== null) {
+    for (const match of text.matchAll(pattern)) {
       if (match.index > lastIndex)
         nodes.push(document.createTextNode(text.slice(lastIndex, match.index)))
       const mark = document.createElement('mark')
       mark.textContent = match[0]
+      mark.className = 'bg-amber-200/50 dark:bg-amber-400/30 text-amber-800 dark:text-amber-300'
       nodes.push(mark)
-      lastIndex = pattern.lastIndex
+      lastIndex = match.index + match[0].length
     }
     if (lastIndex < text.length)
       nodes.push(document.createTextNode(text.slice(lastIndex)))
@@ -327,7 +327,7 @@ class SiteSearch extends HTMLElement {
     | { status: 'aborted' }
     | { status: 'no-pagefind' }
     | { status: 'no-results' }
-    | { status: 'results'; results: PagefindSearchFragment[] }
+    | { status: 'results', results: PagefindSearchFragment[] }
   > {
     const pf = await this.initPagefind()
     if (requestId !== this.searchRequestId)
