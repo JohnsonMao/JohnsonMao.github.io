@@ -28,8 +28,22 @@ class ThemeToggle extends HTMLElement {
     DARK: 'dark',
   } as const
 
-  stats = {
-    theme: null as string | null,
+  get theme() {
+    return localStorage.getItem(this.THEME_STORAGE_KEY)
+  }
+
+  applyTheme(theme: string) {
+    document.documentElement.classList.toggle(this.THEMES.DARK, theme === this.THEMES.DARK)
+  }
+
+  set theme(value: string | null) {
+    if (value) {
+      localStorage.setItem(this.THEME_STORAGE_KEY, value)
+      this.applyTheme(value)
+    }
+    else {
+      localStorage.removeItem(this.THEME_STORAGE_KEY)
+    }
   }
 
   connectedCallback() {
@@ -45,29 +59,19 @@ class ThemeToggle extends HTMLElement {
     this.addEventListener('keydown', this.handleKeydown)
 
     // Apply theme from localStorage on initial load or fallback to system preference
-    const root = document.documentElement
-    this.stats.theme = localStorage.getItem(this.THEME_STORAGE_KEY)
-    if (this.stats.theme) {
-      root.classList.toggle(this.THEMES.DARK, this.stats.theme === this.THEMES.DARK)
+    if (this.theme) {
+      this.applyTheme(this.theme)
     }
     else {
       // Fallback to system preference if no theme is stored
       const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
-      if (prefersDark) {
-        root.classList.add(this.THEMES.DARK)
-      }
+      this.applyTheme(prefersDark ? this.THEMES.DARK : this.THEMES.LIGHT)
     }
   }
 
   handleToggle() {
-    const root = document.documentElement
-    const current = root.classList.contains(this.THEMES.DARK) ? this.THEMES.DARK : this.THEMES.LIGHT
-    this.stats.theme = current === this.THEMES.DARK ? this.THEMES.LIGHT : this.THEMES.DARK
-    root.classList.toggle(this.THEMES.DARK, this.stats.theme === this.THEMES.DARK)
-    try {
-      localStorage.setItem(this.THEME_STORAGE_KEY, this.stats.theme)
-    }
-    catch {}
+    const current = document.documentElement.classList.contains(this.THEMES.DARK) ? this.THEMES.DARK : this.THEMES.LIGHT
+    this.theme = current === this.THEMES.DARK ? this.THEMES.LIGHT : this.THEMES.DARK
   }
 
   handleKeydown(event: KeyboardEvent) {
