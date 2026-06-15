@@ -6,13 +6,14 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "check": "astro check && pnpm lint",
+    "check": "astro check && pnpm lint && pnpm knip && pnpm test",
     "astro": "astro",
     "postbuild": "pagefind --site dist",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
     "lint": "eslint",
-    "lint:fix": "eslint --fix"
+    "lint:fix": "eslint --fix",
+    "knip": "knip"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.13",
@@ -26,7 +27,6 @@
     "gsap": "^3.14.2",
     "tailwindcss": "^4.2.0",
     "workbox-cacheable-response": "^7.4.0",
-    "workbox-core": "^7.4.0",
     "workbox-expiration": "^7.4.0",
     "workbox-precaching": "^7.4.0",
     "workbox-routing": "^7.4.0",
@@ -42,10 +42,10 @@
     "eslint": "^10.0.3",
     "eslint-plugin-astro": "^1.6.0",
     "eslint-plugin-format": "^2.0.1",
+    "knip": "^6.16.1",
     "pagefind": "^1.5.2",
     "typescript": "^5.9.3",
     "vite-plugin-pwa": "^1.2.0",
-    "vitest": "^4.1.0",
-    "web-push": "^3.6.7"
+    "vitest": "^4.1.0"
   }
 }

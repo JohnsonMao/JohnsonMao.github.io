@@ -209,20 +209,6 @@ export interface SerializedArticle {
   readingTime?: string
 }
 
-export function serializeArticle<K extends SelectedCollection>(
-  entry: LocalizedCollection<K>,
-  readingTime?: string,
-): SerializedArticle {
-  return {
-    id: entry.id,
-    title: entry.data.title,
-    description: entry.data.description,
-    pubDate: entry.data.pubDate.toISOString(),
-    tags: entry.tags,
-    readingTime,
-  }
-}
-
 /**
  * Serializes a page of articles for JSON export.
  */
@@ -231,18 +217,4 @@ export interface PaginatedArticlesPage {
   locale: Locale
   articles: SerializedArticle[]
   hasMore: boolean
-}
-
-export function createPaginatedPage(
-  page: number,
-  locale: Locale,
-  articles: SerializedArticle[],
-  hasMore: boolean,
-): PaginatedArticlesPage {
-  return {
-    page,
-    locale,
-    articles,
-    hasMore,
-  }
 }

@@ -21,7 +21,7 @@ interface Messages {
 }
 
 const PREFERRED_DEFAULT_LOCALE = 'zh-TW'
-export const SUPPORTED_LOCALES = ['zh-TW', 'en'] as const
+const SUPPORTED_LOCALES = ['zh-TW', 'en'] as const
 export type Locale = (typeof SUPPORTED_LOCALES)[number]
 const SUPPORTED_LOCALE_SET = new Set<Locale>(SUPPORTED_LOCALES)
 const MESSAGE_MODULE_RE = /\/([^/]+)\/([^/]+)\.json$/
