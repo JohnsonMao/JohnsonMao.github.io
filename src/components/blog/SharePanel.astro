@@ -1,0 +1,88 @@
+---
+import type { Platform } from '@/utils/share'
+import { Icon } from 'astro-icon/components'
+import { getLocale, t } from '@/i18n'
+import { buildShareUrl } from '@/utils/share'
+
+interface Props {
+  title: string
+  url: string
+  copyLabel: string
+  copiedLabel: string
+}
+
+const { title, url, copyLabel, copiedLabel } = Astro.props
+const locale = getLocale(Astro.currentLocale)
+
+const platforms: { name: string, platform: Platform, iconName: string, hoverColor: string }[] = [
+  { name: 'Twitter', platform: 'twitter', iconName: 'simple-icons:x', hoverColor: 'hover:text-foreground' },
+  { name: 'Threads', platform: 'threads', iconName: 'simple-icons:threads', hoverColor: 'hover:text-foreground' },
+  { name: 'Facebook', platform: 'facebook', iconName: 'simple-icons:facebook', hoverColor: 'hover:text-blue-600' },
+  { name: 'LinkedIn', platform: 'linkedin', iconName: 'simple-icons:linkedin', hoverColor: 'hover:text-blue-700' },
+  { name: 'LINE', platform: 'line', iconName: 'simple-icons:line', hoverColor: 'hover:text-green-500' },
+]
+---
+
+<div class="flex flex-col gap-4 my-8">
+  <span class="text-sm font-semibold text-gray-500 uppercase tracking-wider">
+    {t(locale, 'blog.share')}
+  </span>
+  <div class="flex flex-wrap items-center gap-3">
+    {
+      platforms.map(({ name, platform, iconName, hoverColor }) => (
+        <a
+          href={buildShareUrl(platform, title, url)}
+          target="_blank"
+          rel="noopener noreferrer"
+          class={`p-2 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 transition-all ${hoverColor} hover:scale-110`}
+          title={`Share on ${name}`}
+          aria-label={`Share on ${name}`}
+        >
+          <Icon name={iconName} class="w-5 h-5" />
+        </a>
+      ))
+    }
+    <button
+      id="share-panel-copy-btn"
+      class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-full bg-secondary text-secondary-foreground hover:bg-secondary/80 transition-all duration-200 border border-transparent shadow-sm"
+      data-label={copyLabel}
+      data-copied={copiedLabel}
+    >
+      <Icon name="lucide:link" class="w-3.5 h-3.5" />
+      <span id="share-panel-copy-text">{copyLabel}</span>
+    </button>
+  </div>
+</div>
+
+<script>
+function setupSharePanelCopy() {
+  const button = document.getElementById('share-panel-copy-btn')
+  const text = document.getElementById('share-panel-copy-text')
+
+  if (!button || !text)
+    return
+
+  const originalLabel = button.getAttribute('data-label') || ''
+  const copiedLabel = button.getAttribute('data-copied') || ''
+
+  button.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.href)
+
+      text.textContent = copiedLabel
+      button.classList.add('bg-green-100', 'text-green-700', 'dark:bg-green-900/30', 'dark:text-green-400')
+
+      setTimeout(() => {
+        text.textContent = originalLabel
+        button.classList.remove('bg-green-100', 'text-green-700', 'dark:bg-green-900/30', 'dark:text-green-400')
+      }, 2000)
+    }
+    catch (err) {
+      console.error('Failed to copy link: ', err)
+    }
+  })
+}
+
+setupSharePanelCopy()
+document.addEventListener('astro:after-swap', setupSharePanelCopy)
+</script>

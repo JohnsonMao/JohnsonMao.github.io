@@ -12,6 +12,7 @@ const config: KnipConfig = {
     'tailwindcss',
     '@tailwindcss/typography',
     '@iconify-json/lucide',
+    '@iconify-json/simple-icons',
   ],
 }
 

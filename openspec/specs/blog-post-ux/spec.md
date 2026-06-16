@@ -3,7 +3,9 @@
 ## Purpose
 
 Enhance the article reading experience with navigation and sharing tools.
+
 ## Requirements
+
 ### Requirement: Automatic Table of Contents (TOC) extraction
 The system SHALL automatically extract H2 and H3 headings from the blog post content at build time to generate a hierarchical Table of Contents. Each TOC item SHALL link to the corresponding section header using a generated ID (slug).
 
@@ -15,13 +17,33 @@ The system SHALL automatically extract H2 and H3 headings from the blog post con
 - **WHEN** a user clicks a TOC link
 - **THEN** the browser SHALL smoothly scroll to the corresponding section header
 
+---
 ### Requirement: Copy Link functionality
-The system SHALL provide a "Copy Link" button or interactive element that, when clicked, copies the current post's full URL to the user's clipboard. The system SHOULD provide visual feedback (e.g., a "Copied!" tooltip or icon change) upon successful copy.
+The system SHALL provide copy-link functionality as part of the unified `SharePanel` component (see social-share-buttons spec). The standalone `CopyLink` component SHALL be removed. The `SharePanel` SHALL accept `copyLabel` and `copiedLabel` props for i18n text, sourced from `blog.copyLink` and `blog.copied` translation keys respectively.
 
 #### Scenario: URL copied to clipboard
-- **WHEN** the user clicks the "Copy Link" button
-- **THEN** the current page URL SHALL be saved to the clipboard and a success message SHALL be briefly displayed
+- **WHEN** the user clicks the copy-link button inside the `SharePanel`
+- **THEN** the current page URL SHALL be saved to the clipboard and the button label SHALL display the translated "copied" text for 2 seconds before reverting to the original `copyLabel` text
 
+
+<!-- @trace
+source: add-share-panel
+updated: 2026-06-16
+code:
+  - src/components/blog/CopyLink.astro
+  - src/components/blog/SharePanel.astro
+  - src/layouts/PostLayout.astro
+  - src/components/blog/ShareButtons.astro
+  - package.json
+  - src/utils/share.ts
+  - knip.config.ts
+  - todo.md
+  - comment-system-design-doc.md
+tests:
+  - src/utils/share.test.ts
+-->
+
+---
 ### Requirement: Series navigation
 For any blog post that is part of a series (as defined by the `series` field in frontmatter), the system SHALL display a "Series Navigation" component at the bottom of the article. This component SHALL list all posts in the same series, sorted by publication date, and SHALL highlight the currently viewed post. It SHALL provide links to the previous and next articles in the series if they exist.
 
@@ -37,10 +59,10 @@ For any blog post that is part of a series (as defined by the `series` field in 
 - **WHEN** a series has multiple posts
 - **THEN** the navigation SHALL provide clickable links to all other posts in that series within the same locale
 
+---
 ### Requirement: Comment Section in Blog Posts
 Each blog post SHALL include a dedicated comment section at the bottom of the article. The section SHALL be clearly marked with a heading (e.g., "Comments" or equivalent translation) and SHALL be accessible to readers for discussion.
 
 #### Scenario: Comment section visible on all blog posts
 - **WHEN** any blog post is rendered
 - **THEN** the comment section (provided by the `blog-comments` capability) SHALL be displayed below the article content and any other post-reading UX components (e.g., related posts, series navigation)
-

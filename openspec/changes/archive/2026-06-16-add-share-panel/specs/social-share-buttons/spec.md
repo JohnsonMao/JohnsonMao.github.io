@@ -1,9 +1,4 @@
-# social-share-buttons Specification
-
-## Purpose
-TBD - created by archiving change identity-social-package. Update Purpose after archive.
-
-## Requirements
+## MODIFIED Requirements
 
 ### Requirement: Social Sharing Links on Posts
 The system SHALL provide a unified `SharePanel` component on blog post pages containing interactive social sharing links for Twitter (X), Threads, Facebook, LinkedIn, and LINE. These links SHALL automatically include the current post's URL and title in the shared content. The `SharePanel` SHALL also contain a copy-link button (see Requirement: Copy Link in Share Panel). The standalone `ShareButtons` component SHALL be removed.
@@ -30,25 +25,6 @@ The system SHALL provide a unified `SharePanel` component on blog post pages con
 - **WHEN** a user clicks the LINE share button
 - **THEN** a new tab SHALL open to `https://social-plugins.line.me/lineit/share?url=<encoded-post-url>`
 
-
-<!-- @trace
-source: add-share-panel
-updated: 2026-06-16
-code:
-  - src/components/blog/CopyLink.astro
-  - src/components/blog/SharePanel.astro
-  - src/layouts/PostLayout.astro
-  - src/components/blog/ShareButtons.astro
-  - package.json
-  - src/utils/share.ts
-  - knip.config.ts
-  - todo.md
-  - comment-system-design-doc.md
-tests:
-  - src/utils/share.test.ts
--->
-
----
 ### Requirement: Share Button Placement
 The `SharePanel` SHALL be placed at the bottom of the blog post article, after the main content, replacing the previous standalone `ShareButtons` location. The standalone `CopyLink` button at the top of the post header area SHALL be removed.
 
@@ -56,25 +32,8 @@ The `SharePanel` SHALL be placed at the bottom of the blog post article, after t
 - **WHEN** a user is viewing a blog post
 - **THEN** the `SharePanel` component containing all share links and the copy-link button SHALL be clearly visible at the bottom of the post
 
+## ADDED Requirements
 
-<!-- @trace
-source: add-share-panel
-updated: 2026-06-16
-code:
-  - src/components/blog/CopyLink.astro
-  - src/components/blog/SharePanel.astro
-  - src/layouts/PostLayout.astro
-  - src/components/blog/ShareButtons.astro
-  - package.json
-  - src/utils/share.ts
-  - knip.config.ts
-  - todo.md
-  - comment-system-design-doc.md
-tests:
-  - src/utils/share.test.ts
--->
-
----
 ### Requirement: Copy Link in Share Panel
 The `SharePanel` component SHALL include a copy-link button that, when clicked, copies the current post's full URL to the user's clipboard and displays a translated success message for 2 seconds before reverting to the original label.
 
@@ -85,20 +44,3 @@ The `SharePanel` component SHALL include a copy-link button that, when clicked, 
 #### Scenario: Copy fails silently
 - **WHEN** the clipboard write operation throws an error (e.g., unsupported browser)
 - **THEN** the error SHALL be logged to `console.error` and no visible UI change SHALL occur
-
-<!-- @trace
-source: add-share-panel
-updated: 2026-06-16
-code:
-  - src/components/blog/CopyLink.astro
-  - src/components/blog/SharePanel.astro
-  - src/layouts/PostLayout.astro
-  - src/components/blog/ShareButtons.astro
-  - package.json
-  - src/utils/share.ts
-  - knip.config.ts
-  - todo.md
-  - comment-system-design-doc.md
-tests:
-  - src/utils/share.test.ts
--->

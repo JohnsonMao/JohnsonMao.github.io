@@ -4,11 +4,10 @@ import type { TagId } from '@/i18n'
 import { Icon } from 'astro-icon/components'
 import { getRelativeLocaleUrl } from 'astro:i18n'
 import AuthorBio from '@/components/blog/AuthorBio.astro'
-import CopyLink from '@/components/blog/CopyLink.astro'
 import Giscus from '@/components/blog/Giscus.astro'
 import RelatedPosts from '@/components/blog/RelatedPosts.astro'
 import SeriesNav from '@/components/blog/SeriesNav.astro'
-import ShareButtons from '@/components/blog/ShareButtons.astro'
+import SharePanel from '@/components/blog/SharePanel.astro'
 import TableOfContents from '@/components/blog/TableOfContents.astro'
 import JsonLd from '@/components/seo/JsonLd.astro'
 import { defaultLocale, getLocale, t } from '@/i18n'
@@ -109,7 +108,6 @@ const postData = {
               </div>
             )
           }
-          <CopyLink label={t(locale, 'blog.copyLink')} copiedLabel={t(locale, 'blog.copied')} />
         </div>
         {
           showUpdated && formattedUpdated && (
@@ -142,7 +140,7 @@ const postData = {
 
       <RelatedPosts posts={relatedPosts} title={t(locale, 'blog.relatedPosts')} />
 
-      <ShareButtons title={title} url={Astro.url.href} />
+      <SharePanel title={title} url={Astro.url.href} copyLabel={t(locale, 'blog.copyLink')} copiedLabel={t(locale, 'blog.copied')} />
 
       <AuthorBio />
 
