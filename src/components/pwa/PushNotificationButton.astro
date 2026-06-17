@@ -76,15 +76,11 @@ async function updatePushNotificationButtonUI() {
 }
 
 // Event delegation handler for button click
-async function handlePushNotificationButtonClick(event: PointerEvent) {
-  const target = event.target
-  if (!(target instanceof HTMLElement))
-    return
-
-  const btn = target?.closest('#push-subscription-btn')
+async function handlePushNotificationButtonClick(event: MouseEvent) {
+  event.preventDefault()
+  const btn = event.currentTarget
   if (!(btn instanceof HTMLElement))
     return
-  event.preventDefault()
 
   if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
     // This should ideally be hidden by updatePushNotificationButtonUI
@@ -127,10 +123,19 @@ async function handlePushNotificationButtonClick(event: PointerEvent) {
   }
 }
 
-// Attach event delegation listener once to the document
-// This listener will persist across View Transitions
-document.addEventListener('click', handlePushNotificationButtonClick)
+// AbortController to clean up button-scoped listeners before each View Transition
+let controller: AbortController | undefined
 
-// Update UI on initial load and after View Transitions
-document.addEventListener('astro:page-load', updatePushNotificationButtonUI)
+document.addEventListener('astro:before-swap', () => {
+  controller?.abort()
+})
+
+document.addEventListener('astro:page-load', () => {
+  controller = new AbortController()
+  const btn = document.getElementById('push-subscription-btn')
+  if (btn) {
+    btn.addEventListener('click', handlePushNotificationButtonClick, { signal: controller.signal })
+  }
+  updatePushNotificationButtonUI()
+})
 </script>

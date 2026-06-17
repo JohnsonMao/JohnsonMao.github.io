@@ -10,8 +10,9 @@ const { headings, title = 'Table of Contents' } = Astro.props
 
 // Filter for H2 and H3 only
 const toc = headings.filter(h => h.depth > 1 && h.depth < 4)
-if (toc.length === 0)
-return null
+if (toc.length === 0) {
+  return null
+}
 ---
 
 <nav class="toc-container font-sans mb-8 lg:mb-0" aria-label={title}>

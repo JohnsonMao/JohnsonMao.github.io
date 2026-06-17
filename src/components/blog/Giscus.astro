@@ -75,9 +75,13 @@ function setupGiscusComments() {
 }
 
 let cleanup: (() => void) | undefined
+
+document.addEventListener('astro:before-swap', () => {
+  cleanup?.()
+  cleanup = undefined
+})
+
 document.addEventListener('astro:page-load', () => {
-  if (cleanup)
-    cleanup()
   cleanup = setupGiscusComments()
 })
 </script>
