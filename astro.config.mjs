@@ -2,22 +2,42 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import mdx from '@astrojs/mdx'
 import sitemap from '@astrojs/sitemap'
+import { transformerCopyButton } from '@rehype-pretty/transformers'
 import tailwindcss from '@tailwindcss/vite'
 import AstroPWA from '@vite-pwa/astro'
 import icon from 'astro-icon'
 import { defineConfig } from 'astro/config'
+import rehypePrettyCode from 'rehype-pretty-code'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
+
+const rehypePrettyCodeConfig = {
+  syntaxHighlight: false,
+  rehypePlugins: [[
+    rehypePrettyCode,
+    {
+      theme: 'github-dark',
+      transformers: [
+        transformerCopyButton({
+          visibility: 'hover',
+          feedbackDuration: 3000,
+        }),
+      ],
+    },
+  ]],
+}
 
 // https://astro.build/config
 export default defineConfig({
   site: 'https://johnsonmao.github.io',
   output: 'static',
 
+  markdown: { ...rehypePrettyCodeConfig },
+
   integrations: [
     sitemap(),
     icon(),
-    mdx(),
+    mdx({ ...rehypePrettyCodeConfig }),
     AstroPWA({
       strategies: 'injectManifest',
       srcDir: 'src',
