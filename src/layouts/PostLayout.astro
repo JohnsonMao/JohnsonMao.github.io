@@ -1,6 +1,5 @@
 ---
 import type { MarkdownHeading } from 'astro'
-import type { TagId } from '@/i18n'
 import { Icon } from 'astro-icon/components'
 import { getRelativeLocaleUrl } from 'astro:i18n'
 import AuthorBio from '@/components/blog/AuthorBio.astro'
@@ -26,7 +25,7 @@ interface Props {
   canonical?: string
   readingTimeLabel?: string
   updated?: Date
-  tags?: TagId[]
+  tags?: string[]
   headings?: MarkdownHeading[]
 }
 

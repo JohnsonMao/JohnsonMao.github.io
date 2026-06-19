@@ -4,9 +4,6 @@ import type { I18nMessageModules } from '@/glob.loader'
 import { TAG_IDS } from '@/content.config'
 import { getMessageModules } from '@/glob.loader'
 
-// Re-export for backward compatibility
-export type { TagId }
-
 interface Messages {
   tags?: {
     title?: string

@@ -1,0 +1,22 @@
+{
+  "title": "Series",
+  "description": "Explore all article series.",
+  "registry": {
+    "front-end-skills-journey": {
+      "name": "Front-End Skills Journey",
+      "description": "A step-by-step journey to build the core skills and knowledge for front-end engineers."
+    },
+    "vue3-beginner-camp": {
+      "name": "Vue 3 Beginner Camp",
+      "description": "Learning journey and task records from Vue 3 Beginner Camp."
+    },
+    "react-guide": {
+      "name": "React Guide",
+      "description": "A comprehensive exploration of React development from fundamentals to advanced topics."
+    },
+    "typescript-guide": {
+      "name": "TypeScript Guide",
+      "description": "A complete guide to TypeScript's type system and practical applications."
+    }
+  }
+}

@@ -1,6 +1,6 @@
 ---
 import { getCollection, render } from 'astro:content'
-import { defaultLocale, getLocale, locales } from '@/i18n'
+import { defaultLocale, getLocale, locales, normalizeLocale } from '@/i18n'
 import BaseLayout from '@/layouts/BaseLayout.astro'
 
 export async function getStaticPaths() {
@@ -13,7 +13,7 @@ export async function getStaticPaths() {
 const { lang } = Astro.params
 const locale = getLocale(lang)
 const aboutEntries = await getCollection('about')
-const entry = aboutEntries.find(e => e.data.lang === locale)
+const entry = aboutEntries.find(e => normalizeLocale(e.id) === locale)
 
 if (!entry) {
   return Astro.redirect('/404')

@@ -1,6 +1,5 @@
 ---
 title: "About Me"
-lang: "en"
 ---
 
 Hello! I am Johnson Mao.

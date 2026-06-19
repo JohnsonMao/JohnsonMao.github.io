@@ -1,6 +1,5 @@
 ---
 title: "關於我"
-lang: "zh-TW"
 ---
 
 你好！我是 Johnson Mao。

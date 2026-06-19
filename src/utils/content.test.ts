@@ -9,22 +9,11 @@ import {
   getRelatedEntries,
   getSortedCollectionList,
   parseEntryId,
-  validateTags,
 } from './content'
-
-// Mock content.config to provide TAG_IDS for validation
-vi.mock('@/content.config', () => ({
-  TAG_CONSTANTS: {
-    REACT: 'react',
-    JAVASCRIPT: 'javascript',
-    TYPESCRIPT: 'typescript',
-  },
-  TAG_IDS: ['react', 'javascript', 'typescript'],
-  isTagId: (value: string) => ['react', 'javascript', 'typescript'].includes(value),
-}))
 
 // Mock astro:content
 vi.mock('astro:content', () => ({
+  defineCollection: vi.fn(config => config),
   getCollection: vi.fn(async (_collection, filter) => {
     const allEntries = [
       {
@@ -139,16 +128,6 @@ describe('content Utils', () => {
       const related = await getRelatedEntries('blog', entryNoTags)
       expect(related.length).toBeGreaterThan(0)
       expect(related.map(e => e.id)).not.toContain('post-3')
-    })
-  })
-
-  describe('validateTags()', () => {
-    it('should not throw for registered tags', () => {
-      expect(() => validateTags('test-post', ['react', 'typescript'])).not.toThrow()
-    })
-
-    it('should throw error for unregistered tags', () => {
-      expect(() => validateTags('test-post', ['non-existent' as any])).toThrow(/Unregistered tag ID/)
     })
   })
 

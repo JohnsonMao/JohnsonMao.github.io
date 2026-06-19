@@ -1,8 +1,7 @@
 import type { CollectionEntry } from 'astro:content'
-import type { Locale, TagId } from '@/i18n'
+import type { Locale } from '@/i18n'
 import { getCollection } from 'astro:content'
-import { TAG_IDS } from '@/content.config'
-import { defaultLocale, getLocalePriority, isLocale, normalizeLocale } from '@/i18n'
+import { getLocalePriority, isLocale, normalizeLocale } from '@/i18n'
 
 const selectedCollections = ['blog'] as const
 
@@ -12,25 +11,12 @@ export type LocalizedCollection<K extends SelectedCollection> = CollectionEntry<
   locale: Locale
   isFallback?: boolean
   seriesId?: string
-  tags?: TagId[]
+  tags?: string[]
 }
 
 interface LocalizedCollectionGroup<K extends SelectedCollection> {
   id: string
   entries: Map<Locale, LocalizedCollection<K>>
-}
-
-/**
- * Validates tags against the master registry (from content.config) at build-time to prevent typos.
- */
-export function validateTags(id: string, tags?: TagId[]): void {
-  if (!tags)
-    return
-  tags.forEach((tag) => {
-    if (!TAG_IDS.includes(tag)) {
-      throw new Error(`[Content Error] Unregistered tag ID: "${tag}" found in ${id}. Please register it in src/content.config.ts and add translation in src/i18n/messages/${defaultLocale}/tags.json.`)
-    }
-  })
 }
 
 /**
@@ -83,8 +69,7 @@ async function getGroupedCollection<K extends SelectedCollection>(
   for (const entry of all) {
     const { seriesId, slug, locale } = parseEntryId(entry.id)
     // Tags are now read directly from Frontmatter via Astro's schema
-    const tags = entry.data.tags as TagId[] | undefined
-    validateTags(entry.id, tags)
+    const tags = entry.data.tags as string[] | undefined
 
     const localizedEntry: LocalizedCollection<K> = {
       ...entry,
@@ -140,7 +125,7 @@ export async function getSortedCollectionList<K extends SelectedCollection>(
  * Aggregates tags while accounting for fallback versions visible in the current locale.
  */
 export async function getEntriesByTag(locale: Locale) {
-  const tagMap: Map<TagId, LocalizedCollection<SelectedCollection>[]> = new Map()
+  const tagMap: Map<string, LocalizedCollection<SelectedCollection>[]> = new Map()
 
   for (const col of selectedCollections) {
     const entries = await getSortedCollectionList(col, locale)

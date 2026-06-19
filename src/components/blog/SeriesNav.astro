@@ -24,9 +24,6 @@ const seriesPosts = entries
 
 const currentIndex = seriesPosts.findIndex(entry => entry.id === post.id)
 const blogBase = getRelativeLocaleUrl(locale, `blog/`)
-
-// Get series name from i18n or use seriesId as fallback
-const seriesName = t(locale, `blog.series.${seriesId}`) || seriesId
 ---
 
 <nav
@@ -35,7 +32,7 @@ const seriesName = t(locale, `blog.series.${seriesId}`) || seriesId
 >
   <h2 class="text-lg font-bold text-gray-800 dark:text-gray-200 mb-4">
     {t(locale, 'blog.series.partOf')}
-    <span class="font-extrabold">{seriesName}</span>
+    <span class="font-extrabold">{t(locale, `series.registry.${seriesId}.name`)}</span>
   </h2>
   <ol class="list-decimal list-inside space-y-2">
     {
