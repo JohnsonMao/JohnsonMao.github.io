@@ -21,23 +21,33 @@ interface LocalizedCollectionGroup<K extends SelectedCollection> {
 
 /**
  * Parses raw ID into seriesId and canonical slug.
- * Strips numerical prefixes (e.g. '01-') for clean URLs.
+ * Expects flat format: "post.locale" or "series/post.locale".
  */
 export function parseEntryId(id: string) {
   const parts = id.split('/')
-  const locale = normalizeLocale(parts.at(-1)!)
+  const lastPart = parts.at(-1)!
+  const dotIdx = lastPart.lastIndexOf('.')
+
+  if (dotIdx === -1) {
+    throw new Error(`Invalid entry ID format: ${id}. Expected "post.locale" or "series/post.locale".`)
+  }
+
+  const localePart = lastPart.slice(dotIdx + 1)
+  const baseName = lastPart.slice(0, dotIdx)
+
+  const locale = normalizeLocale(localePart)
 
   if (!isLocale(locale)) {
-    throw new Error(`Invalid locale: ${locale} in entry ${id}`)
+    throw new Error(`Invalid locale: ${localePart} in entry ${id}`)
   }
 
   switch (parts.length) {
+    case 1:
+      return { locale, seriesId: undefined, slug: baseName }
     case 2:
-      return { locale, seriesId: undefined, slug: parts[0] }
-    case 3:
-      return { locale, seriesId: parts[0], slug: `${parts[0]}/${parts[1]}` }
+      return { locale, seriesId: parts[0], slug: `${parts[0]}/${baseName}` }
     default:
-      throw new Error(`Invalid entry ID format: ${id}. Expected "slug/locale" or "series/slug/locale".`)
+      throw new Error(`Invalid entry ID format: ${id}. Expected "post.locale" or "series/post.locale".`)
   }
 }
 

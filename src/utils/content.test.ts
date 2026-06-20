@@ -17,23 +17,23 @@ vi.mock('astro:content', () => ({
   getCollection: vi.fn(async (_collection, filter) => {
     const allEntries = [
       {
-        id: 'post-1/zh-TW',
+        id: 'post-1.zh-TW',
         data: { title: 'Post 1 ZH', pubDate: new Date('2024-01-01'), draft: false, tags: ['react'] },
       },
       {
-        id: 'post-1/en',
+        id: 'post-1.en',
         data: { title: 'Post 1 EN', pubDate: new Date('2024-01-01'), draft: false, tags: ['react'] },
       },
       {
-        id: 'post-2/zh-TW',
+        id: 'post-2.zh-TW',
         data: { title: 'Post 2 ZH', pubDate: new Date('2024-01-02'), draft: false, tags: ['react'] },
       },
       {
-        id: 'post-3/zh-TW',
+        id: 'post-3.zh-TW',
         data: { title: 'Post 3 ZH', pubDate: new Date('2024-01-03'), draft: false, tags: ['javascript', 'react'] },
       },
       {
-        id: 'draft-post/zh-TW',
+        id: 'draft-post.zh-TW',
         data: { title: 'Draft Post', pubDate: new Date('2024-01-04'), draft: true, tags: ['react'] },
       },
     ]
@@ -132,42 +132,42 @@ describe('content Utils', () => {
   })
 
   describe('parseEntryId()', () => {
-    it('should parse "slug/locale" ID correctly', () => {
-      const { seriesId, slug, locale } = parseEntryId('hello-world/zh-TW')
+    it('should parse "post.locale" standalone ID correctly', () => {
+      const { seriesId, slug, locale } = parseEntryId('hello-world.zh-TW')
       expect(seriesId).toBeUndefined()
       expect(slug).toBe('hello-world')
       expect(locale).toBe('zh-TW')
     })
 
-    it('should parse "series/slug/locale" ID correctly and preserve numerical prefix with series path', () => {
-      const { seriesId, slug, locale } = parseEntryId('my-series/01-getting-started/en')
+    it('should parse "series/post.locale" ID with numerical prefix', () => {
+      const { seriesId, slug, locale } = parseEntryId('my-series/01-getting-started.en')
       expect(seriesId).toBe('my-series')
       expect(slug).toBe('my-series/01-getting-started')
       expect(locale).toBe('en')
     })
 
-    it('should parse "series/slug/locale" ID without numerical prefix with series path', () => {
-      const { seriesId, slug, locale } = parseEntryId('my-series/intro/en')
+    it('should parse "series/post.locale" ID without numerical prefix', () => {
+      const { seriesId, slug, locale } = parseEntryId('my-series/intro.en')
       expect(seriesId).toBe('my-series')
       expect(slug).toBe('my-series/intro')
       expect(locale).toBe('en')
     })
 
-    it('should throw error for invalid ID format with only one part', () => {
+    it('should throw for ID with no dot (missing locale suffix)', () => {
       expect(() => parseEntryId('standalone-slug')).toThrow(
-        'Invalid locale: standalone-slug in entry standalone-slug',
+        'Invalid entry ID format: standalone-slug. Expected "post.locale" or "series/post.locale".',
       )
     })
 
-    it('should throw error for invalid ID format with missing locale', () => {
+    it('should throw for series/post ID with no dot (missing locale suffix)', () => {
       expect(() => parseEntryId('my-series/some-slug')).toThrow(
-        'Invalid locale: some-slug in entry my-series/some-slug',
+        'Invalid entry ID format: my-series/some-slug. Expected "post.locale" or "series/post.locale".',
       )
     })
 
-    it('should throw error for invalid ID format with correct locale but wrong number of parts', () => {
-      expect(() => parseEntryId('zh-TW')).toThrow(
-        'Invalid entry ID format: zh-TW. Expected "slug/locale" or "series/slug/locale".',
+    it('should throw for ID with invalid locale suffix', () => {
+      expect(() => parseEntryId('post.invalid-locale')).toThrow(
+        'Invalid locale: invalid-locale in entry post.invalid-locale',
       )
     })
   })

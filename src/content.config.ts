@@ -8,8 +8,14 @@ export type TagId = typeof TAG_IDS[number]
 export const SERIES_IDS = ['front-end-skills-journey', 'vue3-beginner-camp', 'react-guide', 'typescript-guide'] as const
 export type SeriesId = typeof SERIES_IDS[number]
 
+const CONTENT_EXT_RE = /\.(md|mdx)$/
+
 const blog = defineCollection({
-  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/blog' }),
+  loader: glob({
+    pattern: '**/*.{md,mdx}',
+    base: './src/content/blog',
+    generateId: ({ entry }) => entry.replace(CONTENT_EXT_RE, ''),
+  }),
   schema: z.object({
     title: z.string(),
     description: z.string(),
@@ -19,7 +25,6 @@ const blog = defineCollection({
     updated: z.coerce.date().optional(),
     tags: z.array(z.enum(TAG_IDS)).optional(),
     series: z.enum(SERIES_IDS).optional(),
-    seriesOrder: z.number().int().positive().optional(),
   }),
 })
 
