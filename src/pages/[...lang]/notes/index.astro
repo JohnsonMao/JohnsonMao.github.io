@@ -1,0 +1,51 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import { defaultLocale, getLocale, locales, t } from '@/i18n'
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import { getNotesForLocale } from '@/utils/content'
+
+export function getStaticPaths() {
+  return [
+    { params: { lang: undefined } },
+    ...locales.filter(l => l !== defaultLocale).map(l => ({ params: { lang: l } })),
+  ]
+}
+
+const { lang } = Astro.params
+const locale = getLocale(lang)
+const notes = await getNotesForLocale(locale)
+const notesBase = getRelativeLocaleUrl(locale, 'notes/')
+---
+
+<BaseLayout title={t(locale, 'notes.listTitle')} description={t(locale, 'notes.listDescription')}>
+  <div class="mx-auto max-w-3xl px-4 py-12">
+    <h1 class="mb-8 text-4xl font-bold tracking-tight">{t(locale, 'notes.listTitle')}</h1>
+    <ul class="space-y-6">
+      {
+        notes.map((note) => {
+          const formattedDate = new Intl.DateTimeFormat(note.data.lang, { dateStyle: 'medium' }).format(note.data.pubDate)
+          return (
+            <li class="border-b border-gray-100 pb-6 dark:border-gray-800">
+              <a href={`${notesBase}${note.id}/`} class="text-lg font-semibold hover:underline">
+                {note.data.title}
+              </a>
+              <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">{formattedDate}</p>
+              {note.data.description && (
+                <p class="mt-2 text-gray-700 dark:text-gray-300">{note.data.description}</p>
+              )}
+              {note.data.tags && note.data.tags.length > 0 && (
+                <div class="mt-2 flex flex-wrap gap-2">
+                  {note.data.tags.map(tag => (
+                    <span class="rounded bg-gray-100 px-1.5 py-0.5 text-xs text-gray-600 dark:bg-gray-800 dark:text-gray-400">
+                      #{t(locale, `tags.registry.${tag}.name`)}
+                    </span>
+                  ))}
+                </div>
+              )}
+            </li>
+          )
+        })
+      }
+    </ul>
+  </div>
+</BaseLayout>

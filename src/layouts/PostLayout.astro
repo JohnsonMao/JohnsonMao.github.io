@@ -1,5 +1,6 @@
 ---
 import type { MarkdownHeading } from 'astro'
+import type { LocalizedCollection } from '@/utils/content'
 import { Icon } from 'astro-icon/components'
 import { getRelativeLocaleUrl } from 'astro:i18n'
 import AuthorBio from '@/components/blog/AuthorBio.astro'
@@ -27,6 +28,7 @@ interface Props {
   updated?: Date
   tags?: string[]
   headings?: MarkdownHeading[]
+  relatedPosts?: LocalizedCollection<'blog'>[]
 }
 
 const {
@@ -43,6 +45,7 @@ const {
   updated,
   tags,
   headings = [],
+  relatedPosts: propRelatedPosts,
 } = Astro.props
 
 const locale = getLocale(Astro.currentLocale)
@@ -53,8 +56,17 @@ const showUpdated = updated && updated.getTime() !== pubDate.getTime()
 
 const tagBase = getRelativeLocaleUrl(locale, 'tag/')
 
-const entry = await getCollectionEntry('blog', locale, id)
-const relatedPosts = await getRelatedEntries('blog', entry)
+let entry: LocalizedCollection<'blog'> | undefined
+let relatedPosts: LocalizedCollection<'blog'>[]
+
+if (propRelatedPosts !== undefined) {
+  // External override: skip blog fetch (e.g., for notes pages)
+  relatedPosts = propRelatedPosts
+}
+else {
+  entry = await getCollectionEntry('blog', locale, id)
+  relatedPosts = await getRelatedEntries('blog', entry)
+}
 
 const postData = {
   title,

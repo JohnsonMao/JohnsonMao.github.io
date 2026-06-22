@@ -39,7 +39,6 @@ const seriesRegistry = loadRegistry(join(ROOT, 'src/i18n/messages/zh-TW/series.j
 
 const contentDirs = [
   join(ROOT, 'src/content/blog'),
-  join(ROOT, 'src/content/til'),
   join(ROOT, 'src/content/notes'),
 ]
 

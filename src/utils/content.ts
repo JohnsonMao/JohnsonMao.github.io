@@ -205,6 +205,21 @@ export interface SerializedArticle {
 }
 
 /**
+ * Returns notes entries for a specific locale, sorted by pubDate descending.
+ * In production mode, stub notes are excluded.
+ */
+export async function getNotesForLocale(locale: Locale): Promise<CollectionEntry<'notes'>[]> {
+  const all = await getCollection('notes')
+  return all
+    .filter((entry) => {
+      if (!import.meta.env.DEV && entry.data.status === 'stub')
+        return false
+      return entry.data.lang === locale
+    })
+    .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
+}
+
+/**
  * Serializes a page of articles for JSON export.
  */
 export interface PaginatedArticlesPage {

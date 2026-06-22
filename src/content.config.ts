@@ -35,17 +35,6 @@ const about = defineCollection({
   }),
 })
 
-const til = defineCollection({
-  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/til' }),
-  schema: z.object({
-    title: z.string(),
-    pubDate: z.coerce.date(),
-    lang: z.enum(['zh-TW', 'en']).default('zh-TW'),
-    tags: z.array(z.enum(TAG_IDS)).optional(),
-    source: z.string().url().optional(),
-  }),
-})
-
 const notes = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/notes' }),
   schema: z.object({
@@ -60,4 +49,4 @@ const notes = defineCollection({
   }),
 })
 
-export const collections = { blog, about, til, notes }
+export const collections = { blog, about, notes }

@@ -5,39 +5,57 @@ import {
   getBestEntry,
   getCollectionEntry,
   getEntriesByTag,
+  getNotesForLocale,
   getPaginatedArticles,
   getRelatedEntries,
   getSortedCollectionList,
   parseEntryId,
 } from './content'
 
+const blogEntries = [
+  {
+    id: 'post-1.zh-TW',
+    data: { title: 'Post 1 ZH', pubDate: new Date('2024-01-01'), draft: false, tags: ['react'] },
+  },
+  {
+    id: 'post-1.en',
+    data: { title: 'Post 1 EN', pubDate: new Date('2024-01-01'), draft: false, tags: ['react'] },
+  },
+  {
+    id: 'post-2.zh-TW',
+    data: { title: 'Post 2 ZH', pubDate: new Date('2024-01-02'), draft: false, tags: ['react'] },
+  },
+  {
+    id: 'post-3.zh-TW',
+    data: { title: 'Post 3 ZH', pubDate: new Date('2024-01-03'), draft: false, tags: ['javascript', 'react'] },
+  },
+  {
+    id: 'draft-post.zh-TW',
+    data: { title: 'Draft Post', pubDate: new Date('2024-01-04'), draft: true, tags: ['react'] },
+  },
+]
+
+const notesEntries = [
+  {
+    id: 'note-1',
+    data: { title: 'Note 1 ZH', pubDate: new Date('2024-01-01'), lang: 'zh-TW', status: 'complete' },
+  },
+  {
+    id: 'note-2',
+    data: { title: 'Note 2 ZH Stub', pubDate: new Date('2024-01-02'), lang: 'zh-TW', status: 'stub' },
+  },
+  {
+    id: 'note-3',
+    data: { title: 'Note 3 EN', pubDate: new Date('2024-01-03'), lang: 'en', status: 'complete' },
+  },
+]
+
 // Mock astro:content
 vi.mock('astro:content', () => ({
   defineCollection: vi.fn(config => config),
-  getCollection: vi.fn(async (_collection, filter) => {
-    const allEntries = [
-      {
-        id: 'post-1.zh-TW',
-        data: { title: 'Post 1 ZH', pubDate: new Date('2024-01-01'), draft: false, tags: ['react'] },
-      },
-      {
-        id: 'post-1.en',
-        data: { title: 'Post 1 EN', pubDate: new Date('2024-01-01'), draft: false, tags: ['react'] },
-      },
-      {
-        id: 'post-2.zh-TW',
-        data: { title: 'Post 2 ZH', pubDate: new Date('2024-01-02'), draft: false, tags: ['react'] },
-      },
-      {
-        id: 'post-3.zh-TW',
-        data: { title: 'Post 3 ZH', pubDate: new Date('2024-01-03'), draft: false, tags: ['javascript', 'react'] },
-      },
-      {
-        id: 'draft-post.zh-TW',
-        data: { title: 'Draft Post', pubDate: new Date('2024-01-04'), draft: true, tags: ['react'] },
-      },
-    ]
-    return allEntries.filter(entry => !filter || filter(entry))
+  getCollection: vi.fn(async (collection: string, filter?: (entry: any) => boolean) => {
+    const entries = collection === 'notes' ? notesEntries : blogEntries
+    return entries.filter((entry: any) => !filter || filter(entry))
   }),
 }))
 
@@ -218,6 +236,38 @@ describe('content Utils', () => {
     it('should return empty array for empty input', () => {
       const pages = getPaginatedArticles([])
       expect(pages).toHaveLength(0)
+    })
+  })
+
+  describe('getNotesForLocale()', () => {
+    it('should return notes for the requested locale sorted by pubDate descending', async () => {
+      const notes = await getNotesForLocale('zh-TW')
+      // DEV: includes stubs (note-1 complete + note-2 stub) = 2
+      // PROD: excludes stubs (note-1 complete only) = 1
+      const expectedLength = import.meta.env.DEV ? 2 : 1
+      expect(notes).toHaveLength(expectedLength)
+      if (import.meta.env.DEV) {
+        // note-2 has pubDate 2024-01-02 (newer), note-1 has 2024-01-01
+        expect(notes[0].id).toBe('note-2')
+        expect(notes[1].id).toBe('note-1')
+      }
+      else {
+        expect(notes[0].id).toBe('note-1')
+      }
+    })
+
+    it('should only return notes matching the requested locale', async () => {
+      const notes = await getNotesForLocale('en')
+      expect(notes).toHaveLength(1)
+      expect(notes[0].id).toBe('note-3')
+      expect(notes[0].data.lang).toBe('en')
+    })
+
+    it('should return empty array when no notes exist in collection', async () => {
+      const { getCollection } = await import('astro:content')
+      vi.mocked(getCollection).mockResolvedValueOnce([])
+      const notes = await getNotesForLocale('zh-TW')
+      expect(notes).toHaveLength(0)
     })
   })
 })
