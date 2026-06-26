@@ -3,11 +3,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": { "@/*": ["src/*"] },
-    "types": [
-      "vite-plugin-pwa/client",
-      "vite-plugin-pwa/info",
-      "vite-plugin-pwa/pwa-assets"
-    ]
+    "types": ["vite-plugin-pwa/client", "vite-plugin-pwa/info", "vite-plugin-pwa/pwa-assets"]
   },
   "include": [".astro/types.d.ts", "src/**/*"],
   "exclude": ["dist"]

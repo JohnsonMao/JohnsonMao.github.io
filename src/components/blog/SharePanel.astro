@@ -1,7 +1,7 @@
 ---
-import type { Platform } from '@/utils/share'
 import { Icon } from 'astro-icon/components'
 import { getLocale, t } from '@/i18n'
+import type { Platform } from '@/utils/share'
 import { buildShareUrl } from '@/utils/share'
 
 interface Props {
@@ -43,6 +43,7 @@ const platforms: { name: string, platform: Platform, iconName: string, hoverColo
       ))
     }
     <button
+      type="button"
       id="share-panel-copy-btn"
       class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-full bg-secondary text-secondary-foreground hover:bg-secondary/80 transition-all duration-200 border border-transparent shadow-sm"
       data-label={copyLabel}

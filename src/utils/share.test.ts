@@ -14,30 +14,22 @@ describe('buildShareUrl()', () => {
 
   it('threads: combines title and url in a single text param', () => {
     const result = buildShareUrl('threads', TITLE, URL)
-    expect(result).toBe(
-      `https://www.threads.net/intent/post?text=${encodeURIComponent(`${TITLE} ${URL}`)}`,
-    )
+    expect(result).toBe(`https://www.threads.net/intent/post?text=${encodeURIComponent(`${TITLE} ${URL}`)}`)
   })
 
   it('facebook: passes only url as u param', () => {
     const result = buildShareUrl('facebook', TITLE, URL)
-    expect(result).toBe(
-      `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(URL)}`,
-    )
+    expect(result).toBe(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(URL)}`)
   })
 
   it('linkedIn: passes only url as url param', () => {
     const result = buildShareUrl('linkedin', TITLE, URL)
-    expect(result).toBe(
-      `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(URL)}`,
-    )
+    expect(result).toBe(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(URL)}`)
   })
 
   it('lINE: passes only url as url param', () => {
     const result = buildShareUrl('line', TITLE, URL)
-    expect(result).toBe(
-      `https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(URL)}`,
-    )
+    expect(result).toBe(`https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(URL)}`)
   })
 
   it('encodes special characters in title', () => {

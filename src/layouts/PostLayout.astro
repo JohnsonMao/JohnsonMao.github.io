@@ -1,8 +1,7 @@
 ---
-import type { MarkdownHeading } from 'astro'
-import type { LocalizedCollection } from '@/utils/content'
-import { Icon } from 'astro-icon/components'
 import { getRelativeLocaleUrl } from 'astro:i18n'
+import type { MarkdownHeading } from 'astro'
+import { Icon } from 'astro-icon/components'
 import AuthorBio from '@/components/blog/AuthorBio.astro'
 import Giscus from '@/components/blog/Giscus.astro'
 import RelatedPosts from '@/components/blog/RelatedPosts.astro'
@@ -12,6 +11,7 @@ import TableOfContents from '@/components/blog/TableOfContents.astro'
 import JsonLd from '@/components/seo/JsonLd.astro'
 import { defaultLocale, getLocale, t } from '@/i18n'
 import BaseLayout from '@/layouts/BaseLayout.astro'
+import type { LocalizedCollection } from '@/utils/content'
 import { getCollectionEntry, getRelatedEntries } from '@/utils/content'
 
 interface Props {
@@ -115,7 +115,7 @@ const postData = {
             readingTimeLabel && (
               <div class="flex items-center gap-1.5">
                 <Icon name="lucide:clock" class="w-3.5 h-3.5" />
-                <span aria-label="Reading time">{readingTimeLabel}</span>
+                <span>{readingTimeLabel}</span>
               </div>
             )
           }

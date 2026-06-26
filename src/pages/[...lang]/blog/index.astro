@@ -65,7 +65,8 @@ const tagLabels = Object.fromEntries(
       </template>
 
       <template slot="templates" id="tag-template">
-        <a href="" class="rounded px-1.5 py-0.5 text-xs bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700"></a>
+        <!-- biome-ignore lint/a11y/useValidAnchor: href is set dynamically by JS -->
+        <a href="#" aria-label="Tag" class="rounded px-1.5 py-0.5 text-xs bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700">&#8203;</a>
       </template>
     </InfiniteScrollUI>
   </div>

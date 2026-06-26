@@ -1,11 +1,11 @@
 import type { CollectionEntry } from 'astro:content'
-import type { Locale } from '@/i18n'
 import { getCollection } from 'astro:content'
+import type { Locale } from '@/i18n'
 import { getLocalePriority, isLocale, normalizeLocale } from '@/i18n'
 
 const selectedCollections = ['blog'] as const
 
-export type SelectedCollection = typeof selectedCollections[number]
+export type SelectedCollection = (typeof selectedCollections)[number]
 
 export type LocalizedCollection<K extends SelectedCollection> = CollectionEntry<K> & {
   locale: Locale
@@ -25,7 +25,7 @@ interface LocalizedCollectionGroup<K extends SelectedCollection> {
  */
 export function parseEntryId(id: string) {
   const parts = id.split('/')
-  const lastPart = parts.at(-1)!
+  const lastPart = parts.at(-1) ?? ''
   const dotIdx = lastPart.lastIndexOf('.')
 
   if (dotIdx === -1) {
@@ -60,10 +60,9 @@ export function getBestEntry<K extends SelectedCollection>(
 ): LocalizedCollection<K> {
   for (const locale of priority) {
     const entry = entries.get(locale)
-    if (entry)
-      return entry
+    if (entry) return entry
   }
-  return [...entries.values()][0]!
+  return [...entries.values()].at(0) as LocalizedCollection<K>
 }
 
 /**
@@ -107,8 +106,7 @@ export async function getCollectionEntry<K extends SelectedCollection>(
 ): Promise<LocalizedCollection<K>> {
   const collectionMap = await getGroupedCollection(collection)
   const group = collectionMap.get(id)
-  if (!group)
-    throw new Error(`Entry ${id} not found in collection ${collection}`)
+  if (!group) throw new Error(`Entry ${id} not found in collection ${collection}`)
 
   const entry = getBestEntry<K>(group.entries, getLocalePriority(locale))
   return { ...entry, isFallback: entry.locale !== locale }
@@ -127,8 +125,7 @@ export async function getSortedCollectionList<K extends SelectedCollection>(
   return Array.from(collectionMap.values(), (group) => {
     const entry = getBestEntry<K>(group.entries, priority)
     return { ...entry, isFallback: locale !== entry.locale }
-  })
-    .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
+  }).sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
 }
 
 /**
@@ -163,19 +160,19 @@ export async function getRelatedEntries<K extends SelectedCollection>(
   const currentTags = entry.tags ?? []
 
   if (currentTags.length === 0) {
-    return allEntries.filter(e => e.id !== entry.id).slice(0, maxCount)
+    return allEntries.filter((e) => e.id !== entry.id).slice(0, maxCount)
   }
 
   return allEntries
-    .filter(e => e.id !== entry.id)
+    .filter((e) => e.id !== entry.id)
     .map((e) => {
-      const commonTags = (e.tags ?? []).filter(tag => currentTags.includes(tag))
+      const commonTags = (e.tags ?? []).filter((tag) => currentTags.includes(tag))
       return { entry: e, score: commonTags.length }
     })
-    .filter(item => item.score > 0)
+    .filter((item) => item.score > 0)
     .sort((a, b) => b.score - a.score || b.entry.data.pubDate.getTime() - a.entry.data.pubDate.getTime())
     .slice(0, maxCount)
-    .map(item => item.entry)
+    .map((item) => item.entry)
 }
 
 /**
@@ -212,8 +209,7 @@ export async function getNotesForLocale(locale: Locale): Promise<CollectionEntry
   const all = await getCollection('notes')
   return all
     .filter((entry) => {
-      if (!import.meta.env.DEV && entry.data.status === 'stub')
-        return false
+      if (!import.meta.env.DEV && entry.data.status === 'stub') return false
       return entry.data.lang === locale
     })
     .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())

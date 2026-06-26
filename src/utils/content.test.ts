@@ -1,5 +1,5 @@
-import type { Locale } from '@/i18n'
 import { describe, expect, it, vi } from 'vitest'
+import type { Locale } from '@/i18n'
 
 import {
   getBestEntry,
@@ -9,6 +9,7 @@ import {
   getPaginatedArticles,
   getRelatedEntries,
   getSortedCollectionList,
+  type LocalizedCollection,
   parseEntryId,
 } from './content'
 
@@ -52,10 +53,10 @@ const notesEntries = [
 
 // Mock astro:content
 vi.mock('astro:content', () => ({
-  defineCollection: vi.fn(config => config),
-  getCollection: vi.fn(async (collection: string, filter?: (entry: any) => boolean) => {
+  defineCollection: vi.fn((config) => config),
+  getCollection: vi.fn(async (collection: string, filter?: (entry: unknown) => boolean) => {
     const entries = collection === 'notes' ? notesEntries : blogEntries
-    return entries.filter((entry: any) => !filter || filter(entry))
+    return entries.filter((entry) => !filter || filter(entry))
   }),
 }))
 
@@ -90,15 +91,14 @@ describe('content Utils', () => {
       if (import.meta.env.DEV) {
         expect(list[0].id).toBe('draft-post')
         expect(list[1].id).toBe('post-3')
-      }
-      else {
+      } else {
         expect(list[0].id).toBe('post-3')
       }
     })
 
     it('should handle fallbacks correctly in the list', async () => {
       const list = await getSortedCollectionList('blog', 'en')
-      const p2 = list.find(e => e.id === 'post-2')
+      const p2 = list.find((e) => e.id === 'post-2')
       expect(p2?.locale).toBe('zh-TW')
       expect(p2?.isFallback).toBe(true)
     })
@@ -110,11 +110,11 @@ describe('content Utils', () => {
       expect(tagMap.has('react')).toBe(true)
       expect(tagMap.has('javascript')).toBe(true)
 
-      const reactPosts = tagMap.get('react')!
-      expect(reactPosts.some(p => p.id === 'post-1')).toBe(true)
-      expect(reactPosts.some(p => p.id === 'post-3')).toBe(true)
+      const reactPosts = tagMap.get('react')
+      expect(reactPosts?.some((p) => p.id === 'post-1')).toBe(true)
+      expect(reactPosts?.some((p) => p.id === 'post-3')).toBe(true)
       if (import.meta.env.DEV) {
-        expect(reactPosts.some(p => p.id === 'draft-post')).toBe(true)
+        expect(reactPosts?.some((p) => p.id === 'draft-post')).toBe(true)
       }
     })
   })
@@ -126,26 +126,26 @@ describe('content Utils', () => {
       // post-2 has ['react']
       // post-3 should relate to post-1 and post-2
       const list = await getSortedCollectionList('blog', 'zh-TW')
-      const post3 = list.find(e => e.id === 'post-3')!
+      const post3 = list.find((e) => e.id === 'post-3')
+      if (!post3) throw new Error('post-3 not found')
 
       const related = await getRelatedEntries('blog', post3)
       // Expect post-2 and post-1 (sorted by date descending since scores are equal)
       // If draft-post is included, it also has 'react', so it should be there too
-      const expectedRelatedIds = import.meta.env.DEV
-        ? ['draft-post', 'post-2', 'post-1']
-        : ['post-2', 'post-1']
+      const expectedRelatedIds = import.meta.env.DEV ? ['draft-post', 'post-2', 'post-1'] : ['post-2', 'post-1']
 
-      expect(related.map(e => e.id)).toEqual(expectedRelatedIds)
+      expect(related.map((e) => e.id)).toEqual(expectedRelatedIds)
     })
 
     it('should handle entries with no tags', async () => {
       const list = await getSortedCollectionList('blog', 'zh-TW')
-      const post3 = list.find(e => e.id === 'post-3')!
+      const post3 = list.find((e) => e.id === 'post-3')
+      if (!post3) throw new Error('post-3 not found')
       const entryNoTags = { ...post3, tags: [] }
 
       const related = await getRelatedEntries('blog', entryNoTags)
       expect(related.length).toBeGreaterThan(0)
-      expect(related.map(e => e.id)).not.toContain('post-3')
+      expect(related.map((e) => e.id)).not.toContain('post-3')
     })
   })
 
@@ -191,10 +191,10 @@ describe('content Utils', () => {
   })
 
   describe('getBestEntry()', () => {
-    const mockEntries = new Map<Locale, any>([
+    const mockEntries = new Map<Locale, LocalizedCollection<'blog'>>([
       ['zh-TW', { id: 'post', locale: 'zh-TW', data: { title: '中文' } }],
       ['en', { id: 'post', locale: 'en', data: { title: 'English' } }],
-    ])
+    ] as unknown as [Locale, LocalizedCollection<'blog'>][])
 
     it('should pick the exact locale if available', () => {
       const entry = getBestEntry(mockEntries, ['en', 'zh-TW'])
@@ -202,22 +202,24 @@ describe('content Utils', () => {
     })
 
     it('should fallback to next available locale in priority list', () => {
-      const partialEntries = new Map<Locale, any>([
+      const partialEntries = new Map<Locale, LocalizedCollection<'blog'>>([
         ['zh-TW', { id: 'post', locale: 'zh-TW', data: { title: '中文' } }],
-      ])
+      ] as unknown as [Locale, LocalizedCollection<'blog'>][])
       const entry = getBestEntry(partialEntries, ['en', 'zh-TW'])
       expect(entry.locale).toBe('zh-TW')
     })
 
     it('should fallback to first available if priority list fails', () => {
-      const entry = getBestEntry(mockEntries, ['ja' as any])
+      const entry = getBestEntry(mockEntries, ['ja' as unknown as Locale])
       expect(entry).toBeDefined()
       expect(['zh-TW', 'en']).toContain(entry.locale)
     })
   })
 
   describe('getPaginatedArticles()', () => {
-    const mockArticles = Array.from({ length: 25 }, (_, i) => ({ id: `post-${i}` })) as any[]
+    const mockArticles = Array.from({ length: 25 }, (_, i) => ({
+      id: `post-${i}`,
+    })) as unknown as LocalizedCollection<'blog'>[]
 
     it('should split articles into pages of default size (10)', () => {
       const pages = getPaginatedArticles(mockArticles)
@@ -250,8 +252,7 @@ describe('content Utils', () => {
         // note-2 has pubDate 2024-01-02 (newer), note-1 has 2024-01-01
         expect(notes[0].id).toBe('note-2')
         expect(notes[1].id).toBe('note-1')
-      }
-      else {
+      } else {
         expect(notes[0].id).toBe('note-1')
       }
     })

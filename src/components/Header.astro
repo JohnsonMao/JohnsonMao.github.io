@@ -1,8 +1,8 @@
 ---
-import type { Locale } from '@/i18n'
 import { getRelativeLocaleUrl } from 'astro:i18n'
 import Search from '@/components/Search.astro'
 import ThemeToggle from '@/components/theme/ThemeToggle.astro'
+import type { Locale } from '@/i18n'
 import { getLocale, locales, t } from '@/i18n'
 
 const locale = getLocale(Astro.currentLocale)

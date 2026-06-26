@@ -1,12 +1,24 @@
+import { defineCollection } from 'astro:content'
 import { glob } from 'astro/loaders'
 import { z } from 'astro/zod'
-import { defineCollection } from 'astro:content'
 
-export const TAG_IDS = ['react', 'hexschool', 'vue3-camp', 'mongodb', 'it-ironman', 'vscode', 'html', 'css', 'javascript', 'jsdc', 'typescript'] as const
-export type TagId = typeof TAG_IDS[number]
+export const TAG_IDS = [
+  'react',
+  'hexschool',
+  'vue3-camp',
+  'mongodb',
+  'it-ironman',
+  'vscode',
+  'html',
+  'css',
+  'javascript',
+  'jsdc',
+  'typescript',
+] as const
+export type TagId = (typeof TAG_IDS)[number]
 
 export const SERIES_IDS = ['front-end-skills-journey', 'vue3-beginner-camp', 'react-guide', 'typescript-guide'] as const
-export type SeriesId = typeof SERIES_IDS[number]
+export type SeriesId = (typeof SERIES_IDS)[number]
 
 const CONTENT_EXT_RE = /\.(md|mdx)$/
 

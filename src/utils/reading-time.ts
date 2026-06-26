@@ -45,14 +45,10 @@ export interface ReadingTimeResult {
  * @param content - Raw markdown or plain text
  * @param locale - Optional locale for WPM (future use); currently uses unified default
  */
-export function getReadingTimeMinutes(
-  content: string,
-  locale?: Locale,
-): number {
+export function getReadingTimeMinutes(content: string, locale?: Locale): number {
   const text = stripMarkdown(content)
   const len = text.length
-  if (len === 0)
-    return 0
+  if (len === 0) return 0
   const wpm = locale === 'en' ? CHARS_PER_MINUTE_EN : CHARS_PER_MINUTE_ZH
   return Math.max(1, Math.ceil(len / wpm))
 }

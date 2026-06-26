@@ -1,7 +1,6 @@
 import type { TagId } from '@/content.config'
-import type { I18nMessageModules } from '@/glob.loader'
-
 import { TAG_IDS } from '@/content.config'
+import type { I18nMessageModules } from '@/glob.loader'
 import { getMessageModules } from '@/glob.loader'
 
 interface Messages {
@@ -9,10 +8,13 @@ interface Messages {
     title?: string
     description?: string
     count?: string
-    registry?: Record<string, {
-      name: string
-      description: string
-    }>
+    registry?: Record<
+      string,
+      {
+        name: string
+        description: string
+      }
+    >
   }
   [key: string]: unknown
 }
@@ -24,8 +26,7 @@ const SUPPORTED_LOCALE_SET = new Set<Locale>(SUPPORTED_LOCALES)
 const MESSAGE_MODULE_RE = /\/([^/]+)\/([^/]+)\.json$/
 
 function toRecord(value: unknown): Record<string, unknown> {
-  if (value && typeof value === 'object' && !Array.isArray(value))
-    return value as Record<string, unknown>
+  if (value && typeof value === 'object' && !Array.isArray(value)) return value as Record<string, unknown>
   return {}
 }
 
@@ -34,12 +35,12 @@ function mergeRecords(base: Record<string, unknown>, source: Record<string, unkn
   Object.entries(source).forEach(([key, value]) => {
     const existing = output[key]
     if (
-      existing
-      && typeof existing === 'object'
-      && !Array.isArray(existing)
-      && value
-      && typeof value === 'object'
-      && !Array.isArray(value)
+      existing &&
+      typeof existing === 'object' &&
+      !Array.isArray(existing) &&
+      value &&
+      typeof value === 'object' &&
+      !Array.isArray(value)
     ) {
       output[key] = mergeRecords(existing as Record<string, unknown>, value as Record<string, unknown>)
       return
@@ -76,11 +77,12 @@ export function createI18nData(options: CreateI18nDataOptions = {}): I18nData {
   const messageEntries = Object.entries(messageModules)
     .map(([path, mod]) => {
       const match = path.match(MESSAGE_MODULE_RE)
-      if (!match)
-        return null
+      if (!match) return null
       const [, locale, moduleName] = match
       if (!isSupportedLocale(locale)) {
-        throw new Error(`[i18n] Unsupported locale "${locale}" in "${path}". Supported locales: ${SUPPORTED_LOCALES.join(', ')}`)
+        throw new Error(
+          `[i18n] Unsupported locale "${locale}" in "${path}". Supported locales: ${SUPPORTED_LOCALES.join(', ')}`,
+        )
       }
       return [locale, moduleName, toRecord(mod.default)] as const
     })
@@ -93,11 +95,8 @@ export function createI18nData(options: CreateI18nDataOptions = {}): I18nData {
   const localeSet = new Set<Locale>(messageEntries.map(([locale]) => locale))
   const defaultLocale: Locale = localeSet.has(preferredDefaultLocale)
     ? preferredDefaultLocale
-    : messageEntries[0]![0]
-  const locales: Locale[] = [
-    defaultLocale,
-    ...[...localeSet].filter(locale => locale !== defaultLocale),
-  ]
+    : (messageEntries[0]?.[0] as Locale)
+  const locales: Locale[] = [defaultLocale, ...[...localeSet].filter((locale) => locale !== defaultLocale)]
 
   const messagesByLocale = new Map<Locale, Record<string, unknown>>()
   messageEntries.forEach(([locale, moduleName, moduleData]) => {
@@ -105,7 +104,7 @@ export function createI18nData(options: CreateI18nDataOptions = {}): I18nData {
     messagesByLocale.set(locale, mergeRecords(current, { [moduleName]: moduleData }))
   })
 
-  function buildTagRegistry(locale: Locale): Record<string, { name: string, description: string }> {
+  function buildTagRegistry(locale: Locale): Record<string, { name: string; description: string }> {
     const getRawRegistry = (loc: Locale): Record<string, unknown> => {
       const msgs = messagesByLocale.get(loc) ?? {}
       return toRecord(toRecord(msgs.tags).registry)
@@ -113,17 +112,17 @@ export function createI18nData(options: CreateI18nDataOptions = {}): I18nData {
 
     const localeRegistry = getRawRegistry(locale)
     const fallbackRegistry = getRawRegistry(defaultLocale)
-    const registry: Record<string, { name: string, description: string }> = {}
+    const registry: Record<string, { name: string; description: string }> = {}
 
     resolvedTagIds.forEach((tagId) => {
       const entry = localeRegistry[tagId] ?? fallbackRegistry[tagId]
       if (
-        entry
-        && typeof entry === 'object'
-        && 'name' in entry
-        && typeof (entry as Record<string, unknown>).name === 'string'
+        entry &&
+        typeof entry === 'object' &&
+        'name' in entry &&
+        typeof (entry as Record<string, unknown>).name === 'string'
       ) {
-        registry[tagId] = entry as { name: string, description: string }
+        registry[tagId] = entry as { name: string; description: string }
         return
       }
       registry[tagId] = { name: tagId, description: tagId }
@@ -132,19 +131,22 @@ export function createI18nData(options: CreateI18nDataOptions = {}): I18nData {
     return registry
   }
 
-  const messages = locales.reduce<Record<Locale, Messages>>((acc, locale) => {
-    const localeMessages = (messagesByLocale.get(locale) ?? {}) as Messages
-    const tags = toRecord(localeMessages.tags) as Messages['tags']
+  const messages = locales.reduce<Record<Locale, Messages>>(
+    (acc, locale) => {
+      const localeMessages = (messagesByLocale.get(locale) ?? {}) as Messages
+      const tags = toRecord(localeMessages.tags) as Messages['tags']
 
-    acc[locale] = {
-      ...localeMessages,
-      tags: {
-        ...tags,
-        registry: buildTagRegistry(locale),
-      },
-    }
-    return acc
-  }, {} as Record<Locale, Messages>)
+      acc[locale] = {
+        ...localeMessages,
+        tags: {
+          ...tags,
+          registry: buildTagRegistry(locale),
+        },
+      }
+      return acc
+    },
+    {} as Record<Locale, Messages>,
+  )
 
   const isDev = options.isDev ?? import.meta.env.DEV
   if (isDev) {
@@ -154,8 +156,8 @@ export function createI18nData(options: CreateI18nDataOptions = {}): I18nData {
     locales.forEach((locale) => {
       const msgs = messagesByLocale.get(locale) ?? {}
       const localeTagIds = Object.keys(toRecord(toRecord(msgs.tags).registry))
-      const missingTags = resolvedTagIds.filter(tag => !localeTagIds.includes(tag))
-      const extraTags = localeTagIds.filter(tag => !defaultTagSet.has(tag))
+      const missingTags = resolvedTagIds.filter((tag) => !localeTagIds.includes(tag))
+      const extraTags = localeTagIds.filter((tag) => !defaultTagSet.has(tag))
 
       if (missingTags.length > 0 || extraTags.length > 0) {
         warn(
@@ -183,8 +185,7 @@ const messages: Record<Locale, Messages> = i18nData.messages
 export function normalizeLocale(locale: string): string {
   try {
     return new Intl.Locale(locale).toString()
-  }
-  catch {
+  } catch {
     return locale
   }
 }
@@ -231,8 +232,7 @@ function getNested(obj: unknown, key: string): string | undefined {
   const parts = key.split('.')
   let current: unknown = obj
   for (const part of parts) {
-    if (current == null || typeof current !== 'object')
-      return undefined
+    if (current == null || typeof current !== 'object') return undefined
     current = (current as Record<string, unknown>)[part]
   }
   return typeof current === 'string' ? current : undefined
@@ -241,9 +241,7 @@ function getNested(obj: unknown, key: string): string | undefined {
 export function t(locale: Locale, key: string, vars?: Record<string, string | number>): string {
   const data = messages[locale]
   const value = getNested(data, key)
-  if (value == null)
-    return key
-  if (!vars)
-    return value
+  if (value == null) return key
+  if (!vars) return value
   return Object.entries(vars).reduce((s, [k, v]) => s.replace(new RegExp(`\\{${k}\\}`, 'g'), v.toString()), value)
 }

@@ -7,6 +7,7 @@ const locale = getLocale(Astro.currentLocale)
 
 <site-search data-locale={locale}>
   <button
+    type="button"
     id="search-button"
     class="flex items-center gap-2 px-3 py-1.5 text-sm text-neutral-500 bg-neutral-100 border border-neutral-200 rounded-lg hover:bg-neutral-200 dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-400 dark:hover:bg-neutral-700 transition-colors"
     aria-label="Search"
@@ -36,6 +37,7 @@ const locale = getLocale(Astro.currentLocale)
         autocomplete="off"
       />
       <button
+        type="button"
         id="close-search"
         class="text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-200 p-1 cursor-pointer"
       >
@@ -70,8 +72,9 @@ const locale = getLocale(Astro.currentLocale)
   </dialog>
 
   <template id="search-result-template">
-    <a href="" class="block p-4 rounded-xl hover:bg-neutral-100 dark:hover:bg-neutral-800/50 transition-all group mb-2 border border-transparent hover:border-neutral-200 dark:hover:border-neutral-700">
-      <h3 class="result-title font-bold text-neutral-900 dark:text-white mb-2 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors flex items-center justify-between">
+    <!-- biome-ignore lint/a11y/useValidAnchor: href is set dynamically by JS -->
+    <a href="#" aria-label="Search result" class="block p-4 rounded-xl hover:bg-neutral-100 dark:hover:bg-neutral-800/50 transition-all group mb-2 border border-transparent hover:border-neutral-200 dark:hover:border-neutral-700">
+      <h3 aria-label="Result title" class="result-title font-bold text-neutral-900 dark:text-white mb-2 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors flex items-center justify-between">
       </h3>
       <p class="result-excerpt text-sm text-neutral-500 dark:text-neutral-400 line-clamp-2 leading-relaxed"></p>
     </a>
@@ -105,7 +108,7 @@ interface PagefindSearchFragment {
   plain_excerpt?: string
   word_count: number
   meta: Record<string, string>
-  [key: string]: any
+  [key: string]: unknown
 }
 
 /** A single result from a search query, before actual data has been loaded */
@@ -151,10 +154,6 @@ class SiteSearch extends HTMLElement {
   private skeletonTemplate: HTMLTemplateElement | null = null
   private isClosing = false
   private searchRequestId = 0
-
-  constructor() {
-    super()
-  }
 
   connectedCallback() {
     this.searchButton = this.querySelector<HTMLButtonElement>('#search-button')
@@ -214,7 +213,7 @@ class SiteSearch extends HTMLElement {
   }
 
   private closeSearch() {
-    if (!this.searchDialog || !this.searchDialog.open || this.isClosing)
+    if (!this.searchDialog?.open || this.isClosing)
       return
     this.isClosing = true
 
@@ -258,7 +257,7 @@ class SiteSearch extends HTMLElement {
 
   private mergeSearchResults(primary: PagefindSearchResult[], secondary: PagefindSearchResult[]) {
     const merged = new Map<string, PagefindSearchResult>()
-    primary.forEach(item => merged.set(item.id, item))
+    primary.forEach(item => { merged.set(item.id, item) })
     secondary.forEach((item) => {
       if (!merged.has(item.id))
         merged.set(item.id, item)
@@ -277,14 +276,14 @@ class SiteSearch extends HTMLElement {
       const chars = [...query]
       chars
         .filter(char => CJK_CHAR_REGEX.test(char))
-        .forEach(char => terms.add(char))
+        .forEach(char => { terms.add(char) })
     }
     else {
       query
         .split(SPLIT_WHITESPACE_REGEX)
         .map(t => t.trim())
         .filter(Boolean)
-        .forEach(t => terms.add(t))
+        .forEach(t => { terms.add(t) })
     }
     return [...terms].toSorted((a, b) => b.length - a.length)
   }
@@ -403,7 +402,7 @@ class SiteSearch extends HTMLElement {
     const fragment = document.createDocumentFragment()
 
     results.forEach((r) => {
-      const clone = this.resultTemplate!.content.cloneNode(true) as DocumentFragment
+      const clone = this.resultTemplate?.content.cloneNode(true) as DocumentFragment
       const link = clone.querySelector('a')
       const title = clone.querySelector('.result-title')
       const excerpt = clone.querySelector('.result-excerpt')

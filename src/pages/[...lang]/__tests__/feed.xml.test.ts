@@ -6,7 +6,7 @@ import { GET, getStaticPaths } from '../feed.xml'
 
 // Mock Astro-specific modules first, before imports
 vi.mock('@astrojs/rss', () => {
-  const mockRss = vi.fn(args => args)
+  const mockRss = vi.fn((args) => args)
   return {
     default: mockRss,
   }

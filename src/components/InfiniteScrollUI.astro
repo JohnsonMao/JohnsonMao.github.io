@@ -33,8 +33,9 @@
  * i18n tags are located at `src/i18n/messages/{locale}/tags.json` under the
  * `registry` key, co-located with other locale message files.
  */
-import type { Locale } from '@/i18n'
+
 import { Icon } from 'astro-icon/components'
+import type { Locale } from '@/i18n'
 
 interface Props {
   locale: Locale
@@ -164,18 +165,18 @@ class InfiniteScroll extends HTMLElement {
       : {}
 
     clone.querySelectorAll<HTMLElement>('[data-infinite-text]').forEach((el) => {
-      const field = el.getAttribute('data-infinite-text')!
+      const field = el.getAttribute('data-infinite-text') ?? ''
       el.textContent = String(item[field] ?? '')
     })
 
     clone.querySelectorAll<HTMLElement>('[data-infinite-href]').forEach((el) => {
-      const pattern = el.getAttribute('data-infinite-href')!
+      const pattern = el.getAttribute('data-infinite-href') ?? ''
       const href = pattern.replace(FIELD_PATTERN, (_, key) => String(item[key] ?? ''))
       el.setAttribute('href', href)
     })
 
     clone.querySelectorAll<HTMLElement>('[data-infinite-date]').forEach((el) => {
-      const field = el.getAttribute('data-infinite-date')!
+      const field = el.getAttribute('data-infinite-date') ?? ''
       const rawDate = item[field]
       if (rawDate) {
         const date = new Date(String(rawDate))
@@ -186,14 +187,14 @@ class InfiniteScroll extends HTMLElement {
 
     // Process data-infinite-if before data-infinite-list so removed elements don't block list rendering
     clone.querySelectorAll<HTMLElement>('[data-infinite-if]').forEach((el) => {
-      const field = el.getAttribute('data-infinite-if')!
+      const field = el.getAttribute('data-infinite-if') ?? ''
       if (!item[field]) {
         el.remove()
       }
     })
 
     clone.querySelectorAll<HTMLElement>('[data-infinite-list]').forEach((el) => {
-      const field = el.getAttribute('data-infinite-list')!
+      const field = el.getAttribute('data-infinite-list') ?? ''
       const subTemplateId = el.getAttribute('data-list-template')
       const hrefPattern = el.getAttribute('data-list-href')
       const items = item[field]

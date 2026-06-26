@@ -37,9 +37,7 @@ registerRoute(
 // 2. Cache-First Strategy for Static Assets (Images & Fonts)
 registerRoute(
   ({ request }) =>
-    request.destination === 'image'
-    || request.destination === 'font'
-    || request.url.includes('/_astro/'),
+    request.destination === 'image' || request.destination === 'font' || request.url.includes('/_astro/'),
   new CacheFirst({
     cacheName: 'assets-cache',
     plugins: [
@@ -64,16 +62,14 @@ setCatchHandler(async ({ event }) => {
     const offlinePath = isEn ? '/en/offline/index.html' : '/offline/index.html'
 
     const cachedResponse = await caches.match(offlinePath)
-    if (cachedResponse)
-      return cachedResponse
+    if (cachedResponse) return cachedResponse
   }
   return Response.error()
 })
 
 // Push event listener
 self.addEventListener('push', (event) => {
-  if (!event.data)
-    return
+  if (!event.data) return
 
   try {
     const data = event.data.json()
@@ -86,11 +82,8 @@ self.addEventListener('push', (event) => {
         url: data.url || '/',
       },
     }
-    event.waitUntil(
-      self.registration.showNotification(title, options),
-    )
-  }
-  catch (e) {
+    event.waitUntil(self.registration.showNotification(title, options))
+  } catch (e) {
     console.error('Error handling push event:', e)
   }
 })

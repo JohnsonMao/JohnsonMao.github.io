@@ -59,7 +59,6 @@ const blogBase = getRelativeLocaleUrl(locale, 'blog/')
         !asTemplate && langBadge && (
           <span
             class="rounded px-1.5 py-0.5 text-xs font-medium bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300"
-            aria-label={`Language: ${langBadge}`}
           >
             {langBadge}
           </span>
@@ -76,8 +75,8 @@ const blogBase = getRelativeLocaleUrl(locale, 'blog/')
         data-infinite-date={asTemplate ? 'pubDate' : undefined}
       >{asTemplate ? '' : formattedDate}</time>
       {asTemplate
-        ? <span aria-label="Reading time" data-infinite-text="readingTime" data-infinite-if="readingTime"></span>
-        : readingTimeLabel && <span aria-label="Reading time">{readingTimeLabel}</span>}
+        ? <span data-infinite-text="readingTime" data-infinite-if="readingTime"></span>
+        : readingTimeLabel && <span>{readingTimeLabel}</span>}
     </div>
   </a>
   {asTemplate

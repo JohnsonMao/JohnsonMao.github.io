@@ -64,7 +64,7 @@ class ThemeToggle extends HTMLElement {
     }
     else {
       // Fallback to system preference if no theme is stored
-      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+      const prefersDark = window.matchMedia?.('(prefers-color-scheme: dark)').matches
       this.applyTheme(prefersDark ? this.THEMES.DARK : this.THEMES.LIGHT)
     }
   }

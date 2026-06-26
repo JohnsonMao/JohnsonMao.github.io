@@ -5,26 +5,28 @@ import sitemap from '@astrojs/sitemap'
 import { transformerCopyButton } from '@rehype-pretty/transformers'
 import tailwindcss from '@tailwindcss/vite'
 import AstroPWA from '@vite-pwa/astro'
-import icon from 'astro-icon'
 import { defineConfig } from 'astro/config'
+import icon from 'astro-icon'
 import rehypePrettyCode from 'rehype-pretty-code'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 const rehypePrettyCodeConfig = {
   syntaxHighlight: false,
-  rehypePlugins: [[
-    rehypePrettyCode,
-    {
-      theme: 'github-dark',
-      transformers: [
-        transformerCopyButton({
-          visibility: 'hover',
-          feedbackDuration: 3000,
-        }),
-      ],
-    },
-  ]],
+  rehypePlugins: [
+    [
+      rehypePrettyCode,
+      {
+        theme: 'github-dark',
+        transformers: [
+          transformerCopyButton({
+            visibility: 'hover',
+            feedbackDuration: 3000,
+          }),
+        ],
+      },
+    ],
+  ],
 }
 
 // https://astro.build/config
@@ -47,7 +49,7 @@ export default defineConfig({
         globPatterns: ['**/*.{js,css,html,ico,png,svg}', 'offline/index.html', 'en/offline/index.html'],
       },
       manifest: {
-        name: 'JohnsonMao\'s Blog',
+        name: "JohnsonMao's Blog",
         short_name: 'JohnsonMao',
         description: 'Personal blog of JohnsonMao',
         theme_color: '#ffffff',

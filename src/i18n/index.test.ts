@@ -57,13 +57,17 @@ describe('i18n t()', () => {
     expect(data.defaultLocale).toBe('zh-TW')
     expect(data.locales).toEqual(['zh-TW', 'en'])
     expect((data.messages.en as { nav: { blog: string } }).nav.blog).toBe('Blog')
-    expect((data.messages['zh-TW'] as { tags: { registry: Record<string, { name: string }> } }).tags.registry.react.name).toBe('React')
+    expect(
+      (data.messages['zh-TW'] as { tags: { registry: Record<string, { name: string }> } }).tags.registry.react.name,
+    ).toBe('React')
   })
 
   it('throws when injected message source is empty', () => {
-    expect(() => createI18nData({
-      messageModules: {},
-      isDev: false,
-    })).toThrow('[i18n] No locale files found under src/i18n/messages/*/*.json')
+    expect(() =>
+      createI18nData({
+        messageModules: {},
+        isDev: false,
+      }),
+    ).toThrow('[i18n] No locale files found under src/i18n/messages/*/*.json')
   })
 })

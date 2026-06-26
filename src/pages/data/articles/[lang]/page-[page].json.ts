@@ -1,6 +1,6 @@
 import type { APIRoute } from 'astro'
-import type { PaginatedArticlesPage, SerializedArticle } from '@/utils/content'
 import { isLocale, locales } from '@/i18n'
+import type { PaginatedArticlesPage, SerializedArticle } from '@/utils/content'
 import { getPaginatedArticles, getSortedCollectionList } from '@/utils/content'
 import { getReadingTime } from '@/utils/reading-time'
 
@@ -12,8 +12,7 @@ export async function getStaticPaths() {
   const paths = []
 
   for (const locale of locales) {
-    if (!isLocale(locale))
-      continue
+    if (!isLocale(locale)) continue
 
     const articles = await getSortedCollectionList('blog', locale)
     const pages = getPaginatedArticles(articles, ARTICLES_PER_PAGE)
@@ -33,7 +32,7 @@ export async function getStaticPaths() {
 
 export const GET: APIRoute = async ({ params }) => {
   const { lang, page: pageStr } = params
-  const pageNum = Number.parseInt(pageStr!, 10)
+  const pageNum = Number.parseInt(pageStr ?? '', 10)
 
   if (!isLocale(lang) || !pageNum || pageNum < 1) {
     return new Response(JSON.stringify({ error: 'Invalid page or locale' }), {
@@ -52,7 +51,7 @@ export const GET: APIRoute = async ({ params }) => {
     })
   }
 
-  const pageArticles = pages[pageNum - 1]!
+  const pageArticles = pages[pageNum - 1] ?? []
   const serializedArticles: SerializedArticle[] = pageArticles.map((article) => {
     const readingTime = getReadingTime(article.body ?? '', article.locale)
     return {

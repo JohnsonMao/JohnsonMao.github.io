@@ -8,7 +8,7 @@ const FEED_SIZE = 20
 export function getStaticPaths() {
   return [
     { params: { lang: undefined } },
-    ...locales.filter(l => l !== defaultLocale).map(l => ({ params: { lang: l } })),
+    ...locales.filter((l) => l !== defaultLocale).map((l) => ({ params: { lang: l } })),
   ]
 }
 
@@ -22,9 +22,7 @@ export async function GET({ params, site }: Context) {
   const locale = getLocale(lang)
 
   const allEntries = await getSortedCollectionList('blog', locale)
-  const sorted = allEntries
-    .filter(entry => entry.data.draft !== true)
-    .slice(0, FEED_SIZE)
+  const sorted = allEntries.filter((entry) => entry.data.draft !== true).slice(0, FEED_SIZE)
 
   const siteUrl = site ?? new URL('https://johnsonmao.github.io')
   const prefix = locale === defaultLocale ? '' : `/${locale}`

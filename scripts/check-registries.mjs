@@ -17,8 +17,7 @@ function walkFiles(dir, exts = ['.md', '.mdx']) {
   let entries
   try {
     entries = readdirSync(dir)
-  }
-  catch {
+  } catch {
     return files
   }
   for (const entry of entries) {
@@ -26,8 +25,7 @@ function walkFiles(dir, exts = ['.md', '.mdx']) {
     const stat = statSync(fullPath)
     if (stat.isDirectory()) {
       files.push(...walkFiles(fullPath, exts))
-    }
-    else if (exts.some(ext => entry.endsWith(ext))) {
+    } else if (exts.some((ext) => entry.endsWith(ext))) {
       files.push(fullPath)
     }
   }
@@ -37,12 +35,9 @@ function walkFiles(dir, exts = ['.md', '.mdx']) {
 const tagsRegistry = loadRegistry(join(ROOT, 'src/i18n/messages/zh-TW/tags.json'))
 const seriesRegistry = loadRegistry(join(ROOT, 'src/i18n/messages/zh-TW/series.json'))
 
-const contentDirs = [
-  join(ROOT, 'src/content/blog'),
-  join(ROOT, 'src/content/notes'),
-]
+const contentDirs = [join(ROOT, 'src/content/blog'), join(ROOT, 'src/content/notes')]
 
-const allFiles = contentDirs.flatMap(dir => walkFiles(dir))
+const allFiles = contentDirs.flatMap((dir) => walkFiles(dir))
 
 /** @type {Map<string, string[]>} */
 const missingTags = new Map()
@@ -61,8 +56,7 @@ for (const filePath of allFiles) {
     for (const tag of data.tags) {
       allTagValues.add(tag)
       if (!tagsRegistry.has(tag)) {
-        if (!missingTags.has(tag))
-          missingTags.set(tag, [])
+        if (!missingTags.has(tag)) missingTags.set(tag, [])
         missingTags.get(tag).push(relativePath)
       }
     }
@@ -71,8 +65,7 @@ for (const filePath of allFiles) {
   if (typeof data.series === 'string') {
     allSeriesValues.add(data.series)
     if (!seriesRegistry.has(data.series)) {
-      if (!missingSeries.has(data.series))
-        missingSeries.set(data.series, [])
+      if (!missingSeries.has(data.series)) missingSeries.set(data.series, [])
       missingSeries.get(data.series).push(relativePath)
     }
   }
