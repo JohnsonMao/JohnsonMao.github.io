@@ -209,7 +209,7 @@ export async function getNotesForLocale(locale: Locale): Promise<CollectionEntry
   const all = await getCollection('notes')
   return all
     .filter((entry) => {
-      if (!import.meta.env.DEV && entry.data.status === 'stub') return false
+      if (!import.meta.env.DEV && entry.data.draft === true) return false
       return entry.data.lang === locale
     })
     .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())

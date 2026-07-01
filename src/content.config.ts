@@ -56,8 +56,7 @@ const notes = defineCollection({
     updated: z.coerce.date().optional(),
     lang: z.enum(['zh-TW', 'en']).default('zh-TW'),
     tags: z.array(z.enum(TAG_IDS)).optional(),
-    status: z.enum(['stub', 'draft', 'complete']).default('stub'),
-    related: z.array(z.string()).optional(),
+    draft: z.boolean().optional(),
   }),
 })
 

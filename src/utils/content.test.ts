@@ -39,15 +39,15 @@ const blogEntries = [
 const notesEntries = [
   {
     id: 'note-1',
-    data: { title: 'Note 1 ZH', pubDate: new Date('2024-01-01'), lang: 'zh-TW', status: 'complete' },
+    data: { title: 'Note 1 ZH', pubDate: new Date('2024-01-01'), lang: 'zh-TW' },
   },
   {
     id: 'note-2',
-    data: { title: 'Note 2 ZH Stub', pubDate: new Date('2024-01-02'), lang: 'zh-TW', status: 'stub' },
+    data: { title: 'Note 2 ZH Draft', pubDate: new Date('2024-01-02'), lang: 'zh-TW', draft: true },
   },
   {
     id: 'note-3',
-    data: { title: 'Note 3 EN', pubDate: new Date('2024-01-03'), lang: 'en', status: 'complete' },
+    data: { title: 'Note 3 EN', pubDate: new Date('2024-01-03'), lang: 'en' },
   },
 ]
 
@@ -244,8 +244,8 @@ describe('content Utils', () => {
   describe('getNotesForLocale()', () => {
     it('should return notes for the requested locale sorted by pubDate descending', async () => {
       const notes = await getNotesForLocale('zh-TW')
-      // DEV: includes stubs (note-1 complete + note-2 stub) = 2
-      // PROD: excludes stubs (note-1 complete only) = 1
+      // DEV: includes drafts (note-1 + note-2 draft) = 2
+      // PROD: excludes drafts (note-1 only) = 1
       const expectedLength = import.meta.env.DEV ? 2 : 1
       expect(notes).toHaveLength(expectedLength)
       if (import.meta.env.DEV) {
