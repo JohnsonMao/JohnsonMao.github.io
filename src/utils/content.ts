@@ -201,16 +201,27 @@ export interface SerializedArticle {
   readingTime?: string
 }
 
+export type LocalizedNote = Omit<CollectionEntry<'notes'>, 'id'> & {
+  id: string
+  locale: Locale
+}
+
 /**
  * Returns notes entries for a specific locale, sorted by pubDate descending.
- * In production mode, stub notes are excluded.
+ * Locale is derived from the filename suffix (e.g. "note.zh-TW.md").
+ * In production mode, draft notes are excluded.
  */
-export async function getNotesForLocale(locale: Locale): Promise<CollectionEntry<'notes'>[]> {
+export async function getNotesForLocale(locale: Locale): Promise<LocalizedNote[]> {
   const all = await getCollection('notes')
   return all
     .filter((entry) => {
       if (!import.meta.env.DEV && entry.data.draft === true) return false
-      return entry.data.lang === locale
+      const { locale: entryLocale } = parseEntryId(entry.id)
+      return entryLocale === locale
+    })
+    .map((entry) => {
+      const { slug } = parseEntryId(entry.id)
+      return { ...entry, id: slug, locale }
     })
     .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
 }

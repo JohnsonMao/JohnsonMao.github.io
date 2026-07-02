@@ -48,13 +48,16 @@ const about = defineCollection({
 })
 
 const notes = defineCollection({
-  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/notes' }),
+  loader: glob({
+    pattern: '**/*.{md,mdx}',
+    base: './src/content/notes',
+    generateId: ({ entry }) => entry.replace(CONTENT_EXT_RE, ''),
+  }),
   schema: z.object({
     title: z.string(),
     pubDate: z.coerce.date(),
     description: z.string().optional(),
     updated: z.coerce.date().optional(),
-    lang: z.enum(['zh-TW', 'en']).default('zh-TW'),
     tags: z.array(z.enum(TAG_IDS)).optional(),
     draft: z.boolean().optional(),
   }),

@@ -23,7 +23,7 @@ const notesBase = getRelativeLocaleUrl(locale, 'notes/')
     <ul class="space-y-6">
       {
         notes.map((note) => {
-          const formattedDate = new Intl.DateTimeFormat(note.data.lang, { dateStyle: 'medium' }).format(note.data.pubDate)
+          const formattedDate = new Intl.DateTimeFormat(note.locale, { dateStyle: 'medium' }).format(note.data.pubDate)
           return (
             <li class="border-b border-gray-100 pb-6 dark:border-gray-800">
               <a href={`${notesBase}${note.id}/`} class="text-lg font-semibold hover:underline">

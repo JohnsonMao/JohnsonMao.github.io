@@ -38,16 +38,16 @@ const blogEntries = [
 
 const notesEntries = [
   {
-    id: 'note-1',
-    data: { title: 'Note 1 ZH', pubDate: new Date('2024-01-01'), lang: 'zh-TW' },
+    id: 'note-1.zh-TW',
+    data: { title: 'Note 1 ZH', pubDate: new Date('2024-01-01') },
   },
   {
-    id: 'note-2',
-    data: { title: 'Note 2 ZH Draft', pubDate: new Date('2024-01-02'), lang: 'zh-TW', draft: true },
+    id: 'note-2.zh-TW',
+    data: { title: 'Note 2 ZH Draft', pubDate: new Date('2024-01-02'), draft: true },
   },
   {
-    id: 'note-3',
-    data: { title: 'Note 3 EN', pubDate: new Date('2024-01-03'), lang: 'en' },
+    id: 'note-3.en',
+    data: { title: 'Note 3 EN', pubDate: new Date('2024-01-03') },
   },
 ]
 
@@ -261,7 +261,7 @@ describe('content Utils', () => {
       const notes = await getNotesForLocale('en')
       expect(notes).toHaveLength(1)
       expect(notes[0].id).toBe('note-3')
-      expect(notes[0].data.lang).toBe('en')
+      expect(notes[0].locale).toBe('en')
     })
 
     it('should return empty array when no notes exist in collection', async () => {
