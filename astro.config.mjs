@@ -68,7 +68,7 @@ export default defineConfig({
         directoryAndTrailingSlashHandler: true,
       },
       devOptions: {
-        enabled: true,
+        enabled: false,
       },
     }),
   ],

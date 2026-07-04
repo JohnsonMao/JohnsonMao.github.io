@@ -18,7 +18,6 @@ export default getViteConfig({
         'src/glob.loader.ts',
         'src/env.d.ts',
         'src/content.config.ts',
-        'src/glob.loader.ts',
         'src/content/**/*',
         'src/sw.ts',
         '**/*.json',
