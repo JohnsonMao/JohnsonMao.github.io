@@ -7,7 +7,7 @@ import Footer from '@/components/Footer.astro'
 import Header from '@/components/Header.astro'
 import ReloadPrompt from '@/components/pwa/ReloadPrompt.astro'
 import ThemeScript from '@/components/theme/ThemeScript.astro'
-import { getLocale, locales, t } from '@/i18n'
+import { getLocale, type Locale, locales, t } from '@/i18n'
 import '@/styles/global.css'
 
 interface Props {
@@ -19,7 +19,10 @@ interface Props {
 }
 const locale = getLocale(Astro.currentLocale)
 const { title, description = t(locale, 'home.description'), image, canonical, maxWidth = 'max-w-3xl' } = Astro.props
-const pathWithoutLocale = Astro.url.pathname.replace(/^\//, '').replace(/^en\//, '')
+const pathSegments = Astro.url.pathname.split('/').filter(Boolean)
+const pathWithoutLocale = locales.includes(pathSegments[0] as Locale)
+  ? pathSegments.slice(1).join('/')
+  : pathSegments.join('/')
 const site = Astro.site?.href ?? `${Astro.url.origin}/`
 const canonicalUrl = canonical ?? Astro.url.href
 const imageUrl = image?.startsWith('http')
@@ -58,6 +61,7 @@ const imageUrl = image?.startsWith('http')
       hreflang="x-default"
       href={new URL(getRelativeLocaleUrl('zh-TW', pathWithoutLocale || undefined), site).href}
     />
+    <link rel="canonical" href={canonicalUrl} />
     <ThemeScript />
     {
       import.meta.env.PROD && import.meta.env.PUBLIC_GA_MEASUREMENT_ID && (
@@ -109,8 +113,12 @@ const imageUrl = image?.startsWith('http')
     <slot name="head" />
   </head>
   <body class="min-h-screen flex flex-col bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100">
+    <a
+      href="#main-content"
+      class="absolute -top-10 left-0 z-9999 bg-black px-4 py-2 text-sm text-white no-underline focus:top-0"
+    >{t(locale, 'nav.skipToContent')}</a>
     <Header />
-    <main class={`flex-1 mx-auto w-full ${maxWidth} px-4 py-8`}>
+    <main id="main-content" tabindex="-1" class={`flex-1 mx-auto w-full ${maxWidth} px-4 py-8`}>
       <slot />
     </main>
     <Footer />
