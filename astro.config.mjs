@@ -11,35 +11,32 @@ import rehypePrettyCode from 'rehype-pretty-code'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
-const rehypePrettyCodeConfig = {
-  syntaxHighlight: false,
-  rehypePlugins: [
-    [
-      rehypePrettyCode,
-      {
-        theme: 'github-dark',
-        transformers: [
-          transformerCopyButton({
-            visibility: 'hover',
-            feedbackDuration: 3000,
-          }),
-        ],
-      },
-    ],
+const rehypePlugins = [
+  [
+    rehypePrettyCode,
+    {
+      theme: 'github-dark',
+      transformers: [
+        transformerCopyButton({
+          visibility: 'hover',
+          feedbackDuration: 3000,
+        }),
+      ],
+    },
   ],
-}
+]
 
 // https://astro.build/config
 export default defineConfig({
   site: 'https://johnsonmao.github.io',
   output: 'static',
 
-  markdown: { ...rehypePrettyCodeConfig },
+  markdown: { syntaxHighlight: false, rehypePlugins },
 
   integrations: [
     sitemap(),
     icon(),
-    mdx({ ...rehypePrettyCodeConfig }),
+    mdx({ syntaxHighlight: false, rehypePlugins }),
     AstroPWA({
       strategies: 'injectManifest',
       srcDir: 'src',
@@ -60,7 +57,13 @@ export default defineConfig({
             src: 'favicon.svg',
             sizes: 'any',
             type: 'image/svg+xml',
-            purpose: 'any maskable',
+            purpose: 'any',
+          },
+          {
+            src: 'favicon.svg',
+            sizes: 'any',
+            type: 'image/svg+xml',
+            purpose: 'maskable',
           },
         ],
       },

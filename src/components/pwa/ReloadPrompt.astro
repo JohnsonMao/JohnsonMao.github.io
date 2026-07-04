@@ -13,7 +13,7 @@ const closeText = t(locale, 'pwa.close')
   role="alert"
   aria-live="assertive"
   aria-labelledby="toast-message"
-  class="fixed right-0 bottom-0 m-4 p-6 bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 z-50 transition-all duration-300 transform translate-y-full opacity-0 pointer-events-none"
+  class="fixed right-0 bottom-0 m-4 p-6 bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 z-50 transition-all duration-300 translate-y-full opacity-0 pointer-events-none data-show:translate-y-0 data-show:opacity-100 data-show:pointer-events-auto"
 >
   <div class="flex items-start">
     <div class="shrink-0">
@@ -66,7 +66,7 @@ window.addEventListener('load', () => {
     onOfflineReady() {},
     onNeedRefresh() {
       if (toast)
-        toast.classList.add('show')
+        toast.setAttribute('data-show', '')
     },
     onRegisteredSW(_swScriptUrl) {},
   })
@@ -77,15 +77,7 @@ window.addEventListener('load', () => {
 
   closeButton?.addEventListener('click', () => {
     if (toast)
-      toast.classList.remove('show')
+      toast.removeAttribute('data-show')
   })
 })
 </script>
-
-<style>
-  #pwa-toast.show {
-    transform: translateY(0);
-    opacity: 1;
-    pointer-events: auto;
-  }
-</style>
