@@ -1,12 +1,14 @@
 ---
 import type { MarkdownHeading } from 'astro'
+import { getLocale, t } from '@/i18n'
 
 interface Props {
   headings: MarkdownHeading[]
   title?: string
 }
 
-const { headings, title = 'Table of Contents' } = Astro.props
+const locale = getLocale(Astro.currentLocale)
+const { headings, title = t(locale, 'blog.tableOfContents') } = Astro.props
 
 // Filter for H2 and H3 only
 const toc = headings.filter(h => h.depth > 1 && h.depth < 4)

@@ -33,7 +33,7 @@ const locale = getLocale(Astro.currentLocale)
         type="text"
         id="search-input"
         placeholder={t(locale, 'search.placeholder')}
-        class="flex-1 bg-transparent border-none text-neutral-900 dark:text-white focus:ring-0 text-lg outline-none"
+        class="flex-1 bg-transparent border-none text-neutral-900 dark:text-white text-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:rounded-sm"
         autocomplete="off"
       />
       <button

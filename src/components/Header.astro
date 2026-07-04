@@ -36,23 +36,41 @@ const currentIndex = locales.indexOf(locale)
 const nextLocale = locales[(currentIndex + 1) % locales.length]
 const nextLocaleUrl = getRelativeLocaleUrl(nextLocale, baseRoute === '/' ? undefined : baseRoute.slice(1))
 const nextLocaleLabel = t(locale, `shortLabel.${nextLocale}`)
+
+function isActiveSection(href: string): boolean {
+  if (href === homeUrl) return currentPath === href
+  const normalized = href.endsWith('/') ? href : `${href}/`
+  const normalizedCurrent = currentPath.endsWith('/') ? currentPath : `${currentPath}/`
+  return normalizedCurrent.startsWith(normalized)
+}
+
+const navClass = (href: string) =>
+  isActiveSection(href)
+    ? 'font-medium text-gray-900 dark:text-gray-100'
+    : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100'
+
+const homeActive = isActiveSection(homeUrl)
+const blogActive = isActiveSection(blogUrl)
+const notesActive = isActiveSection(notesUrl)
+const tagsActive = isActiveSection(tagsUrl)
+const aboutActive = isActiveSection(aboutUrl)
 ---
 
 <header class="border-b border-gray-200 dark:border-gray-800">
   <nav class="mx-auto flex max-w-3xl items-center justify-between px-4 py-4" aria-label="Main">
-    <a href={homeUrl} class="text-lg font-medium">
+    <a href={homeUrl} {...(homeActive && { 'aria-current': 'page' as const })} class="text-lg font-medium">
       {t(locale, 'nav.home')}
     </a>
-    <a href={blogUrl} class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100">
+    <a href={blogUrl} {...(blogActive && { 'aria-current': 'page' as const })} class={navClass(blogUrl)}>
       {t(locale, 'nav.blog')}
     </a>
-    <a href={notesUrl} class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100">
+    <a href={notesUrl} {...(notesActive && { 'aria-current': 'page' as const })} class={navClass(notesUrl)}>
       {t(locale, 'nav.notes')}
     </a>
-    <a href={tagsUrl} class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100">
+    <a href={tagsUrl} {...(tagsActive && { 'aria-current': 'page' as const })} class={navClass(tagsUrl)}>
       {t(locale, 'tags.title')}
     </a>
-    <a href={aboutUrl} class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100">
+    <a href={aboutUrl} {...(aboutActive && { 'aria-current': 'page' as const })} class={navClass(aboutUrl)}>
       {t(locale, 'nav.about')}
     </a>
     <div class="flex items-center gap-2">
