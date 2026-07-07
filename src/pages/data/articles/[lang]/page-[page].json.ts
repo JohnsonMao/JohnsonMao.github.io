@@ -1,8 +1,8 @@
 import type { APIRoute } from 'astro'
-import { isLocale, locales } from '@/i18n'
+import { isLocale, locales, t } from '@/i18n'
 import type { PaginatedArticlesPage, SerializedArticle } from '@/utils/content'
 import { getPaginatedArticles, getSortedCollectionList } from '@/utils/content'
-import { getReadingTime } from '@/utils/reading-time'
+import { getReadingTimeMinutes } from '@/utils/reading-time'
 
 const ARTICLES_PER_PAGE = 10
 
@@ -53,14 +53,14 @@ export const GET: APIRoute = async ({ params }) => {
 
   const pageArticles = pages[pageNum - 1] ?? []
   const serializedArticles: SerializedArticle[] = pageArticles.map((article) => {
-    const readingTime = getReadingTime(article.body ?? '', article.locale)
+    const readingTimeMinutes = getReadingTimeMinutes(article.body ?? '', article.locale)
     return {
       id: article.id,
       title: article.data.title,
       description: article.data.description,
       pubDate: article.data.pubDate.toISOString(),
       tags: article.tags,
-      readingTime: readingTime.label,
+      readingTime: t(lang, 'blog.readingTime', { minutes: readingTimeMinutes }),
     }
   })
 

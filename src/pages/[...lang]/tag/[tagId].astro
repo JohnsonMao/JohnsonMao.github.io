@@ -3,7 +3,7 @@ import PostCard from '@/components/PostCard.astro'
 import { generateStaticLocalePaths, getLocale, t } from '@/i18n'
 import BaseLayout from '@/layouts/BaseLayout.astro'
 import { getEntriesByTag } from '@/utils/content'
-import { getReadingTime } from '@/utils/reading-time'
+import { getReadingTimeMinutes } from '@/utils/reading-time'
 
 export async function getStaticPaths() {
   const all = await Promise.all(
@@ -55,7 +55,8 @@ const pageDescription = tagDescription || `${t(locale, 'blog.listDescription')} 
           const articleLang = entry.locale
           const isFallback = articleLang !== locale
           const langBadge = isFallback ? t(locale, `shortLabel.${articleLang}`) : undefined
-          const readingTime = getReadingTime(entry.body ?? '', articleLang)
+          const readingTimeMinutes = getReadingTimeMinutes(entry.body ?? '', articleLang)
+          const readingTimeLabel = t(locale, 'blog.readingTime', { minutes: readingTimeMinutes })
 
           return (
             <li>
@@ -66,7 +67,7 @@ const pageDescription = tagDescription || `${t(locale, 'blog.listDescription')} 
                 slug={entry.id}
                 postLang={articleLang}
                 langBadge={langBadge}
-                readingTimeLabel={readingTime.label}
+                readingTimeLabel={readingTimeLabel}
                 tags={entry.tags}
               />
             </li>

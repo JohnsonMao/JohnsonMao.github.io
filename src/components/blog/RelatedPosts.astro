@@ -1,7 +1,8 @@
 ---
 import PostCard from '@/components/PostCard.astro'
+import { t } from '@/i18n'
 import type { LocalizedCollection } from '@/utils/content'
-import { getReadingTime } from '@/utils/reading-time'
+import { getReadingTimeMinutes } from '@/utils/reading-time'
 
 interface Props {
   posts: LocalizedCollection<'blog'>[]
@@ -19,7 +20,8 @@ return null
   <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
     {
       posts.map((post) => {
-        const readingTime = getReadingTime(post.body ?? '', post.locale)
+        const readingTimeMinutes = getReadingTimeMinutes(post.body ?? '', post.locale)
+        const readingTimeLabel = t(post.locale, 'blog.readingTime', { minutes: readingTimeMinutes })
         return (
           <PostCard
             title={post.data.title}
@@ -27,7 +29,7 @@ return null
             pubDate={post.data.pubDate}
             slug={post.id}
             postLang={post.locale}
-            readingTimeLabel={readingTime.label}
+            readingTimeLabel={readingTimeLabel}
             tags={post.tags}
           />
         )

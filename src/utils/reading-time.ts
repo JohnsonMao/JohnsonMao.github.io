@@ -35,15 +35,10 @@ function stripMarkdown(content: string): string {
     .trim()
 }
 
-export interface ReadingTimeResult {
-  minutes: number
-  label: string
-}
-
 /**
  * Get estimated reading time in minutes. Rounds up; returns at least 1 for non-empty content.
  * @param content - Raw markdown or plain text
- * @param locale - Optional locale for WPM (future use); currently uses unified default
+ * @param locale - Optional locale for WPM; zh-TW uses 220 CPM, en uses 280 CPM
  */
 export function getReadingTimeMinutes(content: string, locale?: Locale): number {
   const text = stripMarkdown(content)
@@ -51,13 +46,4 @@ export function getReadingTimeMinutes(content: string, locale?: Locale): number 
   if (len === 0) return 0
   const wpm = locale === 'en' ? CHARS_PER_MINUTE_EN : CHARS_PER_MINUTE_ZH
   return Math.max(1, Math.ceil(len / wpm))
-}
-
-/**
- * Get reading time with a display label (e.g. "約 5 分鐘" / "5 min read").
- */
-export function getReadingTime(content: string, locale: Locale): ReadingTimeResult {
-  const minutes = getReadingTimeMinutes(content, locale)
-  const label = locale === 'en' ? `${minutes} min read` : `約 ${minutes} 分鐘`
-  return { minutes, label }
 }

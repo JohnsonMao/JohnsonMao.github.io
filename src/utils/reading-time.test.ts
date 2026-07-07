@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { getReadingTime, getReadingTimeMinutes } from './reading-time'
+import { getReadingTimeMinutes } from './reading-time'
 
 describe('reading Time Utils', () => {
   describe('getReadingTimeMinutes()', () => {
@@ -46,31 +46,6 @@ describe('reading Time Utils', () => {
       // 3 × 280 = 840 chars → exactly 3 minutes at en rate
       const content = 'a'.repeat(840)
       expect(getReadingTimeMinutes(content, 'en')).toBe(3)
-    })
-  })
-
-  describe('getReadingTime()', () => {
-    it('should return correct label for en', () => {
-      const result = getReadingTime('content', 'en')
-      expect(result.label).toContain('min read')
-    })
-
-    it('should return correct label for zh-TW', () => {
-      const result = getReadingTime('內容', 'zh-TW')
-      expect(result.label).toContain('分鐘')
-    })
-
-    it('should return minutes 0 with correct label for empty content', () => {
-      const result = getReadingTime('', 'zh-TW')
-      expect(result.minutes).toBe(0)
-      expect(result.label).toBe('約 0 分鐘')
-    })
-
-    it('should return both minutes and label as a consistent result object', () => {
-      // 280 chars → exactly 1 min at en rate
-      const result = getReadingTime('a'.repeat(280), 'en')
-      expect(result.minutes).toBe(1)
-      expect(result.label).toBe('1 min read')
     })
   })
 })

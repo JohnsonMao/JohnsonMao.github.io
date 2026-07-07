@@ -3,7 +3,7 @@ import { render } from 'astro:content'
 import { generateStaticLocalePaths, getLocale, t } from '@/i18n'
 import PostLayout from '@/layouts/PostLayout.astro'
 import { getSortedCollectionList } from '@/utils/content'
-import { getReadingTime } from '@/utils/reading-time'
+import { getReadingTimeMinutes } from '@/utils/reading-time'
 
 export async function getStaticPaths() {
   const all = await Promise.all(
@@ -23,7 +23,8 @@ const { lang } = Astro.params
 const { entry } = Astro.props
 const locale = getLocale(lang)
 const { Content, headings } = await render(entry)
-const readingTime = getReadingTime(entry.body ?? '', entry.locale)
+const readingTimeMinutes = getReadingTimeMinutes(entry.body ?? '', entry.locale)
+const readingTimeLabel = t(locale, 'blog.readingTime', { minutes: readingTimeMinutes })
 ---
 
 <PostLayout
@@ -34,7 +35,7 @@ const readingTime = getReadingTime(entry.body ?? '', entry.locale)
   postLang={entry.locale}
   isFallback={entry.isFallback}
   fallbackNotice={entry.isFallback ? t(locale, 'blog.contentNotTranslated') : undefined}
-  readingTimeLabel={readingTime.label}
+  readingTimeLabel={readingTimeLabel}
   updated={entry.data.updated}
   tags={entry.tags}
   headings={headings}

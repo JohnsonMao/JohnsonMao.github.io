@@ -4,7 +4,7 @@ import PostCard from '@/components/PostCard.astro'
 import { defaultLocale, getLocale, locales, t, tagIds } from '@/i18n'
 import BaseLayout from '@/layouts/BaseLayout.astro'
 import { getPaginatedArticles, getSortedCollectionList } from '@/utils/content'
-import { getReadingTime } from '@/utils/reading-time'
+import { getReadingTimeMinutes } from '@/utils/reading-time'
 
 export function getStaticPaths() {
   return [
@@ -22,7 +22,8 @@ const firstPageArticles = pages[0] || []
 const articleProps = firstPageArticles.map((entry) => {
   const articleLang = entry.locale
   const langBadge = articleLang !== locale ? t(locale, `shortLabel.${articleLang}`) : undefined
-  const readingTime = getReadingTime(entry.body ?? '', articleLang)
+  const readingTimeMinutes = getReadingTimeMinutes(entry.body ?? '', articleLang)
+  const readingTimeLabel = t(locale, 'blog.readingTime', { minutes: readingTimeMinutes })
 
   return {
     title: entry.data.title,
@@ -31,7 +32,7 @@ const articleProps = firstPageArticles.map((entry) => {
     slug: entry.id,
     postLang: articleLang,
     langBadge,
-    readingTimeLabel: readingTime.label,
+    readingTimeLabel,
     tags: entry.tags,
   }
 })
