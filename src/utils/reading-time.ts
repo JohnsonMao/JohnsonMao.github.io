@@ -58,6 +58,6 @@ export function getReadingTimeMinutes(content: string, locale?: Locale): number 
  */
 export function getReadingTime(content: string, locale: Locale): ReadingTimeResult {
   const minutes = getReadingTimeMinutes(content, locale)
-  const label = (locale ?? 'zh-TW') === 'en' ? `${minutes} min read` : `約 ${minutes} 分鐘`
+  const label = locale === 'en' ? `${minutes} min read` : `約 ${minutes} 分鐘`
   return { minutes, label }
 }

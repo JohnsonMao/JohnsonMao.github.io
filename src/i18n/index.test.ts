@@ -31,6 +31,12 @@ describe('i18n t()', () => {
   it('should return the raw template when no vars are provided', () => {
     expect(t('en', 'blog.readingTime')).toBe('{minutes} min read')
   })
+
+  it('should return the key when the resolved value is a non-string object', () => {
+    // 'nav' maps to an object { blog, about, ... }, not a string
+    // getNested returns undefined → t() falls back to returning the key
+    expect(t('en', 'nav')).toBe('nav')
+  })
 })
 
 describe('getLocalePriority()', () => {
@@ -328,5 +334,18 @@ describe('createI18nData()', () => {
     })
 
     expect(warn).not.toHaveBeenCalled()
+  })
+
+  it('should silently ignore paths that do not match the locale/module path pattern', () => {
+    // A path without /locale/module structure is filtered out (returns null in .map)
+    const data = createI18nData({
+      messageModules: {
+        './messages/en/nav.json': { default: { blog: 'Blog' } },
+        'invalid-path.json': { default: { blog: 'ignored' } },
+      },
+      isDev: false,
+    })
+    expect(data.locales).toContain('en')
+    expect(data.locales).toHaveLength(1)
   })
 })

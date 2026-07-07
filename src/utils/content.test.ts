@@ -188,6 +188,12 @@ describe('content Utils', () => {
         'Invalid locale: invalid-locale in entry post.invalid-locale',
       )
     })
+
+    it('should throw for ID with more than two path segments', () => {
+      expect(() => parseEntryId('series/sub/post.en')).toThrow(
+        'Invalid entry ID format: series/sub/post.en. Expected "post.locale" or "series/post.locale".',
+      )
+    })
   })
 
   describe('getBestEntry()', () => {
