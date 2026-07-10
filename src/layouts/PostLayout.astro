@@ -29,6 +29,7 @@ interface Props {
   tags?: string[]
   headings?: MarkdownHeading[]
   relatedPosts?: LocalizedCollection<'blog'>[]
+  collection: 'blog' | 'notes'
 }
 
 const {
@@ -46,6 +47,7 @@ const {
   tags,
   headings = [],
   relatedPosts: propRelatedPosts,
+  collection,
 } = Astro.props
 
 const locale = getLocale(Astro.currentLocale)
@@ -55,6 +57,21 @@ const formattedUpdated = updated ? new Intl.DateTimeFormat(postLang, { dateStyle
 const showUpdated = updated && updated.getTime() !== pubDate.getTime()
 
 const tagBase = getRelativeLocaleUrl(locale, 'tag/')
+
+const breadcrumbs = [
+  {
+    name: t(locale, 'nav.home'),
+    url: new URL(getRelativeLocaleUrl(locale, '/'), Astro.site).href,
+  },
+  {
+    name: t(locale, `nav.${collection}`),
+    url: new URL(getRelativeLocaleUrl(locale, `${collection}/`), Astro.site).href,
+  },
+  {
+    name: title,
+    url: Astro.url.href,
+  },
+]
 
 let entry: LocalizedCollection<'blog'> | undefined
 let relatedPosts: LocalizedCollection<'blog'>[]
@@ -78,7 +95,7 @@ const postData = {
 ---
 
 <BaseLayout title={title} description={description} image={image} canonical={canonical} maxWidth="max-w-6xl">
-  <JsonLd slot="head" post={postData} url={Astro.url.href} />
+  <JsonLd slot="head" post={postData} url={Astro.url.href} breadcrumbs={breadcrumbs} />
   <div class="grid grid-cols-1 lg:grid-cols-[1fr_250px] gap-12 items-start">
     <article class="prose dark:prose-invert max-w-none min-w-0" data-pagefind-body>
       {

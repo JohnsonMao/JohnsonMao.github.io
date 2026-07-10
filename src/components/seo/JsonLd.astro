@@ -11,9 +11,10 @@ interface Props {
     image?: string
   }
   url: string
+  breadcrumbs?: Array<{ name: string; url: string }>
 }
 
-const { post, url } = Astro.props
+const { post, url, breadcrumbs } = Astro.props
 const locale = getLocale(Astro.currentLocale)
 
 const jsonLd = {
@@ -43,6 +44,22 @@ const jsonLd = {
   },
   'inLanguage': locale,
 }
+
+const breadcrumbLd = breadcrumbs?.length
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      'itemListElement': breadcrumbs.map((item, index) => ({
+        '@type': 'ListItem',
+        'position': index + 1,
+        'name': item.name,
+        'item': item.url,
+      })),
+    }
+  : null
 ---
 
 <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+{breadcrumbLd && (
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbLd)} />
+)}
