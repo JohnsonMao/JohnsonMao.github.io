@@ -1,9 +1,11 @@
 {
   "placeholder": "Search articles...",
+  "buttonLabel": "Search",
   "noResults": "No results found",
   "noResultsFor": "No results found for \"{query}\"",
   "indexNotFound": "Search index not found. Please run a build to enable search.",
   "shortcut": "K",
   "toClose": "to close",
+  "closeSearch": "Close search",
   "toSelect": "to select"
 }

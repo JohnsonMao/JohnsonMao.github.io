@@ -3,5 +3,8 @@
   "home": "JohnsonMao",
   "blog": "Blog",
   "notes": "Notes",
-  "about": "About"
+  "about": "About",
+  "switchLanguage": "Switch language",
+  "mainNav": "Main",
+  "toggleTheme": "Toggle theme"
 }
