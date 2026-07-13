@@ -2,8 +2,8 @@
   "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
     "paths": { "@/*": ["./src/*"] },
-    "types": ["vite-plugin-pwa/client", "vite-plugin-pwa/info", "vite-plugin-pwa/pwa-assets"]
+    "types": ["node", "vite-plugin-pwa/client", "vite-plugin-pwa/info", "vite-plugin-pwa/pwa-assets"]
   },
-  "include": [".astro/types.d.ts", "src/**/*"],
+  "include": [".astro/types.d.ts", "src/**/*", "tests/**/*", "playwright.config.ts"],
   "exclude": ["dist"]
 }
