@@ -7,7 +7,7 @@ import Footer from '@/components/Footer.astro'
 import Header from '@/components/Header.astro'
 import ReloadPrompt from '@/components/pwa/ReloadPrompt.astro'
 import ThemeScript from '@/components/theme/ThemeScript.astro'
-import { getLocale, type Locale, locales, t } from '@/i18n'
+import { getHreflang, getLocale, getOgLocale, type Locale, locales, t } from '@/i18n'
 import '@/styles/global.css'
 
 interface Props {
@@ -30,6 +30,8 @@ const imageUrl = image?.startsWith('http')
   : image
     ? new URL(image, site).href
     : new URL('og-default.svg', site).href
+const ogLocale = getOgLocale(locale)
+const ogAlternateLocales = locales.filter((loc) => loc !== locale).map(getOgLocale)
 ---
 
 <html lang={locale}>
@@ -45,6 +47,8 @@ const imageUrl = image?.startsWith('http')
     <meta property="og:image" content={imageUrl} />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:type" content="website" />
+    <meta property="og:locale" content={ogLocale} />
+    {ogAlternateLocales.map((alt) => <meta property="og:locale:alternate" content={alt} />)}
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     {description && <meta name="twitter:description" content={description} />}
@@ -53,7 +57,7 @@ const imageUrl = image?.startsWith('http')
       locales.map((loc) => {
         const path = getRelativeLocaleUrl(loc, pathWithoutLocale || undefined)
         const href = new URL(path, site).href
-        return <link rel="alternate" hreflang={loc === 'zh-TW' ? 'zh-Hant' : loc} href={href} />
+        return <link rel="alternate" hreflang={getHreflang(loc)} href={href} />
       })
     }
     <link

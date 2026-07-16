@@ -21,6 +21,28 @@ interface Messages {
 
 const PREFERRED_DEFAULT_LOCALE = 'zh-TW'
 const SUPPORTED_LOCALES = ['zh-TW', 'en'] as const
+
+/** BCP 47 hreflang tags (used in `<link rel="alternate" hreflang>`) */
+const HREFLANG_MAP: Record<string, string> = {
+  'zh-TW': 'zh-Hant',
+  'en': 'en',
+}
+
+/** Open Graph locale format (used in `og:locale` / `og:locale:alternate`) */
+const OG_LOCALE_MAP: Record<string, string> = {
+  'zh-TW': 'zh_TW',
+  'en': 'en_US',
+}
+
+/** Returns the hreflang value for the given locale, falling back to the locale itself */
+export function getHreflang(locale: string): string {
+  return HREFLANG_MAP[locale] ?? locale
+}
+
+/** Returns the OG locale value for the given locale, falling back to replacing "-" with "_" */
+export function getOgLocale(locale: string): string {
+  return OG_LOCALE_MAP[locale] ?? locale.replace('-', '_')
+}
 export type Locale = (typeof SUPPORTED_LOCALES)[number]
 const SUPPORTED_LOCALE_SET = new Set<Locale>(SUPPORTED_LOCALES)
 const MESSAGE_MODULE_RE = /\/([^/]+)\/([^/]+)\.json$/
