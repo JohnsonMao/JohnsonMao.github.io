@@ -1,0 +1,58 @@
+---
+interface Props {
+  /** The id of the element to track scroll progress against. */
+  targetId: string
+}
+
+const { targetId } = Astro.props
+---
+
+<div
+  id="reading-progress"
+  role="progressbar"
+  aria-valuemin={0}
+  aria-valuemax={100}
+  aria-valuenow={0}
+  aria-label="Reading progress"
+  data-target-id={targetId}
+  class="fixed top-0 left-0 right-0 z-40 h-0.75 pointer-events-none"
+>
+  <div
+    id="reading-progress-bar"
+    aria-hidden="true"
+    class="h-full origin-left scale-x-0 bg-site-primary"
+  />
+</div>
+
+<script>
+  import { gsap } from 'gsap'
+  import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+  gsap.registerPlugin(ScrollTrigger)
+
+  function initProgressBar() {
+    const container = document.getElementById('reading-progress')
+    const bar = document.getElementById('reading-progress-bar')
+    const targetId = container?.dataset.targetId
+    const target = targetId ? document.getElementById(targetId) : null
+
+    if (!bar || !container || !target) return
+
+    // Remove previous trigger to avoid duplicates on page transitions
+    ScrollTrigger.getById('reading-progress')?.kill()
+
+    ScrollTrigger.create({
+      id: 'reading-progress',
+      trigger: target,
+      start: 'top top',
+      end: 'bottom bottom',
+      onUpdate(self) {
+        gsap.set(bar, { scaleX: self.progress })
+        container.setAttribute('aria-valuenow', String(Math.round(self.progress * 100)))
+      },
+    })
+  }
+
+  // astro:page-load fires on initial load and after every View Transition
+  document.addEventListener('astro:page-load', initProgressBar)
+</script>

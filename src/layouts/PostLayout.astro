@@ -4,6 +4,7 @@ import type { MarkdownHeading } from 'astro'
 import { Icon } from 'astro-icon/components'
 import AuthorBio from '@/components/blog/AuthorBio.astro'
 import Giscus from '@/components/blog/Giscus.astro'
+import ReadingProgress from '@/components/blog/ReadingProgress.astro'
 import RelatedPosts from '@/components/blog/RelatedPosts.astro'
 import SeriesNav from '@/components/blog/SeriesNav.astro'
 import SharePanel from '@/components/blog/SharePanel.astro'
@@ -96,6 +97,7 @@ const postData = {
 
 <BaseLayout title={title} description={description} image={image} canonical={canonical} maxWidth="max-w-6xl">
   <JsonLd slot="head" post={postData} url={Astro.url.href} breadcrumbs={breadcrumbs} />
+  <ReadingProgress targetId="post-content" />
   <div class="grid grid-cols-1 lg:grid-cols-[1fr_250px] gap-12 items-start">
     <article class="prose dark:prose-invert max-w-none min-w-0" data-pagefind-body>
       {
@@ -160,7 +162,7 @@ const postData = {
         }
       </header>
 
-      <div class="prose-headings:font-bold prose-a:text-primary hover:prose-a:underline">
+      <div id="post-content" class="prose-headings:font-bold prose-a:text-primary hover:prose-a:underline">
         <slot />
       </div>
 
