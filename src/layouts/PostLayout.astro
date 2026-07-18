@@ -53,6 +53,9 @@ const {
 
 const locale = getLocale(Astro.currentLocale)
 
+// Use the dynamically generated OG image unless the post provides a custom one
+const ogImage = image ?? `/og/${locale}/blog/${id}.png`
+
 const formattedDate = new Intl.DateTimeFormat(postLang, { dateStyle: 'long' }).format(pubDate)
 const formattedUpdated = updated ? new Intl.DateTimeFormat(postLang, { dateStyle: 'long' }).format(updated) : null
 const showUpdated = updated && updated.getTime() !== pubDate.getTime()
@@ -95,7 +98,7 @@ const postData = {
 }
 ---
 
-<BaseLayout title={title} description={description} image={image} canonical={canonical} maxWidth="max-w-6xl">
+<BaseLayout title={title} description={description} image={ogImage} canonical={canonical} maxWidth="max-w-6xl">
   <JsonLd slot="head" post={postData} url={Astro.url.href} breadcrumbs={breadcrumbs} />
   <ReadingProgress targetId="post-content" />
   <div class="grid grid-cols-1 lg:grid-cols-[1fr_250px] gap-12 items-start">
