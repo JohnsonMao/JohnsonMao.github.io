@@ -25,13 +25,13 @@ const SUPPORTED_LOCALES = ['zh-TW', 'en'] as const
 /** BCP 47 hreflang tags (used in `<link rel="alternate" hreflang>`) */
 const HREFLANG_MAP: Record<string, string> = {
   'zh-TW': 'zh-Hant',
-  'en': 'en',
+  en: 'en',
 }
 
 /** Open Graph locale format (used in `og:locale` / `og:locale:alternate`) */
 const OG_LOCALE_MAP: Record<string, string> = {
   'zh-TW': 'zh_TW',
-  'en': 'en_US',
+  en: 'en_US',
 }
 
 /** Returns the hreflang value for the given locale, falling back to the locale itself */
