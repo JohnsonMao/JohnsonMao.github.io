@@ -3,13 +3,47 @@ import {
   createI18nData,
   defaultLocale,
   generateStaticLocalePaths,
+  getHreflang,
   getLocale,
   getLocalePriority,
+  getOgLocale,
   isLocale,
   locales,
   normalizeLocale,
   t,
 } from './index'
+
+describe('getHreflang()', () => {
+  it.each([
+    ['zh-TW', 'zh-Hant'],
+    ['en', 'en'],
+  ] as const)('should return mapped hreflang "%s" → "%s"', (locale, expected) => {
+    expect(getHreflang(locale)).toBe(expected)
+  })
+
+  it('should return the locale itself when it has no mapping', () => {
+    expect(getHreflang('fr')).toBe('fr')
+    expect(getHreflang('ja')).toBe('ja')
+  })
+})
+
+describe('getOgLocale()', () => {
+  it.each([
+    ['zh-TW', 'zh_TW'],
+    ['en', 'en_US'],
+  ] as const)('should return mapped OG locale "%s" → "%s"', (locale, expected) => {
+    expect(getOgLocale(locale)).toBe(expected)
+  })
+
+  it('should replace hyphen with underscore for unmapped locales', () => {
+    expect(getOgLocale('pt-BR')).toBe('pt_BR')
+    expect(getOgLocale('fr-CA')).toBe('fr_CA')
+  })
+
+  it('should return the locale unchanged when it has no hyphen and no mapping', () => {
+    expect(getOgLocale('fr')).toBe('fr')
+  })
+})
 
 describe('i18n t()', () => {
   it('should return the translation for a nested key in en', () => {

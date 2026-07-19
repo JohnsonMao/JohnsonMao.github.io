@@ -22,9 +22,6 @@ async function ensureWasm() {
   wasmReady = true
 }
 
-// ---------------------------------------------------------------------------
-// Static paths — one entry per locale × post slug
-// ---------------------------------------------------------------------------
 export async function getStaticPaths() {
   const allPaths = await Promise.all(
     locales.map(async (locale) => {
@@ -44,15 +41,12 @@ export async function getStaticPaths() {
   return allPaths.flat()
 }
 
-// ---------------------------------------------------------------------------
-// PNG generation
-// ---------------------------------------------------------------------------
-export const GET: APIRoute = async ({ props }) => {
+export const GET: APIRoute<OgCardProps> = async ({ props }) => {
   await ensureWasm()
 
   const [fontRegular, fontBold] = await Promise.all([fetchNotoSansTC(400), fetchNotoSansTC(700)])
 
-  const svg = await satori(buildOgCard(props as OgCardProps) as Parameters<typeof satori>[0], {
+  const svg = await satori(buildOgCard(props), {
     width: 1200,
     height: 630,
     fonts: [

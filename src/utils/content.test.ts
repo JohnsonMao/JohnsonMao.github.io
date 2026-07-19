@@ -137,7 +137,7 @@ describe('content Utils', () => {
       expect(related.map((e) => e.id)).toEqual(expectedRelatedIds)
     })
 
-    it('should handle entries with no tags', async () => {
+    it('should handle entries with no tags (empty array)', async () => {
       const list = await getSortedCollectionList('blog', 'zh-TW')
       const post3 = list.find((e) => e.id === 'post-3')
       if (!post3) throw new Error('post-3 not found')
@@ -146,6 +146,35 @@ describe('content Utils', () => {
       const related = await getRelatedEntries('blog', entryNoTags)
       expect(related.length).toBeGreaterThan(0)
       expect(related.map((e) => e.id)).not.toContain('post-3')
+    })
+
+    it('should handle entry with undefined tags (falls back to empty array)', async () => {
+      const list = await getSortedCollectionList('blog', 'zh-TW')
+      const post3 = list.find((e) => e.id === 'post-3')
+      if (!post3) throw new Error('post-3 not found')
+      const entryUndefinedTags = { ...post3, tags: undefined }
+
+      const related = await getRelatedEntries('blog', entryUndefinedTags as typeof post3)
+      // undefined tags falls back to [], so all other entries are returned (no tag match needed)
+      expect(related.length).toBeGreaterThan(0)
+      expect(related.map((e) => e.id)).not.toContain('post-3')
+    })
+
+    it('should treat neighbour entries with undefined tags as having no matching tags', async () => {
+      const { getCollection } = await import('astro:content')
+      // Override to include an entry with undefined tags in the pool
+      vi.mocked(getCollection).mockResolvedValueOnce([
+        { id: 'post-a.zh-TW', data: { title: 'A', pubDate: new Date('2024-05-01'), draft: false, tags: ['react'] } },
+        { id: 'post-b.zh-TW', data: { title: 'B', pubDate: new Date('2024-04-01'), draft: false, tags: undefined } },
+      ] as unknown as ReturnType<typeof Array.prototype.filter>)
+
+      const list = await getSortedCollectionList('blog', 'zh-TW')
+      const postA = list.find((e) => e.id === 'post-a')
+      if (!postA) throw new Error('post-a not found')
+
+      const related = await getRelatedEntries('blog', postA)
+      // post-b has no tags (undefined), so it won't match react and won't appear
+      expect(related.map((e) => e.id)).not.toContain('post-b')
     })
   })
 
