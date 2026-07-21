@@ -6,7 +6,7 @@ pubDate: '2021-10-01'
 image: 'https://i.imgur.com/ejWtzFz.png'
 tags:
   - it-ironman
-  - vscode
+  - javascript
 ---
 
 ![「讓我們在更深入函式～」 —— JavaScript call & apply & arguments](https://i.imgur.com/ejWtzFz.png)

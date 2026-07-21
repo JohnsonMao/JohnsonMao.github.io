@@ -6,7 +6,7 @@ pubDate: '2021-09-13'
 image: 'https://i.imgur.com/v6IIogk.png'
 tags:
   - it-ironman
-  - vscode
+  - css
 ---
 
 ![「CSS 基礎中的基礎！」 —— CSS 盒模型 box-model & 距離單位](https://i.imgur.com/v6IIogk.png)

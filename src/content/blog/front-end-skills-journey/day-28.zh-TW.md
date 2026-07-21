@@ -8,7 +8,7 @@ pubDate: '2021-10-07'
 image: 'https://i.imgur.com/BnUYCE5.png'
 tags:
   - it-ironman
-  - vscode
+  - javascript
 ---
 
 ![「Promise 初體驗～」 —— ES6 Promise](https://i.imgur.com/BnUYCE5.png)

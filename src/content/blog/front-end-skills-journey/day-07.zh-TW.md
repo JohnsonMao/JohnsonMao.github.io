@@ -9,7 +9,7 @@ pubDate: '2021-09-16'
 image: 'https://i.imgur.com/hLMVxvv.png'
 tags:
   - it-ironman
-  - vscode
+  - css
 ---
 
 ![「CSS 網頁切版必學，用過都說讚！」 —— CSS 彈性盒模型 Flexbox](https://i.imgur.com/hLMVxvv.png)

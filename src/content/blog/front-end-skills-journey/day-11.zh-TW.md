@@ -8,7 +8,7 @@ pubDate: '2021-09-20'
 image: 'https://i.imgur.com/VoFpU6Q.png'
 tags:
   - it-ironman
-  - vscode
+  - css
 ---
 
 ![「利用漸變效果，讓網頁不再死板！」 —— CSS Transform & CSS Transition](https://i.imgur.com/VoFpU6Q.png)

@@ -6,7 +6,7 @@ pubDate: '2021-09-27'
 image: 'https://i.imgur.com/dUL5Ryk.png'
 tags:
   - it-ironman
-  - vscode
+  - javascript
 ---
 
 ![「從函式物件認識 作用域 與 提升！」 —— JavaScript 函式 & 作用域 & 提升](https://i.imgur.com/dUL5Ryk.png)

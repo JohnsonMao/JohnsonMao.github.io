@@ -8,7 +8,7 @@ pubDate: '2021-09-11'
 image: 'https://i.imgur.com/xadMCtM.png'
 tags:
   - it-ironman
-  - vscode
+  - html
 ---
 
 ![「歡迎來到網頁這個世界！」 —— 認識網頁架構](https://i.imgur.com/xadMCtM.png)

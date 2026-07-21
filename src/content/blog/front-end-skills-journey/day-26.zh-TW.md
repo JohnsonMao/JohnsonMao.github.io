@@ -6,7 +6,7 @@ pubDate: '2021-10-05'
 image: 'https://i.imgur.com/2KRYZOP.png'
 tags:
   - it-ironman
-  - vscode
+  - javascript
 ---
 
 ![「閉包要謹慎使用！」 —— JavaScript 閉包（Closure）](https://i.imgur.com/2KRYZOP.png)

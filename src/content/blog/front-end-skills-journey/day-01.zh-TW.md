@@ -7,7 +7,6 @@ pubDate: '2021-09-10'
 image: 'https://i.imgur.com/YyhvZBl.png'
 tags:
   - it-ironman
-  - vscode
 ---
 
 ![「工欲善其事，必先利其器！」—— 前言 與 介紹工具](https://i.imgur.com/YyhvZBl.png)

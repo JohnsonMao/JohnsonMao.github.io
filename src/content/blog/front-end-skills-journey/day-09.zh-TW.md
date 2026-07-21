@@ -8,7 +8,7 @@ pubDate: '2021-09-18'
 image: 'https://i.imgur.com/77yUxJL.png'
 tags:
   - it-ironman
-  - vscode
+  - css
 ---
 
 ![「我實際不存在 DOM 裡～」 —— CSS 偽類選擇器（Pseudo classes） 與 偽元素（Pseudo element）](https://i.imgur.com/77yUxJL.png)

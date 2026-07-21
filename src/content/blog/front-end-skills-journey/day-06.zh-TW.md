@@ -7,7 +7,7 @@ pubDate: '2021-09-15'
 image: 'https://i.imgur.com/ofgbXuv.png'
 tags:
   - it-ironman
-  - vscode
+  - css
 ---
 
 ![「只要我想，我也能把 div 變 table！」 —— CSS display 屬性](https://i.imgur.com/ofgbXuv.png)

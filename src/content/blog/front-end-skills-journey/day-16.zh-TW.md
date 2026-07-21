@@ -7,7 +7,7 @@ pubDate: '2021-09-25'
 image: 'https://i.imgur.com/0bAwQpd.png'
 tags:
   - it-ironman
-  - vscode
+  - javascript
 ---
 
 ![「重複的事情，交給程式去做！」 —— JavaScript 循環迴圈](https://i.imgur.com/0bAwQpd.png)

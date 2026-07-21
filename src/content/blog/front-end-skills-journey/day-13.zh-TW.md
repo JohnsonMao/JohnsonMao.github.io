@@ -8,7 +8,7 @@ pubDate: '2021-09-22'
 image: 'https://i.imgur.com/wh1ZT6h.png'
 tags:
   - it-ironman
-  - vscode
+  - javascript
 ---
 
 ![JavaScript 宣告變數 與 基本型別](https://i.imgur.com/wh1ZT6h.png)

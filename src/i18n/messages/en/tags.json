@@ -23,10 +23,6 @@
       "name": "iT Ironman",
       "description": "Articles recorded from the iT Help Ironman competition."
     },
-    "vscode": {
-      "name": "VS Code",
-      "description": "Tips and plugin recommendations for Visual Studio Code."
-    },
     "html": {
       "name": "HTML",
       "description": "Knowledge related to HTML markup language."

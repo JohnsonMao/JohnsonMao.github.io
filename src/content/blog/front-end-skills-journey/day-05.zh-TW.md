@@ -7,7 +7,7 @@ pubDate: '2021-09-14'
 image: 'https://i.imgur.com/DGvbCcT.png'
 tags:
   - it-ironman
-  - vscode
+  - css
 ---
 
 ![「我的樣式失靈啦！你有頭緒嗎？」 —— CSS 選擇器 與 權重](https://i.imgur.com/DGvbCcT.png)

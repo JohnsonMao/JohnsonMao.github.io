@@ -7,7 +7,7 @@ pubDate: '2021-09-30'
 image: 'https://i.imgur.com/k1U1ZAE.png'
 tags:
   - it-ironman
-  - vscode
+  - javascript
 ---
 
 ![「物件也有繼承問題？」 —— JavaScript 繼承 與 原型鍊](https://i.imgur.com/k1U1ZAE.png)

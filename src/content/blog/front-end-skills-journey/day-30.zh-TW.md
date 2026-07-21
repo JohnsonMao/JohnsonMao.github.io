@@ -6,7 +6,7 @@ pubDate: '2021-10-09'
 image: 'https://i.imgur.com/YhGvJWy.png'
 tags:
   - it-ironman
-  - vscode
+  - javascript
 ---
 
 ![「什麼！？ Promise 的語法糖？」 —— ES8 Async & Await](https://i.imgur.com/YhGvJWy.png)

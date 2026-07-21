@@ -7,7 +7,7 @@ pubDate: '2021-09-29'
 image: 'https://i.imgur.com/MowXDC1.png'
 tags:
   - it-ironman
-  - vscode
+  - javascript
 ---
 
 ![Day.20 「初步認識 this，中央工廠式的自訂物件～」 —— JavaSript 構造函式](https://i.imgur.com/MowXDC1.png)

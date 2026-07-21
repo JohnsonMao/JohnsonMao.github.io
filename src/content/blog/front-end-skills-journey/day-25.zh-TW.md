@@ -8,7 +8,7 @@ pubDate: '2021-10-04'
 image: 'https://i.imgur.com/oqXdlun.png'
 tags:
   - it-ironman
-  - vscode
+  - javascript
 ---
 
 ![「從 事件綁定 與 定時器 認識回調函式！」 —— JavaScript 定時器 & Callback](https://i.imgur.com/oqXdlun.png)

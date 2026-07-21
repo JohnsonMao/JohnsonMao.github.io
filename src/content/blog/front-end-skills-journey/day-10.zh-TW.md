@@ -6,7 +6,7 @@ pubDate: '2021-09-19'
 image: 'https://i.imgur.com/tJZ3MrQ.png'
 tags:
   - it-ironman
-  - vscode
+  - css
 ---
 
 ![「沒有 RWD 的網站 === 沒有未來」 —— RWD　響應式網頁設計](https://i.imgur.com/tJZ3MrQ.png)

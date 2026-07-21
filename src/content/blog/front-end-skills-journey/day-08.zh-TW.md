@@ -7,7 +7,7 @@ pubDate: '2021-09-17'
 image: 'https://i.imgur.com/n4My3Xy.png'
 tags:
   - it-ironman
-  - vscode
+  - css
 ---
 
 ![「怎麼就這樣脫離文檔流了！」 —— CSS 定位屬性 position & 浮動元素 float](https://i.imgur.com/n4My3Xy.png)

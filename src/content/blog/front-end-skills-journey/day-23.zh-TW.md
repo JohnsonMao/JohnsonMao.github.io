@@ -6,7 +6,7 @@ pubDate: '2021-10-02'
 image: 'https://i.imgur.com/slZvdj6.png'
 tags:
   - it-ironman
-  - vscode
+  - javascript
 ---
 
 ![「更加認識 DOM，並初次了解事件綁定」 —— JavaScript DOM](https://i.imgur.com/slZvdj6.png)

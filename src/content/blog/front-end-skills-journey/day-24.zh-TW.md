@@ -8,7 +8,7 @@ pubDate: '2021-10-03'
 image: 'https://i.imgur.com/oHkbDov.png'
 tags:
   - it-ironman
-  - vscode
+  - javascript
 ---
 
 ![「你點了按鈕～同時也點了網頁本身！」 —— JavaScript 事件冒泡（Event bubbling）](https://i.imgur.com/oHkbDov.png)

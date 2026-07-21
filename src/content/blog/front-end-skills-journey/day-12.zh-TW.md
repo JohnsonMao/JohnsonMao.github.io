@@ -6,7 +6,7 @@ pubDate: '2021-09-21'
 image: 'https://i.imgur.com/Z0lYvKC.gif'
 tags:
   - it-ironman
-  - vscode
+  - css
 ---
 
 ![「來為網頁添加動畫吧！」 —— CSS 動畫（animation）](https://i.imgur.com/Z0lYvKC.gif)

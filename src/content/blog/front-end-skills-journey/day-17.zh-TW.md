@@ -6,7 +6,7 @@ pubDate: '2021-09-26'
 image: 'https://i.imgur.com/6P86wxa.png'
 tags:
   - it-ironman
-  - vscode
+  - javascript
 ---
 
 ![「如果基本型別是商品，那物件型別就是購物袋」 —— JavaScript 物件型別](https://i.imgur.com/6P86wxa.png)

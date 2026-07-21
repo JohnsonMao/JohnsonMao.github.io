@@ -6,7 +6,7 @@ pubDate: '2021-10-06'
 image: 'https://i.imgur.com/hAS4sZ7.png'
 tags:
   - it-ironman
-  - vscode
+  - javascript
 ---
 
 ![「var 成為時代的眼淚！」 —— ES6 區塊作用域 與 提升](https://i.imgur.com/hAS4sZ7.png)

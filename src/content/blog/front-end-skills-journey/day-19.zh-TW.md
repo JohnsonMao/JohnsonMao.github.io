@@ -6,7 +6,7 @@ pubDate: '2021-09-28'
 image: 'https://i.imgur.com/PQ6GCWn.png'
 tags:
   - it-ironman
-  - vscode
+  - javascript
 ---
 
 ![「認識 JavaScript 記憶體堆疊、傳值 與 傳址」 —— JavaScript 物件 與 記憶體](https://i.imgur.com/PQ6GCWn.png)

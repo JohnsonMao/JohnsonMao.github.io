@@ -8,7 +8,7 @@ pubDate: '2021-10-08'
 image: 'https://i.imgur.com/EOelHe0.png'
 tags:
   - it-ironman
-  - vscode
+  - javascript
 ---
 
 ![「Class 語法糖～」 —— ES6 Class 構造函式](https://i.imgur.com/EOelHe0.png)

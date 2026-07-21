@@ -7,7 +7,7 @@ pubDate: '2021-09-24'
 image: 'https://i.imgur.com/Zso8daX.png'
 tags:
   - it-ironman
-  - vscode
+  - javascript
 ---
 
 ![「條件設定好～讓程式判斷！」 —— JavaScript 條件判斷式](https://i.imgur.com/Zso8daX.png)

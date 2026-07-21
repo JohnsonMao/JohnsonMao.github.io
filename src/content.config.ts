@@ -8,7 +8,6 @@ export const TAG_IDS = [
   'vue3-camp',
   'mongodb',
   'it-ironman',
-  'vscode',
   'html',
   'css',
   'javascript',

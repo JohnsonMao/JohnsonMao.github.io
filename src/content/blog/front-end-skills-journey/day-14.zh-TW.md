@@ -7,7 +7,7 @@ pubDate: '2021-09-23'
 image: 'https://i.imgur.com/0XXiCaD.png'
 tags:
   - it-ironman
-  - vscode
+  - javascript
 ---
 
 ![「基礎打穩了，就能走得更長久～」 —— JavaScript 基礎運算子](https://i.imgur.com/0XXiCaD.png)

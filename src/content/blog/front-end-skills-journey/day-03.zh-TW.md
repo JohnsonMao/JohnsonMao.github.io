@@ -8,7 +8,7 @@ pubDate: '2021-09-12'
 image: 'https://i.imgur.com/3myJcyZ.png'
 tags:
   - it-ironman
-  - vscode
+  - html
 ---
 
 ![「建構網頁的基石！」 —— 使用網頁標籤](https://i.imgur.com/3myJcyZ.png)
