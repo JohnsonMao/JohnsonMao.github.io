@@ -15,10 +15,6 @@
       "name": "Vue 3 Beginner Camp",
       "description": "Learning experiences and task records from Vue 3 Beginner Camp."
     },
-    "mongodb": {
-      "name": "MongoDB",
-      "description": "MongoDB database operations and applications."
-    },
     "it-ironman": {
       "name": "iT Ironman",
       "description": "Articles recorded from the iT Help Ironman competition."

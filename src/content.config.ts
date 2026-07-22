@@ -6,7 +6,6 @@ export const TAG_IDS = [
   'react',
   'hexschool',
   'vue3-camp',
-  'mongodb',
   'it-ironman',
   'html',
   'css',
