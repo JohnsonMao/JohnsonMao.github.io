@@ -5,7 +5,7 @@ import { z } from 'astro/zod'
 export const TAG_IDS = [
   'react',
   'hexschool',
-  'vue3-camp',
+  'vue',
   'it-ironman',
   'html',
   'css',

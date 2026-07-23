@@ -11,9 +11,9 @@
       "name": "六角學院",
       "description": "六角學院課程筆記與活動紀錄。"
     },
-    "vue3-camp": {
-      "name": "Vue 3 新手夏令營",
-      "description": "Vue 3 新手夏令營學習心得與任務紀錄。"
+    "vue": {
+      "name": "Vue",
+      "description": "Vue 與 Vue 3 相關學習筆記與實作紀錄。"
     },
     "it-ironman": {
       "name": "iT 鐵人賽",

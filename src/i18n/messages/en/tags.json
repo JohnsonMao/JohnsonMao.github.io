@@ -11,9 +11,9 @@
       "name": "Hexschool",
       "description": "Course notes and activity records from Hexschool."
     },
-    "vue3-camp": {
-      "name": "Vue 3 Beginner Camp",
-      "description": "Learning experiences and task records from Vue 3 Beginner Camp."
+    "vue": {
+      "name": "Vue",
+      "description": "Learning notes and practical records for Vue and Vue 3."
     },
     "it-ironman": {
       "name": "iT Ironman",

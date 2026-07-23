@@ -7,7 +7,7 @@ description: >-
 pubDate: '2021-08-16'
 image: 'https://i.imgur.com/s0FUJXG.png'
 tags:
-  - vue3-camp
+  - vue
 ---
 
 #  Vue 3 Composition API

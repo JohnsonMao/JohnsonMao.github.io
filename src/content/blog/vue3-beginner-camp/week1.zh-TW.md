@@ -5,7 +5,7 @@ description: 這裡將會記錄參加 六角學院 Vue 3 新手夏令營（活�
 pubDate: '2021-07-28'
 image: 'https://i.imgur.com/E48VuxQ.jpg'
 tags:
-  - vue3-camp
+  - vue
 ---
 
 [![第一週作業展示，運用了 Vue 指令與 Ajax，點擊圖片可察看成果](https://i.imgur.com/E48VuxQ.jpg)](https://johnsonmao.github.io/summer-camp-vue3/week1/)

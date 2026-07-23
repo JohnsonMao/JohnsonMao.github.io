@@ -5,7 +5,7 @@ description: 這裡將會記錄參加 六角學院 Vue 3 新手夏令營（活�
 pubDate: '2021-08-02'
 image: 'https://i.imgur.com/Xd2g377.png'
 tags:
-  - vue3-camp
+  - vue
 ---
 
 [![第二週作業展示，運用了 Vue 進階指令與 localStrage，同時也自我挑戰運用了鍵盤監聽，只使用鍵盤就能操控計算機功能，點擊圖片可察看成果](https://i.imgur.com/Xd2g377.png)](https://johnsonmao.github.io/summer-camp-vue3/week2/)
