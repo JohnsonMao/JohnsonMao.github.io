@@ -6,6 +6,7 @@ pubDate: '2021-07-28'
 image: 'https://i.imgur.com/E48VuxQ.jpg'
 tags:
   - vue
+  - hexschool
 ---
 
 [![第一週作業展示，運用了 Vue 指令與 Ajax，點擊圖片可察看成果](https://i.imgur.com/E48VuxQ.jpg)](https://johnsonmao.github.io/summer-camp-vue3/week1/)

@@ -8,6 +8,7 @@ pubDate: '2021-08-16'
 image: 'https://i.imgur.com/s0FUJXG.png'
 tags:
   - vue
+  - hexschool
 ---
 
 #  Vue 3 Composition API
