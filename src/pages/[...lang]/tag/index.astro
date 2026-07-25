@@ -13,6 +13,19 @@ const locale = getLocale(lang)
 
 const tagMap = await getEntriesByTag(locale)
 const allTags = [...tagMap.entries()].toSorted((a, b) => b[1].length - a[1].length)
+const tagCounts = allTags.map(([, posts]) => posts.length)
+const maxCount = Math.max(...tagCounts, 1)
+
+function getWeight(count: number) {
+  return Math.log(count + 1) / Math.log(maxCount + 1)
+}
+
+function getCloudStyle(count: number) {
+  const weight = getWeight(count)
+  const fontSize = `${(0.95 + weight * 1.25).toFixed(3)}rem`
+  const opacity = (0.6 + weight * 0.4).toFixed(2)
+  return `font-size:${fontSize};opacity:${opacity};`
+}
 ---
 
 <BaseLayout title={t(locale, 'tags.title')} description={t(locale, 'tags.description')}>
@@ -27,24 +40,29 @@ const allTags = [...tagMap.entries()].toSorted((a, b) => b[1].length - a[1].leng
       </p>
     </header>
 
-    <div class="flex flex-wrap justify-center items-center gap-x-10 gap-y-12 sm:gap-x-16 sm:gap-y-16">
+    <ul class="flex flex-wrap justify-center items-center gap-3 sm:gap-4 list-none p-0 m-0">
       {
         allTags.map(([tagId, posts]) => {
+          const count = posts.length
           const display = t(locale, `tags.registry.${tagId}.name`)
           const href = getRelativeLocaleUrl(locale, `tag/${tagId}`)
 
           return (
-            <a
-              href={href}
-              class="group relative flex items-center transition-all duration-300 hover:scale-105"
-            >
-              {display}
-              ({posts.length})
-            </a>
+            <li>
+              <a
+                href={href}
+                aria-label={`${display}，${t(locale, 'tags.count', { count: count.toString() })}`}
+                class="inline-flex min-h-6 items-center gap-1 rounded-full px-3 py-2 leading-none transition-colors hover:bg-primary/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                style={getCloudStyle(count)}
+              >
+                <span>{display}</span>
+                <span class="text-xs opacity-70">({count})</span>
+              </a>
+            </li>
           )
         })
       }
-    </div>
+    </ul>
 
     {
       allTags.length === 0 && (
