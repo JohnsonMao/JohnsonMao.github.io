@@ -91,6 +91,7 @@ interface I18nData {
   messages: Record<Locale, Messages>
 }
 
+/** @internal Exported for unit testing only. */
 export function createI18nData(options: CreateI18nDataOptions = {}): I18nData {
   const messageModules = options.messageModules ?? getMessageModules()
   const preferredDefaultLocale = options.preferredDefaultLocale ?? PREFERRED_DEFAULT_LOCALE

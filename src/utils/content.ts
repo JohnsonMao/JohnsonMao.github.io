@@ -22,6 +22,7 @@ interface LocalizedCollectionGroup<K extends SelectedCollection> {
 /**
  * Parses raw ID into seriesId and canonical slug.
  * Expects flat format: "post.locale" or "series/post.locale".
+ * @internal Exported for unit testing only.
  */
 export function parseEntryId(id: string) {
   const parts = id.split('/')
@@ -53,6 +54,7 @@ export function parseEntryId(id: string) {
 
 /**
  * Picks the best language version based on the locale priority list.
+ * @internal Exported for unit testing only.
  */
 export function getBestEntry<K extends SelectedCollection>(
   entries: Map<Locale, LocalizedCollection<K>>,

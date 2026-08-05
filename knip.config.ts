@@ -16,9 +16,13 @@ const config: KnipConfig = {
       'src/sw.ts',
     ],
   },
+  ignore: [
+    'scripts/check-registries.mjs',
+  ],
   ignoreDependencies: [
     '@iconify-json/lucide',
     '@iconify-json/simple-icons',
+    'workbox-window',
   ],
 }
 
