@@ -1,0 +1,441 @@
+---
+import { Icon } from 'astro-icon/components'
+import { getLocale, t } from '@/i18n'
+
+const locale = getLocale(Astro.currentLocale)
+---
+
+<site-search data-locale={locale}>
+  <button
+    type="button"
+    id="search-button"
+    class="flex items-center gap-2 px-3 py-1.5 text-sm text-neutral-500 bg-neutral-100 border border-neutral-200 rounded-lg hover:bg-neutral-200 dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-400 dark:hover:bg-neutral-700 transition-colors"
+    aria-label={t(locale, 'search.buttonLabel')}
+  >
+    <Icon name="lucide:search" class="w-4 h-4" />
+    <span class="hidden sm:inline">{t(locale, 'search.placeholder')}</span>
+    <kbd
+      class="hidden sm:flex items-center gap-1 px-1.5 py-0.5 text-[10px] font-medium bg-white dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-600 rounded"
+    >
+      <span class="text-xs">⌘</span>{t(locale, 'search.shortcut')}
+    </kbd>
+  </button>
+
+  <dialog
+    id="search-dialog"
+    class="fixed inset-0 z-50 p-0 w-[calc(100%-2rem)] max-w-2xl h-2/3 bg-white dark:bg-neutral-900 rounded-2xl shadow-2xl border border-neutral-200 dark:border-neutral-800 overflow-hidden flex-col m-auto focus:outline-none open:flex backdrop:bg-black/50 backdrop:backdrop-blur-sm"
+    data-index-not-found={t(locale, 'search.indexNotFound')}
+    data-no-results-for={t(locale, 'search.noResultsFor')}
+  >
+    <div class="flex items-center gap-3 p-4 border-b border-neutral-100 dark:border-neutral-800">
+      <Icon name="lucide:search" class="w-5 h-5 text-neutral-400" />
+      <input
+        type="text"
+        id="search-input"
+        placeholder={t(locale, 'search.placeholder')}
+        class="flex-1 bg-transparent border-none text-neutral-900 dark:text-white text-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:rounded-sm"
+        autocomplete="off"
+      />
+      <button
+        type="button"
+        id="close-search"
+        aria-label={t(locale, 'search.closeSearch')}
+        class="text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-200 p-1 cursor-pointer"
+      >
+        <Icon name="lucide:x" class="w-5 h-5" aria-hidden="true" />
+      </button>
+    </div>
+
+    <div class="flex-1 overflow-y-auto px-2 py-4">
+      <div id="search-empty" class="flex flex-col items-center justify-center h-full text-neutral-400 py-12">
+        <Icon name="lucide:search" class="w-12 h-12 mb-4 opacity-20" />
+        <p>{t(locale, 'search.placeholder')}</p>
+      </div>
+      <div id="search-results"></div>
+    </div>
+
+    <div
+      class="p-3 border-t border-neutral-100 dark:border-neutral-800 text-[10px] text-neutral-400 flex justify-end gap-4 bg-neutral-50/50 dark:bg-neutral-950/50"
+    >
+      <span class="flex items-center gap-1">
+        <kbd class="px-1 bg-neutral-100 dark:bg-neutral-800 rounded border border-neutral-200 dark:border-neutral-700 text-neutral-500">
+          ESC
+        </kbd>
+        {t(locale, 'search.toClose')}
+      </span>
+      <span class="flex items-center gap-1">
+        <kbd class="px-1 bg-neutral-100 dark:bg-neutral-800 rounded border border-neutral-200 dark:border-neutral-700 text-neutral-500">
+          ↵
+        </kbd>
+        {t(locale, 'search.toSelect')}
+      </span>
+    </div>
+  </dialog>
+
+  <template id="search-result-template">
+    <!-- biome-ignore lint/a11y/useValidAnchor: href is set dynamically by JS -->
+    <a href="#" aria-label="Search result" class="block p-4 rounded-xl hover:bg-neutral-100 dark:hover:bg-neutral-800/50 transition-all group mb-2 border border-transparent hover:border-neutral-200 dark:hover:border-neutral-700">
+      <h3 aria-label="Result title" class="result-title font-bold text-neutral-900 dark:text-white mb-2 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors flex items-center justify-between">
+      </h3>
+      <p class="result-excerpt text-sm text-neutral-500 dark:text-neutral-400 line-clamp-2 leading-relaxed"></p>
+    </a>
+  </template>
+
+  <template id="search-skeleton-template">
+    <div class="animate-pulse flex flex-col gap-6 px-4">
+      {[1, 2, 3].map(() => (
+        <div class="space-y-3">
+          <div class="h-4 bg-neutral-200 dark:bg-neutral-800 rounded w-3/4"></div>
+          <div class="h-3 bg-neutral-100 dark:bg-neutral-800/50 rounded w-full"></div>
+          <div class="h-3 bg-neutral-100 dark:bg-neutral-800/50 rounded w-5/6"></div>
+        </div>
+      ))}
+    </div>
+  </template>
+</site-search>
+
+<script>
+import { gsap } from 'gsap'
+
+// --- Types from Pagefind official definitions ---
+// See: https://github.com/pagefind/pagefind/blob/production-docs/pagefind_web_js/types/index.d.ts
+
+/** The useful data Pagefind provides for a search result fragment */
+interface PagefindSearchFragment {
+  url: string
+  raw_url?: string
+  content: string
+  excerpt: string
+  plain_excerpt?: string
+  word_count: number
+  meta: Record<string, string>
+  [key: string]: unknown
+}
+
+/** A single result from a search query, before actual data has been loaded */
+interface PagefindSearchResult {
+  id: string
+  score: number
+  data: () => Promise<PagefindSearchFragment>
+}
+
+/** The main results object returned from a call to pagefind.search() or pagefind.debouncedSearch() */
+interface PagefindSearchResults {
+  results: PagefindSearchResult[]
+  unfilteredResultCount: number
+  timings: {
+    preload: number
+    search: number
+    total: number
+  }
+}
+
+/** The pagefind object available from the dynamic import */
+interface Pagefind {
+  options: (opts: Record<string, unknown>) => Promise<void>
+  debouncedSearch: (query: string) => Promise<PagefindSearchResults | null>
+  search: (query: string) => Promise<PagefindSearchResults | null>
+}
+
+const CJK_CHAR_REGEX = /[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}]/u
+const WHITESPACE_REGEX = /\s/u
+const SPLIT_WHITESPACE_REGEX = /\s+/u
+const HTML_TAG_REGEX = /<[^>]*>/g
+const REGEX_ESCAPE_REGEX = /[.*+?^${}()|[\]\\]/g
+
+class SiteSearch extends HTMLElement {
+  private pagefind?: Pagefind
+  private searchButton: HTMLButtonElement | null = null
+  private searchDialog: HTMLDialogElement | null = null
+  private searchInput: HTMLInputElement | null = null
+  private searchResults: HTMLElement | null = null
+  private searchEmpty: HTMLElement | null = null
+  private closeButton: HTMLButtonElement | null = null
+  private resultTemplate: HTMLTemplateElement | null = null
+  private skeletonTemplate: HTMLTemplateElement | null = null
+  private isClosing = false
+  private searchRequestId = 0
+
+  connectedCallback() {
+    this.searchButton = this.querySelector<HTMLButtonElement>('#search-button')
+    this.searchDialog = this.querySelector<HTMLDialogElement>('#search-dialog')
+    this.searchInput = this.querySelector<HTMLInputElement>('#search-input')
+    this.searchResults = this.querySelector<HTMLElement>('#search-results')
+    this.searchEmpty = this.querySelector<HTMLElement>('#search-empty')
+    this.closeButton = this.querySelector<HTMLButtonElement>('#close-search')
+    this.resultTemplate = this.querySelector<HTMLTemplateElement>('#search-result-template')
+    this.skeletonTemplate = this.querySelector<HTMLTemplateElement>('#search-skeleton-template')
+
+    this.searchButton?.addEventListener('click', () => this.openSearch())
+    this.closeButton?.addEventListener('click', () => this.closeSearch())
+    this.searchDialog?.addEventListener('click', e => this.handleBackdropClick(e))
+    this.searchInput?.addEventListener('input', e => this.handleInput(e))
+
+    // Handle global shortcuts
+    document.addEventListener('keydown', this.handleGlobalKeydown)
+  }
+
+  disconnectedCallback() {
+    document.removeEventListener('keydown', this.handleGlobalKeydown)
+  }
+
+  private async initPagefind(): Promise<Pagefind | undefined> {
+    if (this.pagefind)
+      return this.pagefind
+    try {
+      const p = '/pagefind/pagefind.js'
+      this.pagefind = (await import(/* @vite-ignore */ p)) as Pagefind
+      await this.pagefind.options({
+        highlightParam: 'highlight',
+      })
+      return this.pagefind
+    }
+    catch (e) {
+      console.warn('Pagefind not found. It will be available after a production build.', e)
+      return undefined
+    }
+  }
+
+  private openSearch() {
+    if (!this.searchDialog || this.searchDialog.open)
+      return
+
+    this.searchDialog.showModal()
+    document.body.style.overflow = 'hidden'
+
+    gsap.fromTo(
+      this.searchDialog,
+      { opacity: 0, scale: 0.95 },
+      { opacity: 1, scale: 1, duration: 0.2, ease: 'power2.out' },
+    )
+
+    this.initPagefind()
+    setTimeout(() => this.searchInput?.focus(), 100)
+  }
+
+  private closeSearch() {
+    if (!this.searchDialog?.open || this.isClosing)
+      return
+    this.isClosing = true
+
+    gsap.to(this.searchDialog, {
+      opacity: 0,
+      scale: 0.95,
+      duration: 0.2,
+      ease: 'power2.in',
+      onComplete: () => {
+        this.searchDialog?.close()
+        document.body.style.overflow = ''
+        if (this.searchInput)
+          this.searchInput.value = ''
+        this.searchResults?.replaceChildren()
+        this.searchEmpty?.classList.remove('hidden')
+        this.isClosing = false
+      },
+    })
+  }
+
+  private handleBackdropClick(e: MouseEvent) {
+    if (e.target === this.searchDialog)
+      this.closeSearch()
+  }
+
+  private showLoading() {
+    if (!this.searchResults || !this.skeletonTemplate)
+      return
+    this.searchResults.replaceChildren(this.skeletonTemplate.content.cloneNode(true))
+  }
+
+  private isCjkQuery(query: string) {
+    return CJK_CHAR_REGEX.test(query)
+  }
+
+  private buildCjkFallbackQuery(query: string) {
+    if (!this.isCjkQuery(query) || WHITESPACE_REGEX.test(query) || query.length < 2)
+      return null
+    return [...query].join(' ')
+  }
+
+  private mergeSearchResults(primary: PagefindSearchResult[], secondary: PagefindSearchResult[]) {
+    const merged = new Map<string, PagefindSearchResult>()
+    primary.forEach(item => { merged.set(item.id, item) })
+    secondary.forEach((item) => {
+      if (!merged.has(item.id))
+        merged.set(item.id, item)
+    })
+    return [...merged.values()]
+  }
+
+  private escapeRegExp(text: string) {
+    return text.replace(REGEX_ESCAPE_REGEX, '\\$&')
+  }
+
+  private buildHighlightTerms(query: string) {
+    const terms = new Set<string>()
+    if (this.isCjkQuery(query) && !WHITESPACE_REGEX.test(query)) {
+      terms.add(query)
+      const chars = [...query]
+      chars
+        .filter(char => CJK_CHAR_REGEX.test(char))
+        .forEach(char => { terms.add(char) })
+    }
+    else {
+      query
+        .split(SPLIT_WHITESPACE_REGEX)
+        .map(t => t.trim())
+        .filter(Boolean)
+        .forEach(t => { terms.add(t) })
+    }
+    return [...terms].toSorted((a, b) => b.length - a.length)
+  }
+
+  private getExcerptText(fragment: PagefindSearchFragment) {
+    return fragment.plain_excerpt ?? fragment.excerpt?.replace(HTML_TAG_REGEX, '') ?? ''
+  }
+
+  private renderHighlightedText(container: Element, text: string, query: string) {
+    const terms = this.buildHighlightTerms(query)
+    if (!terms.length) {
+      container.textContent = text
+      return
+    }
+    const pattern = new RegExp(terms.map(t => this.escapeRegExp(t)).join('|'), 'giu')
+    const nodes: (Text | HTMLElement)[] = []
+    let lastIndex = 0
+    for (const match of text.matchAll(pattern)) {
+      if (match.index > lastIndex)
+        nodes.push(document.createTextNode(text.slice(lastIndex, match.index)))
+      const mark = document.createElement('mark')
+      mark.textContent = match[0]
+      mark.className = 'bg-amber-200/50 dark:bg-amber-400/30 text-amber-800 dark:text-amber-300'
+      nodes.push(mark)
+      lastIndex = match.index + match[0].length
+    }
+    if (lastIndex < text.length)
+      nodes.push(document.createTextNode(text.slice(lastIndex)))
+    container.replaceChildren(...nodes)
+  }
+
+  private createMessageNode(text: string, className: string) {
+    const div = document.createElement('div')
+    div.className = className
+    div.textContent = text
+    return div
+  }
+
+  private async performSearch(query: string, requestId: number): Promise<
+    | { status: 'aborted' }
+    | { status: 'no-pagefind' }
+    | { status: 'no-results' }
+    | { status: 'results', results: PagefindSearchFragment[] }
+  > {
+    const pf = await this.initPagefind()
+    if (requestId !== this.searchRequestId)
+      return { status: 'aborted' }
+    if (!pf)
+      return { status: 'no-pagefind' }
+
+    this.showLoading()
+
+    const searchResponse = await pf.debouncedSearch(query)
+    if (requestId !== this.searchRequestId || !searchResponse)
+      return { status: 'aborted' }
+
+    let mergedResults = searchResponse.results
+    const fallbackQuery = this.buildCjkFallbackQuery(query)
+    if (fallbackQuery && searchResponse.unfilteredResultCount <= 1) {
+      const fallbackResponse = await pf.search(fallbackQuery)
+      if (requestId !== this.searchRequestId)
+        return { status: 'aborted' }
+      if (fallbackResponse)
+        mergedResults = this.mergeSearchResults(searchResponse.results, fallbackResponse.results)
+    }
+
+    const results: PagefindSearchFragment[] = await Promise.all(mergedResults.slice(0, 10).map(r => r.data()))
+    if (requestId !== this.searchRequestId)
+      return { status: 'aborted' }
+
+    return results.length === 0
+      ? { status: 'no-results' }
+      : { status: 'results', results }
+  }
+
+  private async handleInput(e: Event) {
+    const query = (e.target as HTMLInputElement).value.trim()
+    const currentRequestId = ++this.searchRequestId
+
+    if (!query) {
+      this.searchResults?.replaceChildren()
+      this.searchEmpty?.classList.remove('hidden')
+      return
+    }
+
+    this.searchEmpty?.classList.add('hidden')
+
+    const outcome = await this.performSearch(query, currentRequestId)
+    if (outcome.status === 'aborted')
+      return
+
+    if (outcome.status === 'no-pagefind') {
+      const msg = this.searchDialog?.dataset.indexNotFound ?? 'Search index not found.'
+      this.searchResults?.replaceChildren(
+        this.createMessageNode(msg, 'text-center py-12 text-neutral-500 italic'),
+      )
+      return
+    }
+
+    if (outcome.status === 'no-results') {
+      const template = this.searchDialog?.dataset.noResultsFor ?? 'No results found for "{query}"'
+      const msg = template.replace('{query}', query)
+      this.searchResults?.replaceChildren(
+        this.createMessageNode(msg, 'text-center py-12 text-neutral-500'),
+      )
+      return
+    }
+
+    this.renderResults(outcome.results, query)
+  }
+
+  private renderResults(results: PagefindSearchFragment[], query: string) {
+    if (!this.searchResults || !this.resultTemplate)
+      return
+
+    const fragment = document.createDocumentFragment()
+
+    results.forEach((r) => {
+      const clone = this.resultTemplate?.content.cloneNode(true) as DocumentFragment
+      const link = clone.querySelector('a')
+      const title = clone.querySelector('.result-title')
+      const excerpt = clone.querySelector('.result-excerpt')
+
+      if (link)
+        link.href = r.url
+      if (title)
+        title.textContent = r.meta.title
+      if (excerpt)
+        this.renderHighlightedText(excerpt, this.getExcerptText(r), query)
+
+      fragment.appendChild(clone)
+    })
+
+    this.searchResults.replaceChildren(fragment)
+  }
+
+  private handleGlobalKeydown = (e: KeyboardEvent) => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+      e.preventDefault()
+      if (this.searchDialog?.open)
+        this.closeSearch()
+      else this.openSearch()
+    }
+    if (e.key === 'Escape' && this.searchDialog?.open) {
+      e.preventDefault()
+      this.closeSearch()
+    }
+  }
+}
+
+if (!customElements.get('site-search')) {
+  customElements.define('site-search', SiteSearch)
+}
+</script>

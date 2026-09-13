@@ -1,0 +1,74 @@
+---
+import InfiniteScrollUI from '@/components/InfiniteScrollUI.astro'
+import PostCard from '@/components/PostCard.astro'
+import { defaultLocale, getLocale, locales, t, tagIds } from '@/i18n'
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import { getPaginatedArticles, getSortedCollectionList } from '@/utils/content'
+import { getReadingTimeMinutes } from '@/utils/reading-time'
+
+export function getStaticPaths() {
+  return [
+    { params: { lang: undefined } },
+    ...locales.filter(l => l !== defaultLocale).map(l => ({ params: { lang: l } })),
+  ]
+}
+
+const { lang } = Astro.params
+const locale = getLocale(lang)
+const entries = await getSortedCollectionList('blog', locale)
+const pages = getPaginatedArticles(entries, 10)
+const firstPageArticles = pages[0] || []
+
+const articleProps = firstPageArticles.map((entry) => {
+  const articleLang = entry.locale
+  const langBadge = articleLang !== locale ? t(locale, `shortLabel.${articleLang}`) : undefined
+  const readingTimeMinutes = getReadingTimeMinutes(entry.body ?? '', articleLang)
+  const readingTimeLabel = t(locale, 'blog.readingTime', { minutes: readingTimeMinutes })
+
+  return {
+    title: entry.data.title,
+    description: entry.data.description,
+    pubDate: entry.data.pubDate,
+    slug: entry.id,
+    postLang: articleLang,
+    langBadge,
+    readingTimeLabel,
+    tags: entry.tags,
+  }
+})
+
+const tagLabels = Object.fromEntries(
+  tagIds.map(id => [id, t(locale, `tags.registry.${id}.name`)]),
+)
+---
+
+<BaseLayout title={t(locale, 'blog.listTitle')} description={t(locale, 'blog.listDescription')}>
+  <div class="max-w-4xl mx-auto px-4 py-12">
+    <h1 class="text-4xl font-bold tracking-tight mb-8 self-start">{t(locale, 'blog.listTitle')}</h1>
+    <InfiniteScrollUI
+      locale={locale}
+      fetchUrl="/data/articles/{locale}/page-{page}.json"
+      itemsKey="articles"
+      listLabels={{ tags: tagLabels }}
+    >
+      {
+        articleProps.map(props => (
+          <li>
+            <PostCard {...props} />
+          </li>
+        ))
+      }
+
+      <template slot="templates" id="item-template">
+        <li>
+          <PostCard asTemplate />
+        </li>
+      </template>
+
+      <template slot="templates" id="tag-template">
+        <!-- biome-ignore lint/a11y/useValidAnchor: href is set dynamically by JS -->
+        <a href="#" aria-label="Tag" class="rounded px-1.5 py-0.5 text-xs bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700">&#8203;</a>
+      </template>
+    </InfiniteScrollUI>
+  </div>
+</BaseLayout>

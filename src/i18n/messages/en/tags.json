@@ -1,0 +1,43 @@
+{
+  "title": "Tags",
+  "description": "Explore all post tags and topics.",
+  "count": "{count} posts",
+  "registry": {
+    "react": {
+      "name": "React",
+      "description": "Discussions on React.js framework technologies."
+    },
+    "hexschool": {
+      "name": "Hexschool",
+      "description": "Course notes and activity records from Hexschool."
+    },
+    "vue": {
+      "name": "Vue",
+      "description": "Learning notes and practical records for Vue and Vue 3."
+    },
+    "it-ironman": {
+      "name": "iT Ironman",
+      "description": "Articles recorded from the iT Help Ironman competition."
+    },
+    "html": {
+      "name": "HTML",
+      "description": "Knowledge related to HTML markup language."
+    },
+    "css": {
+      "name": "CSS",
+      "description": "Web styling design and techniques with CSS."
+    },
+    "javascript": {
+      "name": "JavaScript",
+      "description": "Core concepts and practical applications of JavaScript."
+    },
+    "jsdc": {
+      "name": "JSDC",
+      "description": "Records from the JavaScript Developer Conference (JSDC)."
+    },
+    "typescript": {
+      "name": "TypeScript",
+      "description": "Sharing experiences with TypeScript static typing development."
+    }
+  }
+}

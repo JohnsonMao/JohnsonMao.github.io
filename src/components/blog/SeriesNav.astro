@@ -1,0 +1,60 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import { getLocale, t } from '@/i18n'
+import type { LocalizedCollection } from '@/utils/content'
+import { getSortedCollectionList } from '@/utils/content'
+
+interface Props {
+  post: LocalizedCollection<'blog'>
+}
+
+const { post } = Astro.props
+const locale = getLocale(Astro.currentLocale)
+const { seriesId } = post
+
+if (!seriesId) {
+  return null
+}
+
+// Get all posts in the same series, sorted by publication date
+const entries = await getSortedCollectionList('blog', post.locale)
+const seriesPosts = entries
+  .filter(entry => entry.seriesId === seriesId)
+  .sort((entryA, entryB) => entryA.data.pubDate.getTime() - entryB.data.pubDate.getTime())
+
+const currentIndex = seriesPosts.findIndex(entry => entry.id === post.id)
+const blogBase = getRelativeLocaleUrl(locale, `blog/`)
+---
+
+<nav
+  aria-label={t(locale, 'blog.seriesNavigation')}
+  class="not-prose mt-12 mb-8 p-6 rounded-2xl border-2 border-dashed border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/20"
+>
+  <h2 class="text-lg font-bold text-gray-800 dark:text-gray-200 mb-4">
+    {t(locale, 'blog.series.partOf')}
+    <span class="font-extrabold">{t(locale, `series.registry.${seriesId}.name`)}</span>
+  </h2>
+  <ol class="list-decimal list-inside space-y-2">
+    {
+      seriesPosts.map((entry, index) => {
+        const isCurrent = index === currentIndex
+        return (
+          <li
+            class:list={[
+              'text-base',
+              { 'font-bold text-primary dark:text-primary-400': isCurrent },
+              { 'text-muted-foreground': !isCurrent },
+            ]}
+          >
+            <a href={`${blogBase}${entry.id}/`} class:list={['hover:underline', { 'pointer-events-none': isCurrent }]}>
+              {entry.data.title}
+            </a>
+            {isCurrent && (
+              <span class="ml-2 text-xs font-normal text-muted-foreground">{t(locale, 'blog.series.current')}</span>
+            )}
+          </li>
+        )
+      })
+    }
+  </ol>
+</nav>

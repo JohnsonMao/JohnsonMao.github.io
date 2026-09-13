@@ -1,50 +1,74 @@
-# Mao's Blog
+# JohnsonMao's Blog
 
-Welcome to My Blog, a simple blog built with Next.js 13 and Markdown for content.
+A static blog built with [Astro](https://astro.build), deployed on GitHub Pages.
 
 ## Tech Stack
 
-- Next.js 13
-- React 18
-- React Spring
-- TypeScript
-- Tailwind CSS
-- I18n
-
-## Features
-
-- Render blog posts from Markdown files.
-- Responsive design for various devices.
-- Light and dark theme.
-- Comments via Giscus.
-<!-- - Multi-language post support. -->
-<!-- - Tags and categories for organizing content. -->
-<!-- - Near perfect lighthouse score -->
-<!-- - SEO friendly with RSS feed, sitemaps and more. -->
+- **Astro** — Static site framework
+- **TypeScript** — Type safety
+- **Tailwind CSS v4** — Styling (with `@tailwindcss/typography`)
+- **Content Collections** — Post management and frontmatter validation (Zod)
+- **View Transitions** — In-app navigation transitions (ClientRouter)
+- **pnpm** — Package manager
 
 ## Project Structure
 
-- `data/`: Contains data-related files.
-  - `i18n/`: Internationalization and localization files.
-  - `posts/`: Markdown files for blog posts.
-  - `giscus.ts`: Configuration for the Giscus comment system.
-  - `metadata.ts`: Metadata and configuration for the blog.
-- `public/static/`: Public static images and other assets.
-- `src/`:  The main source code directory.
-  - `app/`: Next.js pages and routing.
-  - `assets/`: Global and component-specific CSS.
-  - `components/`: Reusable React component.
-  - `hooks/`: Custom React hooks.
-  - `plugins/`: Additional plugins or extensions.
-  - `utils/`: Utility functions and helper modules.
-  - `middleware.ts`: Next.js middleware.
-- `tests/`:  Test folder contains the application's test files.
-- `types/`:  TypeScript type definitions.
+```
+src/
+├── content.config.ts   # Content Collections and blog schema
+├── content/blog/       # Post .md files
+├── layouts/            # BaseLayout, PostLayout
+├── components/         # Header, Footer, PostCard
+├── pages/              # Home, blog list, single post
+└── styles/             # global.css (Tailwind, typography)
+```
 
-<!-- ## License -->
+## Development
 
-<!-- ## Contributions -->
+```bash
+# Install dependencies (Node 20+ recommended, e.g. nvm use 20.19.4)
+pnpm install
 
-<!-- Contributions are welcome! Please create a pull request or open an issue for any improvements or bug fixes. -->
+# Local dev server
+pnpm dev
 
-<!-- ## Contact -->
+# Typecheck and lint
+pnpm check
+
+# Build
+pnpm build
+
+# Preview production build
+pnpm preview
+```
+
+## Writing Posts
+
+Add Markdown files under `src/content/blog/`. Frontmatter must include:
+
+- `title` (required)
+- `description` (required)
+- `pubDate` (required, date or ISO string)
+- `draft`, `tags`, `updated` (optional)
+
+Example:
+
+```md
+---
+title: Post title
+description: Short description
+pubDate: 2025-02-20
+---
+
+Body content...
+```
+
+## Deployment
+
+- Build output goes to `dist/` and can be deployed to any static host.
+- This repo uses **GitHub Actions** to deploy to GitHub Pages: pushing to `main` runs `.github/workflows/deploy.yml` to build and publish.
+- In the repo **Settings → Pages**, set **Source** to **GitHub Actions**.
+
+## License
+
+MIT

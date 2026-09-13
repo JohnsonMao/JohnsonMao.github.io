@@ -1,0 +1,22 @@
+{
+  "title": "系列文章",
+  "description": "探索所有系列文章。",
+  "registry": {
+    "front-end-skills-journey": {
+      "name": "前端技能樹之旅",
+      "description": "一步步建立前端工程師所需的核心技能與知識體系。"
+    },
+    "vue3-beginner-camp": {
+      "name": "Vue 3 新手夏令營",
+      "description": "Vue 3 新手夏令營學習歷程與任務紀錄。"
+    },
+    "react-guide": {
+      "name": "React 學習指南",
+      "description": "從基礎到進階的 React 開發技術探討。"
+    },
+    "typescript-guide": {
+      "name": "TypeScript 學習指南",
+      "description": "TypeScript 型別系統與實戰應用的完整指南。"
+    }
+  }
+}

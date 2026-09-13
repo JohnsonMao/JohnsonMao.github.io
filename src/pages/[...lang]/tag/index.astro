@@ -1,0 +1,75 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import { generateStaticLocalePaths, getLocale, t } from '@/i18n'
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import { getEntriesByTag } from '@/utils/content'
+
+export async function getStaticPaths() {
+  return generateStaticLocalePaths()
+}
+
+const { lang } = Astro.params
+const locale = getLocale(lang)
+
+const tagMap = await getEntriesByTag(locale)
+const allTags = [...tagMap.entries()].toSorted((a, b) => b[1].length - a[1].length)
+const tagCounts = allTags.map(([, posts]) => posts.length)
+const maxCount = Math.max(...tagCounts, 1)
+
+function getWeight(count: number) {
+  return Math.log(count + 1) / Math.log(maxCount + 1)
+}
+
+function getCloudStyle(count: number) {
+  const weight = getWeight(count)
+  const fontSize = `${(0.95 + weight * 1.25).toFixed(3)}rem`
+  const opacity = (0.6 + weight * 0.4).toFixed(2)
+  return `font-size:${fontSize};opacity:${opacity};`
+}
+---
+
+<BaseLayout title={t(locale, 'tags.title')} description={t(locale, 'tags.description')}>
+  <div class="max-w-4xl mx-auto px-4 py-24 sm:py-32">
+    <header class="mb-24 text-center">
+      <h1 class="text-4xl sm:text-5xl font-bold tracking-tight mb-4 text-gray-900 dark:text-white">
+        {t(locale, 'tags.title')}
+      </h1>
+      <div class="h-1 w-8 bg-primary/40 mx-auto rounded-full mb-6"></div>
+      <p class="text-muted-foreground text-lg max-w-md mx-auto italic">
+        {t(locale, 'tags.description')}
+      </p>
+    </header>
+
+    <ul class="flex flex-wrap justify-center items-center gap-3 sm:gap-4 list-none p-0 m-0">
+      {
+        allTags.map(([tagId, posts]) => {
+          const count = posts.length
+          const display = t(locale, `tags.registry.${tagId}.name`)
+          const href = getRelativeLocaleUrl(locale, `tag/${tagId}`)
+
+          return (
+            <li>
+              <a
+                href={href}
+                aria-label={`${display}，${t(locale, 'tags.count', { count: count.toString() })}`}
+                class="inline-flex min-h-6 items-center gap-1 rounded-full px-3 py-2 leading-none transition-colors hover:bg-primary/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                style={getCloudStyle(count)}
+              >
+                <span>{display}</span>
+                <span class="text-xs opacity-70">({count})</span>
+              </a>
+            </li>
+          )
+        })
+      }
+    </ul>
+
+    {
+      allTags.length === 0 && (
+        <div class="text-center py-24 italic text-muted-foreground opacity-50">
+          No tags found.
+        </div>
+      )
+    }
+  </div>
+</BaseLayout>

@@ -1,0 +1,11 @@
+<script is:inline>
+try {
+  const stored = localStorage.getItem('theme')
+  const themes = ['light', 'dark']
+  const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+  const theme = themes.includes(stored) ? stored : systemTheme
+
+  document.documentElement.classList.toggle('dark', theme === 'dark')
+}
+catch {}
+</script>

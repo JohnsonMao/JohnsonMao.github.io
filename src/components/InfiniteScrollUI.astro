@@ -1,0 +1,311 @@
+---
+/**
+ * InfiniteScrollUI — generic infinite-scroll container.
+ *
+ * Usage:
+ * ```astro
+ * <InfiniteScrollUI locale={locale} fetchUrl="/data/{type}/{locale}/page-{page}.json" itemsKey="items">
+ *   <!-- Initial items rendered server-side -->
+ *   {items.map(item => <li>...</li>)}
+ *
+ *   <!-- Client-side item template (slot="templates") -->
+ *   <!-- Use `data-infinite-*` attributes for data binding: -->
+ *   <!--   data-infinite-text="field"         → textContent = item[field]           -->
+ *   <!--   data-infinite-href="/path/{field}" → href with {field} replaced           -->
+ *   <!--   data-infinite-date="field"         → formatted date text + datetime attr  -->
+ *   <!--   data-infinite-if="field"           → removes element when falsy           -->
+ *   <!--   data-infinite-list="field"         → renders array with sub-template      -->
+ *   <!--     data-list-template="templateId"  → ID of sub-template element           -->
+ *   <!--     data-list-href="/path/{value}"   → href for each list item              -->
+ *   <!--     display text resolved from listLabels[field][value] (falls back to raw) -->
+ *   <template slot="templates" id="item-template">
+ *     <li>
+ *       <a href="" data-infinite-href="/blog/{id}">
+ *         <h2 data-infinite-text="title"></h2>
+ *       </a>
+ *     </li>
+ *   </template>
+ * </InfiniteScrollUI>
+ * ```
+ *
+ * For the article-specific implementation, see `src/pages/[...lang]/blog/index.astro`.
+ *
+ * i18n tags are located at `src/i18n/messages/{locale}/tags.json` under the
+ * `registry` key, co-located with other locale message files.
+ */
+
+import { Icon } from 'astro-icon/components'
+import type { Locale } from '@/i18n'
+
+interface Props {
+  locale: Locale
+  /**
+   * URL pattern for client-side fetching of subsequent pages.
+   * Use `{locale}` and `{page}` as placeholders.
+   * Example: `/data/articles/{locale}/page-{page}.json`
+   */
+  fetchUrl: string
+  /**
+   * Key in the JSON response that contains the items array.
+   * @default 'items'
+   */
+  itemsKey?: string
+  /**
+   * Key in the JSON response that contains the hasMore boolean.
+   * @default 'hasMore'
+   */
+  hasMoreKey?: string
+  /**
+   * Display labels for array fields rendered with `data-infinite-list`.
+   * Maps field name → (value → display text), used to translate raw values
+   * (e.g. tag IDs) into human-readable labels client-side.
+   *
+   * Example: `{ tags: { react: 'React', typescript: 'TypeScript' } }`
+   */
+  listLabels?: Record<string, Record<string, string>>
+}
+
+const { locale, fetchUrl, itemsKey = 'items', hasMoreKey = 'hasMore', listLabels } = Astro.props
+---
+
+<infinite-scroll
+  data-locale={locale}
+  data-fetch-url={fetchUrl}
+  data-items-key={itemsKey}
+  data-has-more-key={hasMoreKey}
+  data-list-labels={listLabels ? JSON.stringify(listLabels) : undefined}
+>
+  <div class="space-y-4">
+    <ul id="infinite-scroll-list" class="grid gap-8 list-none p-0 m-0">
+      <slot />
+    </ul>
+
+    <div id="infinite-scroll-sentinel" class="h-10" aria-hidden="true"></div>
+    <div id="loading-indicator" class="hidden py-8 text-center">
+      <div class="inline-block animate-spin">
+        <Icon name="lucide:loader" class="w-6 h-6 text-gray-600 dark:text-gray-400" />
+      </div>
+    </div>
+  </div>
+
+  <slot name="templates" />
+</infinite-scroll>
+
+<script>
+const FIELD_PATTERN = /\{(\w+)\}/g
+
+class InfiniteScroll extends HTMLElement {
+  currentPage = 1
+  isLoading = false
+  hasMore = true
+  observer: IntersectionObserver | null = null
+
+  connectedCallback() {
+    this.init()
+  }
+
+  disconnectedCallback() {
+    if (this.observer) {
+      this.observer.disconnect()
+    }
+  }
+
+  init() {
+    const sentinel = this.querySelector('#infinite-scroll-sentinel')
+    const loadingIndicator = this.querySelector('#loading-indicator')
+    const list = this.querySelector('#infinite-scroll-list')
+
+    if (!sentinel || !loadingIndicator || !list) {
+      console.error('Required elements not found for infinite scroll')
+      return
+    }
+
+    this.setupObserver(sentinel)
+  }
+
+  setupObserver(sentinel: Element) {
+    if (this.observer) {
+      this.observer.disconnect()
+    }
+
+    this.observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !this.isLoading && this.hasMore) {
+            this.loadNextPage()
+          }
+        })
+      },
+      { threshold: 0.1 },
+    )
+
+    this.observer.observe(sentinel)
+  }
+
+  /**
+   * Renders a single item by cloning the provided template and binding
+   * data using `data-infinite-*` attributes.
+   *
+   * Supported binding attributes:
+   * - `data-infinite-text="field"` → sets textContent from item[field]
+   * - `data-infinite-href="pattern"` → sets href, replacing `{field}` placeholders
+   * - `data-infinite-date="field"` → sets formatted date text + datetime attribute
+   * - `data-infinite-if="field"` → removes element when item[field] is falsy
+   * - `data-infinite-list="field"` → renders array using a sub-template
+   *   - `data-list-template="templateId"` → ID of the sub-template element
+   *   - `data-list-href="pattern"` → href pattern for each list item (use `{value}`)
+   *   - display text is resolved from `listLabels[field][value]`, falling back to raw value
+   */
+  renderItem(item: Record<string, unknown>, template: HTMLTemplateElement): DocumentFragment {
+    const clone = template.content.cloneNode(true) as DocumentFragment
+    const locale = this.getAttribute('data-locale') ?? 'en'
+    const listLabelsAttr = this.getAttribute('data-list-labels')
+    const listLabels: Record<string, Record<string, string>> = listLabelsAttr
+      ? (JSON.parse(listLabelsAttr) as Record<string, Record<string, string>>)
+      : {}
+
+    clone.querySelectorAll<HTMLElement>('[data-infinite-text]').forEach((el) => {
+      const field = el.getAttribute('data-infinite-text') ?? ''
+      el.textContent = String(item[field] ?? '')
+    })
+
+    clone.querySelectorAll<HTMLElement>('[data-infinite-href]').forEach((el) => {
+      const pattern = el.getAttribute('data-infinite-href') ?? ''
+      const href = pattern.replace(FIELD_PATTERN, (_, key) => String(item[key] ?? ''))
+      el.setAttribute('href', href)
+    })
+
+    clone.querySelectorAll<HTMLElement>('[data-infinite-date]').forEach((el) => {
+      const field = el.getAttribute('data-infinite-date') ?? ''
+      const rawDate = item[field]
+      if (rawDate) {
+        const date = new Date(String(rawDate))
+        el.textContent = new Intl.DateTimeFormat(locale, { dateStyle: 'long' }).format(date)
+        el.setAttribute('datetime', date.toISOString())
+      }
+    })
+
+    // Process data-infinite-if before data-infinite-list so removed elements don't block list rendering
+    clone.querySelectorAll<HTMLElement>('[data-infinite-if]').forEach((el) => {
+      const field = el.getAttribute('data-infinite-if') ?? ''
+      if (!item[field]) {
+        el.remove()
+      }
+    })
+
+    clone.querySelectorAll<HTMLElement>('[data-infinite-list]').forEach((el) => {
+      const field = el.getAttribute('data-infinite-list') ?? ''
+      const subTemplateId = el.getAttribute('data-list-template')
+      const hrefPattern = el.getAttribute('data-list-href')
+      const items = item[field]
+
+      if (!Array.isArray(items) || items.length === 0) {
+        el.remove()
+        return
+      }
+
+      const subTemplate = subTemplateId
+        ? (this.querySelector(`#${subTemplateId}`) as HTMLTemplateElement | null)
+        : null
+
+      if (subTemplate) {
+        const fieldLabels = listLabels[field] ?? {}
+        items.forEach((subItem: unknown) => {
+          const subClone = subTemplate.content.cloneNode(true) as DocumentFragment
+          const anchor = subClone.querySelector('a')
+          if (anchor) {
+            const value = String(subItem)
+            anchor.textContent = fieldLabels[value] ?? value
+            if (hrefPattern) {
+              anchor.href = hrefPattern.replace('{value}', value)
+            }
+          }
+          el.appendChild(subClone)
+        })
+      }
+    })
+
+    return clone
+  }
+
+  async loadNextPage() {
+    if (this.isLoading || !this.hasMore)
+      return
+
+    const loadingIndicator = this.querySelector('#loading-indicator')
+    const list = this.querySelector('#infinite-scroll-list')
+    const locale = this.getAttribute('data-locale')
+    const fetchUrl = this.getAttribute('data-fetch-url')
+    const itemsKey = this.getAttribute('data-items-key') ?? 'items'
+    const hasMoreKey = this.getAttribute('data-has-more-key') ?? 'hasMore'
+
+    if (!loadingIndicator || !list || !locale || !fetchUrl) {
+      console.error('Required elements or attributes not found for loading next page')
+      return
+    }
+
+    this.isLoading = true
+    loadingIndicator.classList.remove('hidden')
+    this.currentPage += 1
+
+    const url = fetchUrl
+      .replace('{locale}', locale)
+      .replace('{page}', String(this.currentPage))
+
+    try {
+      const response = await fetch(url)
+
+      if (!response.ok) {
+        if (response.status === 404) {
+          this.hasMore = false
+          const sentinel = this.querySelector('#infinite-scroll-sentinel')
+          if (this.observer && sentinel)
+            this.observer.unobserve(sentinel)
+          loadingIndicator.classList.add('hidden')
+          return
+        }
+        throw new Error(`HTTP ${response.status}`)
+      }
+
+      const data = await response.json() as Record<string, unknown>
+      const items = data[itemsKey]
+      const hasMore = Boolean(data[hasMoreKey])
+
+      if (!items || !Array.isArray(items)) {
+        throw new Error('Invalid response format: missing items array')
+      }
+
+      const template = this.querySelector('#item-template') as HTMLTemplateElement | null
+      if (!template) {
+        console.error('Item template (#item-template) not found')
+        return
+      }
+
+      items.forEach((item: unknown) => {
+        const fragment = this.renderItem(item as Record<string, unknown>, template)
+        list.appendChild(fragment)
+      })
+
+      this.hasMore = hasMore
+
+      if (!this.hasMore) {
+        const sentinel = this.querySelector('#infinite-scroll-sentinel')
+        if (this.observer && sentinel)
+          this.observer.unobserve(sentinel)
+      }
+    }
+    catch (error) {
+      console.error('Failed to load items:', error)
+      this.currentPage -= 1
+    }
+    finally {
+      this.isLoading = false
+      loadingIndicator.classList.add('hidden')
+    }
+  }
+}
+
+if (!customElements.get('infinite-scroll')) {
+  customElements.define('infinite-scroll', InfiniteScroll)
+}
+</script>
