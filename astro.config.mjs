@@ -28,7 +28,7 @@ const rehypePlugins = [
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://johnsonmao.github.io',
+  site: process.env.SITE_URL || 'https://johnsonmao.github.io',
   output: 'static',
 
   markdown: { syntaxHighlight: false, rehypePlugins },

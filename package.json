@@ -2,11 +2,16 @@
   "name": "johnsonmao-blog",
   "type": "module",
   "version": "0.0.1",
+  "packageManager": "pnpm@10.20.0",
+  "engines": {
+    "node": ">=24.20.0 <25"
+  },
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "check": "astro check && pnpm lint && pnpm knip && pnpm knip:production && pnpm test && pnpm check-registries",
+    "typecheck": "astro check",
+    "check": "pnpm typecheck && pnpm lint && pnpm knip && pnpm knip:production && pnpm test && pnpm check-registries",
     "astro": "astro",
     "postbuild": "pagefind --site dist",
     "test": "vitest run",
