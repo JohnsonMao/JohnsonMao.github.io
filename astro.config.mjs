@@ -4,7 +4,6 @@ import mdx from '@astrojs/mdx'
 import sitemap from '@astrojs/sitemap'
 import { transformerCopyButton } from '@rehype-pretty/transformers'
 import tailwindcss from '@tailwindcss/vite'
-import AstroPWA from '@vite-pwa/astro'
 import { defineConfig } from 'astro/config'
 import icon from 'astro-icon'
 import rehypePrettyCode from 'rehype-pretty-code'
@@ -28,53 +27,12 @@ const rehypePlugins = [
 
 // https://astro.build/config
 export default defineConfig({
-  site: process.env.SITE_URL || 'https://johnsonmao.github.io',
+  site: process.env.SITE_URL || 'https://a-mao.pages.dev',
   output: 'static',
 
   markdown: { syntaxHighlight: false, rehypePlugins },
 
-  integrations: [
-    sitemap(),
-    icon(),
-    mdx({ syntaxHighlight: false, rehypePlugins }),
-    AstroPWA({
-      strategies: 'injectManifest',
-      srcDir: 'src',
-      filename: 'sw.ts',
-      registerType: 'autoUpdate',
-      injectManifest: {
-        globPatterns: ['**/*.{js,css,html,ico,png,svg}', 'offline/index.html', 'en/offline/index.html'],
-      },
-      manifest: {
-        name: "JohnsonMao's Blog",
-        short_name: 'JohnsonMao',
-        description: 'Personal blog of JohnsonMao',
-        theme_color: '#ffffff',
-        background_color: '#ffffff',
-        display: 'standalone',
-        icons: [
-          {
-            src: 'favicon.svg',
-            sizes: 'any',
-            type: 'image/svg+xml',
-            purpose: 'any',
-          },
-          {
-            src: 'favicon.svg',
-            sizes: 'any',
-            type: 'image/svg+xml',
-            purpose: 'maskable',
-          },
-        ],
-      },
-      experimental: {
-        directoryAndTrailingSlashHandler: true,
-      },
-      devOptions: {
-        enabled: false,
-      },
-    }),
-  ],
+  integrations: [sitemap(), icon(), mdx({ syntaxHighlight: false, rehypePlugins })],
 
   i18n: {
     locales: ['en', 'zh-TW'],

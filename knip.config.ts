@@ -15,7 +15,6 @@ const config: KnipConfig = {
       'src/middleware.{js,ts}',
       'src/middleware/index.{js,ts}',
       'src/actions/index.{js,ts}',
-      'src/sw.ts',
     ],
   },
   ignore: [
@@ -23,12 +22,7 @@ const config: KnipConfig = {
     // This development script is outside the production entry graph.
     ...(isProduction ? ['scripts/check-registries.mjs'] : []),
   ],
-  ignoreDependencies: [
-    '@iconify-json/lucide',
-    '@iconify-json/simple-icons',
-    // The PWA virtual module imports this dependency at build time.
-    ...(isProduction ? ['workbox-window'] : []),
-  ],
+  ignoreDependencies: ['@iconify-json/lucide', '@iconify-json/simple-icons'],
 }
 
 export default config

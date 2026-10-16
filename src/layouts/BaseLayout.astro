@@ -1,11 +1,8 @@
 ---
 import { getRelativeLocaleUrl } from 'astro:i18n'
 import { ClientRouter } from 'astro:transitions'
-import { pwaAssetsHead } from 'virtual:pwa-assets/head'
-import { pwaInfo } from 'virtual:pwa-info'
 import Footer from '@/components/Footer.astro'
 import Header from '@/components/Header.astro'
-import ReloadPrompt from '@/components/pwa/ReloadPrompt.astro'
 import ThemeScript from '@/components/theme/ThemeScript.astro'
 import { getHreflang, getLocale, getOgLocale, type Locale, locales, t } from '@/i18n'
 import '@/styles/global.css'
@@ -111,9 +108,6 @@ const ogAlternateLocales = locales.filter((loc) => loc !== locale).map(getOgLoca
         />
       )
     }
-    {pwaInfo && <Fragment set:html={pwaInfo.webManifest.linkTag} />}
-    {pwaAssetsHead.themeColor && <meta name="theme-color" content={pwaAssetsHead.themeColor.content} />}
-    {pwaAssetsHead.links.map(link => <link {...link} />)}
     <slot name="head" />
   </head>
   <body class="min-h-screen flex flex-col bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100">
@@ -126,6 +120,5 @@ const ogAlternateLocales = locales.filter((loc) => loc !== locale).map(getOgLoca
       <slot />
     </main>
     <Footer />
-    <ReloadPrompt />
   </body>
 </html>
