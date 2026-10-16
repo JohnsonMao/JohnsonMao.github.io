@@ -1,5 +1,7 @@
 import type { KnipConfig } from 'knip'
 
+const isProduction = process.argv.includes('--production')
+
 const config: KnipConfig = {
   astro: {
     config: ['astro.config.{js,cjs,mjs,ts,mts}'],
@@ -17,12 +19,15 @@ const config: KnipConfig = {
     ],
   },
   ignore: [
-    'scripts/check-registries.mjs',
+    '.agents/**',
+    // This development script is outside the production entry graph.
+    ...(isProduction ? ['scripts/check-registries.mjs'] : []),
   ],
   ignoreDependencies: [
     '@iconify-json/lucide',
     '@iconify-json/simple-icons',
-    'workbox-window',
+    // The PWA virtual module imports this dependency at build time.
+    ...(isProduction ? ['workbox-window'] : []),
   ],
 }
 
